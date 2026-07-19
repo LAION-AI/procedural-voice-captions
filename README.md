@@ -38,6 +38,15 @@ Given a clip's predictions, the module:
    **top-k EmoNet emotions by |z|** (default `k=3`) — both configurable.
 3. **always includes** Age (`AGEV`), Gender (`GEND`), Register (`REGS`) and
    Tempo (`TEMP`), even when they sit at the baseline.
+   - **Exception — categorical dims use absolute 0–6 bands, not z-scores.**
+     `AGEV`, `GEND` and `REGS` are near-categorical on the 0–6 VoiceNet scale, so
+     deviation-from-baseline is the wrong lens: the population median for `GEND`
+     leans masculine (~3.7), so a ±0.5·spread "neutral" band swallowed most male
+     voices and mislabeled them *gender-neutral*. These three dims are therefore
+     mapped through fixed thresholds centered on the scale midpoint `3.0` (see
+     `ABSOLUTE_BANDS` in `caption.py`) — e.g. `GEND ≥ 3.5` → masculine,
+     `≤ 2.5` → feminine, in-between → androgynous. `TEMP` and all other
+     dimensions still use z-scores.
 4. rotates through each emotion's **synonym cluster** so captions aren't one
    rigid word per emotion.
 5. applies the **genuineness gate** (see below).
