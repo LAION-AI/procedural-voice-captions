@@ -4,6 +4,11 @@ Turn a speech clip's **model predictions** into a compact, human-readable
 **caption** that describes the voice by how far it deviates from the *average
 voice*.
 
+> **🔊 [Live demo grid →](https://projects.laion.ai/procedural-voice-captions/)**
+> 100 real multilingual speech clips, each with an audio player and the full
+> caption written automatically by this module (also at
+> [laion-ai.github.io/procedural-voice-captions](https://laion-ai.github.io/procedural-voice-captions/)).
+
 This repo ships:
 
 - **`baseline_stats.json`** — baseline distribution statistics (mean / median /
