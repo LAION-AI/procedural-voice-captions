@@ -40,6 +40,20 @@ EPS = 1e-6
 
 ALWAYS_ON = ["AGEV", "GEND", "REGS", "TEMP"]        # always described
 
+# Surface-form templates. All templates carry the SAME phrase content and pass
+# through the SAME gates (genuineness gate, absolute bands, always-on identity
+# dims, EmoNet synonym rotation, top-k selection) — only the ORDER of the phrase
+# groups (identity = Age/Gender/Register/Tempo, timbre = other VoiceNet dims,
+# emotion = EmoNet, quality = genuineness/vocal-burst) and the CONNECTIVE style
+# differ. This variety keeps procedurally-generated captions from all looking
+# identical, which would otherwise invite overfitting when they are used as
+# fine-tuning targets. `template="random"` picks one deterministically from the
+# clip's synonym_seed; `shuffle_dims=True` additionally permutes the order of the
+# non-identity timbre dims and the emotions within their groups (also seeded).
+TEMPLATE_NAMES = ["default", "identity_first", "emotion_first", "telegraphic",
+                  "two_sentence", "sounds_like", "bulleted", "varied_connectors",
+                  "quality_led", "minimal_identity"]
+
 # |z| -> intensity adverb
 INTENSITY = [(2.0, "Extremely"), (1.5, "Very"), (1.0, "Notably"), (0.5, "Somewhat")]
 NEUTRAL_BAND = 0.5   # |z| below this = "about average"
@@ -211,18 +225,43 @@ def _emotion_word(name, stat, seed):
 
 
 # --------------------------------------------------------------------------- #
+def _perm(lst, seed, salt):
+    """Deterministic permutation of a list, seeded by (seed ^ salt)."""
+    if len(lst) <= 1:
+        return list(lst)
+    rng = random.Random((seed if seed is not None else 0) ^ salt)
+    idx = list(range(len(lst)))
+    rng.shuffle(idx)
+    return [lst[i] for i in idx]
+
+
+def _resolve_template(template, seed):
+    """Map template name (incl. "random") to a concrete registered template."""
+    if template == "random":
+        r = random.Random((seed if seed is not None else random.randrange(1 << 30)) ^ 0xABCDEF)
+        return TEMPLATE_NAMES[r.randrange(len(TEMPLATE_NAMES))]
+    return template if template in TEMPLATE_NAMES else "default"
+
+
 def caption_detail(preds, baseline=None, k_voicenet=5, k_emonet=3,
-                   always_on=ALWAYS_ON, synonym_seed=None):
+                   always_on=ALWAYS_ON, synonym_seed=None,
+                   template="default", shuffle_dims=False):
     """Return a structured breakdown of the caption.
 
     `preds` accepts either a flat {code: value} mapping or a nested
     {"dims": {...}, "emo": {...}, "genu": x, "blend": y} dict.
     Returns {"voicenet": [...], "emotions": [...], "quality": [...],
-             "genuineness_gate": {...}}.
+             "genuineness_gate": {...}, "template": name}.
+
+    `template` selects a surface form (see TEMPLATE_NAMES; "random" -> chosen
+    deterministically from synonym_seed). `shuffle_dims` deterministically
+    permutes the non-identity VoiceNet dims and the emotions within their groups.
+    Neither changes which dims/emotions are selected — only their arrangement.
     """
     if baseline is None:
         baseline = load_baseline()
     k_voicenet = max(0, int(k_voicenet)); k_emonet = max(0, int(k_emonet))
+    template = _resolve_template(template, synonym_seed)
 
     # normalise prediction layout ------------------------------------------------
     dims, emo, genu, blend = {}, {}, None, None
@@ -336,23 +375,172 @@ def caption_detail(preds, baseline=None, k_voicenet=5, k_emonet=3,
             quality.append({"dim": "blend", "name": "Vocal-burst blend",
                             "value": round(_val(blend), 3), "z": round(bz, 2), "phrase": ph})
 
+    # ---- optional deterministic shuffle of display order ----
+    # Identity dims (always-on) keep their slots; the non-identity timbre dims are
+    # permuted among their own positions and the emotions are permuted wholesale.
+    # Which dims/emotions were selected is unchanged; only arrangement varies.
+    if shuffle_dims:
+        pos = [i for i, e in enumerate(vn) if not e["always_on"]]
+        vals = _perm([vn[i] for i in pos], synonym_seed, 0x9E3779B1)
+        for i, v in zip(pos, vals):
+            vn[i] = v
+        emos = _perm(emos, synonym_seed, 0x51ED270B)
+
     return {"voicenet": vn, "emotions": emos, "quality": quality,
-            "genuineness_gate": {"gate": gate, "descriptor": gen_desc, "z": zg}}
+            "genuineness_gate": {"gate": gate, "descriptor": gen_desc, "z": zg},
+            "template": template}
 
 
-def caption(preds, baseline=None, k_voicenet=5, k_emonet=3,
-            always_on=ALWAYS_ON, synonym_seed=None, as_text=True):
-    """Return the caption as a single sentence (`as_text`) or a list of phrases."""
-    d = caption_detail(preds, baseline, k_voicenet, k_emonet, always_on, synonym_seed)
-    phrases = [e["phrase"] for e in d["voicenet"]]
-    phrases += [e["phrase"] for e in d["emotions"]]
-    phrases += [e["phrase"] for e in d["quality"]]
-    if not as_text:
-        return phrases
-    if not phrases:
+# --------------------------------------------------------------------------- #
+# Surface-form renderers. Each takes the four phrase groups and returns prose.
+# They MUST be information-preserving: every phrase from every group appears.
+def _cap(s):
+    s = (s or "").strip()
+    return s[0].upper() + s[1:] if s else s
+
+
+def _sentences(parts):
+    return " ".join(p for p in parts if p)
+
+
+def _groups(detail):
+    """Split a caption_detail into phrase groups + an identity dim->phrase map."""
+    vn, emos, qual = detail["voicenet"], detail["emotions"], detail["quality"]
+    ordered = [e["phrase"] for e in vn] + [e["phrase"] for e in emos] + [e["phrase"] for e in qual]
+    ident = [e["phrase"] for e in vn if e["always_on"]]
+    timbre = [e["phrase"] for e in vn if not e["always_on"]]
+    emo = [e["phrase"] for e in emos]
+    q = [e["phrase"] for e in qual]
+    idmap = {e["dim"]: e["phrase"] for e in vn if e["always_on"]}
+    return dict(ordered=ordered, ident=ident, timbre=timbre, emo=emo, q=q, idmap=idmap)
+
+
+def _t_default(g):
+    return "A voice that is " + "; ".join(g["ordered"]) + "."
+
+
+def _t_identity_first(g):
+    return _sentences([
+        _cap(", ".join(g["ident"])) + "." if g["ident"] else "",
+        ("It sounds " + "; ".join(g["timbre"]) + ".") if g["timbre"] else "",
+        ("Emotionally, it is " + ", ".join(g["emo"]) + ".") if g["emo"] else "",
+        (_cap("; ".join(g["q"])) + ".") if g["q"] else "",
+    ])
+
+
+def _t_emotion_first(g):
+    s1 = ("Emotionally " + ", ".join(g["emo"]) + ".") if g["emo"] else "Emotionally even and unmarked."
+    body = g["timbre"] + g["ident"]
+    return _sentences([
+        s1,
+        ("The voice itself is " + "; ".join(body) + ".") if body else "",
+        (_cap("; ".join(g["q"])) + ".") if g["q"] else "",
+    ])
+
+
+def _t_telegraphic(g):
+    return _cap(", ".join(g["ordered"])) + "."
+
+
+def _t_two_sentence(g):
+    sound = g["timbre"] + g["ident"]
+    conv = g["emo"] + g["q"]
+    return _sentences([
+        ("How it sounds: " + "; ".join(sound) + ".") if sound else "",
+        ("What it conveys: " + "; ".join(conv) + ".") if conv else "What it conveys: little overt emotion.",
+    ])
+
+
+def _t_sounds_like(g):
+    im = g["idmap"]
+    lead = " ".join(x for x in [im.get("AGEV"), im.get("GEND")] if x)
+    head = "Sounds like a " + lead + " voice" if lead else "Sounds like a voice"
+    tail = [x for x in [im.get("REGS"), im.get("TEMP")] if x]
+    if tail:
+        head += ", " + ", ".join(tail)
+    return _sentences([
+        head + ".",
+        ("It is " + "; ".join(g["timbre"]) + ".") if g["timbre"] else "",
+        ("Emotionally, " + ", ".join(g["emo"]) + ".") if g["emo"] else "",
+        (_cap("; ".join(g["q"])) + ".") if g["q"] else "",
+    ])
+
+
+def _t_bulleted(g):
+    segs = []
+    if g["ident"]:  segs.append("Identity: " + ", ".join(g["ident"]))
+    if g["timbre"]: segs.append("Timbre: " + "; ".join(g["timbre"]))
+    if g["emo"]:    segs.append("Emotion: " + ", ".join(g["emo"]))
+    if g["q"]:      segs.append("Delivery: " + "; ".join(g["q"]))
+    return " · ".join(segs) + "." if segs else ""
+
+
+def _t_varied_connectors(g):
+    seq = g["ordered"]
+    conns = [", with ", " and ", ", carrying ", ", "]
+    out = "A voice that is " + seq[0]
+    for i, p in enumerate(seq[1:]):
+        out += conns[i % len(conns)] + p
+    return out + "."
+
+
+def _t_quality_led(g):
+    s1 = (_cap("; ".join(g["q"])) + ".") if g["q"] else "Natural, unforced in delivery."
+    body = g["timbre"] + g["ident"]
+    return _sentences([
+        s1,
+        ("The voice is " + "; ".join(body) + ".") if body else "",
+        ("Emotionally, " + ", ".join(g["emo"]) + ".") if g["emo"] else "",
+    ])
+
+
+def _t_minimal_identity(g):
+    im = g["idmap"]
+    lead = " ".join(x for x in [im.get("AGEV"), im.get("GEND")] if x)
+    head = "A " + lead + " voice" if lead else "A voice"
+    if g["emo"]:
+        head += " " + ", ".join(g["emo"])
+    head += "."
+    rest = [x for x in [im.get("REGS"), im.get("TEMP")] if x] + g["timbre"] + g["q"]
+    tail = ("Also " + ", ".join(rest) + ".") if rest else ""
+    return _sentences([_cap(head), tail])
+
+
+TEMPLATES = {
+    "default": _t_default, "identity_first": _t_identity_first,
+    "emotion_first": _t_emotion_first, "telegraphic": _t_telegraphic,
+    "two_sentence": _t_two_sentence, "sounds_like": _t_sounds_like,
+    "bulleted": _t_bulleted, "varied_connectors": _t_varied_connectors,
+    "quality_led": _t_quality_led, "minimal_identity": _t_minimal_identity,
+}
+
+
+def render_caption(detail):
+    """Render a caption_detail into prose using its selected template."""
+    g = _groups(detail)
+    if not g["ordered"]:
         return "An average, unremarkable voice."
-    body = "; ".join(phrases)
-    return "A voice that is " + body + "."
+    name = detail.get("template", "default")
+    return TEMPLATES.get(name, _t_default)(g)
+
+
+# --------------------------------------------------------------------------- #
+def caption(preds, baseline=None, k_voicenet=5, k_emonet=3,
+            always_on=ALWAYS_ON, synonym_seed=None, as_text=True,
+            template="default", shuffle_dims=False):
+    """Return the caption as a single sentence (`as_text`) or a list of phrases.
+
+    `template` chooses a surface form (see TEMPLATE_NAMES, or "random" for a
+    seed-deterministic pick); `shuffle_dims` permutes non-identity dims/emotions.
+    With the defaults (template="default", shuffle_dims=False) the output is
+    byte-identical to the original captioner."""
+    d = caption_detail(preds, baseline, k_voicenet, k_emonet, always_on,
+                       synonym_seed, template=template, shuffle_dims=shuffle_dims)
+    if not as_text:
+        return [e["phrase"] for e in d["voicenet"]] + \
+               [e["phrase"] for e in d["emotions"]] + \
+               [e["phrase"] for e in d["quality"]]
+    return render_caption(d)
 
 
 # --------------------------------------------------------------------------- #
@@ -362,17 +550,23 @@ if __name__ == "__main__":
     ap.add_argument("--kv", type=int, default=5, help="top-k VoiceNet dims (default 5)")
     ap.add_argument("--ke", type=int, default=3, help="top-k EmoNet emotions (default 3)")
     ap.add_argument("--seed", type=int, default=None, help="synonym-rotation seed")
+    ap.add_argument("--template", default="default",
+                    help="surface template: " + ", ".join(TEMPLATE_NAMES) + ", or 'random'")
+    ap.add_argument("--shuffle", action="store_true", help="shuffle non-identity dims/emotions")
     ap.add_argument("--baseline", default=_BASE_PATH)
     ap.add_argument("--json", action="store_true", help="print structured detail as JSON")
     A = ap.parse_args()
     raw = sys.stdin.read() if A.preds == "-" else open(A.preds).read()
     preds = json.loads(raw)
     base = load_baseline(A.baseline)
-    detail = caption_detail(preds, base, A.kv, A.ke, synonym_seed=A.seed)
+    detail = caption_detail(preds, base, A.kv, A.ke, synonym_seed=A.seed,
+                            template=A.template, shuffle_dims=A.shuffle)
     if A.json:
         print(json.dumps(detail, indent=2, ensure_ascii=False))
     else:
-        print(caption(preds, base, A.kv, A.ke, synonym_seed=A.seed))
+        print(f"[template: {detail['template']}]")
+        print(caption(preds, base, A.kv, A.ke, synonym_seed=A.seed,
+                      template=A.template, shuffle_dims=A.shuffle))
         print()
         for e in detail["voicenet"]:
             tag = " *always*" if e["always_on"] else ""

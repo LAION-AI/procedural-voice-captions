@@ -87,6 +87,72 @@ Values may be plain numbers or `{"value"/"reg_score"/"reg": x}`. VoiceNet dims
 and genuineness are on a 0–6 scale, blend on 0–10, EmoNet emotions are raw head
 outputs (roughly 0–3, mostly ≈0).
 
+```bash
+python caption.py preds.json --template identity_first     # pick a surface form
+python caption.py preds.json --template random --shuffle   # seed-random form + shuffled order
+```
+
+---
+
+## Caption templates & dimension shuffling
+
+A single fixed sentence shape (`"A voice that is …; …; …."`) means **every** caption
+looks the same. When these captions are used as **fine-tuning targets** for a
+voice-acting model, that rigid, repetitive surface form is an easy thing for the
+model to overfit to — it learns the template, not the voice. To avoid that, the
+same underlying phrase content can be rendered through **10 interchangeable
+surface templates** plus optional **dimension shuffling**.
+
+Crucially, **only the arrangement changes.** Every template passes through the
+exact same pipeline — z-scores, top-k selection, always-on Age/Gender/Register/
+Tempo, the absolute-band categorical dims, the genuineness gate, and EmoNet
+synonym rotation. The phrase *content* is identical; templates only reorder the
+four phrase groups (identity = Age/Gender/Register/Tempo · timbre = the other
+VoiceNet dims · emotion = EmoNet · quality = genuineness/vocal-burst) and vary the
+connective style. So captions stay information-preserving and comparable.
+
+| template            | example surface form (same clip) |
+|---------------------|----------------------------------|
+| `default`           | *A voice that is very bright in oral resonance; …; young and youthful; masculine and deep-pitched; …; deeply and genuinely felt.* |
+| `identity_first`    | *Young and youthful, masculine and deep-pitched, low and bassy in register, somewhat fast in tempo. It sounds very bright in oral resonance; …. Emotionally, it is …* |
+| `emotion_first`     | *Emotionally extremely carrying amusement, …. The voice itself is very bright in oral resonance; …; masculine and deep-pitched; ….* |
+| `telegraphic`       | *Very bright in oral resonance, notably forward in mask resonance, …, masculine and deep-pitched, ….* (bare comma list) |
+| `two_sentence`      | *How it sounds: … timbre + identity …. What it conveys: … emotions + genuineness ….* |
+| `sounds_like`       | *Sounds like a young and youthful masculine and deep-pitched voice, low and bassy in register, fast in tempo. It is …. Emotionally, ….* |
+| `bulleted`          | *Identity: … · Timbre: … · Emotion: … · Delivery: …* |
+| `varied_connectors` | *A voice that is very bright in oral resonance, with notably forward in mask resonance and …, carrying ….* |
+| `quality_led`       | *Deeply and genuinely felt; interwoven with vocal bursts. The voice is …. Emotionally, ….* |
+| `minimal_identity`  | *A young and youthful masculine and deep-pitched voice extremely carrying amusement, …. Also low and bassy in register, ….* |
+
+API:
+
+```python
+from caption import caption, caption_detail, TEMPLATE_NAMES
+
+caption(preds, base, template="identity_first")     # one of the 10 names
+caption(preds, base, template="random",             # deterministic pick from synonym_seed
+        synonym_seed=1234)
+caption(preds, base, template="random",             # + permute non-identity dims / emotions
+        synonym_seed=1234, shuffle_dims=True)        # (order only; selection unchanged)
+
+caption_detail(preds, base, template="random", synonym_seed=1234)["template"]  # -> chosen name
+```
+
+- **`template`** — one of `TEMPLATE_NAMES` (the 10 above), or `"random"` to pick one
+  deterministically from the clip's `synonym_seed`. Defaults to `"default"`, so
+  existing callers are **byte-for-byte unchanged**.
+- **`shuffle_dims`** — deterministically permutes the order of the non-identity
+  timbre dims and the emotions within their groups (seeded by `synonym_seed`). It
+  changes only *display order*, never *which* dims/emotions were selected. The
+  always-on identity dims keep their slots.
+- **`caption_detail(...)`** reports the resolved template under the `"template"`
+  key (useful for showing a badge in a UI).
+
+Everything is deterministic: given the same `synonym_seed`, a clip always renders
+the same template, shuffle and wording. The [**live demo grid →**](https://projects.laion.ai/procedural-voice-captions/)
+assigns the 10 templates round-robin across its 100 clips (with shuffling on) and
+shows a few clips rendered under several templates side by side.
+
 ---
 
 ## The genuineness gate
