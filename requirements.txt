@@ -1,0 +1,11 @@
+# Runtime for caption.py (procedural caption generation): stdlib only.
+# numpy is only needed by compute_baseline.py (recomputing the baseline).
+numpy>=1.23
+
+# --- recomputing the baseline from scratch (compute_baseline.py) ---
+# Heavy deps; not needed just to USE caption.py with the bundled baseline_stats.json.
+torch>=2.1
+torchaudio>=2.1
+transformers>=4.44
+huggingface_hub>=0.24
+pandas>=2.0

@@ -1,0 +1,7 @@
+raw/
+emonet_tmp/
+voice-taxonomies/
+__pycache__/
+*.log
+*.tar
+*.swp
