@@ -8,6 +8,14 @@ voice*.
 > 100 real multilingual speech clips, each with an audio player and the full
 > caption written automatically by this module (also at
 > [laion-ai.github.io/procedural-voice-captions](https://laion-ai.github.io/procedural-voice-captions/)).
+>
+> **🧠 [MOSS-Audio-Thinking experiment →](https://projects.laion.ai/procedural-voice-captions/moss-thinking/)**
+> The same 100 clips passed through the **MOSS-Audio-Thinking** reasoning models
+> (4B &amp; 8B): they *listen to the audio* and fuse the procedural caption + a
+> Parakeet transcript with timestamps + the LAION taxonomies (VoiceNet / EmoNet /
+> VocalBurst) into the final voice-acting format — a **GENERAL** "how it sounds"
+> instruction plus a **SCRIPT** with a per-sentence `(delivery cue)`, inline vocal
+> `(bursts)` the model actually hears, and `[pause X.Xs]` markers from the timestamps.
 
 This repo ships:
 
