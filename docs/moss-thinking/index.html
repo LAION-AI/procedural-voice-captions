@@ -38,6 +38,7 @@ audio{width:100%;height:34px;margin:2px 0 6px}
 <p>Each clip is passed through the <b>MOSS-Audio-Thinking</b> reasoning models (4B &amp; 8B, Qwen3 + a from-scratch 12.5 Hz audio encoder). The model <b>listens to the audio itself</b> and fuses three text aids: a <b>Parakeet</b> ASR transcript with per-sentence/word timestamps, a <b>procedural whole-clip caption</b> derived from expert VoiceNet / EmoNet / genuineness &amp; vocal-burst classifiers, and the three LAION taxonomies (VoiceNet, EmoNet, VocalBurst).</p>
 <p>It outputs the final voice-acting format: a <b>GENERAL</b> "how the whole voice sounds" instruction, then a <b>SCRIPT</b> where every sentence gets an inline <span class="cue">(delivery cue)</span>, vocal <span class="cue">(bursts)</span> it actually hears, and <span class="pause">[pause X.Xs]</span> markers placed from the timestamps. The model may correct the ASR and relocate/insert bursts using its own listening.</p>
 <p>ASR = Parakeet only (whisper-diarization omitted; VibeVoice/WaveVoice planned later). Greedy decoding. Progress: 4B 100/100 · 8B 100/100.</p>
+<p><a href="../moss-thinking-eval/"><strong>📊 Variant evaluation &amp; Gemini-3.5-Flash scores →</strong></a> (4B/8B × Thinking/No-Think + ASR comparison, with a scores table, conclusions and compute-vs-quality trade-off.)</p>
 </header>
 <div class="wrap">
     <div class="card">
