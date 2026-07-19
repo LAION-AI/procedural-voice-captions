@@ -108,6 +108,30 @@ DESC = {
 NEUTRAL = {"AGEV": "middle-aged in voice", "GEND": "gender-neutral in pitch",
            "REGS": "mid-register", "TEMP": "moderate in tempo"}
 
+# Age/Gender/Register are near-CATEGORICAL/ABSOLUTE attributes, not "deviations from
+# average speech". z-scoring them against a skewed baseline median (e.g. GEND median
+# 3.71 leans masculine) mislabels most male voices as "gender-neutral". For these dims
+# we read the ABSOLUTE 0-6 score, centred on the scale midpoint (3.0), via fixed bands.
+# Each entry: list of (upper_bound, phrase) evaluated in order (value < bound). Tempo is
+# genuinely relative (faster/slower than average) and stays on the z-score path.
+ABSOLUTE_BANDS = {
+    "GEND": [(1.5, "clearly feminine and high-pitched"),
+             (2.5, "feminine and high-pitched"),
+             (3.5, "androgynous, gender-ambiguous in pitch"),
+             (4.5, "masculine and deep-pitched"),
+             (99, "strongly masculine, deep and low-pitched")],
+    "AGEV": [(1.5, "childlike"),
+             (2.5, "young and youthful"),
+             (3.5, "adult"),
+             (4.5, "middle-aged to mature"),
+             (99, "elderly-sounding")],
+    "REGS": [(1.5, "low and bassy in register"),
+             (2.5, "low-to-mid in register"),
+             (3.5, "mid register"),
+             (4.5, "high in register"),
+             (99, "very high in register")],
+}
+
 
 # --------------------------------------------------------------------------- #
 def load_baseline(path=_BASE_PATH):
@@ -252,7 +276,11 @@ def caption_detail(preds, baseline=None, k_voicenet=5, k_emonet=3,
     for code, val, z, always in chosen:
         az = abs(z); direction = "above" if z >= 0 else "below"
         d = DESC[code]
-        if az < NEUTRAL_BAND:
+        if code in ABSOLUTE_BANDS:
+            # near-categorical attribute: describe the ABSOLUTE 0-6 level, not the z-deviation
+            phrase = next(p for thr, p in ABSOLUTE_BANDS[code] if val < thr)
+            adverb = "Absolute"
+        elif az < NEUTRAL_BAND:
             phrase = NEUTRAL.get(code, f"average in {code.lower()}")
             adverb = "About-average"
         else:
