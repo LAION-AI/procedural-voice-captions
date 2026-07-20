@@ -10,8 +10,7 @@ audio{height:30px;width:280px}.k{color:#8b93a7;font-size:11px;margin-left:8px}.g
 burst is, then <b>name it</b>.<br>
 1. <b>Detector</b> (<code>laion/vocalburst-locator</code>, a small model that scans the timeline) marks
 every moment whose "is this a non-speech burst?" score is ≥ <b>0.7</b> → candidate <b>time segments</b>.<br>
-2. For each candidate segment, the <b>single-burst classifier</b> (VoiceCLAP → MLP, mAP 0.68) names the
-burst. <b>If it isn't confident it's a real burst, the segment is discarded</b> — no false alarm.</p>
+2. For each candidate segment, the <b>multi-label classifier</b> (VoiceCLAP → MLP) names the burst via its <b>top-1</b> prediction. <b>If it isn't confident it's a real burst, the segment is discarded</b> — no false alarm.</p>
 <p>Green = the named burst matches a ground-truth burst in the clip. 40 speech-with-burst clips.</p></div>
 <div class="card"><div class="ch"><audio controls preload="none" src="audio/c0000.mp3"></audio>
       <span class="k">0 detected span(s)</span></div>
