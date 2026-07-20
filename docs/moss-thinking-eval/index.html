@@ -43,7 +43,7 @@ reasoning (Thinking on/off), and the upstream ASR (Parakeet-v3 vs Qwen3-ASR vs V
 <div class="wrap">
 <h2>Gemini-3.5-Flash scores (mean over judged clips)</h2>
 <table class="tbl"><thead><tr><th>Variant</th><th>General</th><th>How-to-say</th><th>Inline text</th><th>Vocal-burst acc.</th><th>Overall</th><th>gen/clip</th></tr></thead>
-<tbody><tr class="core"><td class="vname">4B · Thinking</td><td class="">8.09</td><td class="">7.98</td><td class="">8.26</td><td class="">9.07</td><td class="">7.57</td><td>8.1s</td></tr><tr class="core"><td class="vname">4B · No-Think</td><td class="">8.11</td><td class="">7.95</td><td class="">8.32</td><td class="">9.07</td><td class="">7.56</td><td>4.3s</td></tr><tr class="core"><td class="vname">8B · Thinking</td><td class="">8.63</td><td class="">8.45</td><td class="">8.3</td><td class="">9.15</td><td class="">7.84</td><td>20.6s</td></tr><tr class="core"><td class="vname">8B · No-Think</td><td class="">8.22</td><td class="">8.26</td><td class="">8.54</td><td class="">9.11</td><td class="">7.79</td><td>4.1s</td></tr><tr class="asr"><td class="vname">8B·Think + Qwen3-ASR</td><td class="">8.45</td><td class="">8.39</td><td class="">8.43</td><td class="">9.06</td><td class="">7.91</td><td>18.9s</td></tr><tr class="asr"><td class="vname">8B·Think + VibeVoice-HF</td><td class="best">8.64</td><td class="best">8.59</td><td class="best">9.03</td><td class="best">9.16</td><td class="best">8.23</td><td>18.6s</td></tr><tr class="asr"><td class="vname">8B·Think + VibeVoice-events</td><td class="">8.24</td><td class="">7.9</td><td class="">6.27</td><td class="">8.77</td><td class="">6.48</td><td>19.4s</td></tr></tbody></table>
+<tbody><tr class="core"><td class="vname">4B · Thinking</td><td class="">8.09</td><td class="">7.98</td><td class="">8.26</td><td class="">9.07</td><td class="">7.57</td><td>8.1s</td></tr><tr class="core"><td class="vname">4B · No-Think</td><td class="">8.11</td><td class="">7.95</td><td class="">8.32</td><td class="">9.07</td><td class="">7.56</td><td>4.3s</td></tr><tr class="core"><td class="vname">8B · Thinking</td><td class="">8.63</td><td class="">8.45</td><td class="">8.3</td><td class="">9.15</td><td class="">7.84</td><td>20.6s</td></tr><tr class="core"><td class="vname">8B · No-Think</td><td class="">8.22</td><td class="">8.26</td><td class="">8.54</td><td class="">9.11</td><td class="">7.79</td><td>4.1s</td></tr><tr class="burst"><td class="vname">8B·No-Think + BurstLocator</td><td class="">7.68</td><td class="">7.64</td><td class="">8.54</td><td class="">6.68</td><td class="">6.98</td><td>5.5s</td></tr><tr class="asr"><td class="vname">8B·Think + Qwen3-ASR</td><td class="">8.45</td><td class="">8.39</td><td class="">8.43</td><td class="">9.06</td><td class="">7.91</td><td>18.9s</td></tr><tr class="asr"><td class="vname">8B·Think + VibeVoice-HF</td><td class="best">8.64</td><td class="best">8.59</td><td class="best">9.03</td><td class="best">9.16</td><td class="best">8.23</td><td>18.6s</td></tr><tr class="asr"><td class="vname">8B·Think + VibeVoice-events</td><td class="">8.24</td><td class="">7.9</td><td class="">6.27</td><td class="">8.77</td><td class="">6.48</td><td>19.4s</td></tr></tbody></table>
 <p style="font-size:12px">Green = best in column. <code>gen/clip</code> = mean MOSS generation time (compute cost).</p>
 <h2>Conclusions &amp; recommendations</h2>
 <div class="concl">
@@ -58,6 +58,72 @@ reasoning (Thinking on/off), and the upstream ASR (Parakeet-v3 vs Qwen3-ASR vs V
     Because these demo clips have no ground-truth transcript, the fairest quality signal is Gemini's
     <b>inline-text</b> and <b>overall</b> scores on the resulting caption (Gemini hears the audio). <b>An alternative ASR beat Parakeet-v3.</b></p>
     <table class="tbl"><thead><tr><th>ASR into 8B·Think</th><th>General</th><th>How-to-say</th><th>Inline text</th><th>Vocal-burst acc.</th><th>Overall</th><th>gen</th></tr></thead><tbody><tr><td class="vname">8B·Think + Parakeet-v3 (baseline)</td><td>8.63</td><td>8.45</td><td>8.3</td><td>9.15</td><td>7.84</td><td>20.6s</td></tr><tr><td class="vname">8B·Think + Qwen3-ASR</td><td>8.45</td><td>8.39</td><td>8.43</td><td>9.06</td><td>7.91</td><td>18.9s</td></tr><tr><td class="vname">8B·Think + VibeVoice-HF</td><td>8.64</td><td>8.59</td><td>9.03</td><td>9.16</td><td>8.23</td><td>18.6s</td></tr><tr><td class="vname">8B·Think + VibeVoice-events</td><td>8.24</td><td>7.9</td><td>6.27</td><td>8.77</td><td>6.48</td><td>19.4s</td></tr></tbody></table>
+
+    <h2>Vocal-burst locator experiment — does injecting burst timestamps help?</h2>
+    <p>Idea (as requested): run <a href="https://huggingface.co/laion/vocalburst-locator">laion/vocalburst-locator</a>
+    at a looser threshold <b>0.7</b> (0.9 has many false negatives), pass the flagged time regions to
+    <b>MOSS-8B (no-think)</b> as hints, give it the <b>complete VocalBurst taxonomy</b>, and prompt it to
+    prioritise identifying/labelling bursts (inline + in GENERAL). Result on 95 judged clips:</p>
+    <ul>
+      <li>The model added an inline burst to <b>63</b> clips (baseline: 9).</li>
+      <li>Overall <b>6.98</b> vs baseline 7.79 (<b>-0.81</b>).</li>
+      <li>Vocal-burst accuracy <b>6.68</b> vs baseline 9.11 (<b>-2.43</b>).</li>
+    </ul>
+    <p><b>Finding: the aggressive locator-hint + burst-emphasis approach HURT quality.</b> Pushed to look for
+    bursts, MOSS <b>hallucinated</b> them (e.g. a "Guffaw"/"Chuckle" where the audio has none) or <b>mislabeled</b>
+    the locator's false-positive regions (a breath/gasp called a chuckle). The baseline scores high on burst
+    accuracy precisely by staying conservative (correctly adding none on burst-free clips). Recall went up but
+    precision collapsed. A gentler operating point (higher threshold, "only if clearly audible" prompt) would be
+    the next thing to try. Example clips the judge penalised for a hallucinated/mislabeled burst:</p>
+    <div class="card"><div class="chead"><span class="cid">EN_B00019_S00043_W000025</span>
+          <span class="lang">en</span>
+          <audio controls preload="none" src="../audio/EN_B00019_S00043_W000025.mp3"></audio>
+          <span class="scores" style="margin-left:auto">burst-acc <b>2</b>/10</span></div>
+          <div class="grid4" style="grid-template-columns:1fr 1fr">
+            <div class="col"><div class="vh">8B·No-Think (baseline)</div><div class="scr"><span class="cue">(slowly, somberly)</span> I called in sick the next day. <span class="pause">[pause 0.56s]</span><br><span class="cue">(slowly, somberly)</span> I checked my backyard and sure enough, the grave I dug was still there, <span class="pause">[pause 0.64s]</span> still fresh.<br><span class="cue">(slowly, somberly)</span> I dug him up, burned the body until it was ash.</div></div>
+            <div class="col"><div class="vh">+ BurstLocator (0.7, burst-emphasis)</div><div class="scr"><span class="cue">(gently, somberly)</span> I called in sick the next day. <span class="pause">[pause 0.56s]</span><br><span class="cue">(slowly, intimately)</span> I checked my backyard and sure enough, the grave I dug was still there, <span class="pause">[pause 0.64s]</span> still fresh. <span class="cue">(Chuckle)</span> <span class="pause">[pause 0.64s]</span><br><span class="cue">(slowly, deliberately)</span> I dug him up, burned the body until it was ash.</div>
+              <div class="jc">⚖ Gemini: The voice is a quiet whisper rather than &#x27;bassy&#x27; or &#x27;elderly&#x27;, and the &#x27;Chuckle&#x27; is actually a sharp breath/gasp.</div></div>
+          </div></div><div class="card"><div class="chead"><span class="cid">EN_B00024_S00436_W000018</span>
+          <span class="lang">en</span>
+          <audio controls preload="none" src="../audio/EN_B00024_S00436_W000018.mp3"></audio>
+          <span class="scores" style="margin-left:auto">burst-acc <b>2</b>/10</span></div>
+          <div class="grid4" style="grid-template-columns:1fr 1fr">
+            <div class="col"><div class="vh">8B·No-Think (baseline)</div><div class="scr"><span class="cue">(deeply, slowly)</span> you&#x27;ll see her eyes shine with a trembling light, as when the sun glitters on rippling water.</div></div>
+            <div class="col"><div class="vh">+ BurstLocator (0.7, burst-emphasis)</div><div class="scr"><span class="cue">(slowly, deeply)</span> you&#x27;ll see her eyes shine with a trembling light, as when the sun glitters on rippling water. <span class="cue">(Guffaw)</span></div>
+              <div class="jc">⚖ Gemini: The description and transcription are highly accurate, but the caption hallucinates a &#x27;Guffaw&#x27; at the end which is not present in the audio.</div></div>
+          </div></div><div class="card"><div class="chead"><span class="cid">EN_B00031_S04024_W000027</span>
+          <span class="lang">en</span>
+          <audio controls preload="none" src="../audio/EN_B00031_S04024_W000027.mp3"></audio>
+          <span class="scores" style="margin-left:auto">burst-acc <b>3</b>/10</span></div>
+          <div class="grid4" style="grid-template-columns:1fr 1fr">
+            <div class="col"><div class="vh">8B·No-Think (baseline)</div><div class="scr"><span class="cue">(whining, distressed)</span> Oh mamma, Tracy and Tin are gone.</div></div>
+            <div class="col"><div class="vh">+ BurstLocator (0.7, burst-emphasis)</div><div class="scr"><span class="cue">(strained, high-pitched)</span> Oh mamma, Tracy and Tin are gone. <span class="cue">(Guffaw)</span></div>
+              <div class="jc">⚖ Gemini: The transcription is incorrect (&#x27;Penny&#x27; instead of &#x27;Tin&#x27;) and the ending vocal burst is a sob/cry, not a guffaw.</div></div>
+          </div></div><div class="card"><div class="chead"><span class="cid">EN_B00031_S07769_W000004</span>
+          <span class="lang">en</span>
+          <audio controls preload="none" src="../audio/EN_B00031_S07769_W000004.mp3"></audio>
+          <span class="scores" style="margin-left:auto">burst-acc <b>4</b>/10</span></div>
+          <div class="grid4" style="grid-template-columns:1fr 1fr">
+            <div class="col"><div class="vh">8B·No-Think (baseline)</div><div class="scr"><span class="cue">(excitedly)</span> A sparkly treasure tree. <span class="pause">[pause 0.88s]</span> <span class="cue">(wonderingly)</span> Oh, it&#x27;s the sky. <span class="pause">[pause 0.96s]</span> <span class="cue">(wonderingly)</span> The sparkly night sky. So sparkly tonight.</div></div>
+            <div class="col"><div class="vh">+ BurstLocator (0.7, burst-emphasis)</div><div class="scr"><span class="cue">(gently, awestruck)</span> A sparkly treasure tree. <span class="pause">[pause 0.88s]</span> <span class="cue">(Oh, softly)</span> Oh, it&#x27;s the sky. <span class="pause">[pause 0.96s]</span> <span class="cue">(wondering)</span> The sparkly night sky. So sparkly tonight. <span class="cue">(Chuckle)</span></div>
+              <div class="jc">⚖ Gemini: The caption is mostly accurate but hallucinates a chuckle at the end and misses the opening yawn/sigh.</div></div>
+          </div></div><div class="card"><div class="chead"><span class="cid">EN_B00032_S05969_W000006</span>
+          <span class="lang">en</span>
+          <audio controls preload="none" src="../audio/EN_B00032_S05969_W000006.mp3"></audio>
+          <span class="scores" style="margin-left:auto">burst-acc <b>2</b>/10</span></div>
+          <div class="grid4" style="grid-template-columns:1fr 1fr">
+            <div class="col"><div class="vh">8B·No-Think (baseline)</div><div class="scr"><span class="cue">(rapidly, coldly)</span> I am Sun Wukong, the monkey king. <span class="pause">[pause 0.32s]</span> <span class="cue">(dignified, superior)</span> Your father and I are old friends.</div></div>
+            <div class="col"><div class="vh">+ BurstLocator (0.7, burst-emphasis)</div><div class="scr"><span class="cue">(crisply, rapidly)</span> I am Sun Wukong, the monkey king. <span class="pause">[pause 0.32s]</span> <span class="cue">(coldly, formally)</span> Your father and I are old friends, <span class="cue">(Guffaw)</span> said.</div>
+              <div class="jc">⚖ Gemini: The caption completely mischaracterizes the voice as low and cold, and hallucinates a guffaw and the word &#x27;said&#x27; at the end.</div></div>
+          </div></div><div class="card"><div class="chead"><span class="cid">EN_B00055_S00716_W000007</span>
+          <span class="lang">en</span>
+          <audio controls preload="none" src="../audio/EN_B00055_S00716_W000007.mp3"></audio>
+          <span class="scores" style="margin-left:auto">burst-acc <b>3</b>/10</span></div>
+          <div class="grid4" style="grid-template-columns:1fr 1fr">
+            <div class="col"><div class="vh">8B·No-Think (baseline)</div><div class="scr"><span class="cue">(narrator, flat)</span> Roxy hurried into Mara&#x27;s house. <span class="pause">[pause 0.40s]</span> <span class="cue">(narrator, flat)</span> She flipped open her watch. <span class="cue">(narrator, flat)</span> Mayor Bloom&#x27;s face appeared. <span class="cue">(narrator, flat)</span> He looked very worried.</div></div>
+            <div class="col"><div class="vh">+ BurstLocator (0.7, burst-emphasis)</div><div class="scr"><span class="cue">(flat, monotone)</span> Roxy hurried into Mara&#x27;s house. <span class="pause">[pause 0.40s]</span> <span class="cue">(flat, monotone)</span> She flipped open her watch. <span class="cue">(Chuckle)</span> <span class="cue">(flat, monotone)</span> Mayor Bloom&#x27;s face appeared. <span class="cue">(flat, monotone)</span> He looked very worried.</div>
+              <div class="jc">⚖ Gemini: The caption hallucinated a chuckle that is not present in the audio, but the rest of the description and transcription is highly accurate.</div></div>
+          </div></div>
 <h2>Examples — all four core variants per clip</h2>
 <p>Each card: one clip's audio + the 4B/8B × Thinking/No-Think captions, with that clip's Gemini
 scores (O=overall) and the judge's one-line comment.</p>
