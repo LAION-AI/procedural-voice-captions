@@ -357,6 +357,19 @@ classifier `.pt`) are all overridable via env vars documented at the top of
 
 ---
 
+
+### Evaluation & recommended default
+
+A Gemini-3.5-Flash study (see the [config study](https://github.com/LAION-AI/Comprehensive-Voice-Acting-Annotation-Pipeline/blob/main/CAPTION_CONFIG_EVAL.md)) over caption configurations found:
+
+- **Sentence-level burst insertion (Variant B) is the recommended default** — it beats locator-inline (Variant A), 8.50 vs 7.63, because it keeps the transcript clean (better ASR readability + burst score).
+- The **detector→confirm** stage (`vocalburst-locator@0.7` → confirm with the multi-label classifier, `P(no_burst)≥0.5` → discard, else top-1) is the base for both variants and gates hallucinations.
+- Burst classifiers are the **multilingual-retrained v2** ([single](https://huggingface.co/laion/vocalburst-classifier-single) mAP 0.70/0.87, [multi-label](https://huggingface.co/laion/vocalburst-classifier-multilabel)) — the multi-label model has fewer false positives at the confirm stage.
+- Full annotation runs **~1.1 s/clip** (1×A100).
+
+Live examples on real character voices (procedural vs LLM-assisted, both with bursts):
+**https://projects.laion.ai/procedural-voice-captions/character-captions/**
+
 ## Files
 
 ```
