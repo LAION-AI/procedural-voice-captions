@@ -16,6 +16,14 @@ voice*.
 > VocalBurst) into the final voice-acting format — a **GENERAL** "how it sounds"
 > instruction plus a **SCRIPT** with a per-sentence `(delivery cue)`, inline vocal
 > `(bursts)` the model actually hears, and `[pause X.Xs]` markers from the timestamps.
+>
+> **💥 [Vocal bursts inserted into captions →](https://projects.laion.ai/procedural-voice-captions/burst-captions/)**
+> Detected **vocal bursts** (laughs, gasps, sighs, screams, sobs, grunts…) written
+> straight into the captions on real LAION character voices + in-the-wild clips.
+> Two selectable insertion variants shown side by side — **A: locator** (precise
+> inline `(burst)` at the detected time) vs **B: sentence-level** (one burst woven
+> into a sentence's caption). See [Vocal bursts in captions](#vocal-bursts-in-captions)
+> below. Code: [`burst_captions.py`](burst_captions.py).
 
 This repo ships:
 
@@ -286,13 +294,79 @@ here:
 
 ---
 
+## Vocal bursts in captions
+
+`caption.py` describes the *voice*; it does not place the non-verbal **vocal
+bursts** (laughs, gasps, sighs, screams, sobs, grunts, slaps…) that a clip
+actually contains. [`burst_captions.py`](burst_captions.py) adds that: it runs
+the full scoring stack on raw audio, **detects and names the bursts**, and writes
+them into the captions. **[Live demo →](https://projects.laion.ai/procedural-voice-captions/burst-captions/)**
+
+**Pipeline (all env-driven, everything is a model prediction):**
+
+1. **Score the audio** — VoiceCLAP-commercial embedding → the 57 VoiceNet dim
+   heads + genuineness + vocal-burst-blend; EmoNet-40
+   (`laion/BUD-E-Whisper` → `laion/Empathic-Insight-Voice-Plus`; set
+   `BC_EMONET=0` to skip and fall back to VoiceNet + genuineness only);
+   **Parakeet-TDT** for word + sentence timestamps.
+2. **Detect bursts** — the `laion/vocalburst-locator` (a 50 fps per-frame
+   burst-probability model) is scanned over the clip; a VoiceCLAP→MLP multi-label
+   classifier (83 outputs = 82 taxonomy classes + `no_burst`, sigmoid, **top-1**)
+   names each candidate. The `no_burst` gate (`P(no_burst) ≥ 0.5` ⇒ nothing) kills
+   false alarms.
+
+**Caption composition (as on the demo page):**
+
+- **Global caption** = Top-5 VoiceNet dims + Top-3 EmoNet emotions + genuineness +
+  Age + Gender + Tempo. Bursts are **not** placed at global level.
+- **Per-sentence caption** = Top-3 VoiceNet dims + Top-3 emotions (no
+  Age/Gender/Tempo — those are global only).
+
+**Two burst-insertion variants (selectable, never both at once):**
+
+- **Variant A — locator (precise position).** Locator over the whole clip at
+  threshold **0.7**; each detected span → classifier → if `P(no_burst) < 0.5` the
+  **top-1** class is inserted as its own `(Class Name)` **inline at the burst's
+  time**, between the two ASR words nearest that moment. Reads like a script:
+  *“(Surprised Gasp) No, no, (Surprised Gasp) oh, it hurts.”*
+- **Variant B — sentence-level.** Classifier on each whole sentence segment; if
+  `P(no_burst) ≥ 0.5` attach nothing, else the top-1 class is woven into that
+  sentence's caption via a small procedural phrase (*“… punctuated by a (Gasp).”*).
+
+**Recommendation — prefer Variant A (locator), keep B as a fallback.** Variant A
+anchors each burst to *when it happens*, which is exactly the per-event,
+time-aligned signal the voice-acting SCRIPT format wants, and its per-span
+`P(no_burst) < 0.5` gate suppresses false positives event-by-event. Variant B is
+coarser: it can only say a sentence *contains* a burst, collapses multiple bursts
+per sentence into one label, and running the classifier over a whole sentence
+dilutes a short burst among seconds of speech (lower recall on brief events). Use
+Variant B when word-level timestamps are unavailable (non-speech screams, failed
+ASR) or when a compact one-label-per-sentence summary is enough — there Variant A
+has nowhere to anchor and B still adds value.
+
+```bash
+# score arbitrary audio -> per-clip JSON with both variants
+export HF_HOME=/tmp/hf_cache HF_TOKEN=...            # for the gated LAION models
+python burst_captions.py 'my_clips/*.wav' --out out.json --mp3-dir mp3/
+python build_burst_demo.py                          # rebuild the demo page
+```
+
+The model locations (VoiceNet head repo, genu/blend heads, burst-locator,
+classifier `.pt`) are all overridable via env vars documented at the top of
+`burst_captions.py`; the burst taxonomy is bundled (`vocalburst_taxonomy.json`).
+
+---
+
 ## Files
 
 ```
-baseline_stats.json     # the baselines (99 dimensions + _meta)
-caption.py              # caption() / caption_detail() + CLI  (stdlib only)
-compute_baseline.py     # rebuild baseline_stats.json (staged)
-examples/               # real complete predictions (dims + emo + genu + blend)
+baseline_stats.json      # the baselines (99 dimensions + _meta)
+caption.py               # caption() / caption_detail() + CLI  (stdlib only)
+compute_baseline.py      # rebuild baseline_stats.json (staged)
+burst_captions.py        # scoring -> timestamps -> detect -> classify -> insert bursts
+build_burst_demo.py      # renders docs/burst-captions/ from real audio
+vocalburst_taxonomy.json # 82 vocal-burst classes (class order for the classifier)
+examples/                # real complete predictions (dims + emo + genu + blend)
 requirements.txt
 ```
 

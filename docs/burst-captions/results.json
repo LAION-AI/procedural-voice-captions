@@ -1,0 +1,1606 @@
+{
+ "n": 24,
+ "results": [
+  {
+   "id": "pain_scream5",
+   "dur": 9.04,
+   "transcript": "No, no, oh, it hurts. Ah, Hang, get it off me.",
+   "genu": 1.93,
+   "blend": 3.27,
+   "global_caption": "A voice that is extremely raw and vulnerable; extremely unpleasant and harsh; extremely effortful and strained; extremely jerky and uneven in rhythm; extremely choppy and fragmented; childlike; androgynous, gender-ambiguous in pitch; low and bassy in register; somewhat slow and deliberate in tempo; extremely carrying physical pain; extremely carrying submission; extremely carrying alleviation; genuine in delivery.",
+   "sentences": [
+    {
+     "text": "No, no, oh, it hurts.",
+     "start": 2.24,
+     "end": 5.6,
+     "caption": "Delivered extremely raw and vulnerable; extremely unpleasant and harsh; extremely audibly breathing and gasping; extremely carrying agony; extremely carrying powerlessness; extremely carrying worry.",
+     "variant_b_burst": "Surprised Gasp",
+     "variant_b_prob": 0.942,
+     "variant_b_caption": "Delivered extremely raw and vulnerable; extremely unpleasant and harsh; extremely audibly breathing and gasping; extremely carrying agony; extremely carrying powerlessness; extremely carrying worry, carrying a (Surprised Gasp)."
+    },
+    {
+     "text": "Ah, Hang, get it off me.",
+     "start": 5.92,
+     "end": 8.8,
+     "caption": "Delivered extremely audibly breathing and gasping; extremely raw and vulnerable; extremely unpleasant and harsh; extremely carrying alleviation; extremely carrying exhaustion; notably free of attention.",
+     "variant_b_burst": "Surprised Gasp",
+     "variant_b_prob": 0.984,
+     "variant_b_caption": "Delivered extremely audibly breathing and gasping; extremely raw and vulnerable; extremely unpleasant and harsh; extremely carrying alleviation; extremely carrying exhaustion; notably free of attention, marked by a (Surprised Gasp)."
+    }
+   ],
+   "variant_a_bursts": [
+    {
+     "start": 0.06,
+     "end": 3.58,
+     "peak": 1.0,
+     "label": "Surprised Gasp",
+     "prob": 0.988,
+     "p_noburst": 0.003,
+     "kept": true
+    },
+    {
+     "start": 3.6,
+     "end": 4.3,
+     "peak": 0.994,
+     "label": "Surprised Gasp",
+     "prob": 0.985,
+     "p_noburst": 0.042,
+     "kept": true
+    },
+    {
+     "start": 4.4,
+     "end": 4.82,
+     "peak": 0.954,
+     "label": null,
+     "prob": 0.623,
+     "p_noburst": 0.623,
+     "kept": false
+    },
+    {
+     "start": 4.84,
+     "end": 4.98,
+     "peak": 0.897,
+     "label": null,
+     "prob": 0.801,
+     "p_noburst": 0.801,
+     "kept": false
+    },
+    {
+     "start": 5.06,
+     "end": 5.42,
+     "peak": 0.941,
+     "label": null,
+     "prob": 0.881,
+     "p_noburst": 0.881,
+     "kept": false
+    },
+    {
+     "start": 5.54,
+     "end": 6.14,
+     "peak": 0.932,
+     "label": "Surprised Gasp",
+     "prob": 0.9,
+     "p_noburst": 0.018,
+     "kept": true
+    },
+    {
+     "start": 6.38,
+     "end": 6.68,
+     "peak": 0.799,
+     "label": "Slap Face",
+     "prob": 0.993,
+     "p_noburst": 0.213,
+     "kept": true
+    },
+    {
+     "start": 6.9,
+     "end": 7.02,
+     "peak": 0.825,
+     "label": null,
+     "prob": 0.969,
+     "p_noburst": 0.969,
+     "kept": false
+    },
+    {
+     "start": 7.52,
+     "end": 7.76,
+     "peak": 0.838,
+     "label": "Slap Face",
+     "prob": 0.991,
+     "p_noburst": 0.236,
+     "kept": true
+    },
+    {
+     "start": 7.84,
+     "end": 8.0,
+     "peak": 0.872,
+     "label": null,
+     "prob": 0.739,
+     "p_noburst": 0.739,
+     "kept": false
+    }
+   ],
+   "variant_a_inline": "(Surprised Gasp) No, no, (Surprised Gasp) oh, it hurts. (Surprised Gasp) Ah, (Slap Face) Hang, (Slap Face) get it off me.",
+   "n_spans": 10,
+   "n_words_ts": 11,
+   "emonet": true
+  },
+  {
+   "id": "pain_scream4",
+   "dur": 3.84,
+   "transcript": "No, no, Erk, somebody help me",
+   "genu": 2.0,
+   "blend": 8.25,
+   "global_caption": "A voice that is extremely one-dimensional in resonance; extremely unpleasant and harsh; extremely dialogic and outward; extremely thin in chest resonance; childlike; feminine and high-pitched; high in register; moderate in tempo; extremely carrying helplessness; extremely carrying terror; extremely carrying anxiety; genuine in delivery; interwoven with vocal bursts (laughs, gasps, sighs).",
+   "sentences": [
+    {
+     "text": "No, no, Erk, somebody help me",
+     "start": 0.72,
+     "end": 3.6,
+     "caption": "Delivered high in register; extremely one-dimensional in resonance; extremely dialogic and outward; extremely carrying desperation; extremely carrying anxiety; extremely carrying dread.",
+     "variant_b_burst": "Trembling Whimper",
+     "variant_b_prob": 0.744,
+     "variant_b_caption": "Delivered high in register; extremely one-dimensional in resonance; extremely dialogic and outward; extremely carrying desperation; extremely carrying anxiety; extremely carrying dread, carrying a (Trembling Whimper)."
+    }
+   ],
+   "variant_a_bursts": [],
+   "variant_a_inline": "No, no, Erk, somebody help me",
+   "n_spans": 0,
+   "n_words_ts": 6,
+   "emonet": true
+  },
+  {
+   "id": "zombie5",
+   "dur": 12.4,
+   "transcript": "So hungry. Hmm. Help me. I can't stop.",
+   "genu": 2.22,
+   "blend": 3.6,
+   "global_caption": "A voice that is extremely raw and vulnerable; extremely unpleasant and harsh; extremely meek and submissive; extremely flat and monotone; extremely dissociated and inward; adult; clearly feminine and high-pitched; low-to-mid in register; very slow and deliberate in tempo; extremely carrying burnout; notably free of engrossment; extremely carrying sexual lust; genuine in delivery; interwoven with vocal bursts (laughs, gasps, sighs).",
+   "sentences": [
+    {
+     "text": "So hungry.",
+     "start": 0.64,
+     "end": 2.72,
+     "caption": "Delivered extremely collapsing in energy; extremely blurry and mumbled; extremely meek and submissive; extremely carrying burnout; extremely carrying suffering; extremely carrying desperation.",
+     "variant_b_burst": "Contented Sigh",
+     "variant_b_prob": 0.922,
+     "variant_b_caption": "Delivered extremely collapsing in energy; extremely blurry and mumbled; extremely meek and submissive; extremely carrying burnout; extremely carrying suffering; extremely carrying desperation, interrupted by a (Contented Sigh)."
+    },
+    {
+     "text": "Hmm.",
+     "start": 3.2,
+     "end": 3.84,
+     "caption": "Delivered extremely blurry and mumbled; extremely flat and unemphasized; extremely collapsing in energy; extremely carrying fatigue; extremely carrying alleviation; notably free of concentration.",
+     "variant_b_burst": "Wistful Sigh",
+     "variant_b_prob": 0.899,
+     "variant_b_caption": "Delivered extremely blurry and mumbled; extremely flat and unemphasized; extremely collapsing in energy; extremely carrying fatigue; extremely carrying alleviation; notably free of concentration, with an audible (Wistful Sigh)."
+    },
+    {
+     "text": "Help me.",
+     "start": 5.12,
+     "end": 6.24,
+     "caption": "Delivered extremely flat and unemphasized; extremely blurry and mumbled; extremely collapsing in energy; extremely carrying submission; extremely carrying sorrow; extremely carrying ache.",
+     "variant_b_burst": "Surprised Gasp",
+     "variant_b_prob": 0.804,
+     "variant_b_caption": "Delivered extremely flat and unemphasized; extremely blurry and mumbled; extremely collapsing in energy; extremely carrying submission; extremely carrying sorrow; extremely carrying ache, marked by a (Surprised Gasp)."
+    },
+    {
+     "text": "I can't stop.",
+     "start": 6.56,
+     "end": 9.36,
+     "caption": "Delivered extremely flat and unemphasized; extremely collapsing in energy; extremely flat and monotone; extremely carrying exhaustion; extremely carrying submission; extremely carrying melancholy.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.988,
+     "variant_b_caption": "Delivered extremely flat and unemphasized; extremely collapsing in energy; extremely flat and monotone; extremely carrying exhaustion; extremely carrying submission; extremely carrying melancholy."
+    }
+   ],
+   "variant_a_bursts": [
+    {
+     "start": 3.32,
+     "end": 3.4,
+     "peak": 0.739,
+     "label": null,
+     "prob": 0.0,
+     "p_noburst": 1.0,
+     "kept": false
+    },
+    {
+     "start": 3.5,
+     "end": 4.76,
+     "peak": 0.989,
+     "label": "Relief Sigh",
+     "prob": 0.76,
+     "p_noburst": 0.051,
+     "kept": true
+    },
+    {
+     "start": 4.98,
+     "end": 5.28,
+     "peak": 0.856,
+     "label": "Lip Smack",
+     "prob": 0.875,
+     "p_noburst": 0.333,
+     "kept": true
+    },
+    {
+     "start": 5.32,
+     "end": 5.66,
+     "peak": 0.954,
+     "label": null,
+     "prob": 0.969,
+     "p_noburst": 0.969,
+     "kept": false
+    },
+    {
+     "start": 5.96,
+     "end": 6.68,
+     "peak": 0.909,
+     "label": "Relief Sigh",
+     "prob": 0.787,
+     "p_noburst": 0.129,
+     "kept": true
+    },
+    {
+     "start": 6.9,
+     "end": 7.1,
+     "peak": 0.9,
+     "label": null,
+     "prob": 0.719,
+     "p_noburst": 0.719,
+     "kept": false
+    },
+    {
+     "start": 8.46,
+     "end": 8.58,
+     "peak": 0.915,
+     "label": "Slap Face",
+     "prob": 0.893,
+     "p_noburst": 0.363,
+     "kept": true
+    },
+    {
+     "start": 8.6,
+     "end": 8.74,
+     "peak": 0.737,
+     "label": "Lip Smack",
+     "prob": 0.864,
+     "p_noburst": 0.289,
+     "kept": true
+    },
+    {
+     "start": 9.2,
+     "end": 9.32,
+     "peak": 0.767,
+     "label": null,
+     "prob": 0.597,
+     "p_noburst": 0.597,
+     "kept": false
+    },
+    {
+     "start": 9.48,
+     "end": 9.6,
+     "peak": 0.75,
+     "label": null,
+     "prob": 0.577,
+     "p_noburst": 0.577,
+     "kept": false
+    },
+    {
+     "start": 10.22,
+     "end": 12.4,
+     "peak": 1.0,
+     "label": "Chuckle",
+     "prob": 0.891,
+     "p_noburst": 0.001,
+     "kept": true
+    }
+   ],
+   "variant_a_inline": "So hungry. Hmm. (Relief Sigh) Help (Lip Smack) me. (Relief Sigh) I can't (Slap Face) (Lip Smack) stop. (Chuckle)",
+   "n_spans": 11,
+   "n_words_ts": 8,
+   "emonet": true
+  },
+  {
+   "id": "ork5",
+   "dur": 6.0,
+   "transcript": "You should not have come here, little one. This is where your journey ends.",
+   "genu": 0.55,
+   "blend": 2.22,
+   "global_caption": "A voice that is extremely full and cinematic; extremely pristine in recording quality; very smooth and clean; very one-dimensional in resonance; very warm and enveloping; adult; strongly masculine, deep and low-pitched; low and bassy in register; somewhat slow and deliberate in tempo; notably free of attention; notably carrying pride; notably carrying desire to harm; only slightly genuine, somewhat performed.",
+   "sentences": [
+    {
+     "text": "You should not have come here, little one.",
+     "start": 0.48,
+     "end": 2.72,
+     "caption": "Delivered extremely seamless and inaudible in breathing; extremely smooth and clean; extremely pristine in recording quality; notably free of deep focus; notably carrying ribbing; notably carrying reverence.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.95,
+     "variant_b_caption": "Delivered extremely seamless and inaudible in breathing; extremely smooth and clean; extremely pristine in recording quality; notably free of deep focus; notably carrying ribbing; notably carrying reverence."
+    },
+    {
+     "text": "This is where your journey ends.",
+     "start": 3.2,
+     "end": 5.68,
+     "caption": "Delivered extremely seamless and inaudible in breathing; extremely pristine in recording quality; very crisply articulated.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.888,
+     "variant_b_caption": "Delivered extremely seamless and inaudible in breathing; extremely pristine in recording quality; very crisply articulated."
+    }
+   ],
+   "variant_a_bursts": [],
+   "variant_a_inline": "You should not have come here, little one. This is where your journey ends.",
+   "n_spans": 0,
+   "n_words_ts": 14,
+   "emonet": true
+  },
+  {
+   "id": "ranting5",
+   "dur": 11.92,
+   "transcript": "Enough. I am sick to death of this. You pathetic, spineless fool. How dare you how dare you waste my time again and again?",
+   "genu": 1.5,
+   "blend": 9.54,
+   "global_caption": "A voice that is extremely raw and vulnerable; extremely noisy and aperiodic; extremely denasal and clear; extremely distressed and negative; extremely darkening in mood; adult; strongly masculine, deep and low-pitched; low and bassy in register; moderate in tempo; notably carrying jealousy; notably carrying infatuation; notably carrying ache; only slightly genuine, somewhat performed; interwoven with vocal bursts (laughs, gasps, sighs).",
+   "sentences": [
+    {
+     "text": "Enough.",
+     "start": 2.0,
+     "end": 2.64,
+     "caption": "Delivered extremely jerky and uneven in rhythm; extremely flat and unemphasized; extremely collapsing in energy; notably free of absorption; extremely carrying butterflies in the stomach; notably free of intrigue.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.672,
+     "variant_b_caption": "Delivered extremely jerky and uneven in rhythm; extremely flat and unemphasized; extremely collapsing in energy; notably free of absorption; extremely carrying butterflies in the stomach; notably free of intrigue."
+    },
+    {
+     "text": "I am sick to death of this.",
+     "start": 3.76,
+     "end": 5.68,
+     "caption": "Delivered extremely audibly breathing and gasping; extremely rough and raspy; extremely denasal and clear; extremely carrying adoration; extremely carrying ache; extremely carrying submission.",
+     "variant_b_burst": "Snort",
+     "variant_b_prob": 0.872,
+     "variant_b_caption": "Delivered extremely audibly breathing and gasping; extremely rough and raspy; extremely denasal and clear; extremely carrying adoration; extremely carrying ache; extremely carrying submission, broken by a (Snort)."
+    },
+    {
+     "text": "You pathetic, spineless fool.",
+     "start": 5.92,
+     "end": 8.24,
+     "caption": "Delivered extremely denasal and clear; extremely rough and raspy; extremely distressed and negative; extremely carrying repulsion; extremely carrying scorn; extremely carrying schadenfreude.",
+     "variant_b_burst": "Spitting",
+     "variant_b_prob": 0.895,
+     "variant_b_caption": "Delivered extremely denasal and clear; extremely rough and raspy; extremely distressed and negative; extremely carrying repulsion; extremely carrying scorn; extremely carrying schadenfreude, carrying a (Spitting)."
+    },
+    {
+     "text": "How dare you how dare you waste my time again and again?",
+     "start": 8.4,
+     "end": 11.68,
+     "caption": "Delivered extremely denasal and clear; extremely rough and raspy; extremely intensely focused; notably carrying butterflies in the stomach; notably carrying fury; notably carrying feeling horny.",
+     "variant_b_burst": "Exasperated Sigh",
+     "variant_b_prob": 0.863,
+     "variant_b_caption": "Delivered extremely denasal and clear; extremely rough and raspy; extremely intensely focused; notably carrying butterflies in the stomach; notably carrying fury; notably carrying feeling horny, punctuated by a (Exasperated Sigh)."
+    }
+   ],
+   "variant_a_bursts": [
+    {
+     "start": 0.16,
+     "end": 4.1,
+     "peak": 1.0,
+     "label": "Breathy Giggle",
+     "prob": 0.97,
+     "p_noburst": 0.001,
+     "kept": true
+    },
+    {
+     "start": 4.2,
+     "end": 4.34,
+     "peak": 0.812,
+     "label": null,
+     "prob": 0.79,
+     "p_noburst": 0.79,
+     "kept": false
+    },
+    {
+     "start": 6.24,
+     "end": 6.36,
+     "peak": 0.843,
+     "label": "Slap Face",
+     "prob": 0.932,
+     "p_noburst": 0.4,
+     "kept": true
+    }
+   ],
+   "variant_a_inline": "Enough. (Breathy Giggle) I am sick to death of this. You pathetic, (Slap Face) spineless fool. How dare you how dare you waste my time again and again?",
+   "n_spans": 3,
+   "n_words_ts": 24,
+   "emonet": true
+  },
+  {
+   "id": "ranting4",
+   "dur": 7.84,
+   "transcript": "I am absolutely sick of this! How dare you waste my time again and again!",
+   "genu": 0.88,
+   "blend": 2.59,
+   "global_caption": "A voice that is extremely strongly emphasized; extremely wide in dynamic swell; extremely collapsing in energy; extremely tight and tense; very dramatic and theatrical; young and youthful; masculine and deep-pitched; low-to-mid in register; somewhat fast and rapid in tempo; notably carrying wrath; notably carrying restlessness; notably carrying letdown; only slightly genuine, somewhat performed.",
+   "sentences": [
+    {
+     "text": "I am absolutely sick of this!",
+     "start": 0.32,
+     "end": 2.96,
+     "caption": "Delivered extremely accelerating in pace; extremely tight and tense; extremely bright in oral resonance; notably carrying abhorrence; notably free of deep focus; notably carrying pleasure.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.937,
+     "variant_b_caption": "Delivered extremely accelerating in pace; extremely tight and tense; extremely bright in oral resonance; notably carrying abhorrence; notably free of deep focus; notably carrying pleasure."
+    },
+    {
+     "text": "How dare you waste my time again and again!",
+     "start": 3.44,
+     "end": 7.2,
+     "caption": "Delivered extremely wide in dynamic swell; extremely tight and tense; extremely accelerating in pace; notably carrying enragement; notably carrying exasperation; notably carrying disappointment.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.915,
+     "variant_b_caption": "Delivered extremely wide in dynamic swell; extremely tight and tense; extremely accelerating in pace; notably carrying enragement; notably carrying exasperation; notably carrying disappointment."
+    }
+   ],
+   "variant_a_bursts": [
+    {
+     "start": 6.46,
+     "end": 6.54,
+     "peak": 0.759,
+     "label": null,
+     "prob": 0.0,
+     "p_noburst": 1.0,
+     "kept": false
+    },
+    {
+     "start": 6.68,
+     "end": 6.92,
+     "peak": 0.801,
+     "label": "Hiccups",
+     "prob": 0.829,
+     "p_noburst": 0.351,
+     "kept": true
+    },
+    {
+     "start": 7.54,
+     "end": 7.6,
+     "peak": 0.808,
+     "label": null,
+     "prob": 0.0,
+     "p_noburst": 1.0,
+     "kept": false
+    },
+    {
+     "start": 7.62,
+     "end": 7.68,
+     "peak": 0.743,
+     "label": null,
+     "prob": 0.0,
+     "p_noburst": 1.0,
+     "kept": false
+    }
+   ],
+   "variant_a_inline": "I am absolutely sick of this! How dare you waste my time again and again! (Hiccups)",
+   "n_spans": 4,
+   "n_words_ts": 15,
+   "emonet": true
+  },
+  {
+   "id": "evil_ghost5",
+   "dur": 7.12,
+   "transcript": "You should not have come here. This house feeds on the living.",
+   "genu": 1.3,
+   "blend": 6.7,
+   "global_caption": "A voice that is extremely rough and raspy; extremely full and cinematic; elderly-sounding; extremely warm and enveloping; extremely distressed and negative; strongly masculine, deep and low-pitched; low and bassy in register; somewhat slow and deliberate in tempo; notably carrying malevolence; notably carrying nervousness; notably carrying disgust; only slightly genuine, somewhat performed; interwoven with vocal bursts (laughs, gasps, sighs).",
+   "sentences": [
+    {
+     "text": "You should not have come here.",
+     "start": 1.2,
+     "end": 3.36,
+     "caption": "Delivered extremely full and cinematic; extremely rough and raspy; extremely intensely focused; notably free of attention; notably carrying schadenfreude; notably carrying rage.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.945,
+     "variant_b_caption": "Delivered extremely full and cinematic; extremely rough and raspy; extremely intensely focused; notably free of attention; notably carrying schadenfreude; notably carrying rage."
+    },
+    {
+     "text": "This house feeds on the living.",
+     "start": 3.92,
+     "end": 6.8,
+     "caption": "Delivered extremely full and cinematic; extremely rough and raspy; very thin in head resonance; notably carrying feeling turned on; notably carrying longing; notably carrying dejection.",
+     "variant_b_burst": "Heavy Breathing",
+     "variant_b_prob": 0.912,
+     "variant_b_caption": "Delivered extremely full and cinematic; extremely rough and raspy; very thin in head resonance; notably carrying feeling turned on; notably carrying longing; notably carrying dejection, broken by a (Heavy Breathing)."
+    }
+   ],
+   "variant_a_bursts": [
+    {
+     "start": 0.16,
+     "end": 1.14,
+     "peak": 0.988,
+     "label": "Exasperated Sigh",
+     "prob": 0.802,
+     "p_noburst": 0.069,
+     "kept": true
+    }
+   ],
+   "variant_a_inline": "(Exasperated Sigh) You should not have come here. This house feeds on the living.",
+   "n_spans": 1,
+   "n_words_ts": 12,
+   "emonet": true
+  },
+  {
+   "id": "goblin5",
+   "dur": 8.32,
+   "transcript": "Huh. What have we here? A lost little traveller with shiny pockets?",
+   "genu": 1.74,
+   "blend": 6.55,
+   "global_caption": "A voice that is extremely warm and enveloping; extremely decelerating in pace; extremely flat and monotone; extremely soft and gentle in onset; extremely meek and submissive; middle-aged to mature; strongly masculine, deep and low-pitched; low and bassy in register; very slow and deliberate in tempo; extremely carrying longing; notably free of concentration; extremely carrying helplessness; genuine in delivery; interwoven with vocal bursts (laughs, gasps, sighs).",
+   "sentences": [
+    {
+     "text": "Huh.",
+     "start": 0.32,
+     "end": 0.96,
+     "caption": "Delivered extremely flat and unemphasized; extremely collapsing in energy; extremely noisy in the background; notably free of engrossment; extremely carrying weariness; notably free of curiosity.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.558,
+     "variant_b_caption": "Delivered extremely flat and unemphasized; extremely collapsing in energy; extremely noisy in the background; notably free of engrossment; extremely carrying weariness; notably free of curiosity."
+    },
+    {
+     "text": "What have we here?",
+     "start": 1.36,
+     "end": 2.8,
+     "caption": "Delivered extremely flat and unemphasized; extremely flat and monotone; extremely blurry and mumbled; extremely carrying powerlessness; extremely carrying melancholy; notably free of concentration.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.586,
+     "variant_b_caption": "Delivered extremely flat and unemphasized; extremely flat and monotone; extremely blurry and mumbled; extremely carrying powerlessness; extremely carrying melancholy; notably free of concentration."
+    },
+    {
+     "text": "A lost little traveller with shiny pockets?",
+     "start": 3.28,
+     "end": 7.84,
+     "caption": "Delivered extremely warm and enveloping; extremely soft and gentle in onset; extremely collapsing in energy; notably carrying fondness; notably carrying feeling horny; notably carrying altered perception.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.804,
+     "variant_b_caption": "Delivered extremely warm and enveloping; extremely soft and gentle in onset; extremely collapsing in energy; notably carrying fondness; notably carrying feeling horny; notably carrying altered perception."
+    }
+   ],
+   "variant_a_bursts": [
+    {
+     "start": 0.16,
+     "end": 0.48,
+     "peak": 0.916,
+     "label": "Clears Throat",
+     "prob": 0.901,
+     "p_noburst": 0.26,
+     "kept": true
+    },
+    {
+     "start": 0.6,
+     "end": 1.58,
+     "peak": 0.992,
+     "label": "Deep Breath",
+     "prob": 0.867,
+     "p_noburst": 0.08,
+     "kept": true
+    },
+    {
+     "start": 2.0,
+     "end": 2.14,
+     "peak": 0.853,
+     "label": "Purr",
+     "prob": 0.894,
+     "p_noburst": 0.389,
+     "kept": true
+    },
+    {
+     "start": 2.98,
+     "end": 3.08,
+     "peak": 0.8,
+     "label": "Slap Face",
+     "prob": 0.894,
+     "p_noburst": 0.434,
+     "kept": true
+    },
+    {
+     "start": 4.12,
+     "end": 4.26,
+     "peak": 0.838,
+     "label": null,
+     "prob": 0.871,
+     "p_noburst": 0.871,
+     "kept": false
+    },
+    {
+     "start": 4.7,
+     "end": 4.8,
+     "peak": 0.811,
+     "label": null,
+     "prob": 0.722,
+     "p_noburst": 0.722,
+     "kept": false
+    },
+    {
+     "start": 5.78,
+     "end": 5.88,
+     "peak": 0.813,
+     "label": "Lip Smack",
+     "prob": 0.841,
+     "p_noburst": 0.374,
+     "kept": true
+    }
+   ],
+   "variant_a_inline": "(Clears Throat) Huh. (Deep Breath) What have (Purr) we here? (Slap Face) A lost little traveller with (Lip Smack) shiny pockets?",
+   "n_spans": 7,
+   "n_words_ts": 12,
+   "emonet": true
+  },
+  {
+   "id": "goblin4",
+   "dur": 7.36,
+   "transcript": "He what have we here? A lost little traveller with shiny pockets?",
+   "genu": 1.11,
+   "blend": 2.19,
+   "global_caption": "A voice that is extremely heavily nasal in resonance; extremely bright in oral resonance; extremely narrator-like and storybook; very crisply articulated; very effortless and fluent; adult; feminine and high-pitched; low-to-mid in register; moderate in tempo; notably carrying provoking lightly; notably free of engrossment; notably carrying playfulness; only slightly genuine, somewhat performed.",
+   "sentences": [
+    {
+     "text": "He what have we here?",
+     "start": 0.24,
+     "end": 2.64,
+     "caption": "Delivered very accelerating in pace; very clean and quiet in background; very choppy and fragmented; extremely carrying disorientation; extremely carrying silliness; notably free of engrossment.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.882,
+     "variant_b_caption": "Delivered very accelerating in pace; very clean and quiet in background; very choppy and fragmented; extremely carrying disorientation; extremely carrying silliness; notably free of engrossment."
+    },
+    {
+     "text": "A lost little traveller with shiny pockets?",
+     "start": 3.04,
+     "end": 6.96,
+     "caption": "Delivered very bright in oral resonance; very effortless and fluent; very narrator-like and storybook; notably carrying covetousness; notably free of attention; notably carrying envy.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.77,
+     "variant_b_caption": "Delivered very bright in oral resonance; very effortless and fluent; very narrator-like and storybook; notably carrying covetousness; notably free of attention; notably carrying envy."
+    }
+   ],
+   "variant_a_bursts": [],
+   "variant_a_inline": "He what have we here? A lost little traveller with shiny pockets?",
+   "n_spans": 0,
+   "n_words_ts": 12,
+   "emonet": true
+  },
+  {
+   "id": "mouse5",
+   "dur": 11.84,
+   "transcript": "Eee wait wait ooh did you see it? Did you see how teeny tiny it was?",
+   "genu": 0.97,
+   "blend": 2.89,
+   "global_caption": "A voice that is extremely rough and raspy; extremely unpleasant and harsh; extremely tight and tense; extremely choppy and fragmented; extremely dominant and commanding; young and youthful; strongly masculine, deep and low-pitched; low and bassy in register; somewhat slow and deliberate in tempo; notably carrying wonder; notably carrying joy; notably free of absorption; only slightly genuine, somewhat performed.",
+   "sentences": [
+    {
+     "text": "Eee wait wait ooh did you see it?",
+     "start": 0.64,
+     "end": 5.36,
+     "caption": "Delivered extremely rough and raspy; extremely unpleasant and harsh; extremely emotionally volatile; notably carrying awestruck; notably carrying amazement; notably carrying happiness.",
+     "variant_b_burst": "Hiss",
+     "variant_b_prob": 0.984,
+     "variant_b_caption": "Delivered extremely rough and raspy; extremely unpleasant and harsh; extremely emotionally volatile; notably carrying awestruck; notably carrying amazement; notably carrying happiness, punctuated by a (Hiss)."
+    },
+    {
+     "text": "Did you see how teeny tiny it was?",
+     "start": 5.52,
+     "end": 8.8,
+     "caption": "Delivered extremely dominant and commanding; very wide in dynamic swell; very dialogic and outward; notably carrying wonder; notably free of attention; notably carrying startlement.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.569,
+     "variant_b_caption": "Delivered extremely dominant and commanding; very wide in dynamic swell; very dialogic and outward; notably carrying wonder; notably free of attention; notably carrying startlement."
+    }
+   ],
+   "variant_a_bursts": [
+    {
+     "start": 5.34,
+     "end": 5.42,
+     "peak": 0.72,
+     "label": null,
+     "prob": 0.0,
+     "p_noburst": 1.0,
+     "kept": false
+    },
+    {
+     "start": 7.62,
+     "end": 7.7,
+     "peak": 0.732,
+     "label": null,
+     "prob": 0.0,
+     "p_noburst": 1.0,
+     "kept": false
+    },
+    {
+     "start": 8.86,
+     "end": 9.02,
+     "peak": 0.808,
+     "label": "Slap Face",
+     "prob": 0.961,
+     "p_noburst": 0.422,
+     "kept": true
+    },
+    {
+     "start": 9.24,
+     "end": 9.38,
+     "peak": 0.81,
+     "label": "Lip Smack",
+     "prob": 0.795,
+     "p_noburst": 0.374,
+     "kept": true
+    },
+    {
+     "start": 9.46,
+     "end": 9.56,
+     "peak": 0.75,
+     "label": "Lip Smack",
+     "prob": 0.76,
+     "p_noburst": 0.327,
+     "kept": true
+    },
+    {
+     "start": 9.64,
+     "end": 9.92,
+     "peak": 0.845,
+     "label": "Lip Smack",
+     "prob": 0.865,
+     "p_noburst": 0.375,
+     "kept": true
+    },
+    {
+     "start": 10.1,
+     "end": 10.26,
+     "peak": 0.818,
+     "label": "Lip Smack",
+     "prob": 0.812,
+     "p_noburst": 0.342,
+     "kept": true
+    },
+    {
+     "start": 10.28,
+     "end": 10.34,
+     "peak": 0.76,
+     "label": null,
+     "prob": 0.0,
+     "p_noburst": 1.0,
+     "kept": false
+    },
+    {
+     "start": 10.6,
+     "end": 11.02,
+     "peak": 0.907,
+     "label": "Slap Face",
+     "prob": 0.96,
+     "p_noburst": 0.203,
+     "kept": true
+    },
+    {
+     "start": 11.78,
+     "end": 11.84,
+     "peak": 0.817,
+     "label": null,
+     "prob": 0.0,
+     "p_noburst": 1.0,
+     "kept": false
+    }
+   ],
+   "variant_a_inline": "Eee wait wait ooh did you see it? Did you see how teeny tiny it was? (Slap Face) (Lip Smack) (Lip Smack) (Lip Smack) (Lip Smack) (Slap Face)",
+   "n_spans": 10,
+   "n_words_ts": 16,
+   "emonet": true
+  },
+  {
+   "id": "dragon5",
+   "dur": 7.12,
+   "transcript": "You dare enter my lair, mortal. Your bones will join the others.",
+   "genu": 0.98,
+   "blend": 4.11,
+   "global_caption": "A voice that is extremely rough and raspy; extremely full and cinematic; extremely deep in throat resonance; extremely thin in mask resonance; very denasal and clear; middle-aged to mature; masculine and deep-pitched; low and bassy in register; somewhat slow and deliberate in tempo; notably carrying fondness; notably carrying lust; notably carrying spite; only slightly genuine, somewhat performed; interwoven with vocal bursts (laughs, gasps, sighs).",
+   "sentences": [
+    {
+     "text": "You dare enter my lair, mortal.",
+     "start": 0.4,
+     "end": 3.36,
+     "caption": "Delivered extremely rough and raspy; extremely full and cinematic; extremely thin in mask resonance; notably carrying butterflies in the stomach; notably carrying sexual lust; notably carrying malice.",
+     "variant_b_burst": "Wolf Whistle",
+     "variant_b_prob": 0.967,
+     "variant_b_caption": "Delivered extremely rough and raspy; extremely full and cinematic; extremely thin in mask resonance; notably carrying butterflies in the stomach; notably carrying sexual lust; notably carrying malice, interrupted by a (Wolf Whistle)."
+    },
+    {
+     "text": "Your bones will join the others.",
+     "start": 3.6,
+     "end": 6.24,
+     "caption": "Delivered extremely rough and raspy; extremely one-dimensional in resonance; extremely thin in mask resonance; notably carrying sadism; notably carrying adoration; notably carrying carnal desire.",
+     "variant_b_burst": "Displeased Grunt",
+     "variant_b_prob": 0.947,
+     "variant_b_caption": "Delivered extremely rough and raspy; extremely one-dimensional in resonance; extremely thin in mask resonance; notably carrying sadism; notably carrying adoration; notably carrying carnal desire, with an audible (Displeased Grunt)."
+    }
+   ],
+   "variant_a_bursts": [
+    {
+     "start": 1.52,
+     "end": 1.6,
+     "peak": 0.752,
+     "label": null,
+     "prob": 0.0,
+     "p_noburst": 1.0,
+     "kept": false
+    },
+    {
+     "start": 2.9,
+     "end": 2.98,
+     "peak": 0.74,
+     "label": null,
+     "prob": 0.0,
+     "p_noburst": 1.0,
+     "kept": false
+    },
+    {
+     "start": 3.12,
+     "end": 3.7,
+     "peak": 0.922,
+     "label": "Slap Face",
+     "prob": 0.962,
+     "p_noburst": 0.1,
+     "kept": true
+    },
+    {
+     "start": 3.82,
+     "end": 4.06,
+     "peak": 0.904,
+     "label": null,
+     "prob": 0.823,
+     "p_noburst": 0.823,
+     "kept": false
+    },
+    {
+     "start": 4.22,
+     "end": 4.98,
+     "peak": 0.961,
+     "label": "Displeased Grunt",
+     "prob": 0.994,
+     "p_noburst": 0.006,
+     "kept": true
+    },
+    {
+     "start": 5.06,
+     "end": 7.12,
+     "peak": 0.993,
+     "label": "Wolf Whistle",
+     "prob": 0.95,
+     "p_noburst": 0.013,
+     "kept": true
+    }
+   ],
+   "variant_a_inline": "You dare enter my lair, mortal. (Slap Face) Your bones will (Displeased Grunt) join the others. (Wolf Whistle)",
+   "n_spans": 6,
+   "n_words_ts": 12,
+   "emonet": true
+  },
+  {
+   "id": "fairy5",
+   "dur": 5.12,
+   "transcript": "Oh hello there little one what a wonderful day to make a new friend.",
+   "genu": 1.76,
+   "blend": 4.7,
+   "global_caption": "A voice that is high in register; extremely one-dimensional in resonance; very thin in chest resonance; very dialogic and outward; clearly feminine and high-pitched; young and youthful; moderate in tempo; extremely carrying devotion; extremely carrying contentment; extremely carrying exhilaration; genuine in delivery; interwoven with vocal bursts (laughs, gasps, sighs).",
+   "sentences": [
+    {
+     "text": "Oh hello there little one what a wonderful day to make a new friend.",
+     "start": 0.0,
+     "end": 4.88,
+     "caption": "Delivered high in register; extremely one-dimensional in resonance; extremely dialogic and outward; extremely carrying forgiveness; extremely carrying gladness; extremely carrying joy.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.823,
+     "variant_b_caption": "Delivered high in register; extremely one-dimensional in resonance; extremely dialogic and outward; extremely carrying forgiveness; extremely carrying gladness; extremely carrying joy."
+    }
+   ],
+   "variant_a_bursts": [],
+   "variant_a_inline": "Oh hello there little one what a wonderful day to make a new friend.",
+   "n_spans": 0,
+   "n_words_ts": 14,
+   "emonet": true
+  },
+  {
+   "id": "sad_man5",
+   "dur": 9.68,
+   "transcript": "It's my fault. I I should have been there I should have saved her.",
+   "genu": 1.78,
+   "blend": 5.5,
+   "global_caption": "A voice that is extremely denasal and clear; extremely decelerating in pace; extremely soft and gentle in onset; extremely thin in chest resonance; very organic and soft; childlike; clearly feminine and high-pitched; low-to-mid in register; very slow and deliberate in tempo; extremely carrying remorse; extremely carrying solace; extremely carrying sorrow; genuine in delivery; interwoven with vocal bursts (laughs, gasps, sighs).",
+   "sentences": [
+    {
+     "text": "It's my fault.",
+     "start": 1.04,
+     "end": 2.72,
+     "caption": "Delivered very organic and soft; very slow and deliberate in tempo; clearly feminine and high-pitched; extremely carrying guilt; extremely carrying desperation; extremely carrying sorrow.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.734,
+     "variant_b_caption": "Delivered very organic and soft; very slow and deliberate in tempo; clearly feminine and high-pitched; extremely carrying guilt; extremely carrying desperation; extremely carrying sorrow."
+    },
+    {
+     "text": "I I should have been there I should have saved her.",
+     "start": 3.04,
+     "end": 9.04,
+     "caption": "Delivered extremely decelerating in pace; extremely denasal and clear; extremely soft and gentle in onset; extremely carrying respite; extremely carrying sadness; extremely carrying disappointment.",
+     "variant_b_burst": "Surprised Gasp",
+     "variant_b_prob": 0.884,
+     "variant_b_caption": "Delivered extremely decelerating in pace; extremely denasal and clear; extremely soft and gentle in onset; extremely carrying respite; extremely carrying sadness; extremely carrying disappointment, marked by a (Surprised Gasp)."
+    }
+   ],
+   "variant_a_bursts": [
+    {
+     "start": 0.54,
+     "end": 0.66,
+     "peak": 0.854,
+     "label": "Slap Face",
+     "prob": 0.953,
+     "p_noburst": 0.346,
+     "kept": true
+    },
+    {
+     "start": 4.5,
+     "end": 4.58,
+     "peak": 0.802,
+     "label": null,
+     "prob": 0.0,
+     "p_noburst": 1.0,
+     "kept": false
+    },
+    {
+     "start": 6.22,
+     "end": 6.28,
+     "peak": 0.738,
+     "label": null,
+     "prob": 0.0,
+     "p_noburst": 1.0,
+     "kept": false
+    },
+    {
+     "start": 6.3,
+     "end": 7.28,
+     "peak": 0.901,
+     "label": "Clears Throat",
+     "prob": 0.907,
+     "p_noburst": 0.234,
+     "kept": true
+    },
+    {
+     "start": 7.92,
+     "end": 8.04,
+     "peak": 0.775,
+     "label": null,
+     "prob": 0.729,
+     "p_noburst": 0.729,
+     "kept": false
+    }
+   ],
+   "variant_a_inline": "(Slap Face) It's my fault. I I should have been there (Clears Throat) I should have saved her.",
+   "n_spans": 5,
+   "n_words_ts": 14,
+   "emonet": true
+  },
+  {
+   "id": "sad_woman5",
+   "dur": 11.84,
+   "transcript": "No no please Don't leave me to I can't I can't lose anyone else",
+   "genu": 1.34,
+   "blend": 1.63,
+   "global_caption": "A voice that is extremely collapsing in energy; extremely denasal and clear; extremely thin in chest resonance; extremely decelerating in pace; extremely distressed and negative; childlike; clearly feminine and high-pitched; mid register; notably slow and deliberate in tempo; notably carrying submission; notably carrying humiliation; notably carrying suffering; only slightly genuine, somewhat performed.",
+   "sentences": [
+    {
+     "text": "No no please Don't leave me to I can't I can't lose anyone else",
+     "start": 0.32,
+     "end": 10.08,
+     "caption": "Delivered extremely denasal and clear; extremely collapsing in energy; extremely thin in chest resonance; notably carrying humiliation; notably carrying suffering; notably carrying submission.",
+     "variant_b_burst": "Exasperated Sigh",
+     "variant_b_prob": 0.904,
+     "variant_b_caption": "Delivered extremely denasal and clear; extremely collapsing in energy; extremely thin in chest resonance; notably carrying humiliation; notably carrying suffering; notably carrying submission, interrupted by a (Exasperated Sigh)."
+    }
+   ],
+   "variant_a_bursts": [
+    {
+     "start": 5.08,
+     "end": 5.64,
+     "peak": 0.944,
+     "label": "Deep Breath",
+     "prob": 0.899,
+     "p_noburst": 0.18,
+     "kept": true
+    },
+    {
+     "start": 6.16,
+     "end": 7.34,
+     "peak": 0.989,
+     "label": null,
+     "prob": 0.793,
+     "p_noburst": 0.793,
+     "kept": false
+    },
+    {
+     "start": 10.68,
+     "end": 11.86,
+     "peak": 1.0,
+     "label": "Surprised Gasp",
+     "prob": 0.994,
+     "p_noburst": 0.001,
+     "kept": true
+    }
+   ],
+   "variant_a_inline": "No no please Don't leave me to (Deep Breath) I can't I can't lose anyone else (Surprised Gasp)",
+   "n_spans": 3,
+   "n_words_ts": 14,
+   "emonet": true
+  },
+  {
+   "id": "asmr_woman5",
+   "dur": 11.84,
+   "transcript": "There now, my love, close your eyes. I have you, safe and warm.",
+   "genu": 1.64,
+   "blend": 3.08,
+   "global_caption": "A voice that is extremely collapsing in energy; extremely blurry and mumbled; extremely raw and vulnerable; extremely denasal and clear; extremely choppy and fragmented; middle-aged to mature; masculine and deep-pitched; low and bassy in register; notably slow and deliberate in tempo; notably carrying comfort; notably carrying tenderness; notably carrying burnout; only slightly genuine, somewhat performed.",
+   "sentences": [
+    {
+     "text": "There now, my love, close your eyes.",
+     "start": 3.2,
+     "end": 6.64,
+     "caption": "Delivered extremely warm and enveloping; extremely full and cinematic; extremely beautiful and pleasing; notably carrying infatuation; notably carrying feeling horny; notably carrying clemency.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.967,
+     "variant_b_caption": "Delivered extremely warm and enveloping; extremely full and cinematic; extremely beautiful and pleasing; notably carrying infatuation; notably carrying feeling horny; notably carrying clemency."
+    },
+    {
+     "text": "I have you, safe and warm.",
+     "start": 6.96,
+     "end": 10.08,
+     "caption": "Delivered extremely full and cinematic; extremely flat and unemphasized; extremely warm and enveloping; notably carrying warmth; notably carrying lust; notably carrying butterflies in the stomach.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.952,
+     "variant_b_caption": "Delivered extremely full and cinematic; extremely flat and unemphasized; extremely warm and enveloping; notably carrying warmth; notably carrying lust; notably carrying butterflies in the stomach."
+    }
+   ],
+   "variant_a_bursts": [
+    {
+     "start": 0.04,
+     "end": 3.14,
+     "peak": 0.999,
+     "label": "Hiss",
+     "prob": 0.997,
+     "p_noburst": 0.061,
+     "kept": true
+    },
+    {
+     "start": 7.96,
+     "end": 8.04,
+     "peak": 0.764,
+     "label": null,
+     "prob": 0.0,
+     "p_noburst": 1.0,
+     "kept": false
+    },
+    {
+     "start": 8.06,
+     "end": 11.84,
+     "peak": 1.0,
+     "label": "Breathy Giggle",
+     "prob": 0.89,
+     "p_noburst": 0.226,
+     "kept": true
+    }
+   ],
+   "variant_a_inline": "(Hiss) There now, my love, close your eyes. I have you, safe and warm. (Breathy Giggle)",
+   "n_spans": 3,
+   "n_words_ts": 13,
+   "emonet": true
+  },
+  {
+   "id": "asmr_man5",
+   "dur": 11.76,
+   "transcript": "Just relax now. Let it all go. You are safe here. Close your eyes.",
+   "genu": 1.07,
+   "blend": 2.06,
+   "global_caption": "A voice that is extremely collapsing in energy; extremely meek and submissive; extremely soft and gentle in onset; extremely thin in chest resonance; extremely relaxed and loose; middle-aged to mature; clearly feminine and high-pitched; mid register; notably slow and deliberate in tempo; notably carrying tranquility; notably carrying trust; notably carrying feeling turned on; only slightly genuine, somewhat performed.",
+   "sentences": [
+    {
+     "text": "Just relax now.",
+     "start": 0.0,
+     "end": 1.44,
+     "caption": "Delivered extremely effortless and fluent; extremely meek and submissive; very relaxed and loose; notably carrying relief; notably carrying fulfillment; notably free of engrossment.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.828,
+     "variant_b_caption": "Delivered extremely effortless and fluent; extremely meek and submissive; very relaxed and loose; notably carrying relief; notably carrying fulfillment; notably free of engrossment."
+    },
+    {
+     "text": "Let it all go.",
+     "start": 1.76,
+     "end": 3.04,
+     "caption": "Delivered extremely flat and unemphasized; extremely collapsing in energy; extremely blurry and mumbled; notably carrying melancholy; notably carrying chagrin; notably carrying existential void.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.507,
+     "variant_b_caption": "Delivered extremely flat and unemphasized; extremely collapsing in energy; extremely blurry and mumbled; notably carrying melancholy; notably carrying chagrin; notably carrying existential void."
+    },
+    {
+     "text": "You are safe here.",
+     "start": 3.52,
+     "end": 5.04,
+     "caption": "Delivered extremely effortless and fluent; extremely meek and submissive; very organic and soft; notably carrying alleviation; notably carrying clemency; notably carrying lightness.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.678,
+     "variant_b_caption": "Delivered extremely effortless and fluent; extremely meek and submissive; very organic and soft; notably carrying alleviation; notably carrying clemency; notably carrying lightness."
+    },
+    {
+     "text": "Close your eyes.",
+     "start": 5.52,
+     "end": 7.28,
+     "caption": "Delivered extremely collapsing in energy; extremely soft and gentle in onset; extremely flat and unemphasized; notably carrying carnal desire; notably carrying fondness; notably carrying comfort.",
+     "variant_b_burst": "Wistful Sigh",
+     "variant_b_prob": 0.884,
+     "variant_b_caption": "Delivered extremely collapsing in energy; extremely soft and gentle in onset; extremely flat and unemphasized; notably carrying carnal desire; notably carrying fondness; notably carrying comfort, punctuated by a (Wistful Sigh)."
+    }
+   ],
+   "variant_a_bursts": [
+    {
+     "start": 5.78,
+     "end": 5.84,
+     "peak": 0.775,
+     "label": null,
+     "prob": 0.0,
+     "p_noburst": 1.0,
+     "kept": false
+    },
+    {
+     "start": 6.98,
+     "end": 7.08,
+     "peak": 0.748,
+     "label": "Lip Smack",
+     "prob": 0.768,
+     "p_noburst": 0.317,
+     "kept": true
+    },
+    {
+     "start": 7.18,
+     "end": 11.76,
+     "peak": 1.0,
+     "label": "Slap Face",
+     "prob": 0.949,
+     "p_noburst": 0.0,
+     "kept": true
+    }
+   ],
+   "variant_a_inline": "Just relax now. Let it all go. You are safe here. Close your eyes. (Lip Smack) (Slap Face)",
+   "n_spans": 3,
+   "n_words_ts": 14,
+   "emonet": true
+  },
+  {
+   "id": "ZH_B00039_S04341_W000000",
+   "dur": 3.78,
+   "transcript": "Tiva. Tia Baya Gokufu Tsiwa.",
+   "genu": 2.24,
+   "blend": 9.1,
+   "global_caption": "A voice that is extremely blurry and mumbled; extremely soft and gentle in onset; extremely dark and muffled; extremely flat and monotone; extremely collapsing in energy; adult; masculine and deep-pitched; low and bassy in register; notably slow and deliberate in tempo; extremely carrying lethargy; extremely carrying feeling turned on; extremely carrying infatuation; genuine in delivery; interwoven with vocal bursts (laughs, gasps, sighs).",
+   "sentences": [
+    {
+     "text": "Tiva.",
+     "start": 0.16,
+     "end": 0.64,
+     "caption": "Delivered extremely collapsing in energy; extremely blurry and mumbled; extremely flat and unemphasized; extremely carrying fondness; notably free of concentration; extremely carrying carnal desire.",
+     "variant_b_burst": "Gulps",
+     "variant_b_prob": 0.767,
+     "variant_b_caption": "Delivered extremely collapsing in energy; extremely blurry and mumbled; extremely flat and unemphasized; extremely carrying fondness; notably free of concentration; extremely carrying carnal desire, carrying a (Gulps)."
+    },
+    {
+     "text": "Tia Baya Gokufu Tsiwa.",
+     "start": 1.84,
+     "end": 3.68,
+     "caption": "Delivered extremely collapsing in energy; very blurry and mumbled; very thin in head resonance; notably free of deep focus; notably carrying burnout; notably carrying indifference.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.697,
+     "variant_b_caption": "Delivered extremely collapsing in energy; very blurry and mumbled; very thin in head resonance; notably free of deep focus; notably carrying burnout; notably carrying indifference."
+    }
+   ],
+   "variant_a_bursts": [
+    {
+     "start": 0.08,
+     "end": 0.16,
+     "peak": 0.848,
+     "label": null,
+     "prob": 0.0,
+     "p_noburst": 1.0,
+     "kept": false
+    },
+    {
+     "start": 0.92,
+     "end": 1.1,
+     "peak": 0.912,
+     "label": "Slap Face",
+     "prob": 0.937,
+     "p_noburst": 0.087,
+     "kept": true
+    },
+    {
+     "start": 1.12,
+     "end": 2.06,
+     "peak": 0.992,
+     "label": "Deep Breath",
+     "prob": 0.885,
+     "p_noburst": 0.115,
+     "kept": true
+    },
+    {
+     "start": 2.54,
+     "end": 2.78,
+     "peak": 0.99,
+     "label": null,
+     "prob": 0.599,
+     "p_noburst": 0.599,
+     "kept": false
+    },
+    {
+     "start": 3.64,
+     "end": 3.76,
+     "peak": 0.91,
+     "label": "Clears Throat",
+     "prob": 0.802,
+     "p_noburst": 0.489,
+     "kept": true
+    }
+   ],
+   "variant_a_inline": "Tiva. (Slap Face) (Deep Breath) Tia Baya Gokufu Tsiwa. (Clears Throat)",
+   "n_spans": 5,
+   "n_words_ts": 5,
+   "emonet": true
+  },
+  {
+   "id": "ZH_B00039_S09711_W000002",
+   "dur": 4.49,
+   "transcript": "Ah Najulia Leba in Chuchu Chuchu",
+   "genu": 2.51,
+   "blend": 8.55,
+   "global_caption": "A voice that is extremely raw and vulnerable; extremely collapsing in energy; extremely audibly breathing and gasping; extremely thin in chest resonance; extremely meek and submissive; adult; feminine and high-pitched; low-to-mid in register; somewhat slow and deliberate in tempo; extremely carrying agony; extremely carrying pessimism; extremely carrying helplessness; deeply and genuinely felt; interwoven with vocal bursts (laughs, gasps, sighs).",
+   "sentences": [
+    {
+     "text": "Ah Najulia Leba in Chuchu Chuchu",
+     "start": 0.0,
+     "end": 4.24,
+     "caption": "Delivered extremely raw and vulnerable; extremely audibly breathing and gasping; extremely collapsing in energy; extremely carrying suffering; extremely carrying trepidation; extremely carrying desperation.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.638,
+     "variant_b_caption": "Delivered extremely raw and vulnerable; extremely audibly breathing and gasping; extremely collapsing in energy; extremely carrying suffering; extremely carrying trepidation; extremely carrying desperation."
+    }
+   ],
+   "variant_a_bursts": [
+    {
+     "start": 0.12,
+     "end": 0.3,
+     "peak": 0.913,
+     "label": null,
+     "prob": 0.599,
+     "p_noburst": 0.599,
+     "kept": false
+    },
+    {
+     "start": 0.32,
+     "end": 0.5,
+     "peak": 0.837,
+     "label": "Slap Face",
+     "prob": 0.991,
+     "p_noburst": 0.161,
+     "kept": true
+    },
+    {
+     "start": 0.56,
+     "end": 0.82,
+     "peak": 0.925,
+     "label": "Slap Face",
+     "prob": 0.968,
+     "p_noburst": 0.281,
+     "kept": true
+    },
+    {
+     "start": 4.34,
+     "end": 4.46,
+     "peak": 0.988,
+     "label": null,
+     "prob": 0.588,
+     "p_noburst": 0.588,
+     "kept": false
+    }
+   ],
+   "variant_a_inline": "Ah (Slap Face) (Slap Face) Najulia Leba in Chuchu Chuchu",
+   "n_spans": 4,
+   "n_words_ts": 6,
+   "emonet": true
+  },
+  {
+   "id": "EN_B00015_S00125_W000000",
+   "dur": 3.17,
+   "transcript": "Hmm so the memento mori has fallen.",
+   "genu": 1.38,
+   "blend": 6.64,
+   "global_caption": "A voice that is extremely full and cinematic; extremely warm and enveloping; extremely beautiful and pleasing; extremely rough and raspy; very thin in head resonance; middle-aged to mature; strongly masculine, deep and low-pitched; low and bassy in register; somewhat slow and deliberate in tempo; notably carrying misery; notably carrying desire to harm; notably carrying feeling turned on; only slightly genuine, somewhat performed; interwoven with vocal bursts (laughs, gasps, sighs).",
+   "sentences": [
+    {
+     "text": "Hmm so the memento mori has fallen.",
+     "start": 0.08,
+     "end": 2.88,
+     "caption": "Delivered extremely full and cinematic; extremely warm and enveloping; extremely beautiful and pleasing; notably carrying desire to harm; notably carrying carnal desire; notably carrying fondness.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.968,
+     "variant_b_caption": "Delivered extremely full and cinematic; extremely warm and enveloping; extremely beautiful and pleasing; notably carrying desire to harm; notably carrying carnal desire; notably carrying fondness."
+    }
+   ],
+   "variant_a_bursts": [
+    {
+     "start": 0.12,
+     "end": 0.22,
+     "peak": 0.814,
+     "label": null,
+     "prob": 0.67,
+     "p_noburst": 0.67,
+     "kept": false
+    }
+   ],
+   "variant_a_inline": "Hmm so the memento mori has fallen.",
+   "n_spans": 1,
+   "n_words_ts": 7,
+   "emonet": true
+  },
+  {
+   "id": "FR_B00000_S02278_W000000",
+   "dur": 4.95,
+   "transcript": "Suis-je au paradis ? Sur l'île il est bien heureux.",
+   "genu": 2.97,
+   "blend": 6.29,
+   "global_caption": "A voice that is extremely raw and vulnerable; extremely noisy and aperiodic; extremely rough and raspy; extremely audibly breathing and gasping; extremely darkening in mood; middle-aged to mature; masculine and deep-pitched; low and bassy in register; somewhat slow and deliberate in tempo; extremely carrying horror; extremely carrying worry; extremely carrying powerlessness; deeply and genuinely felt; interwoven with vocal bursts (laughs, gasps, sighs).",
+   "sentences": [
+    {
+     "text": "Suis-je au paradis ?",
+     "start": 0.08,
+     "end": 1.44,
+     "caption": "Delivered extremely blurry and mumbled; extremely collapsing in energy; extremely noisy and aperiodic; notably free of attention; extremely carrying powerlessness; extremely carrying lethargy.",
+     "variant_b_burst": "Ahem",
+     "variant_b_prob": 0.978,
+     "variant_b_caption": "Delivered extremely blurry and mumbled; extremely collapsing in energy; extremely noisy and aperiodic; notably free of attention; extremely carrying powerlessness; extremely carrying lethargy, marked by a (Ahem)."
+    },
+    {
+     "text": "Sur l'île il est bien heureux.",
+     "start": 3.52,
+     "end": 4.8,
+     "caption": "Delivered very dialogic and outward; very balanced and blended in resonance; very thin in head resonance; notably free of attention; very carrying nostalgia; very carrying helplessness.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.991,
+     "variant_b_caption": "Delivered very dialogic and outward; very balanced and blended in resonance; very thin in head resonance; notably free of attention; very carrying nostalgia; very carrying helplessness."
+    }
+   ],
+   "variant_a_bursts": [
+    {
+     "start": 2.48,
+     "end": 2.74,
+     "peak": 0.849,
+     "label": "Slap Face",
+     "prob": 0.968,
+     "p_noburst": 0.172,
+     "kept": true
+    },
+    {
+     "start": 2.88,
+     "end": 3.32,
+     "peak": 0.974,
+     "label": "Slap Face",
+     "prob": 0.935,
+     "p_noburst": 0.141,
+     "kept": true
+    },
+    {
+     "start": 3.62,
+     "end": 3.7,
+     "peak": 0.778,
+     "label": null,
+     "prob": 0.0,
+     "p_noburst": 1.0,
+     "kept": false
+    },
+    {
+     "start": 4.5,
+     "end": 4.56,
+     "peak": 0.76,
+     "label": null,
+     "prob": 0.0,
+     "p_noburst": 1.0,
+     "kept": false
+    }
+   ],
+   "variant_a_inline": "Suis-je au paradis ? (Slap Face) (Slap Face) Sur l'île il est bien heureux.",
+   "n_spans": 4,
+   "n_words_ts": 10,
+   "emonet": true
+  },
+  {
+   "id": "EN_B00000_S03298_W000123",
+   "dur": 13.37,
+   "transcript": "So that people go, What is that? I need to find out about that. So this is me making stuff up right in the moment, but I'm like, okay, I'm gonna use these oblique strategies as a way of",
+   "genu": 5.12,
+   "blend": 5.23,
+   "global_caption": "A voice that is very bright in oral resonance; notably forward in mask resonance; notably brightening in mood; notably loud and non-whispered; notably disfluent and halting; young and youthful; masculine and deep-pitched; low and bassy in register; somewhat fast and rapid in tempo; extremely carrying joviality; notably carrying indifference; notably carrying impatience; deeply and genuinely felt; interwoven with vocal bursts (laughs, gasps, sighs).",
+   "sentences": [
+    {
+     "text": "So that people go, What is that?",
+     "start": 0.0,
+     "end": 1.68,
+     "caption": "Delivered extremely balanced and blended in resonance; very bright in oral resonance; very dialogic and outward; notably free of engrossment; very carrying provoking lightly; very carrying disdain.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.865,
+     "variant_b_caption": "Delivered extremely balanced and blended in resonance; very bright in oral resonance; very dialogic and outward; notably free of engrossment; very carrying provoking lightly; very carrying disdain."
+    },
+    {
+     "text": "I need to find out about that.",
+     "start": 1.92,
+     "end": 3.84,
+     "caption": "Delivered extremely balanced and blended in resonance; very seamless and inaudible in breathing; very bright in oral resonance; notably free of deep focus; notably free of meditation; notably free of curiosity.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.953,
+     "variant_b_caption": "Delivered extremely balanced and blended in resonance; very seamless and inaudible in breathing; very bright in oral resonance; notably free of deep focus; notably free of meditation; notably free of curiosity."
+    },
+    {
+     "text": "So this is me making stuff up right in the moment, but I'm like, okay, I'm gonna use these oblique strategies as a way of",
+     "start": 4.56,
+     "end": 13.2,
+     "caption": "Delivered extremely bright in oral resonance; notably joyful and positive; notably naturalistic and understated; extremely carrying ribbing; extremely carrying numbness; very carrying distrust.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.889,
+     "variant_b_caption": "Delivered extremely bright in oral resonance; notably joyful and positive; notably naturalistic and understated; extremely carrying ribbing; extremely carrying numbness; very carrying distrust."
+    }
+   ],
+   "variant_a_bursts": [],
+   "variant_a_inline": "So that people go, What is that? I need to find out about that. So this is me making stuff up right in the moment, but I'm like, okay, I'm gonna use these oblique strategies as a way of",
+   "n_spans": 0,
+   "n_words_ts": 39,
+   "emonet": true
+  },
+  {
+   "id": "FR_B00001_S08689_W000031",
+   "dur": 18.22,
+   "transcript": "Soudain, on frappe à sa porte. Chloé sursaute. Elle se sent incapable de bouger. On frappe à nouveau. Chloé retient sa respiration. Elle a peur. Elle a l'impression de vivre un mauvais rêve.",
+   "genu": 0.92,
+   "blend": 8.02,
+   "global_caption": "A voice that is elderly-sounding; extremely narrator-like and storybook; extremely news-anchor-like; extremely rough and raspy; very thin in mask resonance; masculine and deep-pitched; low and bassy in register; somewhat slow and deliberate in tempo; notably carrying relief; notably carrying alarm; notably carrying submission; only slightly genuine, somewhat performed; interwoven with vocal bursts (laughs, gasps, sighs).",
+   "sentences": [
+    {
+     "text": "Soudain, on frappe à sa porte.",
+     "start": 0.0,
+     "end": 2.72,
+     "caption": "Delivered extremely pristine in recording quality; very clean and quiet in background; notably thin in throat resonance; notably free of engrossment; notably carrying liberation; notably carrying surprise.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.983,
+     "variant_b_caption": "Delivered extremely pristine in recording quality; very clean and quiet in background; notably thin in throat resonance; notably free of engrossment; notably carrying liberation; notably carrying surprise."
+    },
+    {
+     "text": "Chloé sursaute.",
+     "start": 3.04,
+     "end": 4.48,
+     "caption": "Delivered extremely choppy and fragmented; extremely collapsing in energy; very thin in head resonance; notably carrying disgust; notably free of concentration; notably carrying schadenfreude.",
+     "variant_b_burst": "Displeased Grunt",
+     "variant_b_prob": 0.989,
+     "variant_b_caption": "Delivered extremely choppy and fragmented; extremely collapsing in energy; very thin in head resonance; notably carrying disgust; notably free of concentration; notably carrying schadenfreude, with an audible (Displeased Grunt)."
+    },
+    {
+     "text": "Elle se sent incapable de bouger.",
+     "start": 5.12,
+     "end": 8.0,
+     "caption": "Delivered very denasal and clear; notably pristine in recording quality; notably full and cinematic; notably free of absorption; notably carrying solace; notably carrying helplessness.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.968,
+     "variant_b_caption": "Delivered very denasal and clear; notably pristine in recording quality; notably full and cinematic; notably free of absorption; notably carrying solace; notably carrying helplessness."
+    },
+    {
+     "text": "On frappe à nouveau.",
+     "start": 8.56,
+     "end": 10.32,
+     "caption": "Delivered very jerky and uneven in rhythm; very unpleasant and harsh; very choppy and fragmented; notably free of deep focus; notably carrying anticipation; notably carrying bliss.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.951,
+     "variant_b_caption": "Delivered very jerky and uneven in rhythm; very unpleasant and harsh; very choppy and fragmented; notably free of deep focus; notably carrying anticipation; notably carrying bliss."
+    },
+    {
+     "text": "Chloé retient sa respiration.",
+     "start": 10.64,
+     "end": 13.68,
+     "caption": "Delivered extremely full and cinematic; very thin in head resonance; very organic and soft; notably carrying liberation; notably free of engrossment; notably carrying agony.",
+     "variant_b_burst": "Exasperated Sigh",
+     "variant_b_prob": 0.807,
+     "variant_b_caption": "Delivered extremely full and cinematic; very thin in head resonance; very organic and soft; notably carrying liberation; notably free of engrossment; notably carrying agony, punctuated by a (Exasperated Sigh)."
+    },
+    {
+     "text": "Elle a peur.",
+     "start": 14.32,
+     "end": 15.52,
+     "caption": "Delivered extremely collapsing in energy; extremely choppy and fragmented; extremely unpleasant and harsh; notably carrying jealousy; notably carrying horror; notably carrying helplessness.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.644,
+     "variant_b_caption": "Delivered extremely collapsing in energy; extremely choppy and fragmented; extremely unpleasant and harsh; notably carrying jealousy; notably carrying horror; notably carrying helplessness."
+    },
+    {
+     "text": "Elle a l'impression de vivre un mauvais rêve.",
+     "start": 15.76,
+     "end": 18.0,
+     "caption": "Delivered extremely balanced and blended in resonance; extremely denasal and clear; extremely effortless and fluent; notably carrying wonder; notably carrying panic; notably carrying pining.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.767,
+     "variant_b_caption": "Delivered extremely balanced and blended in resonance; extremely denasal and clear; extremely effortless and fluent; notably carrying wonder; notably carrying panic; notably carrying pining."
+    }
+   ],
+   "variant_a_bursts": [],
+   "variant_a_inline": "Soudain, on frappe à sa porte. Chloé sursaute. Elle se sent incapable de bouger. On frappe à nouveau. Chloé retient sa respiration. Elle a peur. Elle a l'impression de vivre un mauvais rêve.",
+   "n_spans": 0,
+   "n_words_ts": 33,
+   "emonet": true
+  },
+  {
+   "id": "EN_B00026_S00187_W000083",
+   "dur": 3.17,
+   "transcript": "The woman coos and sings a sweet song",
+   "genu": 0.66,
+   "blend": 7.4,
+   "global_caption": "A voice that is extremely accelerating in pace; extremely pristine in recording quality; extremely warm and enveloping; very beautiful and pleasing; very effortless and fluent; adult; feminine and high-pitched; low-to-mid in register; notably slow and deliberate in tempo; notably carrying fondness; notably carrying pleasure; notably carrying ease; only slightly genuine, somewhat performed; interwoven with vocal bursts (laughs, gasps, sighs).",
+   "sentences": [
+    {
+     "text": "The woman coos and sings a sweet song",
+     "start": 0.0,
+     "end": 2.8,
+     "caption": "Delivered extremely accelerating in pace; extremely pristine in recording quality; extremely warm and enveloping; notably carrying butterflies in the stomach; notably carrying relaxation; notably carrying ecstasy.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.651,
+     "variant_b_caption": "Delivered extremely accelerating in pace; extremely pristine in recording quality; extremely warm and enveloping; notably carrying butterflies in the stomach; notably carrying relaxation; notably carrying ecstasy."
+    }
+   ],
+   "variant_a_bursts": [],
+   "variant_a_inline": "The woman coos and sings a sweet song",
+   "n_spans": 0,
+   "n_words_ts": 8,
+   "emonet": true
+  },
+  {
+   "id": "ZH_B00014_S01305_W000041",
+   "dur": 7.45,
+   "transcript": "Hue Shvung Sam Yiv Bush Sam Y forg. Some Y for some yung.",
+   "genu": 2.66,
+   "blend": 6.53,
+   "global_caption": "A voice that is notably denasal and clear; notably bright in oral resonance; notably organic and soft; notably thin in mask resonance; somewhat authoritative and commanding; adult; strongly masculine, deep and low-pitched; low and bassy in register; somewhat fast and rapid in tempo; extremely carrying adoration; extremely carrying feeling turned on; extremely carrying alleviation; deeply and genuinely felt; interwoven with vocal bursts (laughs, gasps, sighs).",
+   "sentences": [
+    {
+     "text": "Hue Shvung Sam Yiv Bush Sam Y forg.",
+     "start": 0.16,
+     "end": 4.08,
+     "caption": "Delivered extremely explicit in content; very denasal and clear; very noisy and aperiodic; notably carrying infatuation; notably carrying tenderness; notably carrying sexual lust.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.987,
+     "variant_b_caption": "Delivered extremely explicit in content; very denasal and clear; very noisy and aperiodic; notably carrying infatuation; notably carrying tenderness; notably carrying sexual lust."
+    },
+    {
+     "text": "Some Y for some yung.",
+     "start": 4.56,
+     "end": 6.96,
+     "caption": "Delivered very seamless and inaudible in breathing; very bright in oral resonance; notably clean and quiet in background; notably free of absorption; notably free of interest; notably free of pondering.",
+     "variant_b_burst": null,
+     "variant_b_prob": 0.937,
+     "variant_b_caption": "Delivered very seamless and inaudible in breathing; very bright in oral resonance; notably clean and quiet in background; notably free of absorption; notably free of interest; notably free of pondering."
+    }
+   ],
+   "variant_a_bursts": [
+    {
+     "start": 2.96,
+     "end": 3.06,
+     "peak": 0.787,
+     "label": null,
+     "prob": 0.823,
+     "p_noburst": 0.823,
+     "kept": false
+    }
+   ],
+   "variant_a_inline": "Hue Shvung Sam Yiv Bush Sam Y forg. Some Y for some yung.",
+   "n_spans": 1,
+   "n_words_ts": 13,
+   "emonet": true
+  }
+ ]
+}

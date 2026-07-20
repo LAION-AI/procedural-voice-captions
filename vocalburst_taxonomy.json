@@ -1,0 +1,404 @@
+{
+  "meta": {
+    "name": "VocalBurst Taxonomy",
+    "version": "1.0",
+    "description": "A taxonomy of 82 non-speech vocal burst categories for classifying human vocalizations beyond speech",
+    "total_categories": 82,
+    "source": "LAION Improved Synthetic Vocal Bursts Dataset",
+    "dataset_url": "https://huggingface.co/datasets/laion/vocal-burst-db"
+  },
+  "categories": {
+    "laughter": {
+      "items": {
+        "Breathy Giggle": {
+          "description": "soft airy laugh",
+          "group": "laughter"
+        },
+        "Cackle": {
+          "description": "harsh sharp laugh sometimes unsettling",
+          "group": "laughter"
+        },
+        "Childlike Giggle": {
+          "description": "light playful laugh",
+          "group": "laughter"
+        },
+        "Chuckle": {
+          "description": "soft suppressed laugh showing mild amusement",
+          "group": "laughter"
+        },
+        "Guffaw": {
+          "description": "loud unrestrained laugh of strong amusement",
+          "group": "laughter"
+        },
+        "Nervous Giggle": {
+          "description": "high-pitched laugh indicating anxiety",
+          "group": "laughter"
+        },
+        "Snicker": {
+          "description": "stifled laugh often conveying mockery or sarcasm",
+          "group": "laughter"
+        },
+        "Snorting Giggle": {
+          "description": "brief nasal snort combined with laughter",
+          "group": "laughter"
+        }
+      }
+    },
+    "crying_and_distress": {
+      "items": {
+        "Convulsive Sob": {
+          "description": "intense crying with heaving breaths",
+          "group": "crying_and_distress"
+        },
+        "Mournful Wail": {
+          "description": "long high cry of grief",
+          "group": "crying_and_distress"
+        },
+        "Quiet Sob": {
+          "description": "soft crying with short broken breaths",
+          "group": "crying_and_distress"
+        },
+        "Sobs": {
+          "description": "audible heavier crying with convulsive gasps",
+          "group": "crying_and_distress"
+        },
+        "Trembling Whimper": {
+          "description": "faint cry indicating fear or pain",
+          "group": "crying_and_distress"
+        }
+      }
+    },
+    "breathing": {
+      "items": {
+        "Deep Breath": {
+          "description": "large inhalation to calm or refocus",
+          "group": "breathing"
+        },
+        "Deep Breathing": {
+          "description": "slow deliberate inhalations and exhalations for relaxation",
+          "group": "breathing"
+        },
+        "Fast Breathing": {
+          "description": "rapid inhalation and exhalation from excitement or stress",
+          "group": "breathing"
+        },
+        "Heavy Breathing": {
+          "description": "deep labored breaths of fatigue or tension",
+          "group": "breathing"
+        },
+        "Normal Breathing": {
+          "description": "regular rhythmic breaths at rest",
+          "group": "breathing"
+        },
+        "Panting": {
+          "description": "rapid breathing due to exertion or excitement",
+          "group": "breathing"
+        },
+        "Slow Breathing": {
+          "description": "paced controlled breaths for calm",
+          "group": "breathing"
+        }
+      }
+    },
+    "sighs": {
+      "items": {
+        "Contented Sigh": {
+          "description": "deep exhale expressing satisfaction",
+          "group": "sighs"
+        },
+        "Exasperated Sigh": {
+          "description": "audible breath of frustration",
+          "group": "sighs"
+        },
+        "Relief Sigh": {
+          "description": "release of tension after stress",
+          "group": "sighs"
+        },
+        "Wistful Sigh": {
+          "description": "soft exhale tinged with longing",
+          "group": "sighs"
+        }
+      }
+    },
+    "gasps_and_inhales": {
+      "items": {
+        "Fearful Gasp": {
+          "description": "sudden inhale showing shock or anxiety",
+          "group": "gasps_and_inhales"
+        },
+        "Sharp Inhale": {
+          "description": "quick breath of sudden realization",
+          "group": "gasps_and_inhales"
+        },
+        "Surprised Gasp": {
+          "description": "quick intake of breath in astonishment",
+          "group": "gasps_and_inhales"
+        }
+      }
+    },
+    "groans_and_moans": {
+      "items": {
+        "Exhausted Groan": {
+          "description": "weary sound indicating fatigue",
+          "group": "groans_and_moans"
+        },
+        "Frustrated Groan": {
+          "description": "deep sound of annoyance",
+          "group": "groans_and_moans"
+        },
+        "Pain Moan": {
+          "description": "low vocalization signaling discomfort",
+          "group": "groans_and_moans"
+        },
+        "Pleasure Moan": {
+          "description": "soft prolonged sound of enjoyment",
+          "group": "groans_and_moans"
+        }
+      }
+    },
+    "grunts": {
+      "items": {
+        "Affirmative Grunt": {
+          "description": "short sound indicating agreement",
+          "group": "grunts"
+        },
+        "Displeased Grunt": {
+          "description": "harsh vocalization of dissatisfaction",
+          "group": "grunts"
+        },
+        "Effort Grunt": {
+          "description": "short forceful sound during physical strain",
+          "group": "grunts"
+        }
+      }
+    },
+    "throat_and_vocal_sounds": {
+      "items": {
+        "Ahem": {
+          "description": "clearing throat to gain attention or show discomfort",
+          "group": "throat_and_vocal_sounds"
+        },
+        "Clears Throat": {
+          "description": "brief intentional effort to remove phlegm or gain attention",
+          "group": "throat_and_vocal_sounds"
+        },
+        "Growl": {
+          "description": "low guttural rumble conveying anger",
+          "group": "throat_and_vocal_sounds"
+        },
+        "Gurgling": {
+          "description": "bubbling sound in the throat",
+          "group": "throat_and_vocal_sounds"
+        },
+        "Hiss": {
+          "description": "sustained sibilant sound of disapproval",
+          "group": "throat_and_vocal_sounds"
+        },
+        "Low Mumble": {
+          "description": "indistinct vocalization of uncertainty or drowsiness",
+          "group": "throat_and_vocal_sounds"
+        },
+        "Whispered Mumble": {
+          "description": "very quiet muddled speech sounds",
+          "group": "throat_and_vocal_sounds"
+        }
+      }
+    },
+    "humming": {
+      "items": {
+        "Humming": {
+          "description": "low continuous vocal tone often tuneful or absent-minded",
+          "group": "humming"
+        },
+        "Purr": {
+          "description": "soft continuous vibrating hum showing contentment",
+          "group": "humming"
+        },
+        "Resonant Hum": {
+          "description": "lower-pitched thoughtful hum",
+          "group": "humming"
+        },
+        "Soft Hum": {
+          "description": "steady tone with closed lips in contentment",
+          "group": "humming"
+        }
+      }
+    },
+    "coughing_and_sneezing": {
+      "items": {
+        "Cough": {
+          "description": "sharp expulsion of air from lungs",
+          "group": "coughing_and_sneezing"
+        },
+        "Coughing": {
+          "description": "series of forceful expulsions of air from lungs",
+          "group": "coughing_and_sneezing"
+        },
+        "Hiccup": {
+          "description": "spasmodic contraction of diaphragm creating a 'hic' sound",
+          "group": "coughing_and_sneezing"
+        },
+        "Hiccups": {
+          "description": "involuntary diaphragmatic spasm producing 'hic' sound",
+          "group": "coughing_and_sneezing"
+        },
+        "Sniff": {
+          "description": "audible inhalation through the nose possibly sadness or restraint",
+          "group": "coughing_and_sneezing"
+        },
+        "Snort": {
+          "description": "quick burst of air through the nose often disbelief",
+          "group": "coughing_and_sneezing"
+        },
+        "Yawn": {
+          "description": "involuntary wide-mouthed breath showing tiredness",
+          "group": "coughing_and_sneezing"
+        }
+      }
+    },
+    "whistling": {
+      "items": {
+        "Person Whistling Playfully": {
+          "description": "lighthearted melodic whistle",
+          "group": "whistling"
+        },
+        "Person Whistling to Get Attention": {
+          "description": "serious sharp whistle",
+          "group": "whistling"
+        },
+        "Sharp Whistle": {
+          "description": "quick high-pitched attention grabber",
+          "group": "whistling"
+        },
+        "Soft Whistle": {
+          "description": "gentle tuneful blowing of air",
+          "group": "whistling"
+        },
+        "Wolf Whistle": {
+          "description": "two-note whistle expressing admiration",
+          "group": "whistling"
+        }
+      }
+    },
+    "mouth_and_lip_sounds": {
+      "items": {
+        "Blowing a Kiss": {
+          "description": "brief airy sound of sending affection",
+          "group": "mouth_and_lip_sounds"
+        },
+        "Kissing Noises": {
+          "description": "repetitive gentle lip compression for affection",
+          "group": "mouth_and_lip_sounds"
+        },
+        "Kissing Sounds": {
+          "description": "soft repeated lip contact expressing affection",
+          "group": "mouth_and_lip_sounds"
+        },
+        "Lip Smack": {
+          "description": "soft pop of parted lips indicating anticipation",
+          "group": "mouth_and_lip_sounds"
+        },
+        "Smack One's Lips": {
+          "description": "light pop of lips often from dryness or taste anticipation",
+          "group": "mouth_and_lip_sounds"
+        },
+        "Smacks Lips": {
+          "description": "repetitive lip popping after tasting or anticipating food",
+          "group": "mouth_and_lip_sounds"
+        },
+        "Licking Sound": {
+          "description": "light quick contact of tongue on surface",
+          "group": "mouth_and_lip_sounds"
+        },
+        "Spitting": {
+          "description": "forceful expulsion of saliva",
+          "group": "mouth_and_lip_sounds"
+        },
+        "Sucking Noise": {
+          "description": "soft pulling sound created by suction",
+          "group": "mouth_and_lip_sounds"
+        }
+      }
+    },
+    "tongue_clicks": {
+      "items": {
+        "Click One's Tongue": {
+          "description": "short 'tch' sound by flicking tongue off palate",
+          "group": "tongue_clicks"
+        },
+        "Clicks Tongue": {
+          "description": "distinct click by tapping tongue against the palate",
+          "group": "tongue_clicks"
+        },
+        "Tongue Click": {
+          "description": "distinct clack made by tongue against palate",
+          "group": "tongue_clicks"
+        },
+        "Tsk": {
+          "description": "clicking sound of reprimand or annoyance",
+          "group": "tongue_clicks"
+        }
+      }
+    },
+    "eating_and_drinking": {
+      "items": {
+        "Chewing Noises": {
+          "description": "crunching or moist sounds from the mouth",
+          "group": "eating_and_drinking"
+        },
+        "Drinking Noises": {
+          "description": "audible liquid intake with gulps or slurps",
+          "group": "eating_and_drinking"
+        },
+        "Gulps": {
+          "description": "short audible swallow from nervousness or ingesting",
+          "group": "eating_and_drinking"
+        },
+        "Nervous Gulp": {
+          "description": "audible swallow indicating anxiety",
+          "group": "eating_and_drinking"
+        },
+        "Slurping Noises": {
+          "description": "wet sucking sound typically when consuming liquids",
+          "group": "eating_and_drinking"
+        },
+        "Swallows": {
+          "description": "audible movement of liquid down the throat",
+          "group": "eating_and_drinking"
+        }
+      }
+    },
+    "screams_and_shrieks": {
+      "items": {
+        "Scream": {
+          "description": "loud high-pitched outburst of extreme emotion",
+          "group": "screams_and_shrieks"
+        },
+        "Shriek": {
+          "description": "sharp piercing cry typically of fear",
+          "group": "screams_and_shrieks"
+        }
+      }
+    },
+    "hand_and_body_sounds": {
+      "items": {
+        "Finger Snaps": {
+          "description": "brief sharp click made by friction of thumb and finger",
+          "group": "hand_and_body_sounds"
+        },
+        "Hand Scratching Head": {
+          "description": "rubbing hair soft rustling of fingers on scalp",
+          "group": "hand_and_body_sounds"
+        },
+        "Hand Slaps": {
+          "description": "solid impact sound of palm against a surface or another hand",
+          "group": "hand_and_body_sounds"
+        },
+        "Slap Face": {
+          "description": "sharp impact sound of palm against face",
+          "group": "hand_and_body_sounds"
+        }
+      }
+    }
+  }
+}
