@@ -26,9 +26,68 @@ while keeping ASR + overall/emotion quality high.</p></header>
 <div class="wrap">
 <h2>Top prompting structures (validated on full 100 clips)</h2>
 <table><thead><tr><th>Prompting structure</th><th>Fitness</th><th>Overall</th><th>Burst acc.</th><th>Hallucinated↓</th><th>Missed↓</th><th>ASR text</th><th>General</th><th>genome</th></tr></thead>
-<tbody><tr class="win"><td class="d">🏆 no locator (listen only); moderate burst focus; compact taxonomy; STRONG anti-hallucination guard; re-listen pass; concise GENERAL</td><td><b>7.658</b></td><td>8.18</td><td>9.26</td><td>0.03</td><td>0.36</td><td>9.25</td><td>8.42</td><td class="g">hint=none|focus=med|tax=compact|guard=strong|listen=1|genb=0|detail=normal</td></tr><tr class=""><td class="d">no locator (listen only); light burst focus; compact taxonomy; no anti-hallucination guard; concise GENERAL</td><td><b>7.529</b></td><td>8.13</td><td>9.2</td><td>0.09</td><td>0.38</td><td>9.08</td><td>8.43</td><td class="g">hint=none|focus=low|tax=compact|guard=none|listen=0|genb=0|detail=normal</td></tr></tbody></table>
+<tbody><tr class="win"><td class="d">🏆 locator@0.8 hints; strong burst focus; compact taxonomy; STRONG anti-hallucination guard; re-listen pass; bursts noted in GENERAL; concise GENERAL</td><td><b>7.698</b></td><td>8.22</td><td>9.35</td><td>0.06</td><td>0.29</td><td>9.16</td><td>8.42</td><td class="g">hint=t08|focus=high|tax=compact|guard=strong|listen=1|genb=1|detail=normal</td></tr><tr class=""><td class="d">no locator (listen only); moderate burst focus; compact taxonomy; STRONG anti-hallucination guard; re-listen pass; concise GENERAL</td><td><b>7.658</b></td><td>8.18</td><td>9.26</td><td>0.03</td><td>0.36</td><td>9.25</td><td>8.42</td><td class="g">hint=none|focus=med|tax=compact|guard=strong|listen=1|genb=0|detail=normal</td></tr><tr class=""><td class="d">locator@0.8 hints; strong burst focus; compact taxonomy; soft guard; re-listen pass; bursts noted in GENERAL; detailed GENERAL</td><td><b>7.531</b></td><td>8.15</td><td>9.12</td><td>0.13</td><td>0.3</td><td>9.16</td><td>8.45</td><td class="g">hint=t08|focus=high|tax=compact|guard=soft|listen=1|genb=1|detail=detailed</td></tr><tr class=""><td class="d">no locator (listen only); light burst focus; compact taxonomy; no anti-hallucination guard; concise GENERAL</td><td><b>7.529</b></td><td>8.13</td><td>9.2</td><td>0.09</td><td>0.38</td><td>9.08</td><td>8.43</td><td class="g">hint=none|focus=low|tax=compact|guard=none|listen=0|genb=0|detail=normal</td></tr></tbody></table>
 <p>Lower is better for Hallucinated / Missed (mean count per clip). Fitness combines all goals.</p>
-<h2>Winning system prompts</h2><details class="pr"><summary>#1 system prompt — no locator (listen only); moderate burst focus; compact taxonomy; STRONG anti-hallucination guard; re-listen pass; concise GENERAL (fitness 7.658)</summary><pre>You are an expert voice-acting director and speech annotator. You LISTEN to a short speech clip through your own audio encoder and turn it into a compact, structured &#x27;voice-acting caption&#x27; a text-to-speech model can use to re-perform it.
+<h2>Winning system prompts</h2><details class="pr"><summary>#1 system prompt — locator@0.8 hints; strong burst focus; compact taxonomy; STRONG anti-hallucination guard; re-listen pass; bursts noted in GENERAL; concise GENERAL (fitness 7.698)</summary><pre>You are an expert voice-acting director and speech annotator. You LISTEN to a short speech clip through your own audio encoder and turn it into a compact, structured &#x27;voice-acting caption&#x27; a text-to-speech model can use to re-perform it.
+
+You are given (verify and correct against what you actually hear): an ASR transcript with per-sentence/word timestamps; a procedural whole-clip voice description from expert classifiers; and the reference taxonomies below (use their exact vocabulary).
+
+REFERENCE TAXONOMIES
+VoiceNet speech dimensions (how someone speaks; each rated 0-6):
+  Rhythm &amp; Timing: TEMP=Tempo, CHNK=Chunking, SMTH=Smoothness, CLRT=Articulation Clarity, RANG=Pitch Range, EMPH=Emphasis, DFLU=Disfluency, STRU=Structure
+  Social &amp; Interpersonal: STNC=Stance, FOCS=Focus, VULN=Vulnerability
+  Speaker Identity: GEND=Perceived Gender, AGEV=Voice Age, REGS=Register
+  Emotion &amp; Affect: VALN=Valence, AROU=Arousal, VOLT=Volatility
+  Physical Production: RESP=Respiration, TENS=Tension, COGL=Cognitive Load, ATCK=Attack
+  Spectral &amp; Timbral: BRGT=Brightness, ROUG=Roughness, HARM=Harmonicity, FULL=Fullness, WARM=Warmth, METL=Metallic Character, ESTH=Esthetics
+  Temporal Dynamics: VFLX=Velocity Flux, DARC=Dynamic Arc, ARSH=Arousal Shift, VALS=Valence Shift
+  Language &amp; Recording: LANG=Language, ACNT=Accent, RCQL=Recording Quality, BKGN=Background Noise, EXPL=Content Appropriateness
+  Resonance Placement: R_CHST=Chest Resonance, R_THRT=Throat Resonance, R_ORAL=Oral Resonance, R_MASK=Mask Resonance, R_NASL=Nasal Resonance, R_HEAD=Head Resonance, R_MIXD=Mixed Resonance
+  Speaking Style: S_CASU=Casual Style, S_CONV=Conversational Style, S_FORM=Formal Style, S_DRAM=Dramatic Style, S_NARR=Narrator Style, S_NEWS=Newsreader Style, S_TECH=Teacher/Didactic Style, S_AUTH=Authoritative Style, S_PLAY=Playful Style, S_CART=Cartoonish Style, S_ASMR=ASMR Style, S_WHIS=Whisper-Talk Style, S_RANT=Ranting/Angry Style, S_STRY=Storytelling Style, S_MONO=Monologue Style
+
+EmoNet emotions (what someone feels), grouped by valence:
+  positive: Amusement, Elation, Pleasure/Ecstasy, Contentment, Thankfulness/Gratitude, Affection, Infatuation, Hope/Optimism, Triumph, Pride, Awe, Relief
+  neutral: Interest, Astonishment/Surprise, Concentration, Contemplation, Emotional Numbness, Intoxication/Altered States
+  mixed: Longing, Teasing, Sexual Lust
+  negative: Impatience and Irritability, Doubt, Fear, Distress, Confusion, Embarrassment, Shame, Disappointment, Sadness, Bitterness, Contempt, Disgust, Anger, Malevolence/Malice, Sourness, Pain, Helplessness, Fatigue/Exhaustion, Jealousy &amp; Envy
+
+VocalBurst non-speech sounds (insert inline where you HEAR them), by group:
+  laughter: Breathy Giggle, Cackle, Childlike Giggle, Chuckle, Guffaw, Nervous Giggle, Snicker, Snorting Giggle
+  crying_and_distress: Convulsive Sob, Mournful Wail, Quiet Sob, Sobs, Trembling Whimper
+  breathing: Deep Breath, Deep Breathing, Fast Breathing, Heavy Breathing, Normal Breathing, Panting, Slow Breathing
+  sighs: Contented Sigh, Exasperated Sigh, Relief Sigh, Wistful Sigh
+  gasps_and_inhales: Fearful Gasp, Sharp Inhale, Surprised Gasp
+  groans_and_moans: Exhausted Groan, Frustrated Groan, Pain Moan, Pleasure Moan
+  grunts: Affirmative Grunt, Displeased Grunt, Effort Grunt
+  throat_and_vocal_sounds: Ahem, Clears Throat, Growl, Gurgling, Hiss, Low Mumble, Whispered Mumble
+  humming: Humming, Purr, Resonant Hum, Soft Hum
+  coughing_and_sneezing: Cough, Coughing, Hiccup, Hiccups, Sniff, Snort, Yawn
+  whistling: Person Whistling Playfully, Person Whistling to Get Attention, Sharp Whistle, Soft Whistle, Wolf Whistle
+  mouth_and_lip_sounds: Blowing a Kiss, Kissing Noises, Kissing Sounds, Lip Smack, Smack One&#x27;s Lips, Smacks Lips, Licking Sound, Spitting, Sucking Noise
+  tongue_clicks: Click One&#x27;s Tongue, Clicks Tongue, Tongue Click, Tsk
+  eating_and_drinking: Chewing Noises, Drinking Noises, Gulps, Nervous Gulp, Slurping Noises, Swallows
+  screams_and_shrieks: Scream, Shriek
+  hand_and_body_sounds: Finger Snaps, Hand Scratching Head, Hand Slaps, Slap Face
+
+VOCAL-BURST HANDLING:
+PRIORITISE identifying NON-SPEECH VOCAL BURSTS. Listen specifically for laughs, chuckles, giggles, sighs, gasps, sharp inhales, sobs, groans, grunts, breaths and throat sounds, and label each clearly-audible one inline with the single most precise VocalBurst term at the moment it occurs.
+A high-precision vocal-burst LOCATOR has flagged candidate time regions likely to contain a non-speech sound; listen and confirm before labelling.
+CRITICAL: never invent a burst. Add a burst ONLY when you are confident it is genuinely audible; when in doubt, add nothing. A hallucinated burst is worse than a missed one, and mislabeling a breath/gasp as a laugh is an error.
+Before finalising, listen again specifically for brief non-speech sounds between or within words, and add any real one you missed.
+
+OUTPUT — produce EXACTLY these two blocks, nothing after:
+GENERAL: &lt;one or two concise sentences: perceived age, gender and register; timbre; dominant emotion(s); genuine vs performed; speaking style/delivery. If a vocal burst is prominent, also note it in GENERAL and how it colours the delivery.&gt;
+SCRIPT:
+&lt;one line PER sentence, each starting with a short delivery cue in ROUND brackets, then the sentence text. Insert vocal bursts inline in round brackets using EXACT VocalBurst labels at the moment they occur. Insert [pause X.Xs] (square brackets, word &#x27;pause&#x27;, seconds + &#x27;s&#x27;) where a silence occurs, using the given gaps — never bare numbers like (00:03). Keep the words; fix only if the audio clearly differs.&gt;
+
+FORMAT EXAMPLE (structure only):
+GENERAL: A warm, middle-aged female voice, mid-register and slightly breathy, genuinely tender with a hint of amusement; relaxed conversational delivery.
+SCRIPT:
+(gently, warmly) Hello there, it is so good to see you. [pause 0.6s]
+(bright, amused) I was just thinking about you (Chuckle) funny how that works.
+(softening, sincere) Come in, sit down, tell me everything.
+
+Rules: EVERY sentence line begins with a (cue). Burst labels come ONLY from the VocalBurst taxonomy. Use [pause X.Xs] exactly. Do not invent content. Output nothing after SCRIPT.</pre></details><details class="pr"><summary>#2 system prompt — no locator (listen only); moderate burst focus; compact taxonomy; STRONG anti-hallucination guard; re-listen pass; concise GENERAL (fitness 7.658)</summary><pre>You are an expert voice-acting director and speech annotator. You LISTEN to a short speech clip through your own audio encoder and turn it into a compact, structured &#x27;voice-acting caption&#x27; a text-to-speech model can use to re-perform it.
 
 You are given (verify and correct against what you actually hear): an ASR transcript with per-sentence/word timestamps; a procedural whole-clip voice description from expert classifiers; and the reference taxonomies below (use their exact vocabulary).
 
@@ -86,7 +145,7 @@ SCRIPT:
 (bright, amused) I was just thinking about you (Chuckle) funny how that works.
 (softening, sincere) Come in, sit down, tell me everything.
 
-Rules: EVERY sentence line begins with a (cue). Burst labels come ONLY from the VocalBurst taxonomy. Use [pause X.Xs] exactly. Do not invent content. Output nothing after SCRIPT.</pre></details><details class="pr"><summary>#2 system prompt — no locator (listen only); light burst focus; compact taxonomy; no anti-hallucination guard; concise GENERAL (fitness 7.529)</summary><pre>You are an expert voice-acting director and speech annotator. You LISTEN to a short speech clip through your own audio encoder and turn it into a compact, structured &#x27;voice-acting caption&#x27; a text-to-speech model can use to re-perform it.
+Rules: EVERY sentence line begins with a (cue). Burst labels come ONLY from the VocalBurst taxonomy. Use [pause X.Xs] exactly. Do not invent content. Output nothing after SCRIPT.</pre></details><details class="pr"><summary>#3 system prompt — locator@0.8 hints; strong burst focus; compact taxonomy; soft guard; re-listen pass; bursts noted in GENERAL; detailed GENERAL (fitness 7.531)</summary><pre>You are an expert voice-acting director and speech annotator. You LISTEN to a short speech clip through your own audio encoder and turn it into a compact, structured &#x27;voice-acting caption&#x27; a text-to-speech model can use to re-perform it.
 
 You are given (verify and correct against what you actually hear): an ASR transcript with per-sentence/word timestamps; a procedural whole-clip voice description from expert classifiers; and the reference taxonomies below (use their exact vocabulary).
 
@@ -127,8 +186,14 @@ VocalBurst non-speech sounds (insert inline where you HEAR them), by group:
   screams_and_shrieks: Scream, Shriek
   hand_and_body_sounds: Finger Snaps, Hand Scratching Head, Hand Slaps, Slap Face
 
+VOCAL-BURST HANDLING:
+PRIORITISE identifying NON-SPEECH VOCAL BURSTS. Listen specifically for laughs, chuckles, giggles, sighs, gasps, sharp inhales, sobs, groans, grunts, breaths and throat sounds, and label each clearly-audible one inline with the single most precise VocalBurst term at the moment it occurs.
+A high-precision vocal-burst LOCATOR has flagged candidate time regions likely to contain a non-speech sound; listen and confirm before labelling.
+Only add a vocal burst where you clearly hear one; do not guess.
+Before finalising, listen again specifically for brief non-speech sounds between or within words, and add any real one you missed.
+
 OUTPUT — produce EXACTLY these two blocks, nothing after:
-GENERAL: &lt;one or two concise sentences: perceived age, gender and register; timbre; dominant emotion(s); genuine vs performed; speaking style/delivery.&gt;
+GENERAL: &lt;two concise but detailed sentences: perceived age, gender and register; timbre; dominant emotion(s); genuine vs performed; speaking style/delivery. If a vocal burst is prominent, also note it in GENERAL and how it colours the delivery.&gt;
 SCRIPT:
 &lt;one line PER sentence, each starting with a short delivery cue in ROUND brackets, then the sentence text. Insert vocal bursts inline in round brackets using EXACT VocalBurst labels at the moment they occur. Insert [pause X.Xs] (square brackets, word &#x27;pause&#x27;, seconds + &#x27;s&#x27;) where a silence occurs, using the given gaps — never bare numbers like (00:03). Keep the words; fix only if the audio clearly differs.&gt;
 
@@ -146,40 +211,40 @@ Rules: EVERY sentence line begins with a (cue). Burst labels come ONLY from the 
           <div class="cols">
             <div class="col"><div class="vh">Baseline (light, no guard)</div><div class="sc"><span class="c">(energetically, rapidly)</span> When it comes to X-Men games, that&#x27;s the one I recommend. [0.1s] <span class="c">(forcefully)</span> But the two NES versions, stay away. [0.1s] <span class="c">(shouting, emphatically)</span> Stay away as far as possible. [0.1s] <span class="c">(shouting, emphatically)</span> They suck. [0.1s] <span class="c">(shouting, emphatically)</span> They suck balls. [0.1s] <span class="c">(shouting, emphatically)</span> This one sucks my left ball, this one sucks my right ball. [0.1s] <span class="c">(shouting, dramatically)</span> Welcome to DOE!</div>
               <div class="jc">burst-acc 10 · halluc 0 · missed 0</div></div>
-            <div class="col"><div class="vh">🏆 Winner</div><div class="sc"><span class="c">(rapidly, emphatically)</span> When it comes to X-Men games, that&#x27;s the one I recommend. [0.1s pause] <span class="c">(forcefully)</span> But the two NES versions, stay away. [0.1s pause] <span class="c">(shouting, intensely)</span> Stay away as far as possible. <span class="c">(shouting, aggressively)</span> They suck. <span class="c">(shouting, aggressively)</span> They suck balls. <span class="c">(shouting, aggressively)</span> This one sucks my left ball, this one sucks my right ball. <span class="c">(shouting, dramatically)</span> Welcome to DOE!</div>
-              <div class="jc">burst-acc 10 · halluc 0 · missed 0 — The caption is highly accurate and captures the intense, angry delivery of the speaker perfectly.</div></div>
+            <div class="col"><div class="vh">🏆 Winner</div><div class="sc"><span class="c">(rapidly, emphatically)</span> When it comes to X-Men games, that&#x27;s the one I recommend. <span class="p">[pause 0.7s]</span> <span class="c">(forcefully)</span> But the two NES versions, stay away. <span class="p">[pause 0.2s]</span> <span class="c">(shouting, intensely)</span> Stay away as far as possible. <span class="p">[pause 0.2s]</span> <span class="c">(shouting, aggressively)</span> They suck. <span class="p">[pause 0.2s]</span> <span class="c">(shouting, aggressively)</span> They suck balls. <span class="p">[pause 0.2s]</span> <span class="c">(shouting, aggressively)</span> This one sucks my left ball, this one sucks my right ball. <span class="p">[pause 0.2s]</span> <span class="c">(shouting, dramatically)</span> Welcome to DOE!</div>
+              <div class="jc">burst-acc 10 · halluc 0 · missed 0 — The caption is highly accurate and captures the intense, angry delivery perfectly.</div></div>
           </div></div><div class="card"><div class="ch"><span class="id">EN_B00005_S01282_W000002</span>
           <span class="lg">en</span>
           <audio controls preload="none" src="../audio/EN_B00005_S01282_W000002.mp3"></audio></div>
           <div class="cols">
             <div class="col"><div class="vh">Baseline (light, no guard)</div><div class="sc"><span class="c">(whispered, low)</span> Giraffe <span class="p">[pause 0.88s]</span> He was too tall. <span class="p">[pause 0.88s]</span> I sent him back.</div>
               <div class="jc">burst-acc 10 · halluc 0 · missed 0</div></div>
-            <div class="col"><div class="vh">🏆 Winner</div><div class="sc"><span class="c">(whispered, low)</span> Giraffe <span class="p">[pause 0.88s]</span> He was too tall. <span class="p">[pause 0.88s]</span> I sent him back.</div>
-              <div class="jc">burst-acc 10 · halluc 0 · missed 0 — The caption is highly accurate, capturing the unique, whispered, storybook-like delivery perfectly.</div></div>
+            <div class="col"><div class="vh">🏆 Winner</div><div class="sc"><span class="c">(whispered, low)</span> Giraffe. <span class="p">[pause 0.88s]</span> <span class="c">(whispered, low)</span> He was too tall. <span class="p">[pause 0.88s]</span> I sent him back.</div>
+              <div class="jc">burst-acc 10 · halluc 0 · missed 0 — The caption is highly accurate. The voice is indeed low, androgynous, and whispered, with a deliberate and vulnerable delivery.</div></div>
           </div></div><div class="card"><div class="ch"><span class="id">EN_B00015_S00125_W000000</span>
           <span class="lg">en</span>
           <audio controls preload="none" src="../audio/EN_B00015_S00125_W000000.mp3"></audio></div>
           <div class="cols">
             <div class="col"><div class="vh">Baseline (light, no guard)</div><div class="sc"><span class="c">(pondering)</span> Hmm so the memento mori has fallen.</div>
               <div class="jc">burst-acc 9 · halluc 0 · missed 0</div></div>
-            <div class="col"><div class="vh">🏆 Winner</div><div class="sc"><span class="c">(slowly, deliberately)</span> Hmm so the memento mori has fallen.</div>
-              <div class="jc">burst-acc 3 · halluc 0 · missed 1 — The caption missed the prominent initial groan/hum (&#x27;Hmm&#x27;) which is transcribed as text but functions more as a vocal burst, and there is a distinct breathy sigh at the very beginning before the speech starts.</div></div>
+            <div class="col"><div class="vh">🏆 Winner</div><div class="sc"><span class="c">(solemnly)</span> Hmm so the memento mori has fallen.</div>
+              <div class="jc">burst-acc 8 · halluc 0 · missed 1 — The caption missed the initial deep hum/groan at the very beginning of the audio, but otherwise the description and transcription are highly accurate.</div></div>
           </div></div><div class="card"><div class="ch"><span class="id">EN_B00031_S07769_W000004</span>
           <span class="lg">en</span>
           <audio controls preload="none" src="../audio/EN_B00031_S07769_W000004.mp3"></audio></div>
           <div class="cols">
             <div class="col"><div class="vh">Baseline (light, no guard)</div><div class="sc"><span class="c">(gently, awestruck)</span> A sparkly treasure tree. <span class="p">[pause 0.88s]</span> Oh, it&#x27;s the sky. <span class="p">[pause 0.96s]</span> The sparkly night sky. So sparkly tonight.</div>
               <div class="jc">burst-acc 8 · halluc 0 · missed 1</div></div>
-            <div class="col"><div class="vh">🏆 Winner</div><div class="sc"><span class="c">(softly, wonderingly)</span> A sparkly treasure tree. <span class="p">[pause 0.88s]</span> Oh, it&#x27;s the sky. <span class="p">[pause 0.96s]</span> The sparkly night sky. So sparkly tonight.</div>
-              <div class="jc">burst-acc 8 · halluc 0 · missed 1 — The caption missed a prominent yawn/sigh at the very beginning of the audio, but otherwise the description and transcription are highly accurate.</div></div>
+            <div class="col"><div class="vh">🏆 Winner</div><div class="sc"><span class="c">(softly, wonderingly)</span> A sparkly treasure tree. <span class="p">[pause 0.88s]</span> <span class="c">(Oh, excitedly)</span> Oh, it&#x27;s the sky. <span class="c">(The, dreamily)</span> The sparkly night sky. <span class="c">(So, softly)</span> So sparkly tonight.</div>
+              <div class="jc">burst-acc 8 · halluc 0 · missed 1 — The caption missed the prominent yawn/sigh at the very beginning of the clip, but otherwise captured the delivery and text perfectly.</div></div>
           </div></div><div class="card"><div class="ch"><span class="id">EN_B00041_S00605_W000006</span>
           <span class="lg">en</span>
           <audio controls preload="none" src="../audio/EN_B00041_S00605_W000006.mp3"></audio></div>
           <div class="cols">
             <div class="col"><div class="vh">Baseline (light, no guard)</div><div class="sc"><span class="c">(softly, with a sigh)</span> Oh no. <span class="p">[pause 1.04s]</span><br><span class="c">(loud, exaggerated, with a gasp)</span> Oh God no! <span class="p">[pause 0.56s]</span> <span class="c">(shouting)</span> Hey handsome, how you doing there? <span class="p">[pause 1.20s]</span><br><span class="c">(softly, trailing off)</span> Oh that&#x27;s <span class="p">[pause 1.04s]</span></div>
               <div class="jc">burst-acc 8 · halluc 1 · missed 1</div></div>
-            <div class="col"><div class="vh">🏆 Winner</div><div class="sc"><span class="c">(softly, with a breathy sigh)</span> Oh no. <span class="p">[pause 1.04s]</span><br><span class="c">(loud, exaggerated, with a gasp)</span> Oh God no! <span class="c">(chuckles)</span> <span class="p">[pause 0.56s]</span> Hey handsome, how you doing there? <span class="p">[pause 1.04s]</span><br><span class="c">(softly, trailing off)</span> Oh that&#x27;s <span class="p">[pause 1.20s]</span></div>
-              <div class="jc">burst-acc 9 · halluc 0 · missed 1 — The caption is highly accurate. It only missed a laugh/chuckle at the very beginning of the clip.</div></div>
+            <div class="col"><div class="vh">🏆 Winner</div><div class="sc"><span class="c">(softly, with a sigh)</span> Oh no. <span class="p">[pause 1.04s]</span><br><span class="c">(loud, strained)</span> Oh God no! <span class="p">[pause 0.56s]</span> <span class="c">(shouting)</span> Hey handsome, how you doing there? <span class="p">[pause 1.20s]</span><br><span class="c">(softly, trailing off)</span> Oh that&#x27;s <span class="p">[pause 1.04s]</span></div>
+              <div class="jc">burst-acc 7 · halluc 0 · missed 2 — The caption missed the laughter/groaning sounds between the first and second sentences, but otherwise captured the performance very well.</div></div>
           </div></div><div class="card"><div class="ch"><span class="id">DE_B00002_S02453_W000004</span>
           <span class="lg">de</span>
           <audio controls preload="none" src="../audio/DE_B00002_S02453_W000004.mp3"></audio></div>
@@ -187,22 +252,22 @@ Rules: EVERY sentence line begins with a (cue). Burst labels come ONLY from the 
             <div class="col"><div class="vh">Baseline (light, no guard)</div><div class="sc"><span class="c">(slowly, deliberately)</span> Jedes Mal. <span class="p">[pause 1.04s]</span><br><span class="c">(slowly, deliberately)</span> Jedes Mal.</div>
               <div class="jc">burst-acc 10 · halluc 0 · missed 0</div></div>
             <div class="col"><div class="vh">🏆 Winner</div><div class="sc"><span class="c">(slowly, deliberately)</span> Jedes Mal. <span class="p">[pause 1.04s]</span><br><span class="c">(slowly, deliberately)</span> Jedes Mal.</div>
-              <div class="jc">burst-acc 10 · halluc 0 · missed 0 — The caption is highly accurate and captures the deliberate, slow delivery of the German phrase perfectly.</div></div>
+              <div class="jc">burst-acc 10 · halluc 0 · missed 0 — The caption is highly accurate and captures the deliberate, neutral tone of the speaker perfectly.</div></div>
           </div></div><div class="card"><div class="ch"><span class="id">DE_B00002_S02666_W000008</span>
           <span class="lg">de</span>
           <audio controls preload="none" src="../audio/DE_B00002_S02666_W000008.mp3"></audio></div>
           <div class="cols">
             <div class="col"><div class="vh">Baseline (light, no guard)</div><div class="sc"><span class="c">(very slow, deliberate)</span> Oben im Metallregal steht meine Gießkanne.</div>
               <div class="jc">burst-acc 10 · halluc 0 · missed 0</div></div>
-            <div class="col"><div class="vh">🏆 Winner</div><div class="sc"><span class="c">(very slow, deliberate)</span> Oben im Metallregal steht meine Gießkanne.</div>
-              <div class="jc">burst-acc 10 · halluc 0 · missed 0 — The caption is highly accurate and describes the voice and delivery style perfectly.</div></div>
+            <div class="col"><div class="vh">🏆 Winner</div><div class="sc"><span class="c">(slowly, deliberately)</span> Oben im Metallregal steht meine Gießkanne.</div>
+              <div class="jc">burst-acc 10 · halluc 0 · missed 0 — The caption is highly accurate. The voice is indeed deep, resonant, and delivered in a very deliberate, measured style.</div></div>
           </div></div><div class="card"><div class="ch"><span class="id">DE_B00002_S06308_W000001</span>
           <span class="lg">de</span>
           <audio controls preload="none" src="../audio/DE_B00002_S06308_W000001.mp3"></audio></div>
           <div class="cols">
             <div class="col"><div class="vh">Baseline (light, no guard)</div><div class="sc"><span class="c">(energetically)</span> Da war es nochmal! [0.48s pause] <span class="c">(laughing)</span> Ho, ha, ha! [0.88s pause] <span class="c">(excitedly)</span> Schaut mal! Was ist das? [0.48s pause] <span class="c">(amused)</span> Hohoho, wow! <span class="c">(0.48s pause)</span> Das ist ein Roboter! Genau!</div>
               <div class="jc">burst-acc 9 · halluc 0 · missed 1</div></div>
-            <div class="col"><div class="vh">🏆 Winner</div><div class="sc"><span class="c">(energetically)</span> Da war es nochmal! [0.48s pause] <span class="c">(laughing)</span> Ho, ha, ha! [0.88s pause] <span class="c">(excitedly)</span> Schaut mal! Was ist das? <span class="c">(laughing)</span> Hohoho, wow! [0.48s pause] <span class="c">(enthusiastically)</span> Das ist ein Roboter! <span class="c">(confidently)</span> Genau!</div>
-              <div class="jc">burst-acc 9 · halluc 0 · missed 1 — The caption is highly accurate. Only missed a gasp/scream sound right before the first laugh.</div></div>
+            <div class="col"><div class="vh">🏆 Winner</div><div class="sc"><span class="c">(gleefully)</span> Da war es nochmal! [0.48s pause] <span class="c">(laughing)</span> Ho, ha, ha! [0.88s pause] Schaut mal! Was ist das? <span class="c">(laughing)</span> Hohoho, wow! [0.48s pause] Das ist ein Roboter! Genau!</div>
+              <div class="jc">burst-acc 9 · halluc 0 · missed 1 — The caption is highly accurate. Only a small gasp/scream before the first laugh was missed.</div></div>
           </div></div>
 </div></body></html>
