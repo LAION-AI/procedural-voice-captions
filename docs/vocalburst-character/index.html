@@ -9,51 +9,159 @@ audio{height:30px;width:280px}.k{color:#ffd479;font-size:11px;border:1px solid #
 pain-scream, evil-ghost, mouse, dragon, fairy, goblin, ASMR…) — from the best-of-64 evolution grids —
 run through <b>both</b> vocal-burst classifiers. Each = VoiceCLAP embedding → a small MLP. The
 <b>no-burst gate</b> (P(no burst) ≥ 0.5 → 🔇) decides whether there's a burst at all.</p>
-<p>Below: <b>10 clips where a burst WAS detected</b> and <b>4 where none was</b>
+<p>Below: <b>24 clips where a burst WAS detected</b> and <b>26 where none was</b>
 (decided by the multi-label model's gate). We show what each model predicts, so you can listen and judge.
 There are no ground-truth labels here — this is the models applied to fresh, unlabelled character voices.</p></div>
-<h2>Burst detected (10)</h2><div class="card"><div class="ch"><span class="k">fairy</span>
+<h2>Burst detected (24)</h2><div class="card"><div class="ch"><span class="k">sad_woman</span>
           <audio controls preload="none" src="audio/Burs000.mp3"></audio></div>
-          <div class="pr"><b>multi-label model:</b> <span class="p">Exasperated Sigh 0.89</span> <span class="p">Wistful Sigh 0.86</span> <span class="p">Relief Sigh 0.33</span> <span class="p">Deep Breath 0.27</span></div>
-          <div class="pr"><b>single-burst model:</b> <span class="p">Growl 0.40</span> <span class="p">Low Mumble 0.11</span> <span class="p">Pain Moan 0.09</span></div></div><div class="card"><div class="ch"><span class="k">zombie</span>
+          <div class="pr"><b>multi-label model:</b> <span class="p">Heavy Breathing 0.98</span> <span class="p">Deep Breath 0.88</span> <span class="p">Exasperated Sigh 0.87</span> <span class="p">Exhausted Groan 0.51</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Panting 0.47</span> <span class="p">Heavy Breathing 0.25</span> <span class="p">Exasperated Sigh 0.17</span> <span class="p">Contented Sigh 0.03</span></div></div><div class="card"><div class="ch"><span class="k">pain_scream</span>
           <audio controls preload="none" src="audio/Burs001.mp3"></audio></div>
-          <div class="pr"><b>multi-label model:</b> <span class="p">Exasperated Sigh 0.95</span> <span class="p">Deep Breath 0.81</span> <span class="p">Heavy Breathing 0.80</span> <span class="p">Wistful Sigh 0.67</span></div>
-          <div class="pr"><b>single-burst model:</b> <span class="p">Heavy Breathing 0.66</span> <span class="p">Panting 0.10</span> <span class="p">Slap Face 0.06</span> <span class="p">Fast Breathing 0.06</span></div></div><div class="card"><div class="ch"><span class="k">fairy</span>
+          <div class="pr"><b>multi-label model:</b> <span class="p">Exhausted Groan 0.96</span> <span class="p">Exasperated Sigh 0.93</span> <span class="p">Relief Sigh 0.89</span> <span class="p">Yawn 0.88</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Heavy Breathing 0.36</span> <span class="p">Exasperated Sigh 0.34</span> <span class="p">Panting 0.09</span> <span class="p">Contented Sigh 0.06</span></div></div><div class="card"><div class="ch"><span class="k">asmr_man</span>
           <audio controls preload="none" src="audio/Burs002.mp3"></audio></div>
-          <div class="pr"><b>multi-label model:</b> <span class="p">Yawn 0.81</span> <span class="p">Quiet Sob 0.69</span> <span class="p">Wistful Sigh 0.62</span> <span class="p">Wolf Whistle 0.56</span></div>
-          <div class="pr"><b>single-burst model:</b> <span class="p">Frustrated Groan 0.44</span> <span class="p">Pain Moan 0.22</span> <span class="p">Pleasure Moan 0.14</span> <span class="p">Exhausted Groan 0.07</span></div></div><div class="card"><div class="ch"><span class="k">ranting</span>
+          <div class="pr"><b>multi-label model:</b> <span class="p">Wistful Sigh 0.90</span> <span class="p">Purr 0.84</span> <span class="p">Relief Sigh 0.80</span> <span class="p">Contented Sigh 0.65</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Exhausted Groan 0.39</span> <span class="p">Wistful Sigh 0.26</span> <span class="p">Relief Sigh 0.16</span> <span class="p">Contented Sigh 0.13</span></div></div><div class="card"><div class="ch"><span class="k">ork</span>
           <audio controls preload="none" src="audio/Burs003.mp3"></audio></div>
-          <div class="pr"><b>multi-label model:</b> <span class="p">Scream 0.93</span> <span class="p">Hiss 0.89</span> <span class="p">Pain Moan 0.78</span> <span class="p">Heavy Breathing 0.50</span></div>
-          <div class="pr"><b>single-burst model:</b> <span class="p">Growl 0.81</span> <span class="p">Relief Sigh 0.05</span> <span class="p">Pain Moan 0.03</span> <span class="p">Fearful Gasp 0.02</span></div></div><div class="card"><div class="ch"><span class="k">ranting</span>
+          <div class="pr"><b>multi-label model:</b> <span class="p">Sucking Noise 0.86</span> <span class="p">Whispered Mumble 0.84</span> <span class="p">Deep Breath 0.81</span> <span class="p">Heavy Breathing 0.77</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Whispered Mumble 0.35</span> <span class="p">Hand Scratching Head 0.17</span> <span class="p">Heavy Breathing 0.16</span> <span class="p">Relief Sigh 0.10</span></div></div><div class="card"><div class="ch"><span class="k">asmr_man</span>
           <audio controls preload="none" src="audio/Burs004.mp3"></audio></div>
-          <div class="pr"><b>multi-label model:</b> <span class="p">Exasperated Sigh 0.94</span> <span class="p">Deep Breath 0.74</span> <span class="p">Relief Sigh 0.56</span> <span class="p">Heavy Breathing 0.37</span></div>
-          <div class="pr"><b>single-burst model:</b> <span class="p">Slap Face 0.46</span> <span class="p">Spitting 0.20</span> <span class="p">Panting 0.10</span></div></div><div class="card"><div class="ch"><span class="k">zombie</span>
+          <div class="pr"><b>multi-label model:</b> <span class="p">Purr 0.98</span> <span class="p">Wistful Sigh 0.91</span> <span class="p">Deep Breath 0.58</span> <span class="p">Relief Sigh 0.38</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Contented Sigh 0.20</span> <span class="p">Exhausted Groan 0.20</span> <span class="p">Relief Sigh 0.13</span></div></div><div class="card"><div class="ch"><span class="k">evil_ghost4</span>
           <audio controls preload="none" src="audio/Burs005.mp3"></audio></div>
-          <div class="pr"><b>multi-label model:</b> <span class="p">Hiss 0.86</span> <span class="p">Wistful Sigh 0.85</span> <span class="p">Exasperated Sigh 0.73</span> <span class="p">Deep Breath 0.72</span></div>
-          <div class="pr"><b>single-burst model:</b> <span class="p">Heavy Breathing 0.61</span> <span class="p">Panting 0.19</span> <span class="p">Fast Breathing 0.08</span> <span class="p">Hand Scratching Head 0.03</span></div></div><div class="card"><div class="ch"><span class="k">fairy</span>
+          <div class="pr"><b>multi-label model:</b> <span class="p">Deep Breath 0.93</span> <span class="p">Wistful Sigh 0.81</span> <span class="p">Exasperated Sigh 0.69</span> <span class="p">Chuckle 0.67</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Slap Face 0.62</span> <span class="p">Tongue Click 0.06</span> <span class="p">Panting 0.04</span> <span class="p">Cackle 0.04</span></div></div><div class="card"><div class="ch"><span class="k">mouse</span>
           <audio controls preload="none" src="audio/Burs006.mp3"></audio></div>
-          <div class="pr"><b>multi-label model:</b> <span class="p">Quiet Sob 0.86</span> <span class="p">Exasperated Sigh 0.81</span> <span class="p">Wistful Sigh 0.80</span> <span class="p">Yawn 0.52</span></div>
-          <div class="pr"><b>single-burst model:</b> <span class="p">Low Mumble 0.56</span> <span class="p">Frustrated Groan 0.23</span> <span class="p">Pain Moan 0.06</span></div></div><div class="card"><div class="ch"><span class="k">ranting</span>
+          <div class="pr"><b>multi-label model:</b> <span class="p">Affirmative Grunt 0.95</span> <span class="p">Wistful Sigh 0.83</span> <span class="p">Ahem 0.75</span> <span class="p">Deep Breath 0.44</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Kissing Sounds 0.43</span> <span class="p">Swallows 0.17</span> <span class="p">Nervous Gulp 0.09</span> <span class="p">Affirmative Grunt 0.08</span></div></div><div class="card"><div class="ch"><span class="k">goblin</span>
           <audio controls preload="none" src="audio/Burs007.mp3"></audio></div>
-          <div class="pr"><b>multi-label model:</b> <span class="p">Effort Grunt 0.93</span> <span class="p">Displeased Grunt 0.92</span> <span class="p">Fearful Gasp 0.78</span> <span class="p">Licking Sound 0.76</span></div>
-          <div class="pr"><b>single-burst model:</b> <span class="p">Spitting 0.39</span> <span class="p">Licking Sound 0.23</span> <span class="p">Slap Face 0.07</span> <span class="p">Displeased Grunt 0.07</span></div></div><div class="card"><div class="ch"><span class="k">fairy</span>
+          <div class="pr"><b>multi-label model:</b> <span class="p">Chuckle 0.98</span> <span class="p">Breathy Giggle 0.69</span> <span class="p">Sniff 0.68</span> <span class="p">Wistful Sigh 0.64</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Breathy Giggle 0.46</span> <span class="p">Chuckle 0.21</span> <span class="p">Snorting Giggle 0.11</span> <span class="p">Snicker 0.06</span></div></div><div class="card"><div class="ch"><span class="k">mouse</span>
           <audio controls preload="none" src="audio/Burs008.mp3"></audio></div>
-          <div class="pr"><b>multi-label model:</b> <span class="p">Quiet Sob 0.89</span> <span class="p">Wistful Sigh 0.88</span> <span class="p">Exasperated Sigh 0.65</span> <span class="p">Deep Breath 0.64</span></div>
-          <div class="pr"><b>single-burst model:</b> <span class="p">Low Mumble 0.73</span> <span class="p">Ahem 0.18</span> <span class="p">Gurgling 0.02</span> <span class="p">Whispered Mumble 0.01</span></div></div><div class="card"><div class="ch"><span class="k">ranting</span>
+          <div class="pr"><b>multi-label model:</b> <span class="p">Displeased Grunt 0.84</span> <span class="p">Exasperated Sigh 0.75</span> <span class="p">Deep Breath 0.72</span> <span class="p">Yawn 0.71</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Ahem 0.36</span> <span class="p">Low Mumble 0.26</span> <span class="p">Frustrated Groan 0.12</span> <span class="p">Affirmative Grunt 0.10</span></div></div><div class="card"><div class="ch"><span class="k">zombie</span>
           <audio controls preload="none" src="audio/Burs009.mp3"></audio></div>
-          <div class="pr"><b>multi-label model:</b> <span class="p">Scream 0.95</span> <span class="p">Hiss 0.92</span> <span class="p">Shriek 0.84</span> <span class="p">Pain Moan 0.81</span></div>
-          <div class="pr"><b>single-burst model:</b> <span class="p">Spitting 0.55</span> <span class="p">Slap Face 0.07</span> <span class="p">Tongue Click 0.04</span></div></div>
-<h2>No burst detected (4)</h2><div class="card"><div class="ch"><span class="k">fairy</span>
+          <div class="pr"><b>multi-label model:</b> <span class="p">Exasperated Sigh 0.94</span> <span class="p">Pain Moan 0.93</span> <span class="p">Heavy Breathing 0.79</span> <span class="p">Deep Breath 0.71</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Exasperated Sigh 0.35</span> <span class="p">Sharp Inhale 0.10</span> <span class="p">Fearful Gasp 0.09</span> <span class="p">Displeased Grunt 0.09</span></div></div><div class="card"><div class="ch"><span class="k">pain_scream</span>
+          <audio controls preload="none" src="audio/Burs010.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p">Displeased Grunt 0.96</span> <span class="p">Pain Moan 0.95</span> <span class="p">Fast Breathing 0.93</span> <span class="p">Clears Throat 0.80</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Effort Grunt 0.27</span> <span class="p">Fearful Gasp 0.20</span> <span class="p">Sharp Inhale 0.13</span> <span class="p">Displeased Grunt 0.13</span></div></div><div class="card"><div class="ch"><span class="k">sad_man</span>
+          <audio controls preload="none" src="audio/Burs011.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p">Wistful Sigh 0.91</span> <span class="p">Deep Breath 0.88</span> <span class="p">Heavy Breathing 0.82</span> <span class="p">Relief Sigh 0.77</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Wistful Sigh 0.30</span> <span class="p">Exasperated Sigh 0.26</span> <span class="p">Relief Sigh 0.23</span> <span class="p">Contented Sigh 0.09</span></div></div><div class="card"><div class="ch"><span class="k">sad_man</span>
+          <audio controls preload="none" src="audio/Burs012.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p">Wistful Sigh 0.90</span> <span class="p">Relief Sigh 0.87</span> <span class="p">Exasperated Sigh 0.85</span> <span class="p">Yawn 0.77</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Wistful Sigh 0.56</span> <span class="p">Relief Sigh 0.28</span> <span class="p">Contented Sigh 0.06</span> <span class="p">Exasperated Sigh 0.04</span></div></div><div class="card"><div class="ch"><span class="k">sad_man4</span>
+          <audio controls preload="none" src="audio/Burs013.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p">Heavy Breathing 0.98</span> <span class="p">Sobs 0.97</span> <span class="p">Deep Breath 0.92</span> <span class="p">Sniff 0.91</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Quiet Sob 0.28</span> <span class="p">Sharp Inhale 0.26</span> <span class="p">Fearful Gasp 0.11</span> <span class="p">Exasperated Sigh 0.10</span></div></div><div class="card"><div class="ch"><span class="k">sad_man</span>
+          <audio controls preload="none" src="audio/Burs014.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p">Relief Sigh 0.97</span> <span class="p">Yawn 0.95</span> <span class="p">Deep Breath 0.93</span> <span class="p">Exasperated Sigh 0.92</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Contented Sigh 0.32</span> <span class="p">Exasperated Sigh 0.31</span> <span class="p">Relief Sigh 0.22</span> <span class="p">Wistful Sigh 0.04</span></div></div><div class="card"><div class="ch"><span class="k">dragon</span>
+          <audio controls preload="none" src="audio/Burs015.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p">Deep Breath 0.90</span> <span class="p">Deep Breathing 0.89</span> <span class="p">Exasperated Sigh 0.87</span> <span class="p">Relief Sigh 0.65</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Relief Sigh 0.25</span> <span class="p">Exasperated Sigh 0.21</span> <span class="p">Heavy Breathing 0.13</span> <span class="p">Contented Sigh 0.11</span></div></div><div class="card"><div class="ch"><span class="k">goblin</span>
+          <audio controls preload="none" src="audio/Burs016.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p">Yawn 0.85</span> <span class="p">Exasperated Sigh 0.79</span> <span class="p">Deep Breath 0.73</span> <span class="p">Resonant Hum 0.63</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Relief Sigh 0.28</span> <span class="p">Exasperated Sigh 0.21</span> <span class="p">Heavy Breathing 0.19</span> <span class="p">Slow Breathing 0.08</span></div></div><div class="card"><div class="ch"><span class="k">pain_scream4</span>
+          <audio controls preload="none" src="audio/Burs017.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p">Effort Grunt 0.97</span> <span class="p">Pain Moan 0.83</span> <span class="p">Sobs 0.82</span> <span class="p">Displeased Grunt 0.71</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Displeased Grunt 0.39</span> <span class="p">Effort Grunt 0.31</span> <span class="p">Fearful Gasp 0.06</span> <span class="p">Sobs 0.04</span></div></div><div class="card"><div class="ch"><span class="k">zombie</span>
+          <audio controls preload="none" src="audio/Burs018.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p">Yawn 0.95</span> <span class="p">Relief Sigh 0.93</span> <span class="p">Deep Breath 0.91</span> <span class="p">Exasperated Sigh 0.85</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Contented Sigh 0.44</span> <span class="p">Exasperated Sigh 0.21</span> <span class="p">Relief Sigh 0.15</span> <span class="p">Heavy Breathing 0.05</span></div></div><div class="card"><div class="ch"><span class="k">dragon</span>
+          <audio controls preload="none" src="audio/Burs019.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p">Resonant Hum 0.82</span> <span class="p">Displeased Grunt 0.79</span> <span class="p">Soft Hum 0.77</span> <span class="p">Wistful Sigh 0.63</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Surprised Gasp 0.40</span> <span class="p">Fearful Gasp 0.16</span> <span class="p">Displeased Grunt 0.14</span> <span class="p">Contented Sigh 0.07</span></div></div><div class="card"><div class="ch"><span class="k">sad_man</span>
+          <audio controls preload="none" src="audio/Burs020.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p">Fast Breathing 0.98</span> <span class="p">Heavy Breathing 0.96</span> <span class="p">Sobs 0.93</span> <span class="p">Trembling Whimper 0.87</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Fast Breathing 0.44</span> <span class="p">Slurping Noises 0.22</span> <span class="p">Licking Sound 0.09</span> <span class="p">Quiet Sob 0.07</span></div></div><div class="card"><div class="ch"><span class="k">ork</span>
+          <audio controls preload="none" src="audio/Burs021.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p">Sharp Whistle 0.99</span> <span class="p">Wolf Whistle 0.92</span> <span class="p">Hiss 0.81</span> <span class="p">Sucking Noise 0.75</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Whispered Mumble 0.83</span> <span class="p">Sharp Whistle 0.10</span> <span class="p">Wolf Whistle 0.02</span> <span class="p">Slap Face 0.01</span></div></div><div class="card"><div class="ch"><span class="k">goblin</span>
+          <audio controls preload="none" src="audio/Burs022.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p">Quiet Sob 0.95</span> <span class="p">Heavy Breathing 0.82</span> <span class="p">Wistful Sigh 0.81</span> <span class="p">Deep Breath 0.77</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Quiet Sob 0.34</span> <span class="p">Yawn 0.21</span> <span class="p">Sobs 0.15</span> <span class="p">Trembling Whimper 0.13</span></div></div><div class="card"><div class="ch"><span class="k">asmr_woman</span>
+          <audio controls preload="none" src="audio/Burs023.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p">Relief Sigh 0.86</span> <span class="p">Contented Sigh 0.73</span> <span class="p">Wistful Sigh 0.73</span> <span class="p">Deep Breath 0.68</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Exhausted Groan 0.56</span> <span class="p">Wistful Sigh 0.11</span> <span class="p">Contented Sigh 0.10</span> <span class="p">Pleasure Moan 0.10</span></div></div>
+<h2>No burst detected (26)</h2><div class="card"><div class="ch"><span class="k">asmr_man</span>
           <audio controls preload="none" src="audio/No b000.mp3"></audio></div>
-          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.70)</span></div>
-          <div class="pr"><b>single-burst model:</b> <span class="p nb">🔇 no burst (0.94)</span></div></div><div class="card"><div class="ch"><span class="k">ranting</span>
+          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.67)</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Relief Sigh 0.16</span> <span class="p">Whispered Mumble 0.14</span> <span class="p">Wistful Sigh 0.12</span> <span class="p">Growl 0.10</span></div></div><div class="card"><div class="ch"><span class="k">asmr_man</span>
           <audio controls preload="none" src="audio/No b001.mp3"></audio></div>
-          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.79)</span></div>
-          <div class="pr"><b>single-burst model:</b> <span class="p">Fast Breathing 0.35</span> <span class="p">Panting 0.22</span> <span class="p">Spitting 0.19</span> <span class="p">Slap Face 0.11</span></div></div><div class="card"><div class="ch"><span class="k">ranting</span>
+          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.56)</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Exhausted Groan 0.43</span> <span class="p">Wistful Sigh 0.18</span> <span class="p">Relief Sigh 0.17</span> <span class="p">Contented Sigh 0.14</span></div></div><div class="card"><div class="ch"><span class="k">ork</span>
           <audio controls preload="none" src="audio/No b002.mp3"></audio></div>
-          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.73)</span></div>
-          <div class="pr"><b>single-burst model:</b> <span class="p nb">🔇 no burst (0.74)</span></div></div><div class="card"><div class="ch"><span class="k">fairy</span>
+          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.78)</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Relief Sigh 0.35</span> <span class="p">Contented Sigh 0.28</span> <span class="p">Wistful Sigh 0.07</span></div></div><div class="card"><div class="ch"><span class="k">goblin</span>
           <audio controls preload="none" src="audio/No b003.mp3"></audio></div>
-          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.91)</span></div>
-          <div class="pr"><b>single-burst model:</b> <span class="p nb">🔇 no burst (1.00)</span></div></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.51)</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Soft Whistle 0.16</span> <span class="p">Relief Sigh 0.15</span> <span class="p">Exhausted Groan 0.13</span> <span class="p">Wistful Sigh 0.11</span></div></div><div class="card"><div class="ch"><span class="k">ork</span>
+          <audio controls preload="none" src="audio/No b004.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.66)</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Contented Sigh 0.27</span> <span class="p">Relief Sigh 0.20</span> <span class="p">Wistful Sigh 0.13</span> <span class="p">Yawn 0.11</span></div></div><div class="card"><div class="ch"><span class="k">dragon</span>
+          <audio controls preload="none" src="audio/No b005.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.89)</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p nb">🔇 no burst (0.99)</span></div></div><div class="card"><div class="ch"><span class="k">fairy</span>
+          <audio controls preload="none" src="audio/No b006.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.81)</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p nb">🔇 no burst (1.00)</span></div></div><div class="card"><div class="ch"><span class="k">zombie</span>
+          <audio controls preload="none" src="audio/No b007.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.52)</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Displeased Grunt 0.24</span> <span class="p">Kissing Sounds 0.19</span> <span class="p">Kissing Noises 0.17</span></div></div><div class="card"><div class="ch"><span class="k">pain_scream</span>
+          <audio controls preload="none" src="audio/No b008.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.51)</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Exasperated Sigh 0.33</span> <span class="p">Exhausted Groan 0.19</span> <span class="p">Frustrated Groan 0.06</span></div></div><div class="card"><div class="ch"><span class="k">asmr_man</span>
+          <audio controls preload="none" src="audio/No b009.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.60)</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Relief Sigh 0.36</span> <span class="p">Contented Sigh 0.28</span> <span class="p">Exhausted Groan 0.08</span> <span class="p">Whispered Mumble 0.08</span></div></div><div class="card"><div class="ch"><span class="k">dragon</span>
+          <audio controls preload="none" src="audio/No b010.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.80)</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p nb">🔇 no burst (0.61)</span></div></div><div class="card"><div class="ch"><span class="k">dragon</span>
+          <audio controls preload="none" src="audio/No b011.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.67)</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Tongue Click 0.62</span> <span class="p">Spitting 0.14</span> <span class="p">Slap Face 0.12</span> <span class="p">Clicks Tongue 0.06</span></div></div><div class="card"><div class="ch"><span class="k">dragon</span>
+          <audio controls preload="none" src="audio/No b012.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.67)</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Tongue Click 0.85</span> <span class="p">Clicks Tongue 0.07</span> <span class="p">Spitting 0.03</span> <span class="p">Slap Face 0.02</span></div></div><div class="card"><div class="ch"><span class="k">sad_woman4</span>
+          <audio controls preload="none" src="audio/No b013.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.73)</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Whispered Mumble 0.83</span> <span class="p">Relief Sigh 0.07</span> <span class="p">Contented Sigh 0.02</span> <span class="p">Growl 0.02</span></div></div><div class="card"><div class="ch"><span class="k">asmr_woman</span>
+          <audio controls preload="none" src="audio/No b014.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.62)</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Contented Sigh 0.13</span> <span class="p">Kissing Sounds 0.09</span> <span class="p">Exhausted Groan 0.06</span></div></div><div class="card"><div class="ch"><span class="k">evil_ghost4</span>
+          <audio controls preload="none" src="audio/No b015.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.97)</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p nb">🔇 no burst (0.94)</span></div></div><div class="card"><div class="ch"><span class="k">dragon</span>
+          <audio controls preload="none" src="audio/No b016.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.62)</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Tongue Click 0.84</span> <span class="p">Clicks Tongue 0.05</span> <span class="p">Spitting 0.04</span> <span class="p">Slap Face 0.03</span></div></div><div class="card"><div class="ch"><span class="k">ork</span>
+          <audio controls preload="none" src="audio/No b017.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.70)</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p nb">🔇 no burst (1.00)</span></div></div><div class="card"><div class="ch"><span class="k">mouse4</span>
+          <audio controls preload="none" src="audio/No b018.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.65)</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p nb">🔇 no burst (0.99)</span></div></div><div class="card"><div class="ch"><span class="k">ork</span>
+          <audio controls preload="none" src="audio/No b019.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.82)</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Soft Hum 0.38</span> <span class="p">Purr 0.28</span> <span class="p">Humming 0.24</span> <span class="p">Resonant Hum 0.06</span></div></div><div class="card"><div class="ch"><span class="k">ork</span>
+          <audio controls preload="none" src="audio/No b020.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.59)</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Spitting 0.53</span> <span class="p">Slap Face 0.25</span> <span class="p">Tongue Click 0.04</span></div></div><div class="card"><div class="ch"><span class="k">ork</span>
+          <audio controls preload="none" src="audio/No b021.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.56)</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p nb">🔇 no burst (0.88)</span></div></div><div class="card"><div class="ch"><span class="k">goblin4</span>
+          <audio controls preload="none" src="audio/No b022.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.58)</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p nb">🔇 no burst (0.99)</span></div></div><div class="card"><div class="ch"><span class="k">dragon</span>
+          <audio controls preload="none" src="audio/No b023.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.50)</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Tongue Click 0.30</span> <span class="p">Slap Face 0.13</span> <span class="p">Spitting 0.10</span></div></div><div class="card"><div class="ch"><span class="k">evil_ghost</span>
+          <audio controls preload="none" src="audio/No b024.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.58)</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Tongue Click 0.20</span> <span class="p">Slap Face 0.19</span> <span class="p">Sharp Whistle 0.18</span> <span class="p">Clicks Tongue 0.09</span></div></div><div class="card"><div class="ch"><span class="k">pain_scream4</span>
+          <audio controls preload="none" src="audio/No b025.mp3"></audio></div>
+          <div class="pr"><b>multi-label model:</b> <span class="p nb">🔇 no burst (0.76)</span></div>
+          <div class="pr"><b>single-burst model:</b> <span class="p">Displeased Grunt 0.68</span> <span class="p">Surprised Gasp 0.18</span> <span class="p">Fearful Gasp 0.04</span> <span class="p">Effort Grunt 0.04</span></div></div>
 </body></html>
