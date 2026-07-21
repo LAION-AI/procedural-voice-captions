@@ -62,7 +62,7 @@ TAXONOMY_JSON   = os.environ.get("VOCALBURST_TAXONOMY", os.path.join(HERE, "voca
 PARAKEET_MODEL  = os.environ.get("PARAKEET_MODEL", "nvidia/parakeet-tdt-0.6b-v3")
 ASR_HELPERS     = os.environ.get("ASR_HELPERS_DIR", "/run/user/1001/asr_moss_analysis")
 USE_EMONET      = os.environ.get("BC_EMONET", "1") != "0"
-LOCATOR_THR     = float(os.environ.get("BURST_LOCATOR_THR", "0.7"))
+LOCATOR_THR     = float(os.environ.get("BURST_LOCATOR_THR", "0.75"))   # grid-searched on character voices
 NOBURST_GATE    = float(os.environ.get("BURST_NOBURST_GATE", "0.5"))
 # Duration gate: very short locator spans are dominated by transient false positives.
 # Empirically (character-voice grid) every rejected span was <0.6s, and the 0.10-0.16s

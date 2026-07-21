@@ -430,12 +430,39 @@ classifier `.pt`) are all overridable via env vars documented at the top of
 A Gemini-3.5-Flash study (see the [config study](https://github.com/LAION-AI/Comprehensive-Voice-Acting-Annotation-Pipeline/blob/main/CAPTION_CONFIG_EVAL.md)) over caption configurations found:
 
 - **Sentence-level burst insertion (Variant B) is the recommended default** — it beats locator-inline (Variant A), 8.50 vs 7.63, because it keeps the transcript clean (better ASR readability + burst score). The kept bursts are placed **inline** into the per-sentence script (mapped to the sentence they occur in by word timestamps).
-- The **detector→confirm** stage (`vocalburst-locator@0.7` → confirm with the multi-label classifier, `P(no_burst)≥0.5` → discard, else top-1) is the base for both variants and gates hallucinations.
+- The **detector→confirm** stage (`vocalburst-locator` → confirm with the multi-label classifier, `P(no_burst)≥0.5` → discard, else top-1) is the base for both variants and gates hallucinations.
+- **Locator threshold `0.75` (grid-searched, default).** A sweep over the character voices (Gemini-3.5-Flash rating burst precision vs recall) settled `BURST_LOCATOR_THR`:
+
+  | thr | precision | recall | kept | hallucinated |
+  |-----|-----------|--------|------|--------------|
+  | 0.70 | 8.09 | 8.84 | 42 | 18 |
+  | **0.75 (default)** | **8.66** | **8.78** | 38 | 12 |
+  | 0.80 | 8.59 | 8.75 | 37 | 9 |
+  | 0.85 | 8.72 | 8.38 | 33 | 6 |
+  | 0.90 | 8.75 | 8.50 | 28 | 7 |
+
+  `0.70` is clearly too loose (18 hallucinations). `0.75` is the precision/recall optimum — it nearly halves hallucinations with almost no recall loss. Bump to **`0.80`** if you want still fewer hallucinations at a small recall cost.
 - **Duration gate** — locator spans below a minimum duration are rejected (default 0.30 s global, 0.60 s for the smack/click/slap groups). Short spans dominate transient false positives (Slap Face / Lip Smack firing at high `p` on 0.10–0.16 s spans); every discarded span in the character-voice study was < 0.6 s. Tunable via `BURST_MIN_DUR` / `BURST_TRANSIENT_MIN_DUR`.
 - **Gender gate** — the Empathic-Insight Gender expert gates whether a gender phrase is emitted at all (see above); near-zero → gender omitted.
 - **Surface form** — the terse **`tags`** template is the default (`PROC_TEMPLATE`).
 - Burst classifiers are the **multilingual-retrained v2** ([single](https://huggingface.co/laion/vocalburst-classifier-single) mAP 0.70/0.87, [multi-label](https://huggingface.co/laion/vocalburst-classifier-multilabel)) — the multi-label model has fewer false positives at the confirm stage.
-- Full annotation runs **~1.1 s/clip** (1×A100).
+
+### Procedural vs. LLM-assisted — throughput & quality (1×A100, n=32, Gemini-3.5-Flash 1–10)
+
+There are two ways to turn the scores into a final caption. This repo produces the **procedural** one
+directly; the [**Comprehensive Voice-Acting Annotation Pipeline**](https://github.com/LAION-AI/Comprehensive-Voice-Acting-Annotation-Pipeline)
+feeds the same annotations to a small LLM (Gemma-4-E4B, text-only).
+
+| path | s/clip | clips/s | overall | emotion | burst&nbsp;acc | gender | wins |
+|------|--------|---------|---------|---------|----------------|--------|------|
+| **procedural** (this repo) | **0.62** | **1.62** | 6.95 | 7.56 | 6.83 | 9.47 | 12 |
+| **LLM-assisted** ([VAP repo](https://github.com/LAION-AI/Comprehensive-Voice-Acting-Annotation-Pipeline)) | 1.64 | 0.61 | **7.78** | **8.39** | **8.12** | **9.94** | **20** |
+
+**Pros/cons — pick by need:**
+- **Procedural** — **~2.6× faster** (no LLM), fully deterministic, no GPU LLM, trivially re-augmentable (see [augment.py](augment.py)). Terser and a bit more mechanical; slightly lower emotion/burst polish. Best for **large-scale labeling, training targets, and on-the-fly augmentation**.
+- **LLM-assisted** — higher **overall / emotion / burst** quality and can be **coloured by a character archetype**; wins the head-to-head 20–12. Costs a batched LLM pass (~1 s/clip) and is non-deterministic. Best when **fluency and per-clip polish matter** (demos, showcase captions). See the [VAP repo](https://github.com/LAION-AI/Comprehensive-Voice-Acting-Annotation-Pipeline) for that path.
+
+Both keep gender **correct or correctly unstated** (9.47 / 9.94) thanks to the gender gate.
 
 Live examples on real character voices (procedural tags vs LLM-assisted, both with duration-gated inline bursts + gender gate):
 **https://projects.laion.ai/procedural-voice-captions/character-captions/**
