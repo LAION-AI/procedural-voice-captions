@@ -494,3 +494,11 @@ requirements.txt
 
 Built for the LAION voice-acting effort. Models and taxonomies are the
 respective LAION / third-party releases linked above.
+
+## Changelog
+
+- **Pause markers** — the pipeline now inserts **`[pause X.Xs]`** into the SCRIPT from the ASR
+  **word timestamps** (a marker on any silent gap ≥ `BURST_PAUSE_THR`, default 0.30 s, both within a
+  sentence and between sentences; `0` disables). Earlier captions had no pauses. The markers are copied
+  verbatim into the LLM-reword output, and all captioned datasets built with this code were
+  re-annotated to include them.
