@@ -64,6 +64,14 @@ ASR_HELPERS     = os.environ.get("ASR_HELPERS_DIR", "/run/user/1001/asr_moss_ana
 USE_EMONET      = os.environ.get("BC_EMONET", "1") != "0"
 LOCATOR_THR     = float(os.environ.get("BURST_LOCATOR_THR", "0.7"))
 NOBURST_GATE    = float(os.environ.get("BURST_NOBURST_GATE", "0.5"))
+# Duration gate: very short locator spans are dominated by transient false positives.
+# Empirically (character-voice grid) every rejected span was <0.6s, and the 0.10-0.16s
+# cluster was almost entirely Slap Face / Lip Smack / Resonant Hum firing at high p even
+# though nothing is really there. So we reject spans below a minimum duration, with a
+# stricter floor for the transient "smack / click / slap" groups.
+MIN_BURST_DUR     = float(os.environ.get("BURST_MIN_DUR", "0.30"))            # global floor (s)
+TRANSIENT_MIN_DUR = float(os.environ.get("BURST_TRANSIENT_MIN_DUR", "0.60"))  # stricter for smack/click/slap
+TRANSIENT_GROUPS  = {"mouth_and_lip_sounds", "tongue_clicks", "hand_and_body_sounds"}
 
 SR = 16000
 VN_TARGET = 480000          # 30 s @ 16 kHz for the VoiceNet embedding
@@ -201,6 +209,7 @@ class BurstCaptioner:
         # burst taxonomy / classes
         tax = json.load(open(TAXONOMY_JSON))["categories"]
         self.classes = [n for g, d in tax.items() for n in d.get("items", {})] + ["no_burst"]
+        self.label_group = {n: g for g, d in tax.items() for n in d.get("items", {})}
         self.NB = len(self.classes) - 1
         self._log(f"burst taxonomy: {self.NB} classes + no_burst")
 
@@ -416,6 +425,58 @@ class BurstCaptioner:
                 toks.append(words_ts[idx]["w"])
         return " ".join(toks).strip()
 
+    def dur_ok(self, label, dur):
+        """Duration gate. Short locator spans are dominated by transient false positives, so a
+        span must clear a minimum duration to be kept — a stricter floor for the smack/click/slap
+        groups. Returns (ok, floor_used)."""
+        if label is None:
+            return False, 0.0
+        floor = TRANSIENT_MIN_DUR if self.label_group.get(label) in TRANSIENT_GROUPS else MIN_BURST_DUR
+        return dur >= floor, floor
+
+    def _assign_bursts(self, sent_out, words, kept_full):
+        """Assign each kept locator burst to a sentence (by time overlap, nearest as fallback) and
+        build one inline SCRIPT line per sentence with `(Burst)` placed inline via word timestamps.
+        Guarantees every kept burst appears exactly once."""
+        S = len(sent_out)
+        buckets = [[] for _ in range(max(S, 1))]
+        for x in kept_full:
+            mid = (x["start"] + x["end"]) / 2.0
+            best, bestd = None, float("inf")
+            for i, s in enumerate(sent_out):
+                a, b = s.get("start"), s.get("end")
+                if a is None or b is None:
+                    continue
+                if a - 0.2 <= mid <= b + 0.2:
+                    best = i; break
+                d = min(abs(mid - a), abs(mid - b))
+                if d < bestd:
+                    bestd, best = d, i
+            buckets[best if best is not None else 0].append(x)
+        lines = []
+        for i, s in enumerate(sent_out):
+            a, b = s.get("start"), s.get("end")
+            sw = [w for w in words if w.get("start") is not None and a is not None and b is not None
+                  and a - 1e-6 <= w["start"] <= b + 1e-6]
+            sb = sorted([(x["start"], x["end"], x["label"], x["prob"]) for x in buckets[i]], key=lambda z: z[0])
+            if sw and sb:
+                inline = self.variant_a(sw, sb)
+            elif sb:
+                inline = (s["text"].rstrip(".") + " " + " ".join(f"({l})" for _, _, l, _ in sb)).strip()
+            else:
+                inline = s["text"]
+            lines.append({"cue": s["caption"], "text": inline, "bursts": [l for _, _, l, _ in sb]})
+        return lines
+
+    def procedural_caption(self, result):
+        """The default procedural caption: GENERAL line + a SCRIPT with one line per sentence,
+        each `(style cue) sentence text` with the KEPT (locator-detected, confirmed, duration-gated)
+        vocal bursts inserted inline as `(Burst Name)`."""
+        out = ["GENERAL: " + result["global_caption"], "SCRIPT:"]
+        for ln in result.get("script_lines", []):
+            out.append(f"({ln['cue']}) {ln['text']}")
+        return "\n".join(out)
+
     @staticmethod
     def variant_b_phrase(label, seed=0):
         """A small procedurally-generated phrase attaching a burst to a sentence."""
@@ -484,13 +545,19 @@ class BurstCaptioner:
         spans = self.locator_spans(wav)
         a_bursts = []
         for (a, b, pk) in spans:
+            dur_span = b - a
             seg = wav[int(a * SR):int(b * SR)]
-            lab, prob, p_nb = self.classify_burst(seg)
-            a_bursts.append({"start": round(a, 2), "end": round(b, 2), "peak": round(pk, 3),
-                             "label": lab, "prob": round(prob, 3), "p_noburst": round(p_nb, 3),
-                             "kept": lab is not None})
+            lab, prob, p_nb = self.classify_burst(seg)   # lab is None if no_burst gate fires
+            ok, floor = self.dur_ok(lab, dur_span)       # duration gate on the span
+            gated = (lab is not None) and (not ok)       # confirmed a class but span too short
+            a_bursts.append({"start": round(a, 2), "end": round(b, 2), "dur": round(dur_span, 2),
+                             "peak": round(pk, 3), "label": lab, "prob": round(prob, 3),
+                             "p_noburst": round(p_nb, 3), "dur_floor": round(floor, 2),
+                             "dur_gated": gated, "kept": (lab is not None) and ok})
         kept = [(x["start"], x["end"], x["label"], x["prob"]) for x in a_bursts if x["kept"]]
         variant_a_inline = self.variant_a(words, kept)
+        # default procedural output: kept bursts mapped inline into per-sentence script lines
+        script_lines = self._assign_bursts(sent_out, words, [x for x in a_bursts if x["kept"]])
 
         if mp3_out:
             os.makedirs(os.path.dirname(mp3_out), exist_ok=True)
@@ -502,6 +569,7 @@ class BurstCaptioner:
             "genu": round(g_vn["genu"], 2), "blend": round(g_vn["blend"], 2),
             "global_caption": g_text,
             "sentences": sent_out,
+            "script_lines": script_lines,
             "variant_a_bursts": a_bursts,
             "variant_a_inline": variant_a_inline,
             "n_spans": len(spans), "n_words_ts": len([w for w in words if w.get("start") is not None]),
