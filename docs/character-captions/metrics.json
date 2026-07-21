@@ -2,25 +2,25 @@
   "n_clips": 32,
   "gpu": "A100-80GB",
   "procedural": {
-    "s_per_clip": 0.62,
-    "clips_per_s": 1.62,
-    "overall": 6.95,
-    "emotion": 7.56,
-    "burst_accuracy": 6.83,
-    "gender": 9.47
+    "s_per_clip": 0.66,
+    "clips_per_s": 1.52,
+    "overall": 7.28,
+    "emotion": 7.55,
+    "burst_accuracy": 7.97,
+    "gender": 9.19
   },
   "llm_assisted": {
-    "s_per_clip": 1.64,
-    "clips_per_s": 0.61,
-    "gemma_only_s_per_clip": 1.02,
-    "overall": 7.78,
-    "emotion": 8.39,
-    "burst_accuracy": 8.12,
-    "gender": 9.94
+    "s_per_clip": 2.05,
+    "clips_per_s": 0.49,
+    "gemma_only_s_per_clip": 1.4,
+    "overall": 8.25,
+    "emotion": 8.36,
+    "burst_accuracy": 7.97,
+    "gender": 9.91
   },
   "better_vote": {
-    "A": 12,
-    "B": 20,
+    "A": 3,
+    "B": 29,
     "tie": 0
   }
 }

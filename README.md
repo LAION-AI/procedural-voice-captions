@@ -455,14 +455,20 @@ feeds the same annotations to a small LLM (Gemma-4-E4B, text-only).
 
 | path | s/clip | clips/s | overall | emotion | burst&nbsp;acc | gender | wins |
 |------|--------|---------|---------|---------|----------------|--------|------|
-| **procedural** (this repo) | **0.62** | **1.62** | 6.95 | 7.56 | 6.83 | 9.47 | 12 |
-| **LLM-assisted** ([VAP repo](https://github.com/LAION-AI/Comprehensive-Voice-Acting-Annotation-Pipeline)) | 1.64 | 0.61 | **7.78** | **8.39** | **8.12** | **9.94** | **20** |
+| **procedural** (this repo) | **0.66** | **1.52** | 7.28 | 7.55 | 7.97 | 9.19 | 3 |
+| **LLM-assisted** ([VAP repo](https://github.com/LAION-AI/Comprehensive-Voice-Acting-Annotation-Pipeline)) | 2.05 | 0.49 | **8.25** | **8.36** | **7.97** | **9.91** | **29** |
+
+The LLM path **rewords the procedural draft** but the **burst positions are forced to the procedural ones**
+(the LLM only rewrites the GENERAL line and the delivery cues; each sentence's text + inline bursts are copied
+verbatim). That is why **burst_accuracy is identical (7.97)** for both — the LLM no longer degrades placement —
+while overall/emotion improve. (An A/B of four placement strategies confirmed this hybrid beats letting the LLM
+re-place bursts from a list, which tended to *drop* real bursts.)
 
 **Pros/cons — pick by need:**
-- **Procedural** — **~2.6× faster** (no LLM), fully deterministic, no GPU LLM, trivially re-augmentable (see [augment.py](augment.py)). Terser and a bit more mechanical; slightly lower emotion/burst polish. Best for **large-scale labeling, training targets, and on-the-fly augmentation**.
-- **LLM-assisted** — higher **overall / emotion / burst** quality and can be **coloured by a character archetype**; wins the head-to-head 20–12. Costs a batched LLM pass (~1 s/clip) and is non-deterministic. Best when **fluency and per-clip polish matter** (demos, showcase captions). See the [VAP repo](https://github.com/LAION-AI/Comprehensive-Voice-Acting-Annotation-Pipeline) for that path.
+- **Procedural** — **~3× faster** (no LLM), fully deterministic, no GPU LLM, trivially re-augmentable (see [augment.py](augment.py)). Terser, more mechanical wording. Best for **large-scale labeling, training targets, and on-the-fly augmentation**.
+- **LLM-assisted** — same burst placement, **more fluent** GENERAL + cues, can be **coloured by a (non-gendered) archetype**; wins the head-to-head 29–3. Costs a batched LLM reword pass (~1.4 s/clip). Best when **fluency and per-clip polish matter** (demos, showcase captions). See the [VAP repo](https://github.com/LAION-AI/Comprehensive-Voice-Acting-Annotation-Pipeline).
 
-Both keep gender **correct or correctly unstated** (9.47 / 9.94) thanks to the gender gate.
+Both keep gender **correct or correctly unstated** (9.19 / 9.91) thanks to the gender gate.
 
 Live examples on real character voices (procedural tags vs LLM-assisted, both with duration-gated inline bursts + gender gate):
 **https://projects.laion.ai/procedural-voice-captions/character-captions/**
