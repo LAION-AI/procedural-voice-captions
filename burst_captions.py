@@ -49,7 +49,7 @@ os.environ.setdefault("HF_HOME", os.environ.get("HF_HOME", "/tmp/hf_cache"))
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from caption import caption_detail, load_baseline, render_caption, _groups  # noqa: E402
+from caption import caption_detail, load_baseline, render_caption, _groups, EI_GENDER_GATE  # noqa: E402
 
 # --------------------------------------------------------------------------- #
 # ENV — all model locations are overridable.
@@ -69,6 +69,9 @@ NOBURST_GATE    = float(os.environ.get("BURST_NOBURST_GATE", "0.5"))
 # cluster was almost entirely Slap Face / Lip Smack / Resonant Hum firing at high p even
 # though nothing is really there. So we reject spans below a minimum duration, with a
 # stricter floor for the transient "smack / click / slap" groups.
+# Surface form for procedural captions. Default "tags" = terse, on-the-point tags (intensity +
+# dimension as short words, no filler); set PROC_TEMPLATE to any TEMPLATE_NAMES value for prose.
+PROC_TEMPLATE     = os.environ.get("PROC_TEMPLATE", "tags")
 MIN_BURST_DUR     = float(os.environ.get("BURST_MIN_DUR", "0.30"))            # global floor (s)
 TRANSIENT_MIN_DUR = float(os.environ.get("BURST_TRANSIENT_MIN_DUR", "0.60"))  # stricter for smack/click/slap
 TRANSIENT_GROUPS  = {"mouth_and_lip_sounds", "tongue_clicks", "hand_and_body_sounds"}
@@ -255,6 +258,17 @@ class BurstCaptioner:
                     sd = OrderedDict((k.replace("_orig_mod.", ""), v) for k, v in sd.items())
                 m.load_state_dict(sd)
                 self.emo_heads[emo] = m.to(device).eval().half()
+            # Empathic-Insight Gender expert (same FullEmbeddingMLP) -> bipolar -2 masc .. +2 fem.
+            # Used only as a confidence GATE on the VoiceNet gender phrase (see caption.py).
+            self.gender_head = None
+            gpath = avail.get("model_Gender_best.pth")
+            if gpath:
+                gm = _full_embedding_mlp()
+                gsd = torch.load(gpath, map_location="cpu")
+                if any(k.startswith("_orig_mod.") for k in gsd):
+                    gsd = OrderedDict((k.replace("_orig_mod.", ""), v) for k, v in gsd.items())
+                gm.load_state_dict(gsd)
+                self.gender_head = gm.to(device).eval().half()
         self._log("all models ready.")
 
     def _log(self, *a):
@@ -301,6 +315,15 @@ class BurstCaptioner:
         with torch.no_grad():
             e = self.emo_enc(feats, return_dict=True).last_hidden_state.half()
         return e.squeeze(0).cpu()
+
+    def gender_ei(self, embed):
+        """Empathic-Insight Gender expert on a BUD-E-Whisper embedding: -2 (masculine) .. +2
+        (feminine), or None if the encoder/head is unavailable."""
+        import torch
+        if not self.use_emonet or getattr(self, "gender_head", None) is None or embed is None:
+            return None
+        with torch.no_grad():
+            return float(self.gender_head(embed.unsqueeze(0).to(self.dev)).squeeze().float().item())
 
     def emonet_score(self, embeds):
         """Run the 40 heads once over a stack of embeddings -> list of {emo: score}."""
@@ -379,23 +402,29 @@ class BurstCaptioner:
         return self.classes[top], float(p[top]), p_nb
 
     # -- caption composition -------------------------------------------------- #
-    def global_caption(self, preds, seed=0):
-        """Top-5 VoiceNet + Top-3 emotions + genuineness + Age/Gender/Tempo."""
-        d = caption_detail(preds, self.baseline, k_voicenet=5, k_emonet=3,
-                           synonym_seed=seed, template="default")
+    def global_caption(self, preds, seed=0, ei_gender=None, template=None):
+        """Top-5 VoiceNet + Top-3 emotions + genuineness + Age/Gender/Tempo. `ei_gender`
+        (Empathic-Insight gender, -2..+2) gates the gender phrase: near zero -> omitted.
+        `template` defaults to PROC_TEMPLATE (terse 'tags' by default)."""
+        d = caption_detail(preds, self.baseline, k_voicenet=5, k_emonet=3, synonym_seed=seed,
+                           template=(template or PROC_TEMPLATE), ei_gender=ei_gender)
         return render_caption(d), d
 
-    def sentence_caption(self, preds, seed=0):
-        """Top-3 VoiceNet + Top-3 emotions ONLY (no Age/Gender/Tempo, no quality)."""
+    def sentence_caption(self, preds, seed=0, template=None):
+        """Top-3 VoiceNet + Top-3 emotions ONLY (no Age/Gender/Tempo, no quality). Defaults to the
+        terse 'tags' surface form (PROC_TEMPLATE)."""
+        tmpl = template or PROC_TEMPLATE
         d = caption_detail(preds, self.baseline, k_voicenet=3, k_emonet=3,
-                           always_on=[], synonym_seed=seed, template="default")
+                           always_on=[], synonym_seed=seed, template=tmpl)
+        if tmpl == "tags":
+            tags = ([e["tag"] for e in d["voicenet"] if e.get("tag")]
+                    + [e["tag"] for e in d["emotions"] if e.get("tag")])
+            txt = ", ".join(tags) if tags else "unremarkable"
+            return txt, {"voicenet": d["voicenet"], "emotions": d["emotions"]}
         vn = [e["phrase"] for e in d["voicenet"]]
         emo = [e["phrase"] for e in d["emotions"]]
         parts = vn + emo
-        if not parts:
-            txt = "An even, unremarkable delivery."
-        else:
-            txt = "Delivered " + "; ".join(parts) + "."
+        txt = ("Delivered " + "; ".join(parts) + ".") if parts else "An even, unremarkable delivery."
         return txt, {"voicenet": d["voicenet"], "emotions": d["emotions"]}
 
     # -- burst insertion ------------------------------------------------------ #
@@ -519,7 +548,8 @@ class BurstCaptioner:
         emo_scores = self.emonet_score(emo_embeds) if self.use_emonet else [{} for _ in units_wav]
 
         g_preds = {"dims": g_vn["dims"], "emo": emo_scores[0], "genu": g_vn["genu"], "blend": g_vn["blend"]}
-        g_text, g_detail = self.global_caption(g_preds, seed)
+        ei_gender = self.gender_ei(emo_embeds[0]) if self.use_emonet else None
+        g_text, g_detail = self.global_caption(g_preds, seed, ei_gender=ei_gender)
 
         # --- per-sentence scoring + captions ---
         sent_out = []
@@ -539,6 +569,9 @@ class BurstCaptioner:
                 "caption": s_text,
                 "variant_b_burst": lab, "variant_b_prob": round(prob, 3),
                 "variant_b_caption": b_text,
+                # raw scores for on-the-fly caption augmentation (see augment.py)
+                "scores": {"dims": s_vn["dims"], "emo": emo_scores[i + 1],
+                           "genu": round(s_vn["genu"], 4), "blend": round(s_vn["blend"], 4)},
             })
 
         # --- Variant A: locator over whole clip ---
@@ -567,6 +600,11 @@ class BurstCaptioner:
         return {
             "id": cid, "dur": round(dur, 2), "transcript": transcript,
             "genu": round(g_vn["genu"], 2), "blend": round(g_vn["blend"], 2),
+            "ei_gender": (round(ei_gender, 3) if ei_gender is not None else None),
+            "gender_gated": (ei_gender is not None and abs(ei_gender) < EI_GENDER_GATE),
+            # raw global scores for on-the-fly caption augmentation (see augment.py)
+            "scores": {"dims": g_vn["dims"], "emo": emo_scores[0],
+                       "genu": round(g_vn["genu"], 4), "blend": round(g_vn["blend"], 4)},
             "global_caption": g_text,
             "sentences": sent_out,
             "script_lines": script_lines,

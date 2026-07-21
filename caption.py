@@ -40,6 +40,16 @@ EPS = 1e-6
 
 ALWAYS_ON = ["AGEV", "GEND", "REGS", "TEMP"]        # always described
 
+# Empathic-Insight gender GATE. The VoiceNet GEND dim always emits *some* gender phrase, which is
+# risky on voices whose gender is not clearly perceptible (e.g. soft whispers). We use the dedicated
+# Empathic-Insight Gender expert (bipolar -2 masculine .. +2 feminine) purely as a CONFIDENCE GATE:
+# that model was trained to label only the clearly-perceptible cases, so when |EI gender| is small
+# (near zero) we treat the gender as not confidently perceptible and DROP the gender clause entirely
+# instead of asserting a possibly-wrong one. Above the gate, the well-calibrated VoiceNet GEND label
+# is used (the A/B study showed EI compresses masculine voices toward neutral, so EI gates but does
+# not label). Tunable via env; set to 0 to disable the gate.
+EI_GENDER_GATE = float(os.environ.get("EI_GENDER_GATE", "0.5"))
+
 # Surface-form templates. All templates carry the SAME phrase content and pass
 # through the SAME gates (genuineness gate, absolute bands, always-on identity
 # dims, EmoNet synonym rotation, top-k selection) — only the ORDER of the phrase
@@ -52,7 +62,40 @@ ALWAYS_ON = ["AGEV", "GEND", "REGS", "TEMP"]        # always described
 # non-identity timbre dims and the emotions within their groups (also seeded).
 TEMPLATE_NAMES = ["default", "identity_first", "emotion_first", "telegraphic",
                   "two_sentence", "sounds_like", "bulleted", "varied_connectors",
-                  "quality_led", "minimal_identity"]
+                  "quality_led", "minimal_identity", "tags"]
+
+# Terse-tag vocabulary: one short word/expression per VoiceNet dim (hi, lo). The "tags" template
+# renders these comma-joined with a light intensity prefix and NO filler words — a compact,
+# on-the-point form well suited as a training target or LLM input.
+TAG = {
+    "AROU": ("energetic", "calm"), "ARSH": ("surging", "fading"), "ATCK": ("sharp-onset", "soft-onset"),
+    "BKGN": ("clean-bg", "noisy-bg"), "BRGT": ("bright", "dark"), "CHNK": ("long-phrased", "choppy"),
+    "CLRT": ("crisp", "mumbled"), "COGL": ("strained", "effortless"), "DARC": ("swelling", "fading"),
+    "DFLU": ("halting", "smooth"), "EMPH": ("emphatic", "flat"), "ESTH": ("pleasing", "harsh"),
+    "EXPL": ("explicit", "clean-content"), "FOCS": ("focused", "dissociated"), "FULL": ("full", "thin"),
+    "HARM": ("tonal", "noisy"), "METL": ("metallic", "organic"), "RANG": ("wide-pitch", "monotone"),
+    "RCQL": ("hi-fi", "lo-fi"), "RESP": ("breathy", "seamless-breath"), "ROUG": ("raspy", "smooth"),
+    "R_CHST": ("chesty", "thin-chest"), "R_HEAD": ("heady", "thin-head"), "R_MASK": ("forward-mask", "thin-mask"),
+    "R_MIXD": ("blended-resonance", "flat-resonance"), "R_NASL": ("nasal", "denasal"),
+    "R_ORAL": ("oral-bright", "oral-muted"), "R_THRT": ("throaty", "thin-throat"),
+    "SMTH": ("even-rhythm", "jerky"), "STNC": ("commanding", "meek"), "STRU": ("structured", "scattered"),
+    "S_ASMR": ("asmr", "non-intimate"), "S_AUTH": ("authoritative", "submissive"),
+    "S_CART": ("cartoonish", "naturalistic"), "S_CASU": ("casual", "formal"), "S_CONV": ("conversational", "monologic"),
+    "S_DRAM": ("dramatic", "understated"), "S_FORM": ("formal", "loose"), "S_MONO": ("monologic", "dialogic"),
+    "S_NARR": ("narrator", "non-narrative"), "S_NEWS": ("news-anchor", "non-broadcast"),
+    "S_PLAY": ("playful", "serious"), "S_RANT": ("ranting", "even-tempered"), "S_STRY": ("storytelling", "non-narrative"),
+    "S_TECH": ("teacherly", "non-instructional"), "S_WHIS": ("whispered", "non-whispered"),
+    "TEMP": ("fast", "slow"), "TENS": ("tense", "relaxed"), "VALN": ("positive", "negative"),
+    "VALS": ("brightening", "darkening"), "VFLX": ("accelerating", "decelerating"),
+    "VOLT": ("volatile", "steady"), "VULN": ("vulnerable", "guarded"), "WARM": ("warm", "cold"),
+}
+# Short categorical tags for the near-absolute identity dims (evaluated as value < bound).
+TAG_ABS = {
+    "GEND": [(1.5, "feminine"), (2.5, "feminine"), (3.5, "androgynous"), (4.5, "masculine"), (99, "masculine")],
+    "AGEV": [(1.5, "child"), (2.5, "young"), (3.5, "adult"), (4.5, "middle-aged"), (99, "elderly")],
+    "REGS": [(1.5, "low-register"), (2.5, "low-register"), (3.5, "mid-register"), (4.5, "high-register"), (99, "high-register")],
+}
+INTENS_SHORT = {"Extremely": "very", "Very": "very", "Notably": "", "Somewhat": "slightly"}
 
 # |z| -> intensity adverb
 INTENSITY = [(2.0, "Extremely"), (1.5, "Very"), (1.0, "Notably"), (0.5, "Somewhat")]
@@ -245,7 +288,8 @@ def _resolve_template(template, seed):
 
 def caption_detail(preds, baseline=None, k_voicenet=5, k_emonet=3,
                    always_on=ALWAYS_ON, synonym_seed=None,
-                   template="default", shuffle_dims=False):
+                   template="default", shuffle_dims=False,
+                   ei_gender=None, ei_gender_gate=EI_GENDER_GATE):
     """Return a structured breakdown of the caption.
 
     `preds` accepts either a flat {code: value} mapping or a nested
@@ -283,6 +327,13 @@ def caption_detail(preds, baseline=None, k_voicenet=5, k_emonet=3,
     if genu is None and "genuineness" in dims:
         genu = dims.pop("genuineness")
 
+    # Empathic-Insight gender gate: when the EI gender expert is near zero the gender is not
+    # confidently perceptible -> drop GEND entirely (from both top-k and always-on) rather than
+    # assert a possibly-wrong label.
+    if ei_gender is not None and ei_gender_gate > 0 and abs(ei_gender) < ei_gender_gate:
+        dims.pop("GEND", None)
+        always_on = [c for c in always_on if c != "GEND"]
+
     gate, gen_desc, zg = _genuineness_gate(genu, baseline)
 
     # ---- VoiceNet ----
@@ -319,15 +370,19 @@ def caption_detail(preds, baseline=None, k_voicenet=5, k_emonet=3,
             # near-categorical attribute: describe the ABSOLUTE 0-6 level, not the z-deviation
             phrase = next(p for thr, p in ABSOLUTE_BANDS[code] if val < thr)
             adverb = "Absolute"
+            tag = next(p for thr, p in TAG_ABS[code] if val < thr) if code in TAG_ABS else None
         elif az < NEUTRAL_BAND:
             phrase = NEUTRAL.get(code, f"average in {code.lower()}")
             adverb = "About-average"
+            tag = None                                  # about-average -> no tag (terse = no filler)
         else:
             adverb = _intensity(az)
             phrase = f"{adverb.lower()} {d['hi' if z >= 0 else 'lo']}"
+            short = TAG.get(code, (None, None))[0 if z >= 0 else 1]
+            tag = (f"{INTENS_SHORT.get(adverb, '')} {short}".strip() if short else None)
         vn.append({"dim": code, "name": baseline[code].get("name", code),
                    "value": round(val, 3), "z": round(z, 2), "direction": direction,
-                   "intensity": adverb, "always_on": always, "phrase": phrase})
+                   "intensity": adverb, "always_on": always, "phrase": phrase, "tag": tag})
     # order: the top-k deviations first (already sorted by |z|), always-on extras appended
 
     # ---- EmoNet emotions (genuineness-gated) ----
@@ -357,23 +412,26 @@ def caption_detail(preds, baseline=None, k_voicenet=5, k_emonet=3,
             else:
                 phrase = f"notably free of {word}"
                 direction = "below"
+            etag = (f"{INTENS_SHORT.get(adverb, '')} {word}".strip() if z >= 0 else f"no {word}")
             emos.append({"emotion": name, "value": round(val, 3), "z": round(z, 2),
                          "direction": direction, "intensity": adverb,
-                         "synonym": word, "phrase": phrase})
+                         "synonym": word, "phrase": phrase, "tag": etag})
 
     # ---- quality (genuineness + blend) ----
     quality = []
     if gen_desc is not None:
+        gtag = "genuine" if (zg is not None and zg >= 0) else ("semi-genuine" if (zg is not None and zg > -1.0) else "performed")
         quality.append({"dim": "genuineness", "name": "Genuineness",
                         "value": round(_val(genu), 3), "z": round(zg, 2) if zg is not None else None,
-                        "phrase": gen_desc})
+                        "phrase": gen_desc, "tag": gtag})
     if blend is not None and "blend" in baseline:
         bz = _zscore(_val(blend), baseline["blend"])
         if abs(bz) >= NEUTRAL_BAND:
             ph = ("interwoven with vocal bursts (laughs, gasps, sighs)" if bz >= 0
                   else "clean of non-verbal vocal bursts")
             quality.append({"dim": "blend", "name": "Vocal-burst blend",
-                            "value": round(_val(blend), 3), "z": round(bz, 2), "phrase": ph})
+                            "value": round(_val(blend), 3), "z": round(bz, 2), "phrase": ph,
+                            "tag": ("with-bursts" if bz >= 0 else "burst-free")})
 
     # ---- optional deterministic shuffle of display order ----
     # Identity dims (always-on) keep their slots; the non-identity timbre dims are
@@ -412,7 +470,11 @@ def _groups(detail):
     emo = [e["phrase"] for e in emos]
     q = [e["phrase"] for e in qual]
     idmap = {e["dim"]: e["phrase"] for e in vn if e["always_on"]}
-    return dict(ordered=ordered, ident=ident, timbre=timbre, emo=emo, q=q, idmap=idmap)
+    # terse tags (no filler), in the same group order; entries without a tag (about-average) are dropped
+    tags = ([e.get("tag") for e in vn if e.get("tag")]
+            + [e.get("tag") for e in emos if e.get("tag")]
+            + [e.get("tag") for e in qual if e.get("tag")])
+    return dict(ordered=ordered, ident=ident, timbre=timbre, emo=emo, q=q, idmap=idmap, tags=tags)
 
 
 def _t_default(g):
@@ -506,12 +568,18 @@ def _t_minimal_identity(g):
     return _sentences([_cap(head), tail])
 
 
+def _t_tags(g):
+    """Terse, on-the-point tags — intensity + dimension as short words, no filler, comma-joined."""
+    return ", ".join(g["tags"]) if g["tags"] else "unremarkable"
+
+
 TEMPLATES = {
     "default": _t_default, "identity_first": _t_identity_first,
     "emotion_first": _t_emotion_first, "telegraphic": _t_telegraphic,
     "two_sentence": _t_two_sentence, "sounds_like": _t_sounds_like,
     "bulleted": _t_bulleted, "varied_connectors": _t_varied_connectors,
     "quality_led": _t_quality_led, "minimal_identity": _t_minimal_identity,
+    "tags": _t_tags,
 }
 
 
@@ -527,15 +595,17 @@ def render_caption(detail):
 # --------------------------------------------------------------------------- #
 def caption(preds, baseline=None, k_voicenet=5, k_emonet=3,
             always_on=ALWAYS_ON, synonym_seed=None, as_text=True,
-            template="default", shuffle_dims=False):
+            template="default", shuffle_dims=False, ei_gender=None, ei_gender_gate=EI_GENDER_GATE):
     """Return the caption as a single sentence (`as_text`) or a list of phrases.
 
     `template` chooses a surface form (see TEMPLATE_NAMES, or "random" for a
     seed-deterministic pick); `shuffle_dims` permutes non-identity dims/emotions.
+    `ei_gender` (Empathic-Insight gender, -2..+2) gates the gender phrase.
     With the defaults (template="default", shuffle_dims=False) the output is
     byte-identical to the original captioner."""
     d = caption_detail(preds, baseline, k_voicenet, k_emonet, always_on,
-                       synonym_seed, template=template, shuffle_dims=shuffle_dims)
+                       synonym_seed, template=template, shuffle_dims=shuffle_dims,
+                       ei_gender=ei_gender, ei_gender_gate=ei_gender_gate)
     if not as_text:
         return [e["phrase"] for e in d["voicenet"]] + \
                [e["phrase"] for e in d["emotions"]] + \

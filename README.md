@@ -116,8 +116,9 @@ A single fixed sentence shape (`"A voice that is …; …; …."`) means **every
 looks the same. When these captions are used as **fine-tuning targets** for a
 voice-acting model, that rigid, repetitive surface form is an easy thing for the
 model to overfit to — it learns the template, not the voice. To avoid that, the
-same underlying phrase content can be rendered through **10 interchangeable
-surface templates** plus optional **dimension shuffling**.
+same underlying phrase content can be rendered through **11 interchangeable
+surface templates** — including a terse **`tags`** form — plus optional **dimension
+shuffling**.
 
 Crucially, **only the arrangement changes.** Every template passes through the
 exact same pipeline — z-scores, top-k selection, always-on Age/Gender/Register/
@@ -139,6 +140,13 @@ connective style. So captions stay information-preserving and comparable.
 | `varied_connectors` | *A voice that is very bright in oral resonance, with notably forward in mask resonance and …, carrying ….* |
 | `quality_led`       | *Deeply and genuinely felt; interwoven with vocal bursts. The voice is …. Emotionally, ….* |
 | `minimal_identity`  | *A young and youthful masculine and deep-pitched voice extremely carrying amusement, …. Also low and bassy in register, ….* |
+| **`tags`**          | *very warm, very breathy, very meek, elderly, masculine, low-register, slightly slow, very lust, very heartache, genuine, with-bursts* (terse tags, **no filler** — intensity + dimension as short words; the **default** for the burst pipeline) |
+
+The **`tags`** template is special: instead of the verbose phrases it emits one short tag per salient
+dimension (`very warm`, `breathy`, `masculine`, `elderly`, `low-register`, …), drops about-average
+dims entirely, and comma-joins them. It is the recommended, on-the-point surface form and is the
+**default** for the vocal-burst caption pipeline (`PROC_TEMPLATE=tags`); set `PROC_TEMPLATE` to any
+prose template if you prefer full sentences.
 
 API:
 
@@ -154,9 +162,10 @@ caption(preds, base, template="random",             # + permute non-identity dim
 caption_detail(preds, base, template="random", synonym_seed=1234)["template"]  # -> chosen name
 ```
 
-- **`template`** — one of `TEMPLATE_NAMES` (the 10 above), or `"random"` to pick one
-  deterministically from the clip's `synonym_seed`. Defaults to `"default"`, so
-  existing callers are **byte-for-byte unchanged**.
+- **`template`** — one of `TEMPLATE_NAMES` (the 11 above), or `"random"` to pick one
+  deterministically from the clip's `synonym_seed`. `caption()` defaults to `"default"`,
+  so existing callers are **byte-for-byte unchanged**; the burst pipeline defaults to
+  `"tags"` via `PROC_TEMPLATE`.
 - **`shuffle_dims`** — deterministically permutes the order of the non-identity
   timbre dims and the emotions within their groups (seeded by `synonym_seed`). It
   changes only *display order*, never *which* dims/emotions were selected. The
@@ -184,6 +193,64 @@ genuineness z-score:
 
 This prevents an over-acted, low-genuineness clip from being captioned as
 "extremely enraged" when the anger is performed rather than real.
+
+---
+
+## The gender gate (Empathic-Insight)
+
+The VoiceNet `GEND` dimension always emits *some* gender phrase, which is risky on voices whose
+gender is not clearly perceptible (soft whispers, ASMR, children, stylized characters). We therefore
+add a second, dedicated gender signal — the **Empathic-Insight Gender expert** (`model_Gender_best.pth`,
+bipolar **−2 = very masculine … +2 = very feminine**, 0 = neutral) — and use it purely as a
+**confidence gate**:
+
+- **|EI gender| ≥ `EI_GENDER_GATE`** (default 0.5) → the voice's gender is confidently perceptible →
+  keep the well-calibrated **VoiceNet `GEND`** label.
+- **|EI gender| < gate** (near zero) → **omit the gender clause entirely** rather than assert a
+  possibly-wrong one.
+
+Why gate-only (not label): a small A/B study on ASMR clips ([**live grid →**](https://projects.laion.ai/procedural-voice-captions/gender-ab/),
+Gemini-3.5-Flash as ground truth) found the EI expert tracks perceived gender about as well as
+VoiceNet in *direction* (sign-agree 30–31 / 32) but **compresses clearly-masculine voices toward
+neutral** (raw ≈ −0.2 where Gemini says *very masculine*). So EI is trustworthy at the extremes it was
+trained to separate — ideal as a gate — while VoiceNet gives the better graded label above the gate.
+It also confirmed the "soft male ASMR sounds feminine" captions are *correct*: Gemini hears those
+generations as feminine too. Tunable via `EI_GENDER_GATE` (env); set to `0` to disable.
+
+---
+
+## On-the-fly caption augmentation — *score once, caption many times*
+
+Because a caption is a pure function of the stored **scores** + a template + a seed, you don't have to
+freeze one caption per clip. Run the four scoring models **once**, store only the raw scores (per
+sentence and global) with the transcript and confirmed bursts, then regenerate a **different**
+procedural caption every epoch — different template, synonym rotation, dim/emotion shuffle, tags vs.
+prose — with no audio and no model calls at train time (microseconds of string formatting).
+
+This is a cheap, strong **text augmentation** for TTS / caption models: the target *wording and
+structure* vary across epochs while the *content* (which dims/emotions are salient, the bursts, the
+words) stays fixed, so the model learns the score→text mapping instead of memorizing one phrasing.
+
+```python
+from burst_captions import BurstCaptioner
+from augment import score_record, augment_script
+import json
+
+# 1) score ONCE, store the compact record (then you can discard the audio)
+cap = BurstCaptioner()
+rec = score_record(cap.process("clip.wav"))          # global + per-sentence raw scores + bursts
+json.dump(rec, open("clip.scores.json", "w"))
+
+# 2) at train time, per example per epoch — fresh phrasing each call
+text = augment_script(rec, seed=epoch * 1_000_003 + example_id)   # random template each epoch
+text = augment_script(rec, seed=epoch, template="tags")           # or force the terse tags form
+```
+
+`process()` already attaches the raw scores it computes: `result["scores"]` (global) and
+`result["sentences"][i]["scores"]` (per sentence) hold `{dims, emo, genu, blend}`, so `score_record()`
+is just a distillation — no extra inference. The gender gate is applied automatically from the stored
+`ei_gender`. See [`augment.py`](augment.py) (`python augment.py` prints four varied captions from one
+record).
 
 ---
 
@@ -362,21 +429,25 @@ classifier `.pt`) are all overridable via env vars documented at the top of
 
 A Gemini-3.5-Flash study (see the [config study](https://github.com/LAION-AI/Comprehensive-Voice-Acting-Annotation-Pipeline/blob/main/CAPTION_CONFIG_EVAL.md)) over caption configurations found:
 
-- **Sentence-level burst insertion (Variant B) is the recommended default** — it beats locator-inline (Variant A), 8.50 vs 7.63, because it keeps the transcript clean (better ASR readability + burst score).
+- **Sentence-level burst insertion (Variant B) is the recommended default** — it beats locator-inline (Variant A), 8.50 vs 7.63, because it keeps the transcript clean (better ASR readability + burst score). The kept bursts are placed **inline** into the per-sentence script (mapped to the sentence they occur in by word timestamps).
 - The **detector→confirm** stage (`vocalburst-locator@0.7` → confirm with the multi-label classifier, `P(no_burst)≥0.5` → discard, else top-1) is the base for both variants and gates hallucinations.
+- **Duration gate** — locator spans below a minimum duration are rejected (default 0.30 s global, 0.60 s for the smack/click/slap groups). Short spans dominate transient false positives (Slap Face / Lip Smack firing at high `p` on 0.10–0.16 s spans); every discarded span in the character-voice study was < 0.6 s. Tunable via `BURST_MIN_DUR` / `BURST_TRANSIENT_MIN_DUR`.
+- **Gender gate** — the Empathic-Insight Gender expert gates whether a gender phrase is emitted at all (see above); near-zero → gender omitted.
+- **Surface form** — the terse **`tags`** template is the default (`PROC_TEMPLATE`).
 - Burst classifiers are the **multilingual-retrained v2** ([single](https://huggingface.co/laion/vocalburst-classifier-single) mAP 0.70/0.87, [multi-label](https://huggingface.co/laion/vocalburst-classifier-multilabel)) — the multi-label model has fewer false positives at the confirm stage.
 - Full annotation runs **~1.1 s/clip** (1×A100).
 
-Live examples on real character voices (procedural vs LLM-assisted, both with bursts):
+Live examples on real character voices (procedural tags vs LLM-assisted, both with duration-gated inline bursts + gender gate):
 **https://projects.laion.ai/procedural-voice-captions/character-captions/**
 
 ## Files
 
 ```
 baseline_stats.json      # the baselines (99 dimensions + _meta)
-caption.py               # caption() / caption_detail() + CLI  (stdlib only)
+caption.py               # caption() / caption_detail() + 11 templates (incl. tags) + gender gate  (stdlib only)
+augment.py               # on-the-fly caption augmentation from stored scores (score once, caption many times)
 compute_baseline.py      # rebuild baseline_stats.json (staged)
-burst_captions.py        # scoring -> timestamps -> detect -> classify -> insert bursts
+burst_captions.py        # scoring -> timestamps -> detect -> classify (duration+no_burst gate) -> insert bursts inline
 build_burst_demo.py      # renders docs/burst-captions/ from real audio
 vocalburst_taxonomy.json # 82 vocal-burst classes (class order for the classifier)
 examples/                # real complete predictions (dims + emo + genu + blend)
