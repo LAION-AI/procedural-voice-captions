@@ -72,6 +72,9 @@ NOBURST_GATE    = float(os.environ.get("BURST_NOBURST_GATE", "0.5"))
 # Surface form for procedural captions. Default "tags" = terse, on-the-point tags (intensity +
 # dimension as short words, no filler); set PROC_TEMPLATE to any TEMPLATE_NAMES value for prose.
 PROC_TEMPLATE     = os.environ.get("PROC_TEMPLATE", "tags")
+# Insert [pause X.Xs] markers from ASR word timestamps when the gap between consecutive words (or
+# between sentences) is at least this many seconds. Set BURST_PAUSE_THR=0 to disable pauses.
+PAUSE_THR         = float(os.environ.get("BURST_PAUSE_THR", "0.30"))
 MIN_BURST_DUR     = float(os.environ.get("BURST_MIN_DUR", "0.30"))            # global floor (s)
 TRANSIENT_MIN_DUR = float(os.environ.get("BURST_TRANSIENT_MIN_DUR", "0.60"))  # stricter for smack/click/slap
 TRANSIENT_GROUPS  = {"mouth_and_lip_sounds", "tongue_clicks", "hand_and_body_sounds"}
@@ -440,18 +443,27 @@ class BurstCaptioner:
             return " ".join(f"({lab})" for _, _, lab, _ in bl).strip()
         toks = []
         bi = 0
+        prev_end = None
         for idx in range(n + 1):
             # flush any burst whose midpoint falls before the next word's start
             nxt_start = words_ts[idx]["start"] if idx < n else float("inf")
+            burst_here = False
             while bi < len(bl):
                 a, b, lab, pr = bl[bi]
                 if (a + b) / 2.0 <= nxt_start:
                     toks.append(f"({lab})")
-                    bi += 1
+                    bi += 1; burst_here = True
                 else:
                     break
             if idx < n:
-                toks.append(words_ts[idx]["w"])
+                w = words_ts[idx]
+                # [pause X.Xs] on a word gap the burst didn't already fill
+                if PAUSE_THR > 0 and prev_end is not None and not burst_here:
+                    gap = w["start"] - prev_end
+                    if gap >= PAUSE_THR:
+                        toks.append(f"[pause {gap:.1f}s]")
+                toks.append(w["w"])
+                prev_end = w.get("end", w["start"])
         return " ".join(toks).strip()
 
     def dur_ok(self, label, dur):
@@ -483,6 +495,7 @@ class BurstCaptioner:
                     bestd, best = d, i
             buckets[best if best is not None else 0].append(x)
         lines = []
+        prev_send = None
         for i, s in enumerate(sent_out):
             a, b = s.get("start"), s.get("end")
             sw = [w for w in words if w.get("start") is not None and a is not None and b is not None
@@ -494,7 +507,12 @@ class BurstCaptioner:
                 inline = (s["text"].rstrip(".") + " " + " ".join(f"({l})" for _, _, l, _ in sb)).strip()
             else:
                 inline = s["text"]
+            # [pause X.Xs] before this sentence when there was a silent gap after the previous one
+            if PAUSE_THR > 0 and prev_send is not None and a is not None and (a - prev_send) >= PAUSE_THR:
+                inline = f"[pause {a - prev_send:.1f}s] " + inline
             lines.append({"cue": s["caption"], "text": inline, "bursts": [l for _, _, l, _ in sb]})
+            if b is not None:
+                prev_send = b
         return lines
 
     def procedural_caption(self, result):

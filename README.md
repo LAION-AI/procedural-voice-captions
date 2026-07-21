@@ -445,6 +445,7 @@ A Gemini-3.5-Flash study (see the [config study](https://github.com/LAION-AI/Com
 
   `0.70` is clearly too loose (18 hallucinations). `0.75` is the precision/recall optimum — it nearly halves hallucinations with almost no recall loss. Bump to **`0.80`** if you want still fewer hallucinations at a small recall cost.
 - **Duration gate** — locator spans below a minimum duration are rejected (default 0.30 s global, 0.60 s for the smack/click/slap groups). Short spans dominate transient false positives (Slap Face / Lip Smack firing at high `p` on 0.10–0.16 s spans); every discarded span in the character-voice study was < 0.6 s. Tunable via `BURST_MIN_DUR` / `BURST_TRANSIENT_MIN_DUR`.
+- **Pauses** — `[pause X.Xs]` markers are inserted inline from the ASR **word timestamps** at silent gaps ≥ 0.30 s (within a sentence and between sentences); tunable via `BURST_PAUSE_THR` (0 disables). They are copied verbatim into the LLM-reword output too.
 - **Gender gate** — the Empathic-Insight Gender expert gates whether a gender phrase is emitted at all (see above); near-zero → gender omitted.
 - **Surface form** — the terse **`tags`** template is the default (`PROC_TEMPLATE`).
 - Burst classifiers are the **multilingual-retrained v2** ([single](https://huggingface.co/laion/vocalburst-classifier-single) mAP 0.70/0.87, [multi-label](https://huggingface.co/laion/vocalburst-classifier-multilabel)) — the multi-label model has fewer false positives at the confirm stage.
