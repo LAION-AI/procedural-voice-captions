@@ -82,6 +82,17 @@
 <header>
   <h1>Procedural Voice Captions — Live Demo Grid</h1>
   <div class="sub">Every caption below is written automatically by the <a href="https://github.com/LAION-AI/procedural-voice-captions">LAION-AI/procedural-voice-captions</a> module — no hand-writing, no LLM.</div>
+  <div style="background:#12314f22;border:1px solid #2b3240;border-radius:10px;padding:10px 14px;margin:12px 0;font-size:13.5px">
+    <b style="color:#7ee0c0">Current demos →</b>
+    <a href="character-captions/">character voices: procedural vs LLM (bursts + gates)</a> ·
+    <a href="gender-ab/">gender A/B (VoiceNet vs Empathic-Insight)</a> ·
+    <a href="vocalburst-predictions/">burst predictions</a> ·
+    <a href="vocalburst-single/">single-burst</a> ·
+    <a href="vocalburst-combo/">detect→classify combo</a> ·
+    <a href="burst-captions/">burst-captions demo</a><br>
+    <span style="color:#9aa7b4;font-size:12.5px">Current default: locator@0.75 + duration &amp; no-burst gates + terse tags; the LLM path rewords the procedural draft keeping burst positions.
+    Ready-made dataset: <a href="https://huggingface.co/datasets/laion/moss-character-voices-top3-captioned">laion/moss-character-voices-top3-captioned</a>.</span>
+  </div>
   <div class="sub" style="margin-top:8px">🧠 <a href="moss-thinking/"><strong>MOSS-Audio-Thinking experiment →</strong></a> — feed these procedural captions + Parakeet timestamps + the LAION taxonomies to the MOSS-Audio-Thinking models (4B &amp; 8B), which listen to the audio and synthesize the final voice-acting format (general caption + per-sentence <code>(cues)</code>, inline vocal bursts, <code>[pause]</code> markers).</div>
 
   <div class="intro">
