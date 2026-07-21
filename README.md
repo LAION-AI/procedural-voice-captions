@@ -392,24 +392,24 @@ them into the captions. **[Live demo →](https://projects.laion.ai/procedural-v
 **Two burst-insertion variants (selectable, never both at once):**
 
 - **Variant A — locator (precise position).** Locator over the whole clip at
-  threshold **0.7**; each detected span → classifier → if `P(no_burst) < 0.5` the
-  **top-1** class is inserted as its own `(Class Name)` **inline at the burst's
-  time**, between the two ASR words nearest that moment. Reads like a script:
-  *“(Surprised Gasp) No, no, (Surprised Gasp) oh, it hurts.”*
+  threshold **0.75** (grid-searched, see below); each detected span → classifier →
+  a span is kept only if it clears **both** gates — `P(no_burst) < 0.5` **and** the
+  **duration gate** (span ≥ 0.30 s, or ≥ 0.60 s for the transient smack/click/slap
+  groups) — then its **top-1** class is inserted as `(Class Name)` **inline at the
+  burst's time**, between the two ASR words nearest that moment, in the sentence it
+  falls in. Reads like a script: *“(Surprised Gasp) No, no, (Surprised Gasp) oh, it hurts.”*
 - **Variant B — sentence-level.** Classifier on each whole sentence segment; if
   `P(no_burst) ≥ 0.5` attach nothing, else the top-1 class is woven into that
   sentence's caption via a small procedural phrase (*“… punctuated by a (Gasp).”*).
 
-**Recommendation — prefer Variant A (locator), keep B as a fallback.** Variant A
-anchors each burst to *when it happens*, which is exactly the per-event,
-time-aligned signal the voice-acting SCRIPT format wants, and its per-span
-`P(no_burst) < 0.5` gate suppresses false positives event-by-event. Variant B is
-coarser: it can only say a sentence *contains* a burst, collapses multiple bursts
-per sentence into one label, and running the classifier over a whole sentence
-dilutes a short burst among seconds of speech (lower recall on brief events). Use
-Variant B when word-level timestamps are unavailable (non-speech screams, failed
-ASR) or when a compact one-label-per-sentence summary is enough — there Variant A
-has nowhere to anchor and B still adds value.
+**The default pipeline uses Variant A (locator, gated, placed inline per sentence).**
+It anchors each burst to *when it happens* — exactly the per-event, time-aligned
+signal the voice-acting SCRIPT format wants — and the two gates (`P(no_burst)` +
+duration) suppress false positives event-by-event (short spans drive most
+hallucinations; see the threshold search below). Variant B is the **fallback** when
+word-level timestamps are unavailable (non-speech screams, failed ASR) or when a
+compact one-label-per-sentence summary is enough — there Variant A has nowhere to
+anchor and B still adds value.
 
 ```bash
 # score arbitrary audio -> per-clip JSON with both variants
@@ -429,7 +429,7 @@ classifier `.pt`) are all overridable via env vars documented at the top of
 
 A Gemini-3.5-Flash study (see the [config study](https://github.com/LAION-AI/Comprehensive-Voice-Acting-Annotation-Pipeline/blob/main/CAPTION_CONFIG_EVAL.md)) over caption configurations found:
 
-- **Sentence-level burst insertion (Variant B) is the recommended default** — it beats locator-inline (Variant A), 8.50 vs 7.63, because it keeps the transcript clean (better ASR readability + burst score). The kept bursts are placed **inline** into the per-sentence script (mapped to the sentence they occur in by word timestamps).
+- **Locator-inline placement (Variant A), gated, placed per sentence, is the default** — kept bursts are inserted **inline** at their word-timestamp position in the sentence they occur in. (An earlier study preferred sentence-level Variant B for transcript cleanliness, but with the duration gate + 0.75 threshold + per-sentence scoping, inline placement now has the same burst_accuracy as procedural while giving precise positions — see the throughput/quality table above.)
 - The **detector→confirm** stage (`vocalburst-locator` → confirm with the multi-label classifier, `P(no_burst)≥0.5` → discard, else top-1) is the base for both variants and gates hallucinations.
 - **Locator threshold `0.75` (grid-searched, default).** A sweep over the character voices (Gemini-3.5-Flash rating burst precision vs recall) settled `BURST_LOCATOR_THR`:
 
