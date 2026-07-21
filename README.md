@@ -1,5 +1,7 @@
 # Procedural Voice Captions
 
+### ▶ [**Live demo grid — character voices: procedural vs LLM captions (with vocal bursts)**](https://projects.laion.ai/procedural-voice-captions/character-captions/)
+
 Turn a speech clip's **model predictions** into a compact, human-readable
 **caption** that describes the voice by how far it deviates from the *average
 voice*.
