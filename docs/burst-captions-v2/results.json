@@ -8,7 +8,10 @@
   "min_duration": 0.1,
   "no_burst_gate": 0.5,
   "chunk_sec": 30.0,
-  "chunk_overlap": 5.0
+  "chunk_overlap": 5.0,
+  "baseline": "baseline_stats.json",
+  "reliability_weighting": true,
+  "spread_floor_frac": 0.3333
  },
  "results": [
   {
@@ -124,16 +127,16 @@
     "genu": 1.9356,
     "blend": 3.2802
    },
-   "global_caption": "very flat-resonance, very vulnerable, very jerky, very strained, very tense, young, low-register, very physical pain, very submission, very liberation, genuine",
+   "global_caption": "very vulnerable, very jerky, very scattered, very tense, very harsh, young, low-register, trepidation, submission, physical pain, semi-genuine",
    "sentences": [
     {
      "text": "No, no, oh, it hurts.",
      "start": 2.24,
      "end": 5.6000000000000005,
-     "caption": "very flat-resonance, very vulnerable, very breathy, very physical pain, very submission, very concern",
+     "caption": "very vulnerable, very scattered, very raspy, very concern, very submission, very physical pain, genuine, with-bursts",
      "variant_b_burst": "Effort Grunt",
      "variant_b_prob": 0.279,
-     "variant_b_caption": "very flat-resonance, very vulnerable, very breathy, very physical pain, very submission, very concern, with an audible (Effort Grunt).",
+     "variant_b_caption": "very vulnerable, very scattered, very raspy, very concern, very submission, very physical pain, genuine, with-bursts, with an audible (Effort Grunt).",
      "scores": {
       "dims": {
        "AGEV": 1.5113106966018677,
@@ -244,10 +247,10 @@
      "text": "Ah, Eng, get it off me.",
      "start": 5.92,
      "end": 8.8,
-     "caption": "very flat-resonance, very vulnerable, very breathy, very solace, very weariness, no absorption",
+     "caption": "very breathy, very vulnerable, very scattered, very weariness, no curiosity, very helplessness, genuine, with-bursts",
      "variant_b_burst": "Effort Grunt",
      "variant_b_prob": 0.289,
-     "variant_b_caption": "very flat-resonance, very vulnerable, very breathy, very solace, very weariness, no absorption, carrying a (Effort Grunt).",
+     "variant_b_caption": "very breathy, very vulnerable, very scattered, very weariness, no curiosity, very helplessness, genuine, with-bursts, carrying a (Effort Grunt).",
      "scores": {
       "dims": {
        "AGEV": 2.3040924072265625,
@@ -357,14 +360,14 @@
    ],
    "script_lines": [
     {
-     "cue": "very flat-resonance, very vulnerable, very breathy, very physical pain, very submission, very concern",
+     "cue": "very vulnerable, very scattered, very raspy, very concern, very submission, very physical pain, genuine, with-bursts",
      "text": "(Contented Sigh) No, [pause 0.9s] no, [pause 0.3s] oh, it hurts.",
      "bursts": [
       "Contented Sigh"
      ]
     },
     {
-     "cue": "very flat-resonance, very vulnerable, very breathy, very solace, very weariness, no absorption",
+     "cue": "very breathy, very vulnerable, very scattered, very weariness, no curiosity, very helplessness, genuine, with-bursts",
      "text": "[pause 0.3s] Ah, (Contented Sigh) Eng, [pause 0.6s] get it off me.",
      "bursts": [
       "Contented Sigh"
@@ -526,16 +529,16 @@
     "genu": 2.212,
     "blend": 3.6698
    },
-   "global_caption": "very flat-resonance, very vulnerable, very meek, very explicit, very choppy, young, feminine, low-register, very slow, very lethargy, no engrossment, very feeling horny, genuine, with-bursts",
+   "global_caption": "very vulnerable, very meek, very scattered, very soft-onset, very flat, young, feminine, low-register, very slow, lethargy, feeling horny, warmth, semi-genuine",
    "sentences": [
     {
      "text": "So hungry.",
      "start": 0.64,
      "end": 2.72,
-     "caption": "very flat-resonance, very vulnerable, very meek, very lethargy, very suffering, very submission",
+     "caption": "very soft-onset, very scattered, very flat, lethargy, submission, insensitivity, semi-genuine, with-bursts",
      "variant_b_burst": "Exhausted Groan",
      "variant_b_prob": 0.403,
-     "variant_b_caption": "very flat-resonance, very vulnerable, very meek, very lethargy, very suffering, very submission, punctuated by a (Exhausted Groan).",
+     "variant_b_caption": "very soft-onset, very scattered, very flat, lethargy, submission, insensitivity, semi-genuine, with-bursts, punctuated by a (Exhausted Groan).",
      "scores": {
       "dims": {
        "AGEV": 2.5927650928497314,
@@ -646,10 +649,10 @@
      "text": "Hmm.",
      "start": 3.2,
      "end": 3.84,
-     "caption": "very flat-resonance, very smooth, very flat, very burnout, very respite, no engrossment",
+     "caption": "very flat, very scattered, very smooth, burnout, no fascination, sullenness, semi-genuine, with-bursts",
      "variant_b_burst": "Wistful Sigh",
      "variant_b_prob": 0.296,
-     "variant_b_caption": "very flat-resonance, very smooth, very flat, very burnout, very respite, no engrossment, broken by a (Wistful Sigh).",
+     "variant_b_caption": "very flat, very scattered, very smooth, burnout, no fascination, sullenness, semi-genuine, with-bursts, broken by a (Wistful Sigh).",
      "scores": {
       "dims": {
        "AGEV": 1.8063884973526,
@@ -760,10 +763,10 @@
      "text": "Help me.",
      "start": 5.12,
      "end": 6.24,
-     "caption": "very flat-resonance, very mumbled, very jerky, very desperation, very despair, very torment",
+     "caption": "very scattered, very flat, very mumbled, desperation, pessimism, carnal desire, semi-genuine, with-bursts",
      "variant_b_burst": "Wistful Sigh",
      "variant_b_prob": 0.181,
-     "variant_b_caption": "very flat-resonance, very mumbled, very jerky, very desperation, very despair, very torment, carrying a (Wistful Sigh).",
+     "variant_b_caption": "very scattered, very flat, very mumbled, desperation, pessimism, carnal desire, semi-genuine, with-bursts, carrying a (Wistful Sigh).",
      "scores": {
       "dims": {
        "AGEV": 1.73136305809021,
@@ -874,10 +877,10 @@
      "text": "I can't stop.",
      "start": 6.5600000000000005,
      "end": 9.36,
-     "caption": "very flat-resonance, very choppy, very soft-onset, very burnout, very desperation, very dejection",
+     "caption": "very scattered, very soft-onset, very flat, very burnout, very desperation, very unease, genuine, with-bursts",
      "variant_b_burst": null,
      "variant_b_prob": 0.895,
-     "variant_b_caption": "very flat-resonance, very choppy, very soft-onset, very burnout, very desperation, very dejection",
+     "variant_b_caption": "very scattered, very soft-onset, very flat, very burnout, very desperation, very unease, genuine, with-bursts",
      "scores": {
       "dims": {
        "AGEV": 2.941467046737671,
@@ -987,24 +990,24 @@
    ],
    "script_lines": [
     {
-     "cue": "very flat-resonance, very vulnerable, very meek, very lethargy, very suffering, very submission",
+     "cue": "very soft-onset, very scattered, very flat, lethargy, submission, insensitivity, semi-genuine, with-bursts",
      "text": "So hungry.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very smooth, very flat, very burnout, very respite, no engrossment",
+     "cue": "very flat, very scattered, very smooth, burnout, no fascination, sullenness, semi-genuine, with-bursts",
      "text": "[pause 0.5s] Hmm. (Wistful Sigh)",
      "bursts": [
       "Wistful Sigh"
      ]
     },
     {
-     "cue": "very flat-resonance, very mumbled, very jerky, very desperation, very despair, very torment",
+     "cue": "very scattered, very flat, very mumbled, desperation, pessimism, carnal desire, semi-genuine, with-bursts",
      "text": "[pause 1.3s] Help me.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very choppy, very soft-onset, very burnout, very desperation, very dejection",
+     "cue": "very scattered, very soft-onset, very flat, very burnout, very desperation, very unease, genuine, with-bursts",
      "text": "[pause 0.3s] I can't stop.",
      "bursts": []
     }
@@ -1152,16 +1155,16 @@
     "genu": 1.7379,
     "blend": 6.525
    },
-   "global_caption": "very flat-resonance, very warm, very decelerating, very mumbled, very soft-onset, middle-aged, low-register, slow, very pining, no absorption, very helplessness, genuine, with-bursts",
+   "global_caption": "very warm, very soft-onset, very flat, very mumbled, very organic, middle-aged, low-register, very slow, pining, helplessness, unease, semi-genuine, with-bursts",
    "sentences": [
     {
      "text": "Huh.",
      "start": 0.32,
      "end": 0.96,
-     "caption": "very flat-resonance, very smooth, very non-narrative, no deep focus, very fatigue, no interest",
+     "caption": "very flat, very smooth, very non-narrative, no interest, very fatigue, no deep focus, genuine",
      "variant_b_burst": "Chuckle",
      "variant_b_prob": 0.604,
-     "variant_b_caption": "very flat-resonance, very smooth, very non-narrative, no deep focus, very fatigue, no interest, carrying a (Chuckle).",
+     "variant_b_caption": "very flat, very smooth, very non-narrative, no interest, very fatigue, no deep focus, genuine, carrying a (Chuckle).",
      "scores": {
       "dims": {
        "AGEV": 2.4167938232421875,
@@ -1272,10 +1275,10 @@
      "text": "What have we here?",
      "start": 1.36,
      "end": 2.8000000000000003,
-     "caption": "very flat-resonance, very flat, very mumbled, very helplessness, very misery, no absorption",
+     "caption": "very flat, very warm, very smooth, helplessness, concern, no interest, semi-genuine, with-bursts",
      "variant_b_burst": "Wistful Sigh",
      "variant_b_prob": 0.221,
-     "variant_b_caption": "very flat-resonance, very flat, very mumbled, very helplessness, very misery, no absorption, interrupted by a (Wistful Sigh).",
+     "variant_b_caption": "very flat, very warm, very smooth, helplessness, concern, no interest, semi-genuine, with-bursts, interrupted by a (Wistful Sigh).",
      "scores": {
       "dims": {
        "AGEV": 3.7119529247283936,
@@ -1386,10 +1389,10 @@
      "text": "A lost little traveller with shiny pockets?",
      "start": 3.2800000000000002,
      "end": 7.84,
-     "caption": "very flat-resonance, very meek, very warm, fondness, feeling turned on, altered perception",
+     "caption": "very whispered, very flat, very warm, feeling turned on, nostalgia, fondness, semi-genuine, with-bursts",
      "variant_b_burst": "Contented Sigh",
      "variant_b_prob": 0.214,
-     "variant_b_caption": "very flat-resonance, very meek, very warm, fondness, feeling turned on, altered perception, broken by a (Contented Sigh).",
+     "variant_b_caption": "very whispered, very flat, very warm, feeling turned on, nostalgia, fondness, semi-genuine, with-bursts, broken by a (Contented Sigh).",
      "scores": {
       "dims": {
        "AGEV": 3.8260068893432617,
@@ -1499,19 +1502,19 @@
    ],
    "script_lines": [
     {
-     "cue": "very flat-resonance, very smooth, very non-narrative, no deep focus, very fatigue, no interest",
+     "cue": "very flat, very smooth, very non-narrative, no interest, very fatigue, no deep focus, genuine",
      "text": "Huh. (Chuckle)",
      "bursts": [
       "Chuckle"
      ]
     },
     {
-     "cue": "very flat-resonance, very flat, very mumbled, very helplessness, very misery, no absorption",
+     "cue": "very flat, very warm, very smooth, helplessness, concern, no interest, semi-genuine, with-bursts",
      "text": "[pause 0.4s] What have we here?",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very meek, very warm, fondness, feeling turned on, altered perception",
+     "cue": "very whispered, very flat, very warm, feeling turned on, nostalgia, fondness, semi-genuine, with-bursts",
      "text": "[pause 0.5s] A lost little traveller with shiny pockets?",
      "bursts": []
     }
@@ -1659,16 +1662,16 @@
     "genu": 0.9665,
     "blend": 2.9045
    },
-   "global_caption": "very flat-resonance, very raspy, very jerky, very choppy, very breathy, middle-aged, low-register, slow, wonder, exhilaration, no absorption, semi-genuine",
+   "global_caption": "very raspy, very scattered, very jerky, very monologic, very dramatic, middle-aged, low-register, very slow, performed",
    "sentences": [
     {
      "text": "Eee wait, wait, ooh, did you see it?",
      "start": 0.56,
      "end": 5.36,
-     "caption": "very flat-resonance, very raspy, very jerky, wonder, excitement, surprise",
+     "caption": "very raspy, very scattered, very dramatic, wonder, surprise, excitement, semi-genuine",
      "variant_b_burst": "Pain Moan",
      "variant_b_prob": 0.536,
-     "variant_b_caption": "very flat-resonance, very raspy, very jerky, wonder, excitement, surprise, interrupted by a (Pain Moan).",
+     "variant_b_caption": "very raspy, very scattered, very dramatic, wonder, surprise, excitement, semi-genuine, interrupted by a (Pain Moan).",
      "scores": {
       "dims": {
        "AGEV": 2.5121188163757324,
@@ -1779,10 +1782,10 @@
      "text": "Did you see how teeny tiny it was?",
      "start": 5.5200000000000005,
      "end": 8.8,
-     "caption": "very flat-resonance, very swelling, very breathy, awe, no deep focus, amazement",
+     "caption": "very smooth, very raspy, very swelling, awe, amazement, no deep focus, semi-genuine, with-bursts",
      "variant_b_burst": "Whispered Mumble",
      "variant_b_prob": 0.191,
-     "variant_b_caption": "very flat-resonance, very swelling, very breathy, awe, no deep focus, amazement, interrupted by a (Whispered Mumble).",
+     "variant_b_caption": "very smooth, very raspy, very swelling, awe, amazement, no deep focus, semi-genuine, with-bursts, interrupted by a (Whispered Mumble).",
      "scores": {
       "dims": {
        "AGEV": 2.314929246902466,
@@ -1892,12 +1895,12 @@
    ],
    "script_lines": [
     {
-     "cue": "very flat-resonance, very raspy, very jerky, wonder, excitement, surprise",
+     "cue": "very raspy, very scattered, very dramatic, wonder, surprise, excitement, semi-genuine",
      "text": "Eee wait, wait, ooh, did you see it?",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very swelling, very breathy, awe, no deep focus, amazement",
+     "cue": "very smooth, very raspy, very swelling, awe, amazement, no deep focus, semi-genuine, with-bursts",
      "text": "Did you see how teeny tiny it was?",
      "bursts": []
     }
@@ -2032,16 +2035,16 @@
     "genu": 1.3474,
     "blend": 1.5569
    },
-   "global_caption": "very flat-resonance, very vulnerable, very strained, very meek, very decelerating, young, feminine, mid-register, slow, helplessness, contrition, suffering, semi-genuine",
+   "global_caption": "very negative, very scattered, very vulnerable, very darkening, very meek, young, feminine, mid-register, very slow, helplessness, unease, contrition, semi-genuine, burst-free",
    "sentences": [
     {
      "text": "No no please Don't leave me to I can't I can't lose anyone else",
      "start": 0.32,
      "end": 10.16,
-     "caption": "very flat-resonance, very smooth, very meek, contrition, agony, helplessness",
+     "caption": "very negative, very smooth, very meek, anxiety, helplessness, contrition, semi-genuine",
      "variant_b_burst": "Exasperated Sigh",
      "variant_b_prob": 0.402,
-     "variant_b_caption": "very flat-resonance, very smooth, very meek, contrition, agony, helplessness, broken by a (Exasperated Sigh).",
+     "variant_b_caption": "very negative, very smooth, very meek, anxiety, helplessness, contrition, semi-genuine, broken by a (Exasperated Sigh).",
      "scores": {
       "dims": {
        "AGEV": 3.076054573059082,
@@ -2151,7 +2154,7 @@
    ],
    "script_lines": [
     {
-     "cue": "very flat-resonance, very smooth, very meek, contrition, agony, helplessness",
+     "cue": "very negative, very smooth, very meek, anxiety, helplessness, contrition, semi-genuine",
      "text": "No [pause 0.7s] no please [pause 0.3s] Don't leave me to (Contented Sigh) I can't [pause 0.5s] I can't lose anyone else",
      "bursts": [
       "Contented Sigh"
@@ -2301,16 +2304,16 @@
     "genu": 1.649,
     "blend": 3.1039
    },
-   "global_caption": "very flat-resonance, very oral-muted, very noisy, very soft-onset, very choppy, middle-aged, masculine, low-register, slow, respite, compassion, lethargy, semi-genuine",
+   "global_caption": "very whispered, very monologic, very soft-onset, very noisy, very monotone, middle-aged, masculine, low-register, very slow, compassion, foreboding, lethargy, semi-genuine",
    "sentences": [
     {
      "text": "There now, my love, close your eyes.",
      "start": 3.2,
      "end": 6.640000000000001,
-     "caption": "very flat-resonance, very warm, very relaxed, butterflies in the stomach, lust, warmth",
+     "caption": "very whispered, very warm, very smooth, warmth, butterflies in the stomach, lust, semi-genuine, with-bursts",
      "variant_b_burst": "Low Mumble",
      "variant_b_prob": 0.107,
-     "variant_b_caption": "very flat-resonance, very warm, very relaxed, butterflies in the stomach, lust, warmth, with an audible (Low Mumble).",
+     "variant_b_caption": "very whispered, very warm, very smooth, warmth, butterflies in the stomach, lust, semi-genuine, with-bursts, with an audible (Low Mumble).",
      "scores": {
       "dims": {
        "AGEV": 4.232383728027344,
@@ -2421,10 +2424,10 @@
      "text": "I have you, safe and warm.",
      "start": 6.96,
      "end": 10.08,
-     "caption": "very flat-resonance, very meek, very warm, devotion, carnal desire, fondness",
+     "caption": "very whispered, very flat, very smooth, devotion, carnal desire, fondness, semi-genuine, with-bursts",
      "variant_b_burst": "Ahem",
      "variant_b_prob": 0.148,
-     "variant_b_caption": "very flat-resonance, very meek, very warm, devotion, carnal desire, fondness, punctuated by a (Ahem).",
+     "variant_b_caption": "very whispered, very flat, very smooth, devotion, carnal desire, fondness, semi-genuine, with-bursts, punctuated by a (Ahem).",
      "scores": {
       "dims": {
        "AGEV": 4.615945816040039,
@@ -2534,14 +2537,14 @@
    ],
    "script_lines": [
     {
-     "cue": "very flat-resonance, very warm, very relaxed, butterflies in the stomach, lust, warmth",
+     "cue": "very whispered, very warm, very smooth, warmth, butterflies in the stomach, lust, semi-genuine, with-bursts",
      "text": "(Deep Breath) There now, my love, close your eyes.",
      "bursts": [
       "Deep Breath"
      ]
     },
     {
-     "cue": "very flat-resonance, very meek, very warm, devotion, carnal desire, fondness",
+     "cue": "very whispered, very flat, very smooth, devotion, carnal desire, fondness, semi-genuine, with-bursts",
      "text": "[pause 0.3s] I have you, safe and warm.",
      "bursts": []
     }
@@ -2689,16 +2692,16 @@
     "genu": 1.5239,
     "blend": 9.6188
    },
-   "global_caption": "very flat-resonance, very breathy, very vulnerable, very denasal, very jerky, young, masculine, low-register, slightly slow, envy, fondness, agony, semi-genuine, with-bursts",
+   "global_caption": "very denasal, very negative, very thin-head, very jerky, very scattered, young, masculine, low-register, slightly slow, trepidation, powerlessness, agony, semi-genuine, with-bursts",
    "sentences": [
     {
      "text": "Enough I am sick to death of this.",
      "start": 2.0,
      "end": 5.68,
-     "caption": "very flat-resonance, very vulnerable, very breathy, very having a crush, very helplessness, very terror",
+     "caption": "very scattered, very breathy, very vulnerable, very anguish, very helplessness, very having a crush, genuine, with-bursts",
      "variant_b_burst": "Spitting",
      "variant_b_prob": 0.42,
-     "variant_b_caption": "very flat-resonance, very vulnerable, very breathy, very having a crush, very helplessness, very terror, interrupted by a (Spitting).",
+     "variant_b_caption": "very scattered, very breathy, very vulnerable, very anguish, very helplessness, very having a crush, genuine, with-bursts, interrupted by a (Spitting).",
      "scores": {
       "dims": {
        "AGEV": 3.2144196033477783,
@@ -2809,10 +2812,10 @@
      "text": "You pathetic, spineless fool.",
      "start": 5.92,
      "end": 8.24,
-     "caption": "very flat-resonance, very denasal, very oral-muted, very revulsion, very contempt, very spite",
+     "caption": "very whispered, very denasal, very thin-head, spite, anxiety, no interest, semi-genuine, with-bursts",
      "variant_b_burst": "Spitting",
      "variant_b_prob": 0.246,
-     "variant_b_caption": "very flat-resonance, very denasal, very oral-muted, very revulsion, very contempt, very spite, punctuated by a (Spitting).",
+     "variant_b_caption": "very whispered, very denasal, very thin-head, spite, anxiety, no interest, semi-genuine, with-bursts, punctuated by a (Spitting).",
      "scores": {
       "dims": {
        "AGEV": 3.6208457946777344,
@@ -2923,10 +2926,10 @@
      "text": "How dare you how dare you waste my time again and again?",
      "start": 8.4,
      "end": 11.68,
-     "caption": "very flat-resonance, very raspy, very breathy, adoration, rage, feeling horny",
+     "caption": "very raspy, very whispered, very negative, foreboding, adoration, feeling horny, semi-genuine, with-bursts",
      "variant_b_burst": "Whispered Mumble",
      "variant_b_prob": 0.323,
-     "variant_b_caption": "very flat-resonance, very raspy, very breathy, adoration, rage, feeling horny, with an audible (Whispered Mumble).",
+     "variant_b_caption": "very raspy, very whispered, very negative, foreboding, adoration, feeling horny, semi-genuine, with-bursts, with an audible (Whispered Mumble).",
      "scores": {
       "dims": {
        "AGEV": 3.4955430030822754,
@@ -3036,17 +3039,17 @@
    ],
    "script_lines": [
     {
-     "cue": "very flat-resonance, very vulnerable, very breathy, very having a crush, very helplessness, very terror",
+     "cue": "very scattered, very breathy, very vulnerable, very anguish, very helplessness, very having a crush, genuine, with-bursts",
      "text": "Enough I am sick to death of this.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very denasal, very oral-muted, very revulsion, very contempt, very spite",
+     "cue": "very whispered, very denasal, very thin-head, spite, anxiety, no interest, semi-genuine, with-bursts",
      "text": "You pathetic, spineless fool.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very raspy, very breathy, adoration, rage, feeling horny",
+     "cue": "very raspy, very whispered, very negative, foreboding, adoration, feeling horny, semi-genuine, with-bursts",
      "text": "How dare you how dare you waste my time again and again?",
      "bursts": []
     }
@@ -3181,16 +3184,16 @@
     "genu": 0.974,
     "blend": 4.1594
    },
-   "global_caption": "very flat-resonance, very raspy, very full, very throaty, very denasal, middle-aged, masculine, low-register, slow, butterflies in the stomach, feeling horny, desire to harm, semi-genuine, with-bursts",
+   "global_caption": "very raspy, very throaty, very full, very formal, very chesty, middle-aged, masculine, low-register, very slow, performed",
    "sentences": [
     {
      "text": "You dare enter my lair, mortal.",
      "start": 0.4,
      "end": 3.36,
-     "caption": "very flat-resonance, very raspy, very denasal, infatuation, carnal desire, sadism",
+     "caption": "very raspy, very monologic, very whispered, carnal desire, sadism, infatuation, semi-genuine",
      "variant_b_burst": "Whispered Mumble",
      "variant_b_prob": 0.27,
-     "variant_b_caption": "very flat-resonance, very raspy, very denasal, infatuation, carnal desire, sadism, marked by a (Whispered Mumble).",
+     "variant_b_caption": "very raspy, very monologic, very whispered, carnal desire, sadism, infatuation, semi-genuine, marked by a (Whispered Mumble).",
      "scores": {
       "dims": {
        "AGEV": 3.476954460144043,
@@ -3301,10 +3304,10 @@
      "text": "Your bones will join the others.",
      "start": 3.6,
      "end": 6.24,
-     "caption": "very flat-resonance, very metallic, very oral-muted, fondness, sadism, sexual lust",
+     "caption": "very monologic, very formal, very metallic, performed, burst-free",
      "variant_b_burst": "Whispered Mumble",
      "variant_b_prob": 0.276,
-     "variant_b_caption": "very flat-resonance, very metallic, very oral-muted, fondness, sadism, sexual lust, with an audible (Whispered Mumble).",
+     "variant_b_caption": "very monologic, very formal, very metallic, performed, burst-free, with an audible (Whispered Mumble).",
      "scores": {
       "dims": {
        "AGEV": 3.5202858448028564,
@@ -3414,12 +3417,12 @@
    ],
    "script_lines": [
     {
-     "cue": "very flat-resonance, very raspy, very denasal, infatuation, carnal desire, sadism",
+     "cue": "very raspy, very monologic, very whispered, carnal desire, sadism, infatuation, semi-genuine",
      "text": "You dare enter my lair, mortal.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very metallic, very oral-muted, fondness, sadism, sexual lust",
+     "cue": "very monologic, very formal, very metallic, performed, burst-free",
      "text": "Your bones will join the others.",
      "bursts": []
     }
@@ -3554,16 +3557,16 @@
     "genu": 1.305,
     "blend": 6.7534
    },
-   "global_caption": "very flat-resonance, very raspy, very full, very throaty, very denasal, elderly, low-register, very slow, malice, apprehension, loathing, semi-genuine, with-bursts",
+   "global_caption": "very throaty, very raspy, very chesty, very full, very formal, elderly, low-register, very slow, foreboding, malice, submission, semi-genuine, with-bursts",
    "sentences": [
     {
      "text": "Ugh you should not have come here.",
      "start": 0.32,
      "end": 3.36,
-     "caption": "very flat-resonance, very denasal, very breathy, no engrossment, very disapproval, very peevishness",
+     "caption": "very throaty, very chesty, very smooth, sadism, anguish, lust, semi-genuine, with-bursts",
      "variant_b_burst": "Heavy Breathing",
      "variant_b_prob": 0.152,
-     "variant_b_caption": "very flat-resonance, very denasal, very breathy, no engrossment, very disapproval, very peevishness, with an audible (Heavy Breathing).",
+     "variant_b_caption": "very throaty, very chesty, very smooth, sadism, anguish, lust, semi-genuine, with-bursts, with an audible (Heavy Breathing).",
      "scores": {
       "dims": {
        "AGEV": 4.288707256317139,
@@ -3674,10 +3677,10 @@
      "text": "This house feeds on the living.",
      "start": 3.92,
      "end": 6.8,
-     "caption": "very flat-resonance, very raspy, very metallic, carnal desire, longing, sadness",
+     "caption": "very throaty, very chesty, very formal, performed, with-bursts",
      "variant_b_burst": "Whispered Mumble",
      "variant_b_prob": 0.218,
-     "variant_b_caption": "very flat-resonance, very raspy, very metallic, carnal desire, longing, sadness, punctuated by a (Whispered Mumble).",
+     "variant_b_caption": "very throaty, very chesty, very formal, performed, with-bursts, punctuated by a (Whispered Mumble).",
      "scores": {
       "dims": {
        "AGEV": 4.202293872833252,
@@ -3787,14 +3790,14 @@
    ],
    "script_lines": [
     {
-     "cue": "very flat-resonance, very denasal, very breathy, no engrossment, very disapproval, very peevishness",
+     "cue": "very throaty, very chesty, very smooth, sadism, anguish, lust, semi-genuine, with-bursts",
      "text": "Ugh (Exhausted Groan) you should not have come here.",
      "bursts": [
       "Exhausted Groan"
      ]
     },
     {
-     "cue": "very flat-resonance, very raspy, very metallic, carnal desire, longing, sadness",
+     "cue": "very throaty, very chesty, very formal, performed, with-bursts",
      "text": "[pause 0.6s] This house feeds on the living.",
      "bursts": []
     }
@@ -3942,16 +3945,16 @@
     "genu": 2.2246,
     "blend": 9.1043
    },
-   "global_caption": "very flat-resonance, very mumbled, very soft-onset, very warm, very dark, elderly, masculine, low-register, slow, very weariness, very carnal desire, very butterflies in the stomach, genuine, with-bursts",
+   "global_caption": "very whispered, very soft-onset, very thin-head, very flat, very warm, elderly, masculine, low-register, very slow, weariness, carnal desire, wistfulness, semi-genuine, with-bursts",
    "sentences": [
     {
      "text": "Tiva.",
      "start": 0.16,
      "end": 0.64,
-     "caption": "very flat-resonance, very smooth, very flat, very romantic desire, no concentration, very feeling horny",
+     "caption": "very flat, very smooth, very scattered, romantic desire, emotional blunting, feeling horny, semi-genuine, with-bursts",
      "variant_b_burst": "Low Mumble",
      "variant_b_prob": 0.388,
-     "variant_b_caption": "very flat-resonance, very smooth, very flat, very romantic desire, no concentration, very feeling horny, with an audible (Low Mumble).",
+     "variant_b_caption": "very flat, very smooth, very scattered, romantic desire, emotional blunting, feeling horny, semi-genuine, with-bursts, with an audible (Low Mumble).",
      "scores": {
       "dims": {
        "AGEV": 3.1287825107574463,
@@ -4062,10 +4065,10 @@
      "text": "Tia Baya Gokufu Tsiwa.",
      "start": 1.84,
      "end": 3.68,
-     "caption": "very flat-resonance, very dark, very relaxed, no attention, exhaustion, insensitivity",
+     "caption": "very steady, very whispered, very flat, insensitivity, homesickness, exhaustion, semi-genuine, with-bursts",
      "variant_b_burst": "Low Mumble",
      "variant_b_prob": 0.45,
-     "variant_b_caption": "very flat-resonance, very dark, very relaxed, no attention, exhaustion, insensitivity, with an audible (Low Mumble).",
+     "variant_b_caption": "very steady, very whispered, very flat, insensitivity, homesickness, exhaustion, semi-genuine, with-bursts, with an audible (Low Mumble).",
      "scores": {
       "dims": {
        "AGEV": 4.569900035858154,
@@ -4175,12 +4178,12 @@
    ],
    "script_lines": [
     {
-     "cue": "very flat-resonance, very smooth, very flat, very romantic desire, no concentration, very feeling horny",
+     "cue": "very flat, very smooth, very scattered, romantic desire, emotional blunting, feeling horny, semi-genuine, with-bursts",
      "text": "Tiva.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very dark, very relaxed, no attention, exhaustion, insensitivity",
+     "cue": "very steady, very whispered, very flat, insensitivity, homesickness, exhaustion, semi-genuine, with-bursts",
      "text": "[pause 1.2s] Tia Baya Gokufu Tsiwa.",
      "bursts": []
     }
@@ -4315,16 +4318,16 @@
     "genu": 0.9209,
     "blend": 8.046
    },
-   "global_caption": "very flat-resonance, very narrator, very warm, very decelerating, very formal, middle-aged, masculine, low-register, slightly slow, alleviation, fear, desperation, semi-genuine, with-bursts",
+   "global_caption": "very whispered, very formal, very narrator, very steady, very smooth, middle-aged, masculine, low-register, slow, performed, with-bursts",
    "sentences": [
     {
      "text": "Soudain, on frappe à sa porte.",
      "start": 0.0,
      "end": 2.72,
-     "caption": "very flat-resonance, very hi-fi, very smooth, no absorption, solace, surprise",
+     "caption": "very smooth, very crisp, very hi-fi, no fascination, no absorption, detachment, semi-genuine",
      "variant_b_burst": "Displeased Grunt",
      "variant_b_prob": 0.116,
-     "variant_b_caption": "very flat-resonance, very hi-fi, very smooth, no absorption, solace, surprise, with an audible (Displeased Grunt).",
+     "variant_b_caption": "very smooth, very crisp, very hi-fi, no fascination, no absorption, detachment, semi-genuine, with an audible (Displeased Grunt).",
      "scores": {
       "dims": {
        "AGEV": 3.476461410522461,
@@ -4435,10 +4438,10 @@
      "text": "Chloé sursaute.",
      "start": 3.04,
      "end": 4.48,
-     "caption": "very flat-resonance, very denasal, very thin-head, abhorrence, no concentration, spite",
+     "caption": "very smooth, very thin-head, very formal, detachment, spite, no curiosity, semi-genuine, with-bursts",
      "variant_b_burst": "Ahem",
      "variant_b_prob": 0.222,
-     "variant_b_caption": "very flat-resonance, very denasal, very thin-head, abhorrence, no concentration, spite, interrupted by a (Ahem).",
+     "variant_b_caption": "very smooth, very thin-head, very formal, detachment, spite, no curiosity, semi-genuine, with-bursts, interrupted by a (Ahem).",
      "scores": {
       "dims": {
        "AGEV": 3.6409249305725098,
@@ -4549,10 +4552,10 @@
      "text": "Elle se sent incapable de bouger.",
      "start": 5.12,
      "end": 8.0,
-     "caption": "very flat-resonance, very hi-fi, very smooth, no attention, respite, desperation",
+     "caption": "very smooth, very chesty, very formal, boredom, desperation, no fascination, semi-genuine, with-bursts",
      "variant_b_burst": "Displeased Grunt",
      "variant_b_prob": 0.136,
-     "variant_b_caption": "very flat-resonance, very hi-fi, very smooth, no attention, respite, desperation, carrying a (Displeased Grunt).",
+     "variant_b_caption": "very smooth, very chesty, very formal, boredom, desperation, no fascination, semi-genuine, with-bursts, carrying a (Displeased Grunt).",
      "scores": {
       "dims": {
        "AGEV": 3.616894483566284,
@@ -4663,10 +4666,10 @@
      "text": "On frappe à nouveau.",
      "start": 8.56,
      "end": 10.32,
-     "caption": "very flat-resonance, very commanding, very effortless, no engrossment, determination, exhilaration",
+     "caption": "very smooth, very formal, very chesty, no fascination, no engrossment, no contemplation, semi-genuine, with-bursts",
      "variant_b_burst": "Cough",
      "variant_b_prob": 0.286,
-     "variant_b_caption": "very flat-resonance, very commanding, very effortless, no engrossment, determination, exhilaration, with an audible (Cough).",
+     "variant_b_caption": "very smooth, very formal, very chesty, no fascination, no engrossment, no contemplation, semi-genuine, with-bursts, with an audible (Cough).",
      "scores": {
       "dims": {
        "AGEV": 3.4022085666656494,
@@ -4777,10 +4780,10 @@
      "text": "Chloé retient sa respiration.",
      "start": 10.64,
      "end": 13.68,
-     "caption": "very flat-resonance, very noisy, very warm, alleviation, no attention, torment",
+     "caption": "very whispered, very smooth, very noisy, performed, with-bursts",
      "variant_b_burst": "Licking Sound",
      "variant_b_prob": 0.171,
-     "variant_b_caption": "very flat-resonance, very noisy, very warm, alleviation, no attention, torment, marked by a (Licking Sound).",
+     "variant_b_caption": "very whispered, very smooth, very noisy, performed, with-bursts, marked by a (Licking Sound).",
      "scores": {
       "dims": {
        "AGEV": 3.79722261428833,
@@ -4891,10 +4894,10 @@
      "text": "Elle a peur.",
      "start": 14.32,
      "end": 15.52,
-     "caption": "very flat-resonance, very smooth, very smooth, covetousness, fear, submission",
+     "caption": "very smooth, very monologic, very formal, performed, with-bursts",
      "variant_b_burst": "Ahem",
      "variant_b_prob": 0.29,
-     "variant_b_caption": "very flat-resonance, very smooth, very smooth, covetousness, fear, submission, carrying a (Ahem).",
+     "variant_b_caption": "very smooth, very monologic, very formal, performed, with-bursts, carrying a (Ahem).",
      "scores": {
       "dims": {
        "AGEV": 3.154322385787964,
@@ -5005,10 +5008,10 @@
      "text": "Elle a l'impression de vivre un mauvais rêve.",
      "start": 15.76,
      "end": 18.0,
-     "caption": "very flat-resonance, very commanding, very hi-fi, wonder, apprehension, nostalgia",
+     "caption": "very smooth, very formal, very commanding, performed",
      "variant_b_burst": "Cough",
      "variant_b_prob": 0.38,
-     "variant_b_caption": "very flat-resonance, very commanding, very hi-fi, wonder, apprehension, nostalgia, carrying a (Cough).",
+     "variant_b_caption": "very smooth, very formal, very commanding, performed, carrying a (Cough).",
      "scores": {
       "dims": {
        "AGEV": 3.6110618114471436,
@@ -5118,37 +5121,37 @@
    ],
    "script_lines": [
     {
-     "cue": "very flat-resonance, very hi-fi, very smooth, no absorption, solace, surprise",
+     "cue": "very smooth, very crisp, very hi-fi, no fascination, no absorption, detachment, semi-genuine",
      "text": "Soudain, on frappe à sa porte.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very denasal, very thin-head, abhorrence, no concentration, spite",
+     "cue": "very smooth, very thin-head, very formal, detachment, spite, no curiosity, semi-genuine, with-bursts",
      "text": "[pause 0.3s] Chloé sursaute.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very hi-fi, very smooth, no attention, respite, desperation",
+     "cue": "very smooth, very chesty, very formal, boredom, desperation, no fascination, semi-genuine, with-bursts",
      "text": "[pause 0.6s] Elle se sent incapable de bouger.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very commanding, very effortless, no engrossment, determination, exhilaration",
+     "cue": "very smooth, very formal, very chesty, no fascination, no engrossment, no contemplation, semi-genuine, with-bursts",
      "text": "[pause 0.6s] On frappe à nouveau.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very noisy, very warm, alleviation, no attention, torment",
+     "cue": "very whispered, very smooth, very noisy, performed, with-bursts",
      "text": "[pause 0.3s] Chloé retient sa respiration.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very smooth, very smooth, covetousness, fear, submission",
+     "cue": "very smooth, very monologic, very formal, performed, with-bursts",
      "text": "[pause 0.6s] Elle a peur.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very commanding, very hi-fi, wonder, apprehension, nostalgia",
+     "cue": "very smooth, very formal, very commanding, performed",
      "text": "Elle a l'impression de vivre un mauvais rêve.",
      "bursts": []
     }
@@ -5283,16 +5286,16 @@
     "genu": 5.1274,
     "blend": 5.2248
    },
-   "global_caption": "oral-bright, full, halting, naturalistic, slightly non-narrative, adult, masculine, low-register, very mirth, existential void, short-temperedness, genuine, with-bursts",
+   "global_caption": "very oral-bright, very chesty, very full, very naturalistic, very throaty, adult, masculine, low-register, very existential void, very meditation, no ribbing, genuine, with-bursts",
    "sentences": [
     {
      "text": "So that people go, What is that?",
      "start": 0.0,
      "end": 1.68,
-     "caption": "very flat-resonance, very oral-bright, dialogic, no attention, very ribbing, very disdain",
+     "caption": "very oral-bright, very dialogic, very throaty, no interest, no brooding, disdain, genuine, burst-free",
      "variant_b_burst": "Wistful Sigh",
      "variant_b_prob": 0.081,
-     "variant_b_caption": "very flat-resonance, very oral-bright, dialogic, no attention, very ribbing, very disdain, broken by a (Wistful Sigh).",
+     "variant_b_caption": "very oral-bright, very dialogic, very throaty, no interest, no brooding, disdain, genuine, burst-free, broken by a (Wistful Sigh).",
      "scores": {
       "dims": {
        "AGEV": 1.960668683052063,
@@ -5403,10 +5406,10 @@
      "text": "I need to find out about that.",
      "start": 1.92,
      "end": 3.84,
-     "caption": "very flat-resonance, very commanding, very oral-bright, no engrossment, no thoughtfulness, no fascination",
+     "caption": "very oral-bright, very throaty, very commanding, no fascination, no thoughtfulness, no relaxation, genuine",
      "variant_b_burst": "Chuckle",
      "variant_b_prob": 0.131,
-     "variant_b_caption": "very flat-resonance, very commanding, very oral-bright, no engrossment, no thoughtfulness, no fascination, carrying a (Chuckle).",
+     "variant_b_caption": "very oral-bright, very throaty, very commanding, no fascination, no thoughtfulness, no relaxation, genuine, carrying a (Chuckle).",
      "scores": {
       "dims": {
        "AGEV": 2.5993053913116455,
@@ -5517,10 +5520,10 @@
      "text": "So this is me making stuff up right in the moment, but I'm like, okay, I'm gonna use these oblique strategies as a way of",
      "start": 4.5600000000000005,
      "end": 13.200000000000001,
-     "caption": "very oral-bright, very blended-resonance, smooth, very bantering, very existential void, very suspicion",
+     "caption": "very oral-bright, very throaty, very chesty, very existential void, very pensiveness, no fascination, genuine",
      "variant_b_burst": "Clicks Tongue",
      "variant_b_prob": 0.057,
-     "variant_b_caption": "very oral-bright, very blended-resonance, smooth, very bantering, very existential void, very suspicion, interrupted by a (Clicks Tongue).",
+     "variant_b_caption": "very oral-bright, very throaty, very chesty, very existential void, very pensiveness, no fascination, genuine, interrupted by a (Clicks Tongue).",
      "scores": {
       "dims": {
        "AGEV": 2.7671401500701904,
@@ -5630,19 +5633,19 @@
    ],
    "script_lines": [
     {
-     "cue": "very flat-resonance, very oral-bright, dialogic, no attention, very ribbing, very disdain",
+     "cue": "very oral-bright, very dialogic, very throaty, no interest, no brooding, disdain, genuine, burst-free",
      "text": "So that people go, What is that? (Breathy Giggle)",
      "bursts": [
       "Breathy Giggle"
      ]
     },
     {
-     "cue": "very flat-resonance, very commanding, very oral-bright, no engrossment, no thoughtfulness, no fascination",
+     "cue": "very oral-bright, very throaty, very commanding, no fascination, no thoughtfulness, no relaxation, genuine",
      "text": "I need to find out about that.",
      "bursts": []
     },
     {
-     "cue": "very oral-bright, very blended-resonance, smooth, very bantering, very existential void, very suspicion",
+     "cue": "very oral-bright, very throaty, very chesty, very existential void, very pensiveness, no fascination, genuine",
      "text": "[pause 0.7s] So this is me making stuff up right in the moment, but I'm like, okay, I'm gonna use these oblique strategies as a way of",
      "bursts": []
     }
@@ -5790,16 +5793,16 @@
     "genu": 0.6534,
     "blend": 7.3787
    },
-   "global_caption": "very flat-resonance, very pleasing, very hi-fi, very effortless, very soft-onset, adult, feminine, mid-register, slow, romantic desire, pleasure, relaxation, semi-genuine, with-bursts",
+   "global_caption": "very whispered, very smooth, very formal, very steady, very pleasing, adult, feminine, mid-register, slow, performed, with-bursts",
    "sentences": [
     {
      "text": "The woman coos and sings a sweet song",
      "start": 0.0,
      "end": 2.8000000000000003,
-     "caption": "very flat-resonance, very soft-onset, very hi-fi, fondness, calmness, bliss",
+     "caption": "very whispered, very smooth, very soft-onset, performed, with-bursts",
      "variant_b_burst": "Whispered Mumble",
      "variant_b_prob": 0.086,
-     "variant_b_caption": "very flat-resonance, very soft-onset, very hi-fi, fondness, calmness, bliss, interrupted by a (Whispered Mumble).",
+     "variant_b_caption": "very whispered, very smooth, very soft-onset, performed, with-bursts, interrupted by a (Whispered Mumble).",
      "scores": {
       "dims": {
        "AGEV": 2.416248321533203,
@@ -5909,7 +5912,7 @@
    ],
    "script_lines": [
     {
-     "cue": "very flat-resonance, very soft-onset, very hi-fi, fondness, calmness, bliss",
+     "cue": "very whispered, very smooth, very soft-onset, performed, with-bursts",
      "text": "The woman coos and sings a sweet song",
      "bursts": []
     }
@@ -6044,16 +6047,16 @@
     "genu": 1.4292,
     "blend": 1.897
    },
-   "global_caption": "very flat-resonance, very vulnerable, very meek, very jerky, very decelerating, young, androgynous, low-register, very slow, being drunk, respite, no concentration, semi-genuine",
+   "global_caption": "very scattered, very jerky, very vulnerable, very meek, very flat, young, androgynous, low-register, very slow, submission, sexual lust, pessimism, semi-genuine, burst-free",
    "sentences": [
     {
      "text": "So hungry.",
      "start": 0.56,
      "end": 2.72,
-     "caption": "very flat-resonance, very vulnerable, very meek, very lethargy, very agony, very helplessness",
+     "caption": "very soft-onset, very flat, very scattered, lethargy, helplessness, detachment, semi-genuine, with-bursts",
      "variant_b_burst": "Exhausted Groan",
      "variant_b_prob": 0.414,
-     "variant_b_caption": "very flat-resonance, very vulnerable, very meek, very lethargy, very agony, very helplessness, carrying a (Exhausted Groan).",
+     "variant_b_caption": "very soft-onset, very flat, very scattered, lethargy, helplessness, detachment, semi-genuine, with-bursts, carrying a (Exhausted Groan).",
      "scores": {
       "dims": {
        "AGEV": 2.481433391571045,
@@ -6164,10 +6167,10 @@
      "text": "Hmm.",
      "start": 3.2,
      "end": 3.84,
-     "caption": "very flat-resonance, very smooth, very flat, very weariness, very solace, no engrossment",
+     "caption": "very flat, very scattered, very smooth, weariness, no intrigue, mournfulness, semi-genuine, with-bursts",
      "variant_b_burst": "Wistful Sigh",
      "variant_b_prob": 0.296,
-     "variant_b_caption": "very flat-resonance, very smooth, very flat, very weariness, very solace, no engrossment, carrying a (Wistful Sigh).",
+     "variant_b_caption": "very flat, very scattered, very smooth, weariness, no intrigue, mournfulness, semi-genuine, with-bursts, carrying a (Wistful Sigh).",
      "scores": {
       "dims": {
        "AGEV": 1.8063884973526,
@@ -6278,10 +6281,10 @@
      "text": "Help me.",
      "start": 5.2,
      "end": 6.24,
-     "caption": "very flat-resonance, very mumbled, very jerky, very submission, very dejection, very feeling horny",
+     "caption": "very scattered, very flat, very non-narrative, submission, unease, feeling horny, semi-genuine, with-bursts",
      "variant_b_burst": "Wistful Sigh",
      "variant_b_prob": 0.169,
-     "variant_b_caption": "very flat-resonance, very mumbled, very jerky, very submission, very dejection, very feeling horny, with an audible (Wistful Sigh).",
+     "variant_b_caption": "very scattered, very flat, very non-narrative, submission, unease, feeling horny, semi-genuine, with-bursts, with an audible (Wistful Sigh).",
      "scores": {
       "dims": {
        "AGEV": 1.6874568462371826,
@@ -6392,10 +6395,10 @@
      "text": "I can't stop.",
      "start": 6.5600000000000005,
      "end": 9.120000000000001,
-     "caption": "very flat-resonance, very choppy, very soft-onset, very burnout, very desperation, very self-pity",
+     "caption": "very scattered, very soft-onset, very flat, very burnout, very desperation, very pessimism, genuine, with-bursts",
      "variant_b_burst": null,
      "variant_b_prob": 0.65,
-     "variant_b_caption": "very flat-resonance, very choppy, very soft-onset, very burnout, very desperation, very self-pity",
+     "variant_b_caption": "very scattered, very soft-onset, very flat, very burnout, very desperation, very pessimism, genuine, with-bursts",
      "scores": {
       "dims": {
        "AGEV": 2.4425106048583984,
@@ -6506,10 +6509,10 @@
      "text": "Eee, wait!",
      "start": 13.040000000000001,
      "end": 14.4,
-     "caption": "very flat-resonance, very breathy, very jerky, no concentration, schadenfreude, no fascination",
+     "caption": "very scattered, very breathy, very jerky, no fascination, schadenfreude, powerlessness, semi-genuine, with-bursts",
      "variant_b_burst": "Childlike Giggle",
      "variant_b_prob": 0.134,
-     "variant_b_caption": "very flat-resonance, very breathy, very jerky, no concentration, schadenfreude, no fascination, with an audible (Childlike Giggle).",
+     "variant_b_caption": "very scattered, very breathy, very jerky, no fascination, schadenfreude, powerlessness, semi-genuine, with-bursts, with an audible (Childlike Giggle).",
      "scores": {
       "dims": {
        "AGEV": 0.7180150747299194,
@@ -6620,10 +6623,10 @@
      "text": "Wait!",
      "start": 14.72,
      "end": 15.36,
-     "caption": "very breathy, very metallic, very tense, no concentration, astonishment, no interest",
+     "caption": "very sharp-onset, very scattered, very dialogic, performed",
      "variant_b_burst": "Childlike Giggle",
      "variant_b_prob": 0.163,
-     "variant_b_caption": "very breathy, very metallic, very tense, no concentration, astonishment, no interest, punctuated by a (Childlike Giggle).",
+     "variant_b_caption": "very sharp-onset, very scattered, very dialogic, performed, punctuated by a (Childlike Giggle).",
      "scores": {
       "dims": {
        "AGEV": 0.8059874773025513,
@@ -6734,10 +6737,10 @@
      "text": "Ooh!",
      "start": 15.68,
      "end": 16.240000000000002,
-     "caption": "very flat-resonance, very jerky, very oral-muted, revulsion, alleviation, no concentration",
+     "caption": "very scattered, very thin, very smooth, performed",
      "variant_b_burst": "Surprised Gasp",
      "variant_b_prob": 0.388,
-     "variant_b_caption": "very flat-resonance, very jerky, very oral-muted, revulsion, alleviation, no concentration, broken by a (Surprised Gasp).",
+     "variant_b_caption": "very scattered, very thin, very smooth, performed, broken by a (Surprised Gasp).",
      "scores": {
       "dims": {
        "AGEV": 0.766181468963623,
@@ -6848,10 +6851,10 @@
      "text": "Did you see it?",
      "start": 16.48,
      "end": 17.68,
-     "caption": "very flat-resonance, very breathy, very swelling, very awestruck, very astonishment, very excitement",
+     "caption": "very scattered, very breathy, very dialogic, awestruck, sadism, astonishment, semi-genuine, with-bursts",
      "variant_b_burst": "Childlike Giggle",
      "variant_b_prob": 0.184,
-     "variant_b_caption": "very flat-resonance, very breathy, very swelling, very awestruck, very astonishment, very excitement, with an audible (Childlike Giggle).",
+     "variant_b_caption": "very scattered, very breathy, very dialogic, awestruck, sadism, astonishment, semi-genuine, with-bursts, with an audible (Childlike Giggle).",
      "scores": {
       "dims": {
        "AGEV": 1.1027523279190063,
@@ -6962,10 +6965,10 @@
      "text": "Did you see how teeny tiny it was.",
      "start": 17.92,
      "end": 21.28,
-     "caption": "very flat-resonance, very swelling, very breathy, awestruck, no attention, amazement",
+     "caption": "very smooth, very swelling, very dramatic, awestruck, amazement, no attention, semi-genuine, with-bursts",
      "variant_b_burst": "Whispered Mumble",
      "variant_b_prob": 0.188,
-     "variant_b_caption": "very flat-resonance, very swelling, very breathy, awestruck, no attention, amazement, carrying a (Whispered Mumble).",
+     "variant_b_caption": "very smooth, very swelling, very dramatic, awestruck, amazement, no attention, semi-genuine, with-bursts, carrying a (Whispered Mumble).",
      "scores": {
       "dims": {
        "AGEV": 2.273914337158203,
@@ -7076,10 +7079,10 @@
      "text": "Huh.",
      "start": 24.48,
      "end": 25.12,
-     "caption": "very flat-resonance, very smooth, very non-narrative, no concentration, very weariness, no interest",
+     "caption": "very flat, very smooth, very non-narrative, no interest, very weariness, no concentration, genuine, with-bursts",
      "variant_b_burst": "Chuckle",
      "variant_b_prob": 0.523,
-     "variant_b_caption": "very flat-resonance, very smooth, very non-narrative, no concentration, very weariness, no interest, interrupted by a (Chuckle).",
+     "variant_b_caption": "very flat, very smooth, very non-narrative, no interest, very weariness, no concentration, genuine, with-bursts, interrupted by a (Chuckle).",
      "scores": {
       "dims": {
        "AGEV": 2.368659734725952,
@@ -7190,10 +7193,10 @@
      "text": "What have we here?",
      "start": 25.6,
      "end": 27.04,
-     "caption": "very flat-resonance, very flat, very mumbled, very powerlessness, very grief, no attention",
+     "caption": "very flat, very warm, very smooth, powerlessness, anxiety, no curiosity, semi-genuine, with-bursts",
      "variant_b_burst": "Wistful Sigh",
      "variant_b_prob": 0.221,
-     "variant_b_caption": "very flat-resonance, very flat, very mumbled, very powerlessness, very grief, no attention, with an audible (Wistful Sigh).",
+     "variant_b_caption": "very flat, very warm, very smooth, powerlessness, anxiety, no curiosity, semi-genuine, with-bursts, with an audible (Wistful Sigh).",
      "scores": {
       "dims": {
        "AGEV": 3.7119529247283936,
@@ -7304,10 +7307,10 @@
      "text": "A lost little traveler with shiny pockets.",
      "start": 27.52,
      "end": 32.08,
-     "caption": "very flat-resonance, very meek, very warm, infatuation, feeling turned on, intoxication",
+     "caption": "very whispered, very flat, very warm, feeling turned on, yearning, infatuation, semi-genuine, with-bursts",
      "variant_b_burst": "Contented Sigh",
      "variant_b_prob": 0.214,
-     "variant_b_caption": "very flat-resonance, very meek, very warm, infatuation, feeling turned on, intoxication, punctuated by a (Contented Sigh).",
+     "variant_b_caption": "very whispered, very flat, very warm, feeling turned on, yearning, infatuation, semi-genuine, with-bursts, punctuated by a (Contented Sigh).",
      "scores": {
       "dims": {
        "AGEV": 3.8253962993621826,
@@ -7418,10 +7421,10 @@
      "text": "Enough.",
      "start": 34.56,
      "end": 35.2,
-     "caption": "very flat-resonance, very mumbled, very flat, no attention, very having a crush, no fascination",
+     "caption": "very flat, very scattered, very non-narrative, no fascination, very having a crush, very sullenness, genuine, with-bursts",
      "variant_b_burst": "Breathy Giggle",
      "variant_b_prob": 0.629,
-     "variant_b_caption": "very flat-resonance, very mumbled, very flat, no attention, very having a crush, no fascination, with an audible (Breathy Giggle).",
+     "variant_b_caption": "very flat, very scattered, very non-narrative, no fascination, very having a crush, very sullenness, genuine, with-bursts, with an audible (Breathy Giggle).",
      "scores": {
       "dims": {
        "AGEV": 1.7840478420257568,
@@ -7532,10 +7535,10 @@
      "text": "I am sick to death of this.",
      "start": 36.32,
      "end": 38.160000000000004,
-     "caption": "very flat-resonance, very breathy, very denasal, very romantic desire, very suffering, very submission",
+     "caption": "very breathy, very whispered, very denasal, submission, worry, suffering, semi-genuine, with-bursts",
      "variant_b_burst": "Whispered Mumble",
      "variant_b_prob": 0.177,
-     "variant_b_caption": "very flat-resonance, very breathy, very denasal, very romantic desire, very suffering, very submission, interrupted by a (Whispered Mumble).",
+     "variant_b_caption": "very breathy, very whispered, very denasal, submission, worry, suffering, semi-genuine, with-bursts, interrupted by a (Whispered Mumble).",
      "scores": {
       "dims": {
        "AGEV": 3.297743320465088,
@@ -7646,10 +7649,10 @@
      "text": "You pathetic, spineless fool.",
      "start": 38.480000000000004,
      "end": 40.800000000000004,
-     "caption": "very flat-resonance, very denasal, very oral-muted, very repulsion, very contempt, very desire to harm",
+     "caption": "very whispered, very denasal, very thin-head, desire to harm, worry, no intrigue, semi-genuine, with-bursts",
      "variant_b_burst": "Spitting",
      "variant_b_prob": 0.246,
-     "variant_b_caption": "very flat-resonance, very denasal, very oral-muted, very repulsion, very contempt, very desire to harm, punctuated by a (Spitting).",
+     "variant_b_caption": "very whispered, very denasal, very thin-head, desire to harm, worry, no intrigue, semi-genuine, with-bursts, punctuated by a (Spitting).",
      "scores": {
       "dims": {
        "AGEV": 3.6208457946777344,
@@ -7760,10 +7763,10 @@
      "text": "How dare you?",
      "start": 40.96,
      "end": 41.76,
-     "caption": "very flat-resonance, very choppy, very denasal, romantic desire, anger, feeling turned on",
+     "caption": "very smooth, very thin-head, very monologic, performed, with-bursts",
      "variant_b_burst": "Ahem",
      "variant_b_prob": 0.249,
-     "variant_b_caption": "very flat-resonance, very choppy, very denasal, romantic desire, anger, feeling turned on, interrupted by a (Ahem).",
+     "variant_b_caption": "very smooth, very thin-head, very monologic, performed, with-bursts, interrupted by a (Ahem).",
      "scores": {
       "dims": {
        "AGEV": 2.820805072784424,
@@ -7874,10 +7877,10 @@
      "text": "How dare you waste my time again and again.",
      "start": 41.92,
      "end": 44.56,
-     "caption": "very flat-resonance, very raspy, very breathy, butterflies in the stomach, lust, hate",
+     "caption": "very raspy, very whispered, very smooth, butterflies in the stomach, yearning, lust, semi-genuine, with-bursts",
      "variant_b_burst": "Whispered Mumble",
      "variant_b_prob": 0.179,
-     "variant_b_caption": "very flat-resonance, very raspy, very breathy, butterflies in the stomach, lust, hate, punctuated by a (Whispered Mumble).",
+     "variant_b_caption": "very raspy, very whispered, very smooth, butterflies in the stomach, yearning, lust, semi-genuine, with-bursts, punctuated by a (Whispered Mumble).",
      "scores": {
       "dims": {
        "AGEV": 3.0551745891571045,
@@ -7988,10 +7991,10 @@
      "text": "No.",
      "start": 44.88,
      "end": 45.2,
-     "caption": "very flat-resonance, very smooth, very jerky, no absorption, no intrigue, despair",
+     "caption": "very smooth, very flat, very scattered, apathy, no intrigue, despair, semi-genuine",
      "variant_b_burst": "Wistful Sigh",
      "variant_b_prob": 0.135,
-     "variant_b_caption": "very flat-resonance, very smooth, very jerky, no absorption, no intrigue, despair, punctuated by a (Wistful Sigh).",
+     "variant_b_caption": "very smooth, very flat, very scattered, apathy, no intrigue, despair, semi-genuine, punctuated by a (Wistful Sigh).",
      "scores": {
       "dims": {
        "AGEV": 1.0371339321136475,
@@ -8102,10 +8105,10 @@
      "text": "No, please.",
      "start": 45.84,
      "end": 47.04,
-     "caption": "very flat-resonance, very choppy, very smooth, desperation, no attention, despair",
+     "caption": "very smooth, very smooth, very flat, desperation, worry, no curiosity, semi-genuine, with-bursts",
      "variant_b_burst": "Whispered Mumble",
      "variant_b_prob": 0.105,
-     "variant_b_caption": "very flat-resonance, very choppy, very smooth, desperation, no attention, despair, marked by a (Whispered Mumble).",
+     "variant_b_caption": "very smooth, very smooth, very flat, desperation, worry, no curiosity, semi-genuine, with-bursts, marked by a (Whispered Mumble).",
      "scores": {
       "dims": {
        "AGEV": 1.7349920272827148,
@@ -8216,10 +8219,10 @@
      "text": "Don't leave me to.",
      "start": 47.36,
      "end": 48.88,
-     "caption": "very flat-resonance, very smooth, very choppy, desperation, fondness, sullenness",
+     "caption": "very smooth, very smooth, very monologic, performed, with-bursts",
      "variant_b_burst": "Whispered Mumble",
      "variant_b_prob": 0.231,
-     "variant_b_caption": "very flat-resonance, very smooth, very choppy, desperation, fondness, sullenness, with an audible (Whispered Mumble).",
+     "variant_b_caption": "very smooth, very smooth, very monologic, performed, with-bursts, with an audible (Whispered Mumble).",
      "scores": {
       "dims": {
        "AGEV": 2.6339070796966553,
@@ -8330,10 +8333,10 @@
      "text": "I can't.",
      "start": 50.08,
      "end": 51.28,
-     "caption": "very flat-resonance, very breathy, very vulnerable, very desperation, very dejection, very agony",
+     "caption": "very scattered, very breathy, child, desperation, anguish, agony, semi-genuine, with-bursts",
      "variant_b_burst": "Ahem",
      "variant_b_prob": 0.213,
-     "variant_b_caption": "very flat-resonance, very breathy, very vulnerable, very desperation, very dejection, very agony, marked by a (Ahem).",
+     "variant_b_caption": "very scattered, very breathy, child, desperation, anguish, agony, semi-genuine, with-bursts, marked by a (Ahem).",
      "scores": {
       "dims": {
        "AGEV": 0.7894045114517212,
@@ -8444,10 +8447,10 @@
      "text": "I can't lose anyone else.",
      "start": 51.76,
      "end": 54.56,
-     "caption": "very flat-resonance, very breathy, very vulnerable, adoration, helplessness, covetousness",
+     "caption": "very smooth, very thin, very jerky, adoration, helplessness, trust, semi-genuine, with-bursts",
      "variant_b_burst": "Whispered Mumble",
      "variant_b_prob": 0.643,
-     "variant_b_caption": "very flat-resonance, very breathy, very vulnerable, adoration, helplessness, covetousness, with an audible (Whispered Mumble).",
+     "variant_b_caption": "very smooth, very thin, very jerky, adoration, helplessness, trust, semi-genuine, with-bursts, with an audible (Whispered Mumble).",
      "scores": {
       "dims": {
        "AGEV": 1.5162441730499268,
@@ -8558,10 +8561,10 @@
      "text": "There now, my love.",
      "start": 59.6,
      "end": 61.2,
-     "caption": "very flat-resonance, very flat, very dissociated, very fondness, very sympathy, very feeling turned on",
+     "caption": "very flat, very steady, very dissociated, sympathy, fondness, desire, semi-genuine, with-bursts",
      "variant_b_burst": "Low Mumble",
      "variant_b_prob": 0.498,
-     "variant_b_caption": "very flat-resonance, very flat, very dissociated, very fondness, very sympathy, very feeling turned on, punctuated by a (Low Mumble).",
+     "variant_b_caption": "very flat, very steady, very dissociated, sympathy, fondness, desire, semi-genuine, with-bursts, punctuated by a (Low Mumble).",
      "scores": {
       "dims": {
        "AGEV": 4.397816181182861,
@@ -8672,10 +8675,10 @@
      "text": "Close your eyes.",
      "start": 61.44,
      "end": 62.96,
-     "caption": "very flat-resonance, very smooth, very relaxed, lust, fondness, no engrossment",
+     "caption": "very whispered, very smooth, very steady, performed, with-bursts",
      "variant_b_burst": "Low Mumble",
      "variant_b_prob": 0.133,
-     "variant_b_caption": "very flat-resonance, very smooth, very relaxed, lust, fondness, no engrossment, carrying a (Low Mumble).",
+     "variant_b_caption": "very whispered, very smooth, very steady, performed, with-bursts, carrying a (Low Mumble).",
      "scores": {
       "dims": {
        "AGEV": 3.1516544818878174,
@@ -8786,10 +8789,10 @@
      "text": "I have you safe and warm.",
      "start": 63.28,
      "end": 66.24,
-     "caption": "very flat-resonance, very meek, very warm, forgiveness, infatuation, sexual lust",
+     "caption": "very whispered, very flat, very smooth, forgiveness, sexual lust, infatuation, semi-genuine, with-bursts",
      "variant_b_burst": "Whispered Mumble",
      "variant_b_prob": 0.155,
-     "variant_b_caption": "very flat-resonance, very meek, very warm, forgiveness, infatuation, sexual lust, punctuated by a (Whispered Mumble).",
+     "variant_b_caption": "very whispered, very flat, very smooth, forgiveness, sexual lust, infatuation, semi-genuine, with-bursts, punctuated by a (Whispered Mumble).",
      "scores": {
       "dims": {
        "AGEV": 4.573169231414795,
@@ -8900,10 +8903,10 @@
      "text": "You dare enter my lair, mortal.",
      "start": 68.32000000000001,
      "end": 71.52,
-     "caption": "very flat-resonance, very oral-muted, very denasal, romantic desire, carnal desire, sadism",
+     "caption": "very raspy, very whispered, very denasal, romantic desire, carnal desire, sadism, semi-genuine, with-bursts",
      "variant_b_burst": "Whispered Mumble",
      "variant_b_prob": 0.577,
-     "variant_b_caption": "very flat-resonance, very oral-muted, very denasal, romantic desire, carnal desire, sadism, carrying a (Whispered Mumble).",
+     "variant_b_caption": "very raspy, very whispered, very denasal, romantic desire, carnal desire, sadism, semi-genuine, with-bursts, carrying a (Whispered Mumble).",
      "scores": {
       "dims": {
        "AGEV": 3.381911277770996,
@@ -9014,10 +9017,10 @@
      "text": "Your bones will join the others.",
      "start": 71.76,
      "end": 74.56,
-     "caption": "very flat-resonance, very metallic, very oral-muted, infatuation, sadism, feeling horny",
+     "caption": "very monologic, very formal, very smooth, performed, burst-free",
      "variant_b_burst": "Whispered Mumble",
      "variant_b_prob": 0.276,
-     "variant_b_caption": "very flat-resonance, very metallic, very oral-muted, infatuation, sadism, feeling horny, broken by a (Whispered Mumble).",
+     "variant_b_caption": "very monologic, very formal, very smooth, performed, burst-free, broken by a (Whispered Mumble).",
      "scores": {
       "dims": {
        "AGEV": 3.5412755012512207,
@@ -9128,10 +9131,10 @@
      "text": "No.",
      "start": 77.44,
      "end": 77.76,
-     "caption": "very flat-resonance, very jerky, very choppy, no absorption, very dejection, no curiosity",
+     "caption": "very scattered, child, very jerky, no curiosity, dejection, indifference, semi-genuine, with-bursts",
      "variant_b_burst": "Ahem",
      "variant_b_prob": 0.181,
-     "variant_b_caption": "very flat-resonance, very jerky, very choppy, no absorption, very dejection, no curiosity, with an audible (Ahem).",
+     "variant_b_caption": "very scattered, child, very jerky, no curiosity, dejection, indifference, semi-genuine, with-bursts, with an audible (Ahem).",
      "scores": {
       "dims": {
        "AGEV": 0.7302707433700562,
@@ -9242,10 +9245,10 @@
      "text": "No.",
      "start": 78.64,
      "end": 78.96000000000001,
-     "caption": "very flat-resonance, very tense, very dialogic, no absorption, heartache, no curiosity",
+     "caption": "very sharp-onset, very dialogic, very scattered, performed, with-bursts",
      "variant_b_burst": "Ahem",
      "variant_b_prob": 0.141,
-     "variant_b_caption": "very flat-resonance, very tense, very dialogic, no absorption, heartache, no curiosity, interrupted by a (Ahem).",
+     "variant_b_caption": "very sharp-onset, very dialogic, very scattered, performed, with-bursts, interrupted by a (Ahem).",
      "scores": {
       "dims": {
        "AGEV": 1.8719680309295654,
@@ -9356,10 +9359,10 @@
      "text": "Oh, it hurts.",
      "start": 79.44,
      "end": 80.88,
-     "caption": "very flat-resonance, very breathy, very swelling, very physical pain, very respite, very helplessness",
+     "caption": "very scattered, very breathy, very dialogic, very physical pain, very helplessness, very anxiety, genuine, with-bursts",
      "variant_b_burst": "Childlike Giggle",
      "variant_b_prob": 0.296,
-     "variant_b_caption": "very flat-resonance, very breathy, very swelling, very physical pain, very respite, very helplessness, marked by a (Childlike Giggle).",
+     "variant_b_caption": "very scattered, very breathy, very dialogic, very physical pain, very helplessness, very anxiety, genuine, with-bursts, marked by a (Childlike Giggle).",
      "scores": {
       "dims": {
        "AGEV": 0.45650506019592285,
@@ -9470,10 +9473,10 @@
      "text": "Hang, get it off me.",
      "start": 82.0,
      "end": 84.24,
-     "caption": "very flat-resonance, very breathy, very vulnerable, very having a crush, very ache, very helplessness",
+     "caption": "very scattered, very breathy, very vulnerable, helplessness, having a crush, ache, semi-genuine, with-bursts",
      "variant_b_burst": "Breathy Giggle",
      "variant_b_prob": 0.402,
-     "variant_b_caption": "very flat-resonance, very breathy, very vulnerable, very having a crush, very ache, very helplessness, carrying a (Breathy Giggle).",
+     "variant_b_caption": "very scattered, very breathy, very vulnerable, helplessness, having a crush, ache, semi-genuine, with-bursts, carrying a (Breathy Giggle).",
      "scores": {
       "dims": {
        "AGEV": 1.6997766494750977,
@@ -9584,10 +9587,10 @@
      "text": "You should not have come here.",
      "start": 85.52,
      "end": 87.52,
-     "caption": "very flat-resonance, very full, very denasal, no attention, schadenfreude, fury",
+     "caption": "very smooth, very chesty, very formal, schadenfreude, no interest, fury, semi-genuine, with-bursts",
      "variant_b_burst": "Slurping Noises",
      "variant_b_prob": 0.055,
-     "variant_b_caption": "very flat-resonance, very full, very denasal, no attention, schadenfreude, fury, interrupted by a (Slurping Noises).",
+     "variant_b_caption": "very smooth, very chesty, very formal, schadenfreude, no interest, fury, semi-genuine, with-bursts, interrupted by a (Slurping Noises).",
      "scores": {
       "dims": {
        "AGEV": 3.9917969703674316,
@@ -9698,10 +9701,10 @@
      "text": "This house feeds on the living.",
      "start": 88.24,
      "end": 91.12,
-     "caption": "very flat-resonance, very raspy, very metallic, carnal desire, craving, sadness",
+     "caption": "very throaty, very chesty, very formal, performed, with-bursts",
      "variant_b_burst": "Whispered Mumble",
      "variant_b_prob": 0.218,
-     "variant_b_caption": "very flat-resonance, very raspy, very metallic, carnal desire, craving, sadness, marked by a (Whispered Mumble).",
+     "variant_b_caption": "very throaty, very chesty, very formal, performed, with-bursts, marked by a (Whispered Mumble).",
      "scores": {
       "dims": {
        "AGEV": 4.202293872833252,
@@ -9811,183 +9814,183 @@
    ],
    "script_lines": [
     {
-     "cue": "very flat-resonance, very vulnerable, very meek, very lethargy, very agony, very helplessness",
+     "cue": "very soft-onset, very flat, very scattered, lethargy, helplessness, detachment, semi-genuine, with-bursts",
      "text": "So hungry.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very smooth, very flat, very weariness, very solace, no engrossment",
+     "cue": "very flat, very scattered, very smooth, weariness, no intrigue, mournfulness, semi-genuine, with-bursts",
      "text": "[pause 0.5s] Hmm. (Wistful Sigh)",
      "bursts": [
       "Wistful Sigh"
      ]
     },
     {
-     "cue": "very flat-resonance, very mumbled, very jerky, very submission, very dejection, very feeling horny",
+     "cue": "very scattered, very flat, very non-narrative, submission, unease, feeling horny, semi-genuine, with-bursts",
      "text": "[pause 1.4s] Help me.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very choppy, very soft-onset, very burnout, very desperation, very self-pity",
+     "cue": "very scattered, very soft-onset, very flat, very burnout, very desperation, very pessimism, genuine, with-bursts",
      "text": "[pause 0.3s] I can't stop.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very breathy, very jerky, no concentration, schadenfreude, no fascination",
+     "cue": "very scattered, very breathy, very jerky, no fascination, schadenfreude, powerlessness, semi-genuine, with-bursts",
      "text": "[pause 3.9s] Eee, (Surprised Gasp) wait!",
      "bursts": [
       "Surprised Gasp"
      ]
     },
     {
-     "cue": "very breathy, very metallic, very tense, no concentration, astonishment, no interest",
+     "cue": "very sharp-onset, very scattered, very dialogic, performed",
      "text": "[pause 0.3s] Wait!",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very jerky, very oral-muted, revulsion, alleviation, no concentration",
+     "cue": "very scattered, very thin, very smooth, performed",
      "text": "[pause 0.3s] Ooh!",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very breathy, very swelling, very awestruck, very astonishment, very excitement",
+     "cue": "very scattered, very breathy, very dialogic, awestruck, sadism, astonishment, semi-genuine, with-bursts",
      "text": "Did you see it?",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very swelling, very breathy, awestruck, no attention, amazement",
+     "cue": "very smooth, very swelling, very dramatic, awestruck, amazement, no attention, semi-genuine, with-bursts",
      "text": "Did you see how teeny tiny it was.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very smooth, very non-narrative, no concentration, very weariness, no interest",
+     "cue": "very flat, very smooth, very non-narrative, no interest, very weariness, no concentration, genuine, with-bursts",
      "text": "[pause 3.2s] Huh. (Chuckle)",
      "bursts": [
       "Chuckle"
      ]
     },
     {
-     "cue": "very flat-resonance, very flat, very mumbled, very powerlessness, very grief, no attention",
+     "cue": "very flat, very warm, very smooth, powerlessness, anxiety, no curiosity, semi-genuine, with-bursts",
      "text": "[pause 0.5s] What have we here?",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very meek, very warm, infatuation, feeling turned on, intoxication",
+     "cue": "very whispered, very flat, very warm, feeling turned on, yearning, infatuation, semi-genuine, with-bursts",
      "text": "[pause 0.5s] A lost little traveler with shiny pockets.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very mumbled, very flat, no attention, very having a crush, no fascination",
+     "cue": "very flat, very scattered, very non-narrative, no fascination, very having a crush, very sullenness, genuine, with-bursts",
      "text": "[pause 2.5s] Enough.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very breathy, very denasal, very romantic desire, very suffering, very submission",
+     "cue": "very breathy, very whispered, very denasal, submission, worry, suffering, semi-genuine, with-bursts",
      "text": "[pause 1.1s] I am sick to death of this.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very denasal, very oral-muted, very repulsion, very contempt, very desire to harm",
+     "cue": "very whispered, very denasal, very thin-head, desire to harm, worry, no intrigue, semi-genuine, with-bursts",
      "text": "[pause 0.3s] You pathetic, spineless fool.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very choppy, very denasal, romantic desire, anger, feeling turned on",
+     "cue": "very smooth, very thin-head, very monologic, performed, with-bursts",
      "text": "How dare you?",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very raspy, very breathy, butterflies in the stomach, lust, hate",
+     "cue": "very raspy, very whispered, very smooth, butterflies in the stomach, yearning, lust, semi-genuine, with-bursts",
      "text": "How dare you waste my time again and again.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very smooth, very jerky, no absorption, no intrigue, despair",
+     "cue": "very smooth, very flat, very scattered, apathy, no intrigue, despair, semi-genuine",
      "text": "[pause 0.3s] No.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very choppy, very smooth, desperation, no attention, despair",
+     "cue": "very smooth, very smooth, very flat, desperation, worry, no curiosity, semi-genuine, with-bursts",
      "text": "[pause 0.6s] No, please.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very smooth, very choppy, desperation, fondness, sullenness",
+     "cue": "very smooth, very smooth, very monologic, performed, with-bursts",
      "text": "[pause 0.3s] Don't leave me to.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very breathy, very vulnerable, very desperation, very dejection, very agony",
+     "cue": "very scattered, very breathy, child, desperation, anguish, agony, semi-genuine, with-bursts",
      "text": "[pause 1.2s] (Contented Sigh) I can't.",
      "bursts": [
       "Contented Sigh"
      ]
     },
     {
-     "cue": "very flat-resonance, very breathy, very vulnerable, adoration, helplessness, covetousness",
+     "cue": "very smooth, very thin, very jerky, adoration, helplessness, trust, semi-genuine, with-bursts",
      "text": "[pause 0.5s] I can't lose anyone else.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very flat, very dissociated, very fondness, very sympathy, very feeling turned on",
+     "cue": "very flat, very steady, very dissociated, sympathy, fondness, desire, semi-genuine, with-bursts",
      "text": "[pause 5.0s] There now, my love.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very smooth, very relaxed, lust, fondness, no engrossment",
+     "cue": "very whispered, very smooth, very steady, performed, with-bursts",
      "text": "Close your eyes.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very meek, very warm, forgiveness, infatuation, sexual lust",
+     "cue": "very whispered, very flat, very smooth, forgiveness, sexual lust, infatuation, semi-genuine, with-bursts",
      "text": "[pause 0.3s] I have you safe and warm.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very oral-muted, very denasal, romantic desire, carnal desire, sadism",
+     "cue": "very raspy, very whispered, very denasal, romantic desire, carnal desire, sadism, semi-genuine, with-bursts",
      "text": "[pause 2.1s] You dare enter my lair, mortal.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very metallic, very oral-muted, infatuation, sadism, feeling horny",
+     "cue": "very monologic, very formal, very smooth, performed, burst-free",
      "text": "Your bones will join the others. (Contented Sigh)",
      "bursts": [
       "Contented Sigh"
      ]
     },
     {
-     "cue": "very flat-resonance, very jerky, very choppy, no absorption, very dejection, no curiosity",
+     "cue": "very scattered, child, very jerky, no curiosity, dejection, indifference, semi-genuine, with-bursts",
      "text": "[pause 2.9s] (Contented Sigh) No.",
      "bursts": [
       "Contented Sigh"
      ]
     },
     {
-     "cue": "very flat-resonance, very tense, very dialogic, no absorption, heartache, no curiosity",
+     "cue": "very sharp-onset, very dialogic, very scattered, performed, with-bursts",
      "text": "[pause 0.9s] No.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very breathy, very swelling, very physical pain, very respite, very helplessness",
+     "cue": "very scattered, very breathy, very dialogic, very physical pain, very helplessness, very anxiety, genuine, with-bursts",
      "text": "[pause 0.5s] Oh, it hurts. (Contented Sigh)",
      "bursts": [
       "Contented Sigh"
      ]
     },
     {
-     "cue": "very flat-resonance, very breathy, very vulnerable, very having a crush, very ache, very helplessness",
+     "cue": "very scattered, very breathy, very vulnerable, helplessness, having a crush, ache, semi-genuine, with-bursts",
      "text": "[pause 1.1s] Hang, get it off me.",
      "bursts": []
     },
     {
-     "cue": "very flat-resonance, very full, very denasal, no attention, schadenfreude, fury",
+     "cue": "very smooth, very chesty, very formal, schadenfreude, no interest, fury, semi-genuine, with-bursts",
      "text": "[pause 1.3s] (Exhausted Groan) You should not have come here.",
      "bursts": [
       "Exhausted Groan"
      ]
     },
     {
-     "cue": "very flat-resonance, very raspy, very metallic, carnal desire, craving, sadness",
+     "cue": "very throaty, very chesty, very formal, performed, with-bursts",
      "text": "[pause 0.7s] This house feeds on the living.",
      "bursts": []
     }

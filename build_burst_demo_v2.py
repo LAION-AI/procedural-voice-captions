@@ -16,11 +16,20 @@ The page embeds every clip as a 128 kbps mono mp3, so it is self-contained.
 
     python build_burst_demo_v2.py                 # all clips
     python build_burst_demo_v2.py --no-long       # skip the constructed long-form clip
+    python build_burst_demo_v2.py --recaption     # re-caption results.json, no models
+
+`--recaption` exists because a caption is a pure function of the stored raw scores plus
+the baseline (see augment.py). `results.json` already carries every clip's and every
+sentence's 57 dims + 40 emotions, so when only the *captioner* changes — a new baseline,
+reliability weighting — the page can be rebuilt exactly, with no GPU and no audio. The
+detected bursts, spans, transcripts and timings are untouched by such a change and are
+therefore reused verbatim rather than recomputed.
 """
 import os, sys, json, html, re, argparse
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import burst_captions as B
+import caption as C
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT_DIR = os.path.join(HERE, "docs", "burst-captions-v2")
@@ -186,42 +195,100 @@ th,td{border:1px solid #262b3a;padding:5px 10px;text-align:left}th{color:#cfe7ff
 """
 
 
+def kind_of(cid):
+    if cid == LONG_ID:
+        return "long-form"
+    return "character" if cid in CHARACTER else "in-the-wild"
+
+
+def recaption(results, baseline=None):
+    """Re-derive every caption on the page from the stored raw scores.
+
+    Only the captioner's output changes: `global_caption`, each sentence's `caption` /
+    `variant_b_caption`, and the cue on each script line. Bursts, spans, transcripts and
+    timings are model outputs that a captioner change cannot affect, so they are left
+    exactly as measured."""
+    base = C.load_baseline(baseline)
+    tmpl = os.environ.get("PROC_TEMPLATE", B.PROC_TEMPLATE)
+    for r in results:
+        if not isinstance(r.get("scores"), dict):
+            continue
+        seed = B.stable_hash(r["id"]) % (1 << 30)
+        d = C.caption_detail(r["scores"], base, k_voicenet=5, k_emonet=3, synonym_seed=seed,
+                             template=tmpl, ei_gender=r.get("ei_gender"))
+        r["global_caption"] = C.render_caption(d)
+        lines = r.get("script_lines") or []
+        for i, s in enumerate(r.get("sentences") or []):
+            if not isinstance(s.get("scores"), dict):
+                continue
+            sd = C.caption_detail(s["scores"], base, k_voicenet=3, k_emonet=3, always_on=[],
+                                  synonym_seed=seed ^ (i + 1), template=tmpl)
+            s["caption"] = C.render_caption(sd)
+            lab = s.get("variant_b_burst")
+            s["variant_b_caption"] = (
+                s["caption"] if lab is None else
+                s["caption"].rstrip(".") + ", " +
+                B.BurstCaptioner.variant_b_phrase(lab, seed ^ (i + 1)) + ".")
+            if i < len(lines):
+                lines[i]["cue"] = s["caption"]
+    return results
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--no-long", action="store_true")
     ap.add_argument("--device", default=os.environ.get("BC_DEVICE", "cuda:0"))
+    ap.add_argument("--recaption", action="store_true",
+                    help="rebuild from results.json with the current captioner, no models")
+    ap.add_argument("--baseline", default=None, help="baseline name or path")
     A = ap.parse_args()
 
-    os.makedirs(AUDIO_OUT, exist_ok=True)
-    use_emonet = os.environ.get("BC_EMONET", "1") != "0"
-    bc = B.BurstCaptioner(device=A.device, use_emonet=use_emonet)
-    clips = pick_clips(with_long=not A.no_long)
-    print(f"selected {len(clips)} clips")
-
+    res_path = os.path.join(OUT_DIR, "results.json")
     old = old_lookup()
-    results = []
-    for i, (kind, cid, path) in enumerate(clips):
-        mp3 = os.path.join(AUDIO_OUT, cid + ".mp3")
-        try:
-            r = bc.process(path, cid=cid, mp3_out=mp3)
-        except Exception as e:
-            r = {"id": cid, "error": repr(e)}
-        results.append((kind, r))
-        print(f"  [{i+1}/{len(clips)}] {cid}: {r.get('global_caption', 'ERR')[:80]}", flush=True)
 
-    json.dump({"n": len(results),
-               "defaults": {"locator": f"{B.LOCATOR_REPO}/{B.LOCATOR_FILE}",
-                            "classifier": f"{B.BURST_CLF_REPO}/{B.BURST_CLF_FILE}",
-                            "threshold": B.LOCATOR_THR, "merge_gap": B.MERGE_GAP,
-                            "min_duration": B.MIN_BURST_DUR, "no_burst_gate": B.NOBURST_GATE,
-                            "chunk_sec": B.CHUNK_SEC, "chunk_overlap": B.CHUNK_OVERLAP},
-               "results": [r for _, r in results]},
-              open(os.path.join(OUT_DIR, "results.json"), "w"), ensure_ascii=False, indent=1)
+    if A.recaption:
+        blob = json.load(open(res_path, encoding="utf-8"))
+        results = [(kind_of(r["id"]), r) for r in recaption(blob["results"], A.baseline)]
+        blob["defaults"]["baseline"] = os.path.basename(C.baseline_path(A.baseline))
+        blob["defaults"]["reliability_weighting"] = C.RELIABILITY_WEIGHTING
+        blob["defaults"]["spread_floor_frac"] = round(C.SPREAD_FLOOR_FRAC, 4)
+        blob["results"] = [r for _, r in results]
+        json.dump(blob, open(res_path, "w"), ensure_ascii=False, indent=1)
+        print(f"re-captioned {len(results)} clips from stored scores")
+    else:
+        os.makedirs(AUDIO_OUT, exist_ok=True)
+        use_emonet = os.environ.get("BC_EMONET", "1") != "0"
+        bc = B.BurstCaptioner(device=A.device, use_emonet=use_emonet, baseline=A.baseline)
+        clips = pick_clips(with_long=not A.no_long)
+        print(f"selected {len(clips)} clips")
 
-    # drop the intermediate wav for the long clip; the mp3 is what the page uses
-    wav_tmp = os.path.join(AUDIO_OUT, LONG_ID + ".wav")
-    if os.path.exists(wav_tmp):
-        os.remove(wav_tmp)
+        results = []
+        for i, (kind, cid, path) in enumerate(clips):
+            mp3 = os.path.join(AUDIO_OUT, cid + ".mp3")
+            try:
+                r = bc.process(path, cid=cid, mp3_out=mp3)
+            except Exception as e:
+                r = {"id": cid, "error": repr(e)}
+            results.append((kind, r))
+            print(f"  [{i+1}/{len(clips)}] {cid}: {r.get('global_caption', 'ERR')[:80]}", flush=True)
+
+        json.dump({"n": len(results),
+                   "defaults": {"locator": f"{B.LOCATOR_REPO}/{B.LOCATOR_FILE}",
+                                "classifier": f"{B.BURST_CLF_REPO}/{B.BURST_CLF_FILE}",
+                                "threshold": B.LOCATOR_THR, "merge_gap": B.MERGE_GAP,
+                                "min_duration": B.MIN_BURST_DUR, "no_burst_gate": B.NOBURST_GATE,
+                                "chunk_sec": B.CHUNK_SEC, "chunk_overlap": B.CHUNK_OVERLAP,
+                                "scorer": "laion/Empathic-Insight-Voice-Plus",
+                                "baseline": os.path.basename(C.baseline_path(A.baseline)),
+                                "reliability_weighting": C.RELIABILITY_WEIGHTING,
+                                "spread_floor_frac": round(C.SPREAD_FLOOR_FRAC, 4)},
+                   "results": [r for _, r in results]},
+                  open(res_path, "w"), ensure_ascii=False, indent=1)
+
+        # drop the intermediate wav for the long clip; the mp3 is what the page uses
+        wav_tmp = os.path.join(AUDIO_OUT, LONG_ID + ".wav")
+        if os.path.exists(wav_tmp):
+            os.remove(wav_tmp)
 
     cards = "\n".join(render_card(k, r, old) for k, r in results)
     n_burst = sum(len([b for b in r.get("variant_a_bursts", []) if b.get("kept")]) for _, r in results)

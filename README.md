@@ -24,15 +24,14 @@ Three real outputs, produced by `burst_captions.py` at its current defaults
 **1 — a goblin character voice** ([listen ↗](https://projects.laion.ai/procedural-voice-captions/burst-captions-v2/#goblin5))
 
 ```
-GENERAL: very flat-resonance, very warm, very decelerating, very mumbled, very soft-onset,
-         middle-aged, low-register, slow, very pining, no absorption, very helplessness,
-         genuine, with-bursts
+GENERAL: very warm, very soft-onset, very flat, very mumbled, very organic, middle-aged,
+         low-register, very slow, pining, helplessness, unease, semi-genuine, with-bursts
 SCRIPT:
-(very flat-resonance, very smooth, very non-narrative, no deep focus, very fatigue, no interest)
+(very flat, very smooth, very non-narrative, no interest, very fatigue, no deep focus, genuine)
     Huh. (Chuckle)
-(very flat-resonance, very flat, very mumbled, very helplessness, very misery, no absorption)
+(very flat, very warm, very smooth, helplessness, concern, no interest, semi-genuine, with-bursts)
     [pause 0.4s] What have we here?
-(very flat-resonance, very meek, very warm, fondness, feeling turned on, altered perception)
+(very whispered, very flat, very warm, feeling turned on, nostalgia, fondness, semi-genuine, with-bursts)
     [pause 0.5s] A lost little traveller with shiny pockets?
 ```
 
@@ -43,14 +42,15 @@ words nearest that moment.
 **2 — an in-the-wild podcast clip** ([listen ↗](https://projects.laion.ai/procedural-voice-captions/burst-captions-v2/#EN_B00000_S03298_W000123))
 
 ```
-GENERAL: oral-bright, full, halting, naturalistic, slightly non-narrative, adult, masculine,
-         low-register, very mirth, existential void, short-temperedness, genuine, with-bursts
+GENERAL: very oral-bright, very chesty, very full, very naturalistic, very throaty, adult,
+         masculine, low-register, very existential void, very meditation, no ribbing,
+         genuine, with-bursts
 SCRIPT:
-(very flat-resonance, very oral-bright, dialogic, no attention, very ribbing, very disdain)
+(very oral-bright, very dialogic, very throaty, no interest, no brooding, disdain, genuine, burst-free)
     So that people go, What is that? (Breathy Giggle)
-(very flat-resonance, very commanding, very oral-bright, no engrossment, no thoughtfulness, no fascination)
+(very oral-bright, very throaty, very commanding, no fascination, no thoughtfulness, no relaxation, genuine)
     I need to find out about that.
-(very oral-bright, very blended-resonance, smooth, very bantering, very existential void, very suspicion)
+(very oral-bright, very throaty, very chesty, very existential void, very pensiveness, no fascination, genuine)
     [pause 0.7s] So this is me making stuff up right in the moment, but I'm like, okay, I'm
     gonna use these oblique strategies as a way of
 ```
@@ -58,17 +58,16 @@ SCRIPT:
 **3 — a distressed character voice** ([listen ↗](https://projects.laion.ai/procedural-voice-captions/burst-captions-v2/#zombie5))
 
 ```
-GENERAL: very flat-resonance, very vulnerable, very meek, very explicit, very choppy, young,
-         feminine, low-register, very slow, very lethargy, no engrossment, very feeling horny,
-         genuine, with-bursts
+GENERAL: very vulnerable, very meek, very scattered, very soft-onset, very flat, young,
+         feminine, low-register, very slow, lethargy, feeling horny, warmth, semi-genuine
 SCRIPT:
-(very flat-resonance, very vulnerable, very meek, very lethargy, very suffering, very submission)
+(very soft-onset, very scattered, very flat, lethargy, submission, insensitivity, semi-genuine, with-bursts)
     So hungry.
-(very flat-resonance, very smooth, very flat, very burnout, very respite, no engrossment)
+(very flat, very scattered, very smooth, burnout, no fascination, sullenness, semi-genuine, with-bursts)
     [pause 0.5s] Hmm. (Wistful Sigh)
-(very flat-resonance, very mumbled, very jerky, very desperation, very despair, very torment)
+(very scattered, very flat, very mumbled, desperation, pessimism, carnal desire, semi-genuine, with-bursts)
     [pause 1.3s] Help me.
-(very flat-resonance, very choppy, very soft-onset, very burnout, very desperation, very dejection)
+(very scattered, very soft-onset, very flat, very burnout, very desperation, very unease, genuine, with-bursts)
     [pause 0.3s] I can't stop.
 ```
 
@@ -78,12 +77,16 @@ content — same dimensions, same emotions, same gates — can be rendered as pr
 line under `template="default"`:
 
 ```
-A voice that is extremely one-dimensional in resonance; extremely warm and enveloping;
-extremely decelerating in pace; extremely blurry and mumbled; extremely soft and gentle in
-onset; middle-aged to mature; low and bassy in register; notably slow and deliberate in
-tempo; extremely carrying pining; notably free of absorption; extremely carrying
-helplessness; genuine in delivery; interwoven with vocal bursts (laughs, gasps, sighs).
+A voice that is extremely warm and enveloping; extremely soft and gentle in onset; extremely
+flat and unemphasized; extremely blurry and mumbled; extremely organic and soft; middle-aged
+to mature; low and bassy in register; very slow and deliberate in tempo; notably carrying
+pining; notably carrying helplessness; notably carrying unease; only slightly genuine,
+somewhat performed; interwoven with vocal bursts (laughs, gasps, sighs).
 ```
+
+> `very flat` above is **Emphasis** (`EMPH`) below baseline, not resonance. Captions produced
+> before the [baseline swap](#the-baseline) opened almost every line with *"very
+> flat-resonance"* (`R_MIXD`); that was a scaling defect and is fixed.
 
 ### Hear the clips
 
@@ -91,6 +94,11 @@ GitHub's README renderer **cannot embed an audio player** — the links above an
 ordinary links out to the GitHub Pages demo, where each clip has a real `<audio>` element
 next to its caption. Nothing plays inside this page.
 
+- ▶ **[25 clips through the current stack](https://projects.laion.ai/procedural-voice-captions/burst-captions-25/)**
+  — locator v2 + classifier v2 + Empathic-Insight + the in-domain baseline with reliability
+  weighting. Each card shows the z-score, the reliability `r` and the effective rank `|z|·r`
+  of every selected dimension, and expands to the caption the *same* scores produced under
+  the previous captioner.
 - ▶ **[Current output — locator v2 + classifier v2](https://projects.laion.ai/procedural-voice-captions/burst-captions-v2/)**
   (14 clips, each with a player, the located spans, and the previous pipeline's output for comparison)
 - ▶ **[100-clip multilingual caption grid](https://projects.laion.ai/procedural-voice-captions/)**
@@ -107,19 +115,21 @@ Mirror: [`laion-ai.github.io/procedural-voice-captions`](https://laion-ai.github
 Every dimension is **z-scored against the average voice**: `z = (value − median) / spread`,
 where the baseline medians and spreads come from the bundled `baseline_stats.json`
 (99 dimensions: 57 VoiceNet + genuineness + vocal-burst blend + 40 EmoNet emotions).
-Then, for the whole clip:
+Dimensions are then ranked by an **effective score `|z| · r`**, where `r` is the
+dimension's measured predictor reliability — see [reliability
+weighting](#reliability-weighting--z--r). Then, for the whole clip:
 
 | | selected | of |
 |---|---|---|
-| VoiceNet dimensions | **top 5 by \|z\|** | 57 |
-| EmoNet emotions | **top 3 by \|z\|** | 40 |
-| Always included regardless of \|z\| | **Age `AGEV` · Gender `GEND` · Register `REGS` · Tempo `TEMP`** | — |
+| VoiceNet dimensions | **top 5 by \|z\|·r** | 57 |
+| EmoNet emotions | **top 3 by \|z\|** (no published per-emotion reliability) | 40 |
+| Always included regardless of rank | **Age `AGEV` · Gender `GEND` · Register `REGS` · Tempo `TEMP`** | — |
 | Also appended | genuineness, and vocal-burst blend when \|z\| ≥ 0.5 | — |
 
 (`k_voicenet=5`, `k_emonet=3`, `ALWAYS_ON = ["AGEV","GEND","REGS","TEMP"]` in
 [`caption.py`](caption.py) — those are the defaults of `caption()` / `caption_detail()`.)
 
-Two selection rules are worth knowing:
+Three selection rules are worth knowing:
 
 - **Categorical dims use absolute 0–6 bands, not z-scores.** `AGEV`, `GEND` and `REGS`
   are near-categorical, so deviation-from-baseline is the wrong lens: the population
@@ -131,6 +141,9 @@ Two selection rules are worth knowing:
 - **Intensity comes from |z|** — ≥ 2.0 Extremely, ≥ 1.5 Very, ≥ 1.0 Notably, ≥ 0.5
   Somewhat; below 0.5 the dimension is "about average" and, in the `tags` form, dropped
   entirely rather than padded with filler.
+- **Reliability decides ranking, never wording.** `|z|·r` picks *which* dimensions appear;
+  the reported `z`, the direction and the intensity adverb all stay on the raw `|z|`,
+  because the deviation is a fact about the clip while `r` is a fact about the predictor.
 
 Emotion wording then rotates through each emotion's **synonym cluster** (so *Sadness*
 surfaces as *dejection*, *heartache*, *misery*, … across clips), and the
@@ -293,6 +306,9 @@ python burst_captions.py 'my_clips/*.wav' --out out.json --mp3-dir mp3/
 
 # caption from already-computed predictions, no audio, no models, stdlib only
 python caption.py examples/worker_0_EN_tDPU-wXSB5y_W000085.json --kv 5 --ke 3
+
+# same clip against the previously published baseline, ranked by raw |z|
+python caption.py examples/worker_0_EN_tDPU-wXSB5y_W000085.json --baseline emolia --no-reliability
 ```
 
 **Every model defaults to a public HuggingFace repo** and is downloaded on first use —
@@ -498,6 +514,50 @@ BUD-E-Whisper.
 heads. EmoNet is used for its **40 emotions only** — EmoNet's own valence/arousal axes are
 never loaded and never double-counted.
 
+### Emotions come from Empathic-Insight, and only from there
+
+The 40 emotions and the gender gate are scored by
+[`laion/Empathic-Insight-Voice-Plus`](https://huggingface.co/laion/Empathic-Insight-Voice-Plus)
+(BUD-E-Whisper encoder + one head per emotion). There is **no distilled-head path in this
+repo and none is being added.**
+
+The alternative would be the distilled MLP heads in
+[`laion/voiceclap-commercial-attribute-heads`](https://huggingface.co/laion/voiceclap-commercial-attribute-heads)
+— 61 tiny heads on the same frozen VoiceCLAP-commercial embedding the VoiceNet dims already
+use, so they are nearly free once the clip is embedded, where Empathic-Insight needs a
+second encoder pass. They were compared against Empathic-Insight on **72,809 matched pairs
+of identical DramaBox audio** (20,000 whole utterances and 52,809 sentences of ≥ 8 words):
+
+| level | dims compared | median Spearman ρ | median MAE | ρ ≥ 0.7 | ρ < 0.5 |
+|---|---|---|---|---|---|
+| utterance | 44 | **0.381** | 0.438 | 1 | 34 |
+| sentence | 44 | **0.315** | 0.476 | 3 | 35 |
+
+**Spearman is the number that decides this**, because a caption only ever uses the **top-k
+dimensions by |z|** — rank agreement is exactly the question of whether the two scorers pick
+the same dimensions at all. At a median ρ of 0.32–0.38 they largely do not.
+
+The heads are genuinely good at what they were distilled for, and the split is sharp:
+
+| well distilled (sentence level) | ρ | poorly distilled (sentence level) | ρ | bias |
+|---|---|---|---|---|
+| `score_overall_quality` | 0.869 | `Awe` | 0.052 | +0.58 |
+| `score_speech_quality` | 0.744 | `Thankfulness_Gratitude` | 0.083 | +0.99 |
+| `Interest` | 0.707 | `Jealousy_&_Envy` | 0.132 | +0.42 |
+| `score_background_quality` | 0.694 | `Affection` | 0.145 | +0.50 |
+
+The rare emotions also carry a **large positive bias** — classic regression to the mean on
+emotions that are rare in the distillation training data, which would systematically inflate
+exactly the emotions a voice-acting caption most wants to be right about. Short segments make
+it worse: the heads were distilled on whole clips, and `Jealousy_&_Envy` loses 0.33 ρ,
+`Affection` 0.21 and `Contentment` 0.20 when applied to a single sentence — and this repo
+scores **every sentence** separately.
+
+So the distilled heads remain a reasonable **fast approximation for the four quality
+scores**, and a poor one for emotions. Wiring them in as an optional path is not a matter of
+keeping an existing code path alive — there has never been one here — so it is left out
+rather than added as a second, weaker scorer with a caveat attached.
+
 The dimension names, level rubrics and emotion **synonym clusters** come from
 [**LAION-AI/voice-taxonomies**](https://github.com/LAION-AI/voice-taxonomies).
 EmoNet is optional: `BC_EMONET=0` skips it and captions fall back to VoiceNet + genuineness.
@@ -519,10 +579,155 @@ The fine-tuning prompt format that consumes these captions is described here:
 
 ---
 
-## How the baseline was built
+## The baseline
 
-`baseline_stats.json` describes "the average voice" so deviations are meaningful. It was
-built (`compute_baseline.py`) from two sources:
+`baseline_stats.json` describes "the average voice" so deviations are meaningful. Two
+baselines ship, and either can be selected — earlier published results stay reproducible:
+
+| file | measured on | default |
+|---|---|---|
+| **`baseline_stats.json`** | **256,000 DramaBox edge-case clips, in-domain** | ✅ |
+| `baseline_stats_emolia.json` | 4,703 Emolia clips + 1,000 character takes (722 clips for the emotions) | — |
+
+```python
+base = load_baseline()             # the default, in-domain
+base = load_baseline("emolia")     # the previously published baseline
+base = load_baseline("/path/to/my_baseline.json")
+```
+
+```bash
+python caption.py preds.json --baseline emolia    # CLI
+export PVC_BASELINE=emolia                        # or process-wide
+```
+
+### Why it was swapped — `R_MIXD`
+
+Measured on 256,000 clips, **`R_MIXD` (Mixed Resonance) was the only one of the 57
+VoiceNet dimensions whose median sat more than 2 baseline-spreads off the published
+baseline**, at `z = −4.64`; the next worst were `Teasing` at +2.25 and `VFLX` at −2.06.
+
+The problem was not the median but the **spread**. The emolia baseline gave `R_MIXD` a
+spread of **0.202** where the in-domain measurement finds **0.785** — 3.9× too narrow,
+and ~5× narrower than a typical VoiceNet dimension on the same 0–6 scale. Healthy
+dimensions match closely across the two corpora (`DFLU` 1.280 vs 0.749, `COGL` 1.081 vs
+0.802):
+
+```
+z = (1.902 − 2.822) / 0.202 = −4.55        # published spread
+z = (1.902 − 2.822) / 0.785 = −0.87        # true spread — never reaches the top-5
+```
+
+So a single under-estimated denominator put one dimension at |z| ≈ 7 on real audio and let
+it win a top-5 slot on almost every clip. **That is why nearly every caption in this repo
+used to begin with *"very flat-resonance"*.** `R_MIXD` is also the weakest-correlating
+regression head in the VoiceNet release (held-out `reg_pearson` = **0.392**) — it was both
+the mis-scaled dimension and the least trustworthy one.
+
+**Measured effect.** `eval_baseline_swap.py` re-captions the stored raw scores of the 14
+demo clips and their 67 sentences (81 captions, no models, no audio) under four
+configurations:
+
+| configuration | `R_MIXD` takes a top-k slot | mean \|z\| `R_MIXD` | median \|z\| other 56 dims | mean `r` of selected dims |
+|---|---|---|---|---|
+| **A** emolia · no floor · no reliability *(previous default)* | **79/81** | 7.44 | 0.83 | 1.000 |
+| **B** emolia · floor · reliability | 76/81 | 4.29 | 0.83 | 1.000 |
+| **C** dramabox · floor · no reliability | 0/81 | 0.80 | 1.25 | 0.800 |
+| **D** dramabox · floor · reliability *(new default)* | **0/81** | 0.80 | 1.25 | 0.837 |
+
+On the 14 global captions alone, A gives `R_MIXD` **13/14** top-5 wins at mean |z| **7.39**
+against a median of **0.94** across the other 56 dims — reproducing the figure this README
+previously reported as a known issue — and D gives **0/14** at mean |z| 0.87.
+
+Read row **B** honestly: **the spread floor and reliability weighting do not fix `R_MIXD` on
+their own.** A 7.4σ artefact survives both. What fixes it is measuring the spread correctly;
+the floor and the weighting are safety nets that bound the damage from the *next* such
+defect. Independently confirmed on freshly scored audio: on the
+[25-clip grid](https://projects.laion.ai/procedural-voice-captions/burst-captions-25/)
+`R_MIXD` took a top-5 slot on **20 of 25** clips under the old configuration and **0 of 25**
+now, and on the regenerated 100-clip grid it takes **0 of 100**.
+
+One honest consequence of moving in-domain: the genuineness median rises from 1.73 to 2.27,
+so clips that used to be described as *"genuine"* are now often *"semi-genuine"*. That is a
+different reference population, not a change of opinion about the clips.
+
+### The spread floor
+
+`z = (value − median) / spread` has no defence against a spread that is simply too small,
+so the captioner floors it. The floor is **relative**, because the failure was relative:
+
+> **No dimension may have a `spread` narrower than ⅓ of the median `spread` of its own
+> group** (`voicenet` / `emonet` / `quality`).
+
+⅓ is taken from the data, not chosen for roundness. Ordering every dimension by
+`spread ÷ group-median-spread`:
+
+| baseline / group | lowest ratios | first healthy dim |
+|---|---|---|
+| emolia · voicenet | `R_MIXD` 0.19, `EXPL` 0.22 | `ROUG` 0.55 |
+| emolia · emonet | — | `Awe` 0.48 |
+| dramabox · voicenet | `EXPL` 0.35 | `ROUG` 0.57 |
+| dramabox · emonet | `Awe` 0.00, `Shame` 0.02, `Pain` 0.03, `Infatuation` 0.05, `Distress` 0.10, `Affection` 0.29, `Helplessness` 0.33 | `Longing` 0.39 |
+
+In all four distributions every well-estimated dimension sits above ~0.35 and every
+pathological one far below, so ⅓ separates them cleanly. On the shipped default it floors
+**0 of 57** VoiceNet dims, **0 of 2** quality dims, and **9 of 40** EmoNet emotions — the
+zero-inflated ones whose raw IQR collapses towards zero (`Awe`'s is exactly `0.0`, which
+without a floor is an unbounded z). On the emolia baseline it would have floored exactly the
+two anomalies, `R_MIXD` (0.202 → 0.351) and `EXPL`.
+
+`PVC_SPREAD_FLOOR_FRAC=0` disables it; `caption.spread_floors(baseline)` returns the
+per-group floors actually in force.
+
+### Reliability weighting — `|z| · r`
+
+A dimension the model cannot predict should not lead the caption. The VoiceNet release
+publishes a held-out **`reg_pearson` per dimension** (`metrics_best_per_dim.parquet`), and
+the baseline carries it as `reliability_reg_pearson`. It spans **0.392 (`R_MIXD`)** to
+**0.949 (`VOLT`)**; the next weakest are `EXPL` 0.415, `ARSH` 0.532, `VFLX` 0.558.
+
+Dimensions are ranked by **`|z| · r`** instead of `|z|`, so a head at `r = 0.39` needs 2.4×
+the deviation of one at `r = 0.95` to take the same slot. Deliberate limits:
+
+- **Selection only.** The reported `z`, the direction and the intensity adverb come from the
+  raw `|z|`. The deviation is a fact about the clip; `r` is a fact about the predictor, and
+  folding one into the other would understate a measured deviation.
+- **Unknown reliability ⇒ weight 1.0.** A baseline without the field — including
+  `baseline_stats_emolia.json` — behaves exactly as before. This is verified in row A/B of
+  the table above: with the emolia baseline, turning weighting on moves 4 of 271 selected
+  slots, and those 4 come from the spread floor, not the weighting.
+- **EmoNet emotions are not silently assumed perfect.** They have no published
+  `reg_pearson`. They are also ranked in their **own** pool (top-3 EmoNet, separate from the
+  top-5 VoiceNet), so any *uniform* weight there cannot reorder them — reliability weighting
+  is a mathematical **no-op** on the EmoNet group today. It is still applied, so that
+  published per-emotion reliabilities would be picked up with no code change. Genuineness and
+  blend are never ranked (always-on / thresholded) and are unaffected.
+
+Holding the baseline fixed, the weighting changes **56 of 271** selected slots (20.7 %) and
+lifts the mean reliability of the dimensions that make it into a caption from **0.800 to
+0.837**.
+
+```bash
+python caption.py preds.json --no-reliability        # rank by raw |z|
+python caption.py preds.json --reliability-min 0.5   # also drop dims below r = 0.5
+export PVC_RELIABILITY=0                             # process-wide off
+```
+
+`caption_detail()` returns `reliability` and `rank_score` per dimension, so a selection is
+always auditable.
+
+### How each baseline was measured
+
+**The default — DramaBox, in-domain.** 256,000 clips sampled from the DramaBox edge-case
+corpus (reward-Top-3 annotations), capped at 2,000 per shard. `spread` is **IQR / 1.349**, a
+robust σ that, unlike `std`, is not dragged by these heads' long tails. Every dimension is
+measured on the same embedding path used at inference. One emotion, `Jealousy & Envy`, is
+carried over from the emolia baseline — the scoring run that produced the corpus was missing
+that head — and says so in its `source` field. `import_baseline.py` normalises such a
+measurement into this repo's schema (it reconciles Empathic-Insight file-stem keys such as
+`Hope_Enthusiasm_Optimism` with the taxonomy names, carries the synonym clusters over, and
+reports every rename).
+
+**The legacy baseline — Emolia + character voices**, built by `compute_baseline.py`:
 
 **1. Emolia — ~1000 random clips per language** (`en, de, zh, fr, ko, ja`):
 - VoiceNet / genuineness / blend are computed by running the heads directly on
@@ -540,38 +745,45 @@ built (`compute_baseline.py`) from two sources:
 **deliberately widen the spread**. Their per-character `emo_json` is **not** used for the
 40-emotion baseline (Emolia audio is).
 
-**Per-dimension statistics.** For each dimension we store mean, median, std, MAD, p10, p90,
-n, and a robust **`spread`** for z-scoring:
+When a baseline supplies no precomputed `spread`, the captioner falls back to
+`1.4826 · MAD`, and to `std` when `1.4826·MAD < 0.5·std`. That fallback matters for the
+EmoNet emotions, which are strongly zero-inflated (most clips ≈ 0, so the raw MAD collapses).
+Whatever the estimator, the [floor](#the-spread-floor) is applied on top.
 
-> `spread = 1.4826 · MAD`, falling back to `std` when `1.4826·MAD < 0.5·std`.
+**Per-dimension statistics** in the shipped default (mean, median, std, MAD, p10, p90, n,
+`spread`, and `reliability_reg_pearson` for the VoiceNet dims):
 
-The MAD fallback matters for the EmoNet emotions, which are strongly zero-inflated (most
-clips ≈ 0, so the raw MAD collapses and would blow up z-scores).
+| code | name | group | mean | median | std | spread | `r` | n |
+|------|------|-------|------|--------|-----|--------|-----|---|
+| AGEV | Voice Age | voicenet | 3.09 | 3.10 | 0.78 | 0.78 | 0.894 | 256,000 |
+| GEND | Perceived Gender | voicenet | 4.04 | 4.84 | 1.60 | 1.87 | 0.887 | 256,000 |
+| REGS | Register | voicenet | 1.54 | 1.22 | 1.04 | 1.00 | 0.884 | 256,000 |
+| TEMP | Tempo | voicenet | 2.31 | 2.27 | 0.86 | 0.91 | 0.910 | 256,000 |
+| AROU | Arousal | voicenet | 2.54 | 2.51 | 0.97 | 1.06 | 0.929 | 256,000 |
+| VALN | Valence | voicenet | 2.49 | 2.57 | 0.81 | 0.70 | 0.785 | 256,000 |
+| R_MIXD | Mixed Resonance | voicenet | 1.93 | 1.88 | 0.74 | **0.79** | **0.392** | 256,000 |
+| genuineness | Genuineness | quality | 2.45 | 2.27 | 0.96 | 0.98 | — | 256,000 |
+| blend | Vocal-burst blend | quality | 3.61 | 3.38 | 2.19 | 2.40 | — | 256,000 |
+| Anger | Anger | emonet | 0.34 | 0.04 | 0.45 | 0.48 | — | 256,000 |
+| Amusement | Amusement | emonet | 0.80 | 0.83 | 0.64 | 0.93 | — | 256,000 |
+| Interest | Interest | emonet | 2.28 | 2.35 | 0.40 | 0.28 | — | 256,000 |
 
-| code | name | group | mean | median | std | spread | n |
-|------|------|-------|------|--------|-----|--------|---|
-| AGEV | Voice Age | voicenet | 2.87 | 2.68 | 1.26 | 1.19 | 5101 |
-| GEND | Perceived Gender | voicenet | 3.12 | 3.71 | 1.74 | 1.88 | 5004 |
-| REGS | Register | voicenet | 1.73 | 1.31 | 1.30 | 1.18 | 5101 |
-| TEMP | Tempo | voicenet | 2.19 | 2.14 | 0.97 | 1.05 | 4703 |
-| AROU | Arousal | voicenet | 2.53 | 2.45 | 1.24 | 1.22 | 5004 |
-| VALN | Valence | voicenet | 2.36 | 2.33 | 1.00 | 1.02 | 4703 |
-| genuineness | Genuineness | quality | 2.05 | 1.73 | 1.41 | 1.45 | 5703 |
-| blend | Vocal-burst blend | quality | 2.72 | 2.21 | 2.32 | 2.33 | 5703 |
-| Anger | Anger | emonet | 0.33 | 0.03 | 0.45 | 0.45 | 722 |
-| Amusement | Amusement | emonet | 0.20 | 0.00 | 0.46 | 0.46 | 722 |
-| Interest | Interest | emonet | 1.83 | 1.90 | 0.53 | 0.58 | 722 |
-
-(VoiceNet / quality dims get `n ≈ 4703 + bestof64` where bestof64 covers that dim.)
-
-### Rebuild it
+### Rebuild them
 
 ```bash
+# the legacy emolia baseline, from scratch
 export HF_HOME=/path/to/hf_cache HF_TOKEN=...     # needs access to the gated repos above
 python compute_baseline.py --stage emolia_vn      # CPU: heads on precomputed embeddings
 python compute_baseline.py --stage bestof64       # CPU: read precomputed scores
 python compute_baseline.py --stage emonet --gpu 0 # 1 GPU, small batch: BUD-E-Whisper
 python compute_baseline.py --stage merge          # write baseline_stats.json
+
+# normalise a baseline measured on some other corpus into this repo's schema
+python import_baseline.py measured.json --out baseline_stats.json \
+       --reference baseline_stats_emolia.json
+
+# what a swap does to real captions, from stored scores — no models, no audio
+python eval_baseline_swap.py --sentences
 ```
 
 The paths to the Emolia index, embeddings and heads are constants at the top of
@@ -638,15 +850,24 @@ by `laion/vocal-burst-detector-v2`.
 
 ## Known issues
 
-- **`R_MIXD` ("mixed resonance") dominates almost every caption.** Its baseline `spread` is
-  0.20, an order of magnitude tighter than most dimensions, while the head's output on real
-  audio sits well below the baseline median — so its z-score lands around **−7** and it wins
-  the top-5 selection on 13 of the 14 demo clips (mean |z| 7.39, against a median of 0.96
-  across the other 56 dims). That is why nearly every example above starts with
-  *"very flat-resonance"*. `R_MIXD` is also the weakest-correlating regression head in the
-  VoiceNet release (val Pearson r = 0.392). This is a **baseline/head scale mismatch that
-  predates the burst work** and is not fixed here — fixing it means recomputing that
-  dimension's baseline against the same embedding path used at inference.
+- **The default baseline is in-domain for one domain.** It is measured on 256,000 DramaBox
+  edge-case clips — expressive, acted, mostly dramatic speech. That is a far better match for
+  voice-acting captions than the previous 4,703-clip Emolia baseline, and it is what fixed
+  `R_MIXD`, but it is *not* a neutral cross-domain reference. Captioning calm read speech or
+  broadcast audio against it will report larger deviations than a same-domain baseline would.
+  `load_baseline("emolia")` and `import_baseline.py` exist for that reason.
+- **`R_MIXD` is still the weakest head in the VoiceNet release** (`reg_pearson` 0.392). It no
+  longer dominates captions — correct spread plus `|z|·r` ranking — but when it *does* reach
+  the top-5 the underlying prediction is still the least trustworthy of the 57. Setting
+  `--reliability-min 0.5` excludes it (and `EXPL`, 0.415) outright.
+- **One emotion's baseline is not in-domain.** `Jealousy & Envy` is carried over from the
+  Emolia baseline because the head was missing from the scoring run that produced the
+  DramaBox corpus. Its `source` field says so, and its z-scores are not comparable with the
+  other 39. It is the only such dimension.
+- **Duplicate tags in the terse form.** Several dimensions share a tag word (`ROUG` low and
+  `DFLU` low are both *smooth*; `S_FORM` high and `S_CASU` low are both *formal*), so a
+  `tags` caption can read "very formal, very formal". Cosmetic, pre-existing, and more
+  visible now that `R_MIXD` no longer occupies a slot on every clip.
 - The demo page's long-form example is a **concatenation of shorter clips**, not a natural
   long recording — nothing longer than ~18 s ships in this repo. It exercises the 30 s
   windowing honestly, but it is not a substitute for evaluation on real long-form audio.
@@ -656,17 +877,22 @@ by `laion/vocal-burst-detector-v2`.
 ## Files
 
 ```
-caption.py               # caption() / caption_detail() + 11 templates + gates  (stdlib only)
-baseline_stats.json      # the baselines (99 dimensions + _meta)
-burst_captions.py        # full pipeline: score -> timestamps -> locate -> classify -> insert
-asr_words.py             # bundled Parakeet token -> word -> sentence helpers (stdlib only)
-augment.py               # score once, caption many times (train-time text augmentation)
-compute_baseline.py      # rebuild baseline_stats.json (staged)
-build_burst_demo_v2.py   # renders docs/burst-captions-v2/ from audio already in this repo
-build_burst_demo.py      # renders the older docs/burst-captions/ (needs out-of-repo wavs)
-vocalburst_taxonomy.json # 82 vocal-burst classes (class order for the classifier)
-examples/                # real complete predictions (dims + emo + genu + blend)
-docs/                    # the published GitHub Pages demos
+caption.py                  # caption() / caption_detail() + 11 templates + gates  (stdlib only)
+baseline_stats.json         # DEFAULT baseline — 256k DramaBox clips, in-domain (99 dims + _meta)
+baseline_stats_emolia.json  # the previously published baseline, kept for reproducibility
+burst_captions.py           # full pipeline: score -> timestamps -> locate -> classify -> insert
+asr_words.py                # bundled Parakeet token -> word -> sentence helpers (stdlib only)
+augment.py                  # score once, caption many times (train-time text augmentation)
+compute_baseline.py         # rebuild the emolia baseline (staged)
+import_baseline.py          # normalise an out-of-repo baseline measurement into this schema
+eval_baseline_swap.py       # measure what a baseline / weighting change does to real captions
+build_demo25.py             # renders docs/burst-captions-25/ (25 clips, full stack)
+build_caption_grid.py       # rebuilds docs/captions.json + the DATA block in docs/index.html
+build_burst_demo_v2.py      # renders docs/burst-captions-v2/ (--recaption = no models needed)
+build_burst_demo.py         # renders the older docs/burst-captions/ (needs out-of-repo wavs)
+vocalburst_taxonomy.json    # 82 vocal-burst classes (class order for the classifier)
+examples/                   # real complete predictions (dims + emo + genu + blend)
+docs/                       # the published GitHub Pages demos
 requirements.txt
 ```
 
@@ -680,8 +906,9 @@ Each has real audio players — GitHub READMEs cannot embed audio, so these are 
 
 | page | what |
 |---|---|
-| [**burst-captions-v2**](https://projects.laion.ai/procedural-voice-captions/burst-captions-v2/) | **Current defaults.** 14 clips re-annotated with locator `model_v2.pt` + `vocal-burst-detector-v2`, including a 91 s clip that needs 4 locator windows. Each card shows the located spans and, where available, the previous pipeline's output for comparison. |
-| [caption grid](https://projects.laion.ai/procedural-voice-captions/) | 100 real multilingual clips, captioned, with the 11 templates assigned round-robin. |
+| [**burst-captions-25**](https://projects.laion.ai/procedural-voice-captions/burst-captions-25/) | **Current stack, end to end.** 25 multilingual clips: locator `model_v2.pt` → `vocal-burst-detector-v2` → Empathic-Insight scoring → captions on the in-domain baseline with reliability weighting. Each card lists every selected dimension's `z`, reliability `r` and effective rank `|z|·r`, and expands to show what the *same* scores produced under the previous captioner. |
+| [burst-captions-v2](https://projects.laion.ai/procedural-voice-captions/burst-captions-v2/) | 14 clips with locator `model_v2.pt` + `vocal-burst-detector-v2`, including a 91 s clip that needs 4 locator windows, and the locator-v1 output for comparison. Captions regenerated on the current baseline. |
+| [caption grid](https://projects.laion.ai/procedural-voice-captions/) | 100 real multilingual clips, captioned, with the 11 templates assigned round-robin. Rescored and re-captioned on the current baseline. |
 | [character-captions](https://projects.laion.ai/procedural-voice-captions/character-captions/) | LAION character voices: procedural vs LLM-assisted, side by side. |
 | [burst-captions](https://projects.laion.ai/procedural-voice-captions/burst-captions/) | The previous burst pipeline (locator v1 + multi-label classifier). Kept for comparison. |
 | [gender-ab](https://projects.laion.ai/procedural-voice-captions/gender-ab/) | The VoiceNet-vs-Empathic-Insight gender study behind the gender gate. |
@@ -697,6 +924,29 @@ LAION / third-party releases linked above.
 
 ## Changelog
 
+- **The default baseline is now measured in-domain**, on 256,000 DramaBox edge-case clips
+  (`baseline_stats.json`); the previously published one is kept as
+  `baseline_stats_emolia.json` and is selectable by name, path or `$PVC_BASELINE`. This
+  fixes the `R_MIXD` scale defect that made almost every caption open with *"very
+  flat-resonance"* — top-5 wins go from 79/81 to 0/81 on the stored demo captions, 20/25 to
+  0/25 on freshly scored audio, and 0/100 on the regenerated caption grid.
+- **Reliability weighting, on by default.** Dimensions are ranked by `|z| · reg_pearson`
+  instead of `|z|`, so the weakest heads (`R_MIXD` 0.392, `EXPL` 0.415) no longer lead a
+  caption on deviation alone. Selection only — the reported z and the intensity wording are
+  unchanged. EmoNet emotions have no published reliability and are ranked in their own pool,
+  where a uniform weight is a no-op; this is documented rather than assumed.
+  `PVC_RELIABILITY=0` / `--no-reliability` restores the old ranking.
+- **Spread floor.** No dimension's `spread` may be narrower than ⅓ of its group's median
+  spread. On the default baseline this floors 0 of 57 VoiceNet dims and 9 of 40 zero-inflated
+  emotions (`Awe`'s raw spread is exactly 0.0). `PVC_SPREAD_FLOOR_FRAC=0` disables it.
+- **Empathic-Insight-Voice-Plus is the only emotion scorer**, and the README now cites the
+  72,809-matched-pair comparison against the distilled VoiceCLAP attribute heads (median
+  Spearman ρ 0.381 utterance / 0.315 sentence) that settles it. No distilled path is shipped.
+- **New 25-clip demo grid** (`docs/burst-captions-25/`, `build_demo25.py`) showing the whole
+  current stack with per-dimension `z` / `r` / `|z|·r` and a per-clip before/after. It reuses
+  the mp3s already in `docs/audio/`, so it adds no audio bytes. The 100-clip grid and the
+  14-clip page were regenerated; `build_burst_demo_v2.py --recaption` rebuilds the latter
+  from stored scores with no GPU and no audio.
 - **Locator v2 + classifier v2 are the defaults.** `laion/vocalburst-locator` now loads
   **`model_v2.pt`** (event F1 0.607 vs 0.152 on 992 real clips) and the naming stage is
   **`laion/vocal-burst-detector-v2`**, replacing `vocalburst-classifier-single` /
