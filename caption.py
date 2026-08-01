@@ -8,9 +8,12 @@ in plain English by how far it deviates from the average voice.
 Pipeline
 --------
 1. z-score every dimension:  z = (value - median) / spread,
-   spread = 1.4826*MAD  (robust std; falls back to std when MAD == 0).
-2. Pick the top-k VoiceNet dimensions by |z| (default k=5) and the top-k EmoNet
-   emotions by |z| (default k=3); both k are configurable.
+   spread = the baseline's robust scale, floored so that no dimension can be more
+   than 1/SPREAD_FLOOR_FRAC times narrower than its group's median spread.
+2. Rank the dimensions by an *effective* score  |z| * reliability, where
+   reliability is the dimension's measured predictor quality (`reg_pearson`).
+   Pick the top-k VoiceNet dimensions (default k=5) and the top-k EmoNet
+   emotions (default k=3); both k are configurable.
 3. ALWAYS include Age (AGEV), Gender (GEND), Register (REGS) and Tempo (TEMP),
    even when they are close to the baseline.
 4. Emotion wording rotates through each emotion's synonym cluster for variety.
@@ -25,18 +28,93 @@ Usage
 -----
     from caption import caption, caption_detail, load_baseline
     base = load_baseline()                       # bundled baseline_stats.json
+    base = load_baseline("emolia")               # the previously published baseline
     text = caption(preds, base, k_voicenet=5, k_emonet=3)
 
     # CLI:
     python caption.py preds.json                 # JSON: {"dims":{...},"emo":{...},
                                                  #        "genu":x,"blend":y}
     python caption.py - --kv 5 --ke 3            # read JSON from stdin
+    python caption.py preds.json --baseline emolia
 """
 import os, sys, json, math, random, zlib, argparse
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 _BASE_PATH = os.path.join(HERE, "baseline_stats.json")
 EPS = 1e-6
+
+# Selectable baselines. "default" == `baseline_stats.json` == the in-domain DramaBox
+# measurement (256,000 clips). "emolia" is the previously published baseline, kept
+# verbatim so captions and demo pages produced before the swap stay reproducible.
+BASELINES = {
+    "default":  _BASE_PATH,
+    "dramabox": _BASE_PATH,
+    "emolia":   os.path.join(HERE, "baseline_stats_emolia.json"),
+}
+DEFAULT_BASELINE = os.environ.get("PVC_BASELINE", "default")
+
+# --------------------------------------------------------------------------- #
+# SPREAD FLOOR — a safety net against an under-estimated baseline spread.
+#
+# `z = (value - median) / spread` has no defence against a spread that is simply too
+# small: the published emolia baseline gave `R_MIXD` a spread of 0.202 where the
+# in-domain measurement finds 0.785, and that one number alone put R_MIXD at z = -4.6
+# and made it win the top-5 on 13 of 14 demo clips. The failure is *relative*: R_MIXD's
+# spread was ~5x narrower than the typical VoiceNet dimension on the same 0-6 scale.
+#
+# So the floor is relative too: no dimension may have a spread narrower than
+# SPREAD_FLOOR_FRAC times the MEDIAN spread of its own group (voicenet / emonet /
+# quality), which keeps it scale-free and comparable within a group.
+#
+# 1/3 is not arbitrary — it is where the gap sits in the measured data. Ordering every
+# dimension by spread / group-median-spread:
+#   emolia   voicenet: R_MIXD 0.19, EXPL 0.22, then ROUG 0.55 and up   (57 dims)
+#   emolia   emonet:   min 0.48                                        (40 dims)
+#   dramabox voicenet: EXPL 0.35, then ROUG 0.57 and up                (57 dims)
+#   dramabox emonet:   Awe 0.00, Shame 0.02, Pain 0.03, Infatuation 0.05,
+#                      Distress 0.10, Affection 0.29, Helplessness 0.33,
+#                      then Longing 0.39 and up                        (40 dims)
+# Every healthy dimension sits above ~0.35 and every pathological one far below, in all
+# four distributions, so 1/3 separates them without touching a single well-estimated
+# dimension. On the shipped default baseline it therefore floors 0 of 57 VoiceNet dims,
+# 0 of 2 quality dims and 9 of 40 zero-inflated EmoNet dims (where the raw IQR collapses
+# towards 0 and z would otherwise be unbounded — `Awe` has spread exactly 0.0); on the
+# legacy emolia baseline it would have floored exactly the two anomalies, R_MIXD (0.202
+# -> 0.351) and EXPL. Set PVC_SPREAD_FLOOR_FRAC=0 to disable.
+SPREAD_FLOOR_FRAC = float(os.environ.get("PVC_SPREAD_FLOOR_FRAC", str(1.0 / 3.0)))
+
+# --------------------------------------------------------------------------- #
+# RELIABILITY WEIGHTING — a dimension the model cannot predict must not lead the caption.
+#
+# The VoiceNet release (`laion/voicenet-dimension-predictors-commercial`,
+# `metrics_best_per_dim.parquet`) publishes a held-out `reg_pearson` per dimension; the
+# baseline carries it as `reliability_reg_pearson`. It ranges from 0.392 (`R_MIXD`) to
+# 0.949 (`VOLT`) — R_MIXD was both the mis-scaled dimension AND the least trustworthy
+# head in the release, and it drove nearly every caption.
+#
+# Dimensions are therefore ranked by an EFFECTIVE score
+#       rank = |z| * r
+# rather than by |z| alone. A dim at r = 0.39 now needs 2.4x the deviation of a dim at
+# r = 0.95 to take the same slot. Two deliberate limits:
+#   * It changes only WHICH dimensions are selected. The reported z, the direction and
+#     the intensity adverb still come from the raw |z| — the deviation is a fact about
+#     the clip; reliability is a fact about the predictor, and conflating them would
+#     make the wording claim a smaller deviation than was measured.
+#   * A dimension with no published reliability gets weight 1.0, so a baseline without
+#     the field (e.g. `baseline_stats_emolia.json`) behaves exactly as before.
+#
+# EmoNet emotions have NO reg_pearson, and this is not silently treated as r = 1.0 in
+# any meaningful sense: emotions are ranked in their OWN pool (top-k EmoNet, separate
+# from top-k VoiceNet), so every emotion carrying the same weight cannot change their
+# order relative to one another. Reliability weighting is a mathematical no-op on the
+# EmoNet group today. The weighting is still applied there, so that if per-emotion
+# reliabilities are ever published the ranking picks them up with no code change.
+# Genuineness and blend are never ranked (always-on / thresholded), so they are unaffected.
+RELIABILITY_WEIGHTING = os.environ.get("PVC_RELIABILITY", "1") != "0"
+# Hard exclusion: drop any ranked dimension whose reliability is below this before
+# selection (always-on identity dims are exempt). 0 = rank-only, no exclusion.
+RELIABILITY_MIN = float(os.environ.get("PVC_RELIABILITY_MIN", "0"))
+RELIABILITY_DEFAULT = 1.0        # weight for a dimension with no published reg_pearson
 
 
 def stable_hash(s):
@@ -202,15 +280,23 @@ ABSOLUTE_BANDS = {
 
 
 # --------------------------------------------------------------------------- #
-def load_baseline(path=_BASE_PATH):
-    with open(path, encoding="utf-8") as f:
+def baseline_path(which=None):
+    """Resolve a baseline selector to a path. Accepts a name from BASELINES
+    ('default' / 'dramabox' / 'emolia'), or any path, or None -> $PVC_BASELINE."""
+    which = which if which is not None else DEFAULT_BASELINE
+    return BASELINES.get(which, which)
+
+
+def load_baseline(path=None):
+    """Load a baseline. `path` may be a BASELINES name or a filesystem path."""
+    with open(baseline_path(path), encoding="utf-8") as f:
         return json.load(f)
 
 
-def _spread(stat):
-    """Robust scale for z-scoring. Prefer the precomputed 'spread' field; otherwise
-    use 1.4826*MAD, falling back to std when the MAD collapses (< half the std, as
-    for zero-inflated emotion scores)."""
+def _raw_spread(stat):
+    """The baseline's own robust scale, before the floor. Prefer the precomputed
+    'spread' field; otherwise use 1.4826*MAD, falling back to std when the MAD
+    collapses (< half the std, as for zero-inflated emotion scores)."""
     sp = stat.get("spread")
     if sp is not None and float(sp) > EPS:
         return float(sp)
@@ -219,6 +305,56 @@ def _spread(stat):
     rmad = 1.4826 * mad
     sp = rmad if rmad >= 0.5 * std else std
     return sp if sp > EPS else 1.0
+
+
+def spread_floors(baseline, frac=None):
+    """{group: minimum allowed spread} = frac * median raw spread of that group.
+
+    Computed once per baseline dict and memoised into it under `_spread_floors`
+    (a private key; every dimension lookup in this module is by name, so it is
+    inert). See the SPREAD_FLOOR_FRAC block for why the floor is relative."""
+    frac = SPREAD_FLOOR_FRAC if frac is None else frac
+    cached = baseline.get("_spread_floors")
+    if isinstance(cached, dict) and cached.get("frac") == frac:
+        return cached["by_group"]
+    per_group = {}
+    for code, st in baseline.items():
+        if code.startswith("_") or not isinstance(st, dict) or "median" not in st:
+            continue
+        per_group.setdefault(st.get("group") or "?", []).append(_raw_spread(st))
+    by_group = {}
+    for g, vals in per_group.items():
+        vals.sort()
+        n = len(vals)
+        med = vals[n // 2] if n % 2 else 0.5 * (vals[n // 2 - 1] + vals[n // 2])
+        by_group[g] = frac * med
+    baseline["_spread_floors"] = {"frac": frac, "by_group": by_group}
+    return by_group
+
+
+def _spread(stat, baseline=None):
+    """Robust scale for z-scoring, floored against the dimension's group when a
+    baseline is supplied (no baseline -> raw spread, the pre-floor behaviour)."""
+    sp = _raw_spread(stat)
+    if baseline is not None and SPREAD_FLOOR_FRAC > 0:
+        sp = max(sp, spread_floors(baseline).get(stat.get("group") or "?", 0.0))
+    return sp if sp > EPS else 1.0
+
+
+def reliability(stat):
+    """Measured predictor quality of a dimension (held-out `reg_pearson`), or
+    RELIABILITY_DEFAULT when the baseline does not publish one for it."""
+    r = stat.get("reliability_reg_pearson")
+    if r is None:
+        return RELIABILITY_DEFAULT
+    return max(0.0, float(r))
+
+
+def _rank_score(z, stat, weighting=None):
+    """Effective ranking score: |z| scaled by how well the dimension can be predicted.
+    Selection only — the reported z and the intensity adverb stay on the raw |z|."""
+    use = RELIABILITY_WEIGHTING if weighting is None else bool(weighting)
+    return abs(z) * (reliability(stat) if use else 1.0)
 
 
 def _val(v):
@@ -241,8 +377,8 @@ def _intensity(az, cap=None):
     return "Somewhat"
 
 
-def _zscore(value, stat):
-    return (value - float(stat["median"])) / (_spread(stat) + EPS)
+def _zscore(value, stat, baseline=None):
+    return (value - float(stat["median"])) / (_spread(stat, baseline) + EPS)
 
 
 # --------------------------------------------------------------------------- #
@@ -252,7 +388,7 @@ def _genuineness_gate(genu, baseline):
     if genu is None or st is None:
         return "open", None, None
     g = _val(genu)
-    zg = _zscore(g, st)
+    zg = _zscore(g, st, baseline)
     if g >= float(st["median"]):
         gate = "open"
     elif zg > -1.0:
@@ -300,7 +436,8 @@ def _resolve_template(template, seed):
 def caption_detail(preds, baseline=None, k_voicenet=5, k_emonet=3,
                    always_on=ALWAYS_ON, synonym_seed=None,
                    template="default", shuffle_dims=False,
-                   ei_gender=None, ei_gender_gate=EI_GENDER_GATE):
+                   ei_gender=None, ei_gender_gate=EI_GENDER_GATE,
+                   reliability_weighting=None, reliability_min=None):
     """Return a structured breakdown of the caption.
 
     `preds` accepts either a flat {code: value} mapping or a nested
@@ -312,9 +449,15 @@ def caption_detail(preds, baseline=None, k_voicenet=5, k_emonet=3,
     deterministically from synonym_seed). `shuffle_dims` deterministically
     permutes the non-identity VoiceNet dims and the emotions within their groups.
     Neither changes which dims/emotions are selected — only their arrangement.
+
+    `reliability_weighting` (default: the RELIABILITY_WEIGHTING module setting, ON)
+    ranks dimensions by |z| * reg_pearson instead of |z|; `reliability_min` drops
+    ranked dimensions below that reliability outright (always-on dims are exempt).
     """
     if baseline is None:
         baseline = load_baseline()
+    rel_on = RELIABILITY_WEIGHTING if reliability_weighting is None else bool(reliability_weighting)
+    rel_min = RELIABILITY_MIN if reliability_min is None else float(reliability_min)
     k_voicenet = max(0, int(k_voicenet)); k_emonet = max(0, int(k_emonet))
     template = _resolve_template(template, synonym_seed)
 
@@ -348,6 +491,9 @@ def caption_detail(preds, baseline=None, k_voicenet=5, k_emonet=3,
     gate, gen_desc, zg = _genuineness_gate(genu, baseline)
 
     # ---- VoiceNet ----
+    # Ranked by the EFFECTIVE score |z| * reliability, so a dimension the predictor
+    # cannot actually predict does not lead the caption on the strength of a large
+    # deviation alone. `scored` keeps both numbers; only the ordering uses the product.
     scored = []
     for code, v in dims.items():
         st = baseline.get(code)
@@ -357,11 +503,15 @@ def caption_detail(preds, baseline=None, k_voicenet=5, k_emonet=3,
             val = _val(v)
         except Exception:
             continue
-        scored.append((code, val, _zscore(val, st)))
-    scored.sort(key=lambda t: abs(t[2]), reverse=True)
+        z = _zscore(val, st, baseline)
+        scored.append((code, val, z, _rank_score(z, st, rel_on), reliability(st)))
+    scored.sort(key=lambda t: t[3], reverse=True)
+    # Hard exclusion, if configured. Always-on identity dims are exempt: they are
+    # reported because the caption needs them, not because they scored highly.
+    pool = [t for t in scored if t[4] >= rel_min or t[0] in always_on] if rel_min > 0 else scored
 
     chosen, seen = [], set()
-    for code, val, z in scored[:k_voicenet]:
+    for code, val, z, rs, r in pool[:k_voicenet]:
         seen.add(code); chosen.append((code, val, z, False))
     for code in always_on:
         if code in seen:
@@ -369,10 +519,11 @@ def caption_detail(preds, baseline=None, k_voicenet=5, k_emonet=3,
                 if c == code:
                     chosen[i] = (c, val, z, True)
             continue
-        for code2, val, z in scored:
-            if code2 == code:
-                chosen.append((code, val, z, True)); break
+        for t in scored:
+            if t[0] == code:
+                chosen.append((code, t[1], t[2], True)); break
 
+    zmap = {t[0]: (t[3], t[4]) for t in scored}
     vn = []
     for code, val, z, always in chosen:
         az = abs(z); direction = "above" if z >= 0 else "below"
@@ -391,9 +542,11 @@ def caption_detail(preds, baseline=None, k_voicenet=5, k_emonet=3,
             phrase = f"{adverb.lower()} {d['hi' if z >= 0 else 'lo']}"
             short = TAG.get(code, (None, None))[0 if z >= 0 else 1]
             tag = (f"{INTENS_SHORT.get(adverb, '')} {short}".strip() if short else None)
+        rs, rr = zmap.get(code, (abs(z), RELIABILITY_DEFAULT))
         vn.append({"dim": code, "name": baseline[code].get("name", code),
                    "value": round(val, 3), "z": round(z, 2), "direction": direction,
-                   "intensity": adverb, "always_on": always, "phrase": phrase, "tag": tag})
+                   "intensity": adverb, "always_on": always, "phrase": phrase, "tag": tag,
+                   "reliability": round(rr, 3), "rank_score": round(rs, 3)})
     # order: the top-k deviations first (already sorted by |z|), always-on extras appended
 
     # ---- EmoNet emotions (genuineness-gated) ----
@@ -408,10 +561,15 @@ def caption_detail(preds, baseline=None, k_voicenet=5, k_emonet=3,
                 val = _val(v)
             except Exception:
                 continue
-            es.append((name, val, _zscore(val, st)))
-        es.sort(key=lambda t: abs(t[2]), reverse=True)
+            z = _zscore(val, st, baseline)
+            # Same effective ranking as VoiceNet. No EmoNet emotion has a published
+            # reg_pearson, so today every weight here is identical and the product
+            # cannot reorder them — this is a no-op that future-proofs the ranking
+            # rather than a hidden assumption that the emotion heads are perfect.
+            es.append((name, val, z, _rank_score(z, st, rel_on)))
+        es.sort(key=lambda t: t[3], reverse=True)
         cap = "Notably" if gate == "capped" else None
-        for name, val, z in es[:k_emonet]:
+        for name, val, z, _rs in es[:k_emonet]:
             az = abs(z)
             if az < NEUTRAL_BAND:
                 continue
@@ -436,7 +594,7 @@ def caption_detail(preds, baseline=None, k_voicenet=5, k_emonet=3,
                         "value": round(_val(genu), 3), "z": round(zg, 2) if zg is not None else None,
                         "phrase": gen_desc, "tag": gtag})
     if blend is not None and "blend" in baseline:
-        bz = _zscore(_val(blend), baseline["blend"])
+        bz = _zscore(_val(blend), baseline["blend"], baseline)
         if abs(bz) >= NEUTRAL_BAND:
             ph = ("interwoven with vocal bursts (laughs, gasps, sighs)" if bz >= 0
                   else "clean of non-verbal vocal bursts")
@@ -606,17 +764,20 @@ def render_caption(detail):
 # --------------------------------------------------------------------------- #
 def caption(preds, baseline=None, k_voicenet=5, k_emonet=3,
             always_on=ALWAYS_ON, synonym_seed=None, as_text=True,
-            template="default", shuffle_dims=False, ei_gender=None, ei_gender_gate=EI_GENDER_GATE):
+            template="default", shuffle_dims=False, ei_gender=None, ei_gender_gate=EI_GENDER_GATE,
+            reliability_weighting=None, reliability_min=None):
     """Return the caption as a single sentence (`as_text`) or a list of phrases.
 
     `template` chooses a surface form (see TEMPLATE_NAMES, or "random" for a
     seed-deterministic pick); `shuffle_dims` permutes non-identity dims/emotions.
     `ei_gender` (Empathic-Insight gender, -2..+2) gates the gender phrase.
-    With the defaults (template="default", shuffle_dims=False) the output is
-    byte-identical to the original captioner."""
+    `reliability_weighting` / `reliability_min` control the reliability-weighted
+    ranking (see caption_detail)."""
     d = caption_detail(preds, baseline, k_voicenet, k_emonet, always_on,
                        synonym_seed, template=template, shuffle_dims=shuffle_dims,
-                       ei_gender=ei_gender, ei_gender_gate=ei_gender_gate)
+                       ei_gender=ei_gender, ei_gender_gate=ei_gender_gate,
+                       reliability_weighting=reliability_weighting,
+                       reliability_min=reliability_min)
     if not as_text:
         return [e["phrase"] for e in d["voicenet"]] + \
                [e["phrase"] for e in d["emotions"]] + \
@@ -634,24 +795,32 @@ if __name__ == "__main__":
     ap.add_argument("--template", default="default",
                     help="surface template: " + ", ".join(TEMPLATE_NAMES) + ", or 'random'")
     ap.add_argument("--shuffle", action="store_true", help="shuffle non-identity dims/emotions")
-    ap.add_argument("--baseline", default=_BASE_PATH)
+    ap.add_argument("--baseline", default=None,
+                    help="baseline name (" + " / ".join(BASELINES) + ") or path")
+    ap.add_argument("--no-reliability", action="store_true",
+                    help="rank by raw |z| instead of |z| * reg_pearson")
+    ap.add_argument("--reliability-min", type=float, default=None,
+                    help="drop ranked dims below this reg_pearson (0 = keep all)")
     ap.add_argument("--json", action="store_true", help="print structured detail as JSON")
     A = ap.parse_args()
     raw = sys.stdin.read() if A.preds == "-" else open(A.preds).read()
     preds = json.loads(raw)
     base = load_baseline(A.baseline)
+    kw = dict(reliability_weighting=(False if A.no_reliability else None),
+              reliability_min=A.reliability_min)
     detail = caption_detail(preds, base, A.kv, A.ke, synonym_seed=A.seed,
-                            template=A.template, shuffle_dims=A.shuffle)
+                            template=A.template, shuffle_dims=A.shuffle, **kw)
     if A.json:
         print(json.dumps(detail, indent=2, ensure_ascii=False))
     else:
-        print(f"[template: {detail['template']}]")
+        print(f"[template: {detail['template']}]  [baseline: {baseline_path(A.baseline)}]")
         print(caption(preds, base, A.kv, A.ke, synonym_seed=A.seed,
-                      template=A.template, shuffle_dims=A.shuffle))
+                      template=A.template, shuffle_dims=A.shuffle, **kw))
         print()
         for e in detail["voicenet"]:
             tag = " *always*" if e["always_on"] else ""
-            print(f"  VN  {e['dim']:6s} z={e['z']:+.2f}  {e['phrase']}{tag}")
+            print(f"  VN  {e['dim']:6s} z={e['z']:+.2f} r={e['reliability']:.2f} "
+                  f"rank={e['rank_score']:.2f}  {e['phrase']}{tag}")
         for e in detail["emotions"]:
             print(f"  EMO {e['emotion']:22s} z={e['z']:+.2f}  {e['phrase']}")
         for e in detail["quality"]:

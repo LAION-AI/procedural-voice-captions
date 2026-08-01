@@ -1,0 +1,1980 @@
+{
+  "_meta": {
+    "description": "Baseline distribution statistics ('the average voice') for procedural voice captioning. For each scoring dimension we report mean/median/std/MAD/p10/p90 over a broad sample of speech. A captioner converts a clip's raw predictions to z = (value - median) / spread and describes the clip by its largest deviations. The precomputed 'spread' field per dimension is 1.4826*MAD (robust std estimate); it falls back to std when the MAD collapses below half the std (zero-inflated emotion scores).",
+    "z_score_rule": "z = (value - median) / spread ; spread = 1.4826*MAD, but falls back to std when 1.4826*MAD < 0.5*std (zero-inflated dims). The chosen value is stored per dimension as 'spread'.",
+    "groups": {
+      "voicenet": "57 VoiceNet dimensions incl. Valence (VALN) and Arousal (AROU), regression heads on VoiceCLAP-commercial 768-d embeddings, range 0-6.",
+      "quality": "genuineness (0-6) and vocal-burst blend (0-10) heads on the same embedding.",
+      "emonet": "40 EmoNet emotions, BUD-E-Whisper encoder + per-emotion MLP heads."
+    },
+    "valence_arousal_rule": "Valence and Arousal are taken from VoiceNet's VALN/AROU heads. EmoNet is used for its 40 emotions ONLY; EmoNet's own valence/arousal axes are NOT loaded and NOT double-counted.",
+    "models": {
+      "voicenet": "laion/voicenet-dimension-predictors-commercial",
+      "genuineness": "laion/voiceclap-commercial-genuineness",
+      "blend": "laion/voiceclap-commercial-vocalburst-blend",
+      "emonet": "laion/Empathic-Insight-Voice-Plus",
+      "embedder": "laion/voiceclap-commercial"
+    },
+    "sources": {
+      "emolia": {
+        "description": "~1000 random clips per language; VoiceNet/genu/blend from precomputed VoiceCLAP-commercial embeddings, EmoNet from a bounded random audio subset.",
+        "languages": {
+          "en": 1000,
+          "de": 1000,
+          "zh": 1000,
+          "fr": 687,
+          "ko": 562,
+          "ja": 454
+        },
+        "n_voicenet": 4703,
+        "n_emonet_audio": 722,
+        "emonet_shards": [
+          [
+            "en",
+            "emolia-000936.tar",
+            80
+          ],
+          [
+            "en",
+            "emolia-000379.tar",
+            80
+          ],
+          [
+            "en",
+            "emolia-000370.tar",
+            80
+          ],
+          [
+            "de",
+            "emolia-000025.tar",
+            80
+          ],
+          [
+            "de",
+            "emolia-000065.tar",
+            80
+          ],
+          [
+            "zh",
+            "emolia-000256.tar",
+            2
+          ],
+          [
+            "zh",
+            "emolia-001009.tar",
+            80
+          ],
+          [
+            "fr",
+            "emolia-001039.tar",
+            80
+          ],
+          [
+            "ko",
+            "emolia-001041.tar",
+            80
+          ],
+          [
+            "ja",
+            "emolia-001041.tar",
+            80
+          ]
+        ]
+      },
+      "bestof64": {
+        "description": "~1000 random takes from laion/moss-character-voices-bestof64 (extreme character voices; deliberately widens the VoiceNet/genu/blend spread).",
+        "n_takes": 1000,
+        "characters": [
+          "asmr_man",
+          "asmr_woman",
+          "dragon",
+          "evil_ghost",
+          "fairy",
+          "goblin",
+          "mouse"
+        ]
+      }
+    },
+    "notes": [
+      "Date-agnostic: baselines describe relative deviations, not absolute correctness.",
+      "EmoNet emotions come only from the Emolia audio subset (bestof64 emo_json covers just per-character emotions, so it is not used for the 40-emotion baseline).",
+      "EmoNet emotions used a REDUCED audio subset: 722 clips total (~80 random clips per shard, en 240 / de 160 / zh 82 / fr 80 / ko 80 / ja 80), not the full 1000/language, to bound audio fetch and GPU time. VoiceNet/genu/blend used the full precomputed-embedding samples (4703 Emolia + 1000 bestof64)."
+    ],
+    "seed": 20260719,
+    "source_n": {
+      "emolia_vn": 4703,
+      "emonet_emolia_audio": 722,
+      "bestof64": 1000
+    }
+  },
+  "AGEV": {
+    "mean": 2.8683,
+    "median": 2.6813,
+    "std": 1.2621,
+    "mad": 0.8001,
+    "spread": 1.1863,
+    "p10": 1.4235,
+    "p90": 4.6829,
+    "n": 5101,
+    "name": "Voice Age",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 398
+  },
+  "AROU": {
+    "mean": 2.5295,
+    "median": 2.454,
+    "std": 1.2369,
+    "mad": 0.8221,
+    "spread": 1.2189,
+    "p10": 0.9293,
+    "p90": 4.2665,
+    "n": 5004,
+    "name": "Arousal",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 301
+  },
+  "ARSH": {
+    "mean": 2.6465,
+    "median": 2.6406,
+    "std": 0.926,
+    "mad": 0.5496,
+    "spread": 0.8149,
+    "p10": 1.4704,
+    "p90": 3.8444,
+    "n": 5004,
+    "name": "Arousal Shift",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 301
+  },
+  "ATCK": {
+    "mean": 2.6061,
+    "median": 2.5322,
+    "std": 1.062,
+    "mad": 0.7139,
+    "spread": 1.0584,
+    "p10": 1.3119,
+    "p90": 4.0603,
+    "n": 4703,
+    "name": "Attack",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "Affection": {
+    "mean": 0.1513,
+    "median": 0.0072,
+    "std": 0.3607,
+    "mad": 0.0,
+    "spread": 0.3607,
+    "p10": 0.0072,
+    "p90": 0.7507,
+    "n": 722,
+    "name": "Affection",
+    "group": "emonet",
+    "synonyms": [
+      "sympathy",
+      "compassion",
+      "warmth",
+      "trust",
+      "caring",
+      "clemency",
+      "forgiveness",
+      "devotion",
+      "tenderness",
+      "reverence"
+    ]
+  },
+  "Amusement": {
+    "mean": 0.2007,
+    "median": -0.0006,
+    "std": 0.4618,
+    "mad": 0.0,
+    "spread": 0.4618,
+    "p10": -0.0007,
+    "p90": 0.9014,
+    "n": 722,
+    "name": "Amusement",
+    "group": "emonet",
+    "synonyms": [
+      "lighthearted fun",
+      "amusement",
+      "mirth",
+      "joviality",
+      "laughter",
+      "playfulness",
+      "silliness",
+      "jesting"
+    ]
+  },
+  "Anger": {
+    "mean": 0.3301,
+    "median": 0.0259,
+    "std": 0.4468,
+    "mad": 0.0336,
+    "spread": 0.4468,
+    "p10": -0.001,
+    "p90": 0.9465,
+    "n": 722,
+    "name": "Anger",
+    "group": "emonet",
+    "synonyms": [
+      "anger",
+      "rage",
+      "fury",
+      "hate",
+      "irascibility",
+      "enragement",
+      "vexation",
+      "wrath",
+      "peevishness",
+      "annoyance"
+    ]
+  },
+  "Astonishment/Surprise": {
+    "mean": 0.2745,
+    "median": 0.0049,
+    "std": 0.5849,
+    "mad": 0.0013,
+    "spread": 0.5849,
+    "p10": 0.0027,
+    "p90": 1.1909,
+    "n": 722,
+    "name": "Astonishment/Surprise",
+    "group": "emonet",
+    "synonyms": [
+      "astonishment",
+      "surprise",
+      "amazement",
+      "shock",
+      "startlement"
+    ]
+  },
+  "Awe": {
+    "mean": 0.0355,
+    "median": -0.0,
+    "std": 0.181,
+    "mad": 0.0,
+    "spread": 0.181,
+    "p10": -0.0,
+    "p90": -0.0,
+    "n": 722,
+    "name": "Awe",
+    "group": "emonet",
+    "synonyms": [
+      "awe",
+      "awestruck",
+      "wonder"
+    ]
+  },
+  "BKGN": {
+    "mean": 2.9078,
+    "median": 2.9247,
+    "std": 0.6209,
+    "mad": 0.4459,
+    "spread": 0.6611,
+    "p10": 2.0997,
+    "p90": 3.7263,
+    "n": 4703,
+    "name": "Background Noise",
+    "group": "voicenet",
+    "range": [
+      0,
+      4
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "BRGT": {
+    "mean": 2.3693,
+    "median": 2.4296,
+    "std": 0.7662,
+    "mad": 0.554,
+    "spread": 0.8214,
+    "p10": 1.3193,
+    "p90": 3.3237,
+    "n": 5261,
+    "name": "Brightness",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 558
+  },
+  "Bitterness": {
+    "mean": 0.142,
+    "median": 0.0099,
+    "std": 0.3167,
+    "mad": 0.0073,
+    "spread": 0.3167,
+    "p10": -0.001,
+    "p90": 0.6555,
+    "n": 722,
+    "name": "Bitterness",
+    "group": "emonet",
+    "synonyms": [
+      "resentment",
+      "acrimony",
+      "bitterness",
+      "cynicism",
+      "rancor"
+    ]
+  },
+  "CHNK": {
+    "mean": 2.0505,
+    "median": 2.0747,
+    "std": 0.8383,
+    "mad": 0.5624,
+    "spread": 0.8338,
+    "p10": 0.9499,
+    "p90": 3.0645,
+    "n": 4703,
+    "name": "Chunking",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "CLRT": {
+    "mean": 2.519,
+    "median": 2.4496,
+    "std": 0.8948,
+    "mad": 0.57,
+    "spread": 0.8451,
+    "p10": 1.4387,
+    "p90": 3.69,
+    "n": 4703,
+    "name": "Articulation Clarity",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "COGL": {
+    "mean": 2.2409,
+    "median": 2.241,
+    "std": 1.0457,
+    "mad": 0.7288,
+    "spread": 1.0805,
+    "p10": 0.8586,
+    "p90": 3.6318,
+    "n": 4703,
+    "name": "Cognitive Load",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "Concentration": {
+    "mean": 1.3873,
+    "median": 1.5679,
+    "std": 0.5695,
+    "mad": 0.2437,
+    "spread": 0.3612,
+    "p10": 0.6099,
+    "p90": 1.9424,
+    "n": 722,
+    "name": "Concentration",
+    "group": "emonet",
+    "synonyms": [
+      "concentration",
+      "deep focus",
+      "engrossment",
+      "absorption",
+      "attention"
+    ]
+  },
+  "Confusion": {
+    "mean": 0.4029,
+    "median": 0.0004,
+    "std": 0.6457,
+    "mad": 0.0048,
+    "spread": 0.6457,
+    "p10": -0.0034,
+    "p90": 1.5038,
+    "n": 722,
+    "name": "Confusion",
+    "group": "emonet",
+    "synonyms": [
+      "confusion",
+      "bewilderment",
+      "flabbergasted",
+      "disorientation",
+      "perplexity"
+    ]
+  },
+  "Contemplation": {
+    "mean": 0.6849,
+    "median": 0.825,
+    "std": 0.5058,
+    "mad": 0.3191,
+    "spread": 0.4731,
+    "p10": 0.0251,
+    "p90": 1.2642,
+    "n": 722,
+    "name": "Contemplation",
+    "group": "emonet",
+    "synonyms": [
+      "contemplation",
+      "thoughtfulness",
+      "pondering",
+      "reflection",
+      "meditation",
+      "brooding",
+      "pensiveness"
+    ]
+  },
+  "Contempt": {
+    "mean": 0.197,
+    "median": -0.0004,
+    "std": 0.3874,
+    "mad": 0.0034,
+    "spread": 0.3874,
+    "p10": -0.0039,
+    "p90": 0.836,
+    "n": 722,
+    "name": "Contempt",
+    "group": "emonet",
+    "synonyms": [
+      "contempt",
+      "disapproval",
+      "scorn",
+      "disdain",
+      "loathing",
+      "detestation"
+    ]
+  },
+  "Contentment": {
+    "mean": 0.3268,
+    "median": 0.0001,
+    "std": 0.3963,
+    "mad": 0.0,
+    "spread": 0.3963,
+    "p10": 0.0,
+    "p90": 0.8237,
+    "n": 722,
+    "name": "Contentment",
+    "group": "emonet",
+    "synonyms": [
+      "contentment",
+      "relaxation",
+      "peacefulness",
+      "calmness",
+      "satisfaction",
+      "ease",
+      "serenity",
+      "fulfillment",
+      "gladness",
+      "lightness",
+      "tranquility"
+    ]
+  },
+  "DARC": {
+    "mean": 2.2795,
+    "median": 1.9349,
+    "std": 1.3929,
+    "mad": 0.7503,
+    "spread": 1.1124,
+    "p10": 0.7768,
+    "p90": 4.4862,
+    "n": 4703,
+    "name": "Dynamic Arc",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "DFLU": {
+    "mean": 2.4515,
+    "median": 2.4811,
+    "std": 1.094,
+    "mad": 0.8636,
+    "spread": 1.2804,
+    "p10": 0.9692,
+    "p90": 3.8792,
+    "n": 4703,
+    "name": "Disfluency",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "Disappointment": {
+    "mean": 0.22,
+    "median": 0.0,
+    "std": 0.4273,
+    "mad": 0.0,
+    "spread": 0.4273,
+    "p10": 0.0,
+    "p90": 0.9467,
+    "n": 722,
+    "name": "Disappointment",
+    "group": "emonet",
+    "synonyms": [
+      "disappointment",
+      "regret",
+      "dismay",
+      "letdown",
+      "chagrin"
+    ]
+  },
+  "Disgust": {
+    "mean": 0.1233,
+    "median": 0.0066,
+    "std": 0.2902,
+    "mad": 0.0008,
+    "spread": 0.2902,
+    "p10": 0.0056,
+    "p90": 0.5766,
+    "n": 722,
+    "name": "Disgust",
+    "group": "emonet",
+    "synonyms": [
+      "disgust",
+      "revulsion",
+      "repulsion",
+      "abhorrence",
+      "loathing"
+    ]
+  },
+  "Distress": {
+    "mean": 0.1604,
+    "median": 0.0,
+    "std": 0.4385,
+    "mad": 0.0,
+    "spread": 0.4385,
+    "p10": 0.0,
+    "p90": 0.6845,
+    "n": 722,
+    "name": "Distress",
+    "group": "emonet",
+    "synonyms": [
+      "worry",
+      "anxiety",
+      "unease",
+      "anguish",
+      "trepidation",
+      "concern",
+      "upset",
+      "pessimism",
+      "foreboding"
+    ]
+  },
+  "Doubt": {
+    "mean": 0.2779,
+    "median": 0.0063,
+    "std": 0.3804,
+    "mad": 0.0022,
+    "spread": 0.3804,
+    "p10": 0.0043,
+    "p90": 0.8372,
+    "n": 722,
+    "name": "Doubt",
+    "group": "emonet",
+    "synonyms": [
+      "doubt",
+      "distrust",
+      "suspicion",
+      "skepticism",
+      "uncertainty",
+      "pessimism"
+    ]
+  },
+  "EMPH": {
+    "mean": 2.8441,
+    "median": 2.7852,
+    "std": 1.0896,
+    "mad": 0.7253,
+    "spread": 1.0754,
+    "p10": 1.4928,
+    "p90": 4.3433,
+    "n": 4703,
+    "name": "Emphasis",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "ESTH": {
+    "mean": 2.3221,
+    "median": 2.3294,
+    "std": 0.8542,
+    "mad": 0.5492,
+    "spread": 0.8142,
+    "p10": 1.2177,
+    "p90": 3.4452,
+    "n": 5149,
+    "name": "Esthetics",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 446
+  },
+  "EXPL": {
+    "mean": 0.2356,
+    "median": 0.1539,
+    "std": 0.2664,
+    "mad": 0.1539,
+    "spread": 0.2282,
+    "p10": 0.0,
+    "p90": 0.6009,
+    "n": 4703,
+    "name": "Content Appropriateness (3-point Scale)",
+    "group": "voicenet",
+    "range": [
+      0,
+      2
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "Elation": {
+    "mean": 0.1826,
+    "median": 0.0124,
+    "std": 0.4058,
+    "mad": 0.0,
+    "spread": 0.4058,
+    "p10": 0.0123,
+    "p90": 0.8443,
+    "n": 722,
+    "name": "Elation",
+    "group": "emonet",
+    "synonyms": [
+      "happiness",
+      "excitement",
+      "joy",
+      "exhilaration",
+      "delight",
+      "jubilation",
+      "bliss",
+      "cheerfulness"
+    ]
+  },
+  "Embarrassment": {
+    "mean": 0.1306,
+    "median": -0.0121,
+    "std": 0.3218,
+    "mad": 0.0132,
+    "spread": 0.3218,
+    "p10": -0.0277,
+    "p90": 0.5767,
+    "n": 722,
+    "name": "Embarrassment",
+    "group": "emonet",
+    "synonyms": [
+      "embarrassment",
+      "shyness",
+      "mortification",
+      "discomfiture",
+      "awkwardness",
+      "self-consciousness"
+    ]
+  },
+  "Emotional Numbness": {
+    "mean": 0.2968,
+    "median": 0.0215,
+    "std": 0.426,
+    "mad": 0.025,
+    "spread": 0.426,
+    "p10": -0.0025,
+    "p90": 1.0192,
+    "n": 722,
+    "name": "Emotional Numbness",
+    "group": "emonet",
+    "synonyms": [
+      "numbness",
+      "detachment",
+      "insensitivity",
+      "emotional blunting",
+      "apathy",
+      "existential void",
+      "boredom",
+      "stoicism",
+      "indifference"
+    ]
+  },
+  "FOCS": {
+    "mean": 2.4182,
+    "median": 2.4354,
+    "std": 1.0313,
+    "mad": 0.7337,
+    "spread": 1.0878,
+    "p10": 1.0123,
+    "p90": 3.7661,
+    "n": 4703,
+    "name": "Focus",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "FULL": {
+    "mean": 2.1477,
+    "median": 2.0179,
+    "std": 1.0215,
+    "mad": 0.6741,
+    "spread": 0.9994,
+    "p10": 0.9621,
+    "p90": 3.4834,
+    "n": 5257,
+    "name": "Fullness",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 554
+  },
+  "Fatigue/Exhaustion": {
+    "mean": 0.0795,
+    "median": 0.0216,
+    "std": 0.2457,
+    "mad": 0.0072,
+    "spread": 0.2457,
+    "p10": 0.0072,
+    "p90": 0.0737,
+    "n": 722,
+    "name": "Fatigue/Exhaustion",
+    "group": "emonet",
+    "synonyms": [
+      "fatigue",
+      "exhaustion",
+      "weariness",
+      "lethargy",
+      "burnout"
+    ]
+  },
+  "Fear": {
+    "mean": 0.1239,
+    "median": -0.0144,
+    "std": 0.38,
+    "mad": 0.0071,
+    "spread": 0.38,
+    "p10": -0.0251,
+    "p90": 0.5297,
+    "n": 722,
+    "name": "Fear",
+    "group": "emonet",
+    "synonyms": [
+      "fear",
+      "terror",
+      "dread",
+      "apprehension",
+      "alarm",
+      "horror",
+      "panic",
+      "nervousness"
+    ]
+  },
+  "GEND": {
+    "mean": 3.1248,
+    "median": 3.7056,
+    "std": 1.7392,
+    "mad": 1.2701,
+    "spread": 1.8831,
+    "p10": 0.6228,
+    "p90": 5.1101,
+    "n": 5004,
+    "name": "Perceived Gender",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 301
+  },
+  "HARM": {
+    "mean": 2.5832,
+    "median": 2.5675,
+    "std": 0.8825,
+    "mad": 0.5806,
+    "spread": 0.8609,
+    "p10": 1.4629,
+    "p90": 3.7416,
+    "n": 4703,
+    "name": "Harmonicity",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "Helplessness": {
+    "mean": 0.126,
+    "median": -0.0041,
+    "std": 0.3345,
+    "mad": 0.0003,
+    "spread": 0.3345,
+    "p10": -0.0046,
+    "p90": 0.636,
+    "n": 722,
+    "name": "Helplessness",
+    "group": "emonet",
+    "synonyms": [
+      "helplessness",
+      "powerlessness",
+      "desperation",
+      "submission"
+    ]
+  },
+  "Hope/Optimism": {
+    "mean": 0.3642,
+    "median": 0.001,
+    "std": 0.5702,
+    "mad": 0.0022,
+    "spread": 0.5702,
+    "p10": -0.001,
+    "p90": 1.2327,
+    "n": 722,
+    "name": "Hope/Optimism",
+    "group": "emonet",
+    "synonyms": [
+      "hope",
+      "enthusiasm",
+      "optimism",
+      "anticipation",
+      "courage",
+      "encouragement",
+      "zeal",
+      "fervor",
+      "inspiration",
+      "determination"
+    ]
+  },
+  "Impatience and Irritability": {
+    "mean": 0.4456,
+    "median": 0.0937,
+    "std": 0.575,
+    "mad": 0.118,
+    "spread": 0.575,
+    "p10": -0.0177,
+    "p90": 1.2975,
+    "n": 722,
+    "name": "Impatience and Irritability",
+    "group": "emonet",
+    "synonyms": [
+      "impatience",
+      "irritability",
+      "irritation",
+      "restlessness",
+      "short-temperedness",
+      "exasperation"
+    ]
+  },
+  "Infatuation": {
+    "mean": 0.0263,
+    "median": -0.0173,
+    "std": 0.1922,
+    "mad": 0.0049,
+    "spread": 0.1922,
+    "p10": -0.0254,
+    "p90": 0.0061,
+    "n": 722,
+    "name": "Infatuation",
+    "group": "emonet",
+    "synonyms": [
+      "infatuation",
+      "having a crush",
+      "romantic desire",
+      "fondness",
+      "butterflies in the stomach",
+      "adoration"
+    ]
+  },
+  "Interest": {
+    "mean": 1.8292,
+    "median": 1.9014,
+    "std": 0.5312,
+    "mad": 0.3936,
+    "spread": 0.5835,
+    "p10": 1.0265,
+    "p90": 2.484,
+    "n": 722,
+    "name": "Interest",
+    "group": "emonet",
+    "synonyms": [
+      "interest",
+      "fascination",
+      "curiosity",
+      "intrigue"
+    ]
+  },
+  "Intoxication/Altered States": {
+    "mean": 0.0827,
+    "median": -0.0299,
+    "std": 0.3378,
+    "mad": 0.0123,
+    "spread": 0.3378,
+    "p10": -0.0502,
+    "p90": 0.3454,
+    "n": 722,
+    "name": "Intoxication/Altered States",
+    "group": "emonet",
+    "synonyms": [
+      "being drunk",
+      "stupor",
+      "intoxication",
+      "disorientation",
+      "altered perception"
+    ]
+  },
+  "Jealousy & Envy": {
+    "mean": 0.0975,
+    "median": 0.0479,
+    "std": 0.1911,
+    "mad": 0.0127,
+    "spread": 0.1911,
+    "p10": 0.0272,
+    "p90": 0.1497,
+    "n": 722,
+    "name": "Jealousy & Envy",
+    "group": "emonet",
+    "synonyms": [
+      "jealousy",
+      "envy",
+      "covetousness"
+    ]
+  },
+  "Longing": {
+    "mean": 0.2217,
+    "median": 0.0177,
+    "std": 0.3605,
+    "mad": 0.0425,
+    "spread": 0.3605,
+    "p10": -0.0234,
+    "p90": 0.7949,
+    "n": 722,
+    "name": "Longing",
+    "group": "emonet",
+    "synonyms": [
+      "yearning",
+      "longing",
+      "pining",
+      "wistfulness",
+      "nostalgia",
+      "craving",
+      "desire",
+      "envy",
+      "homesickness",
+      "saudade"
+    ]
+  },
+  "METL": {
+    "mean": 1.5254,
+    "median": 1.517,
+    "std": 0.7768,
+    "mad": 0.5262,
+    "spread": 0.7801,
+    "p10": 0.4799,
+    "p90": 2.5762,
+    "n": 4703,
+    "name": "Metallic Character",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "Malevolence/Malice": {
+    "mean": 0.2182,
+    "median": 0.0515,
+    "std": 0.3785,
+    "mad": 0.0111,
+    "spread": 0.3785,
+    "p10": 0.0363,
+    "p90": 0.8602,
+    "n": 722,
+    "name": "Malevolence/Malice",
+    "group": "emonet",
+    "synonyms": [
+      "spite",
+      "sadism",
+      "malevolence",
+      "malice",
+      "desire to harm",
+      "schadenfreude"
+    ]
+  },
+  "Pain": {
+    "mean": 0.0453,
+    "median": -0.0037,
+    "std": 0.2137,
+    "mad": 0.0008,
+    "spread": 0.2137,
+    "p10": -0.0053,
+    "p90": 0.0153,
+    "n": 722,
+    "name": "Pain",
+    "group": "emonet",
+    "synonyms": [
+      "physical pain",
+      "suffering",
+      "torment",
+      "ache",
+      "agony"
+    ]
+  },
+  "Pleasure/Ecstasy": {
+    "mean": 0.1132,
+    "median": -0.0023,
+    "std": 0.3039,
+    "mad": 0.0002,
+    "spread": 0.3039,
+    "p10": -0.0025,
+    "p90": 0.5442,
+    "n": 722,
+    "name": "Pleasure/Ecstasy",
+    "group": "emonet",
+    "synonyms": [
+      "ecstasy",
+      "pleasure",
+      "bliss",
+      "rapture",
+      "beatitude"
+    ]
+  },
+  "Pride": {
+    "mean": 0.1967,
+    "median": 0.0017,
+    "std": 0.3868,
+    "mad": 0.0001,
+    "spread": 0.3868,
+    "p10": 0.0017,
+    "p90": 0.8365,
+    "n": 722,
+    "name": "Pride",
+    "group": "emonet",
+    "synonyms": [
+      "pride",
+      "dignity",
+      "self-confidently",
+      "honor",
+      "self-consciousness"
+    ]
+  },
+  "RANG": {
+    "mean": 2.6975,
+    "median": 2.637,
+    "std": 1.0806,
+    "mad": 0.7501,
+    "spread": 1.1121,
+    "p10": 1.3541,
+    "p90": 4.1688,
+    "n": 5242,
+    "name": "Pitch Range",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 539
+  },
+  "RCQL": {
+    "mean": 2.8005,
+    "median": 2.7924,
+    "std": 0.7597,
+    "mad": 0.5394,
+    "spread": 0.7997,
+    "p10": 1.8044,
+    "p90": 3.8088,
+    "n": 4703,
+    "name": "Recording Quality",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "REGS": {
+    "mean": 1.7283,
+    "median": 1.3091,
+    "std": 1.3001,
+    "mad": 0.7947,
+    "spread": 1.1782,
+    "p10": 0.3078,
+    "p90": 3.7131,
+    "n": 5101,
+    "name": "Register",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 398
+  },
+  "RESP": {
+    "mean": 2.4262,
+    "median": 2.3956,
+    "std": 0.8984,
+    "mad": 0.5525,
+    "spread": 0.8191,
+    "p10": 1.3157,
+    "p90": 3.5579,
+    "n": 5164,
+    "name": "Respiration",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 461
+  },
+  "ROUG": {
+    "mean": 2.5133,
+    "median": 2.4087,
+    "std": 0.635,
+    "mad": 0.3931,
+    "spread": 0.5828,
+    "p10": 1.8119,
+    "p90": 3.3945,
+    "n": 5149,
+    "name": "Roughness",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 446
+  },
+  "R_CHST": {
+    "mean": 2.4285,
+    "median": 2.6107,
+    "std": 1.0644,
+    "mad": 0.6827,
+    "spread": 1.0121,
+    "p10": 0.9006,
+    "p90": 3.6633,
+    "n": 5399,
+    "name": "Chest Resonance",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 696
+  },
+  "R_HEAD": {
+    "mean": 1.7761,
+    "median": 1.7853,
+    "std": 0.9139,
+    "mad": 0.6276,
+    "spread": 0.9305,
+    "p10": 0.5266,
+    "p90": 2.969,
+    "n": 4934,
+    "name": "Head Resonance",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 231
+  },
+  "R_MASK": {
+    "mean": 2.0224,
+    "median": 2.0438,
+    "std": 0.9288,
+    "mad": 0.6872,
+    "spread": 1.0188,
+    "p10": 0.7893,
+    "p90": 3.2344,
+    "n": 4703,
+    "name": "Mask Resonance",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "R_MIXD": {
+    "mean": 2.8131,
+    "median": 2.8216,
+    "std": 0.2031,
+    "mad": 0.1363,
+    "spread": 0.2021,
+    "p10": 2.5586,
+    "p90": 3.0645,
+    "n": 4703,
+    "name": "Mixed Resonance",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "R_NASL": {
+    "mean": 2.7817,
+    "median": 2.8368,
+    "std": 0.9996,
+    "mad": 0.6682,
+    "spread": 0.9906,
+    "p10": 1.441,
+    "p90": 4.0382,
+    "n": 4930,
+    "name": "Nasal Resonance",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 227
+  },
+  "R_ORAL": {
+    "mean": 2.3169,
+    "median": 2.3209,
+    "std": 0.6397,
+    "mad": 0.4347,
+    "spread": 0.6445,
+    "p10": 1.4764,
+    "p90": 3.1287,
+    "n": 4703,
+    "name": "Oral Resonance",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "R_THRT": {
+    "mean": 1.7267,
+    "median": 1.7531,
+    "std": 1.1597,
+    "mad": 0.869,
+    "spread": 1.2884,
+    "p10": 0.0,
+    "p90": 3.2309,
+    "n": 4870,
+    "name": "Throat Resonance",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 167
+  },
+  "Relief": {
+    "mean": 0.1376,
+    "median": 0.026,
+    "std": 0.3017,
+    "mad": 0.0103,
+    "spread": 0.3017,
+    "p10": 0.0093,
+    "p90": 0.4984,
+    "n": 722,
+    "name": "Relief",
+    "group": "emonet",
+    "synonyms": [
+      "relief",
+      "respite",
+      "alleviation",
+      "solace",
+      "comfort",
+      "liberation"
+    ]
+  },
+  "SMTH": {
+    "mean": 2.1827,
+    "median": 2.1791,
+    "std": 0.6789,
+    "mad": 0.4334,
+    "spread": 0.6426,
+    "p10": 1.3114,
+    "p90": 3.0507,
+    "n": 4703,
+    "name": "Smoothness",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "STNC": {
+    "mean": 2.7777,
+    "median": 2.7478,
+    "std": 0.9597,
+    "mad": 0.6132,
+    "spread": 0.9091,
+    "p10": 1.6027,
+    "p90": 3.9816,
+    "n": 5171,
+    "name": "Stance",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 468
+  },
+  "STRU": {
+    "mean": 2.1865,
+    "median": 2.2246,
+    "std": 1.1112,
+    "mad": 0.804,
+    "spread": 1.192,
+    "p10": 0.6443,
+    "p90": 3.654,
+    "n": 4703,
+    "name": "Structure",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "S_ASMR": {
+    "mean": 1.9774,
+    "median": 1.8136,
+    "std": 1.4325,
+    "mad": 1.0137,
+    "spread": 1.5029,
+    "p10": 0.0147,
+    "p90": 4.0082,
+    "n": 5004,
+    "name": "ASMR Style",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 301
+  },
+  "S_AUTH": {
+    "mean": 1.7803,
+    "median": 1.7128,
+    "std": 1.2672,
+    "mad": 1.1007,
+    "spread": 1.6319,
+    "p10": 0.1043,
+    "p90": 3.4906,
+    "n": 5543,
+    "name": "Authoritative Style",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 840
+  },
+  "S_CART": {
+    "mean": 2.2696,
+    "median": 2.3004,
+    "std": 1.4489,
+    "mad": 1.1578,
+    "spread": 1.7166,
+    "p10": 0.1316,
+    "p90": 4.2137,
+    "n": 4930,
+    "name": "Cartoonish Style",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 227
+  },
+  "S_CASU": {
+    "mean": 3.4103,
+    "median": 3.3559,
+    "std": 1.3737,
+    "mad": 1.0546,
+    "spread": 1.5635,
+    "p10": 1.5832,
+    "p90": 5.2932,
+    "n": 4703,
+    "name": "Casual Style",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "S_CONV": {
+    "mean": 2.7072,
+    "median": 2.7863,
+    "std": 1.3541,
+    "mad": 1.0301,
+    "spread": 1.5272,
+    "p10": 0.752,
+    "p90": 4.4458,
+    "n": 4703,
+    "name": "Conversational Style",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "S_DRAM": {
+    "mean": 2.6955,
+    "median": 2.62,
+    "std": 1.4152,
+    "mad": 1.0299,
+    "spread": 1.527,
+    "p10": 0.8927,
+    "p90": 4.6467,
+    "n": 4870,
+    "name": "Dramatic Style",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 167
+  },
+  "S_FORM": {
+    "mean": 1.9825,
+    "median": 2.1331,
+    "std": 1.3733,
+    "mad": 1.2223,
+    "spread": 1.8122,
+    "p10": 0.0,
+    "p90": 3.771,
+    "n": 4703,
+    "name": "Formal Style",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "S_MONO": {
+    "mean": 2.8628,
+    "median": 3.263,
+    "std": 1.3525,
+    "mad": 0.7922,
+    "spread": 1.1744,
+    "p10": 0.6226,
+    "p90": 4.3013,
+    "n": 4703,
+    "name": "Monologue Style",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "S_NARR": {
+    "mean": 2.0595,
+    "median": 1.8681,
+    "std": 1.4675,
+    "mad": 1.1567,
+    "spread": 1.715,
+    "p10": 0.2035,
+    "p90": 4.2397,
+    "n": 4703,
+    "name": "Narrator Style",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "S_NEWS": {
+    "mean": 0.9922,
+    "median": 0.6369,
+    "std": 1.0322,
+    "mad": 0.5668,
+    "spread": 0.8403,
+    "p10": 0.0,
+    "p90": 2.5589,
+    "n": 4703,
+    "name": "Newsreader Style",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "S_PLAY": {
+    "mean": 2.3741,
+    "median": 2.3824,
+    "std": 1.3145,
+    "mad": 1.0927,
+    "spread": 1.62,
+    "p10": 0.576,
+    "p90": 4.1389,
+    "n": 4703,
+    "name": "Playful Style",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "S_RANT": {
+    "mean": 1.5796,
+    "median": 1.2006,
+    "std": 1.5437,
+    "mad": 1.1984,
+    "spread": 1.7768,
+    "p10": 0.0,
+    "p90": 3.9106,
+    "n": 4703,
+    "name": "Ranting/Angry Style",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "S_STRY": {
+    "mean": 3.1735,
+    "median": 3.2504,
+    "std": 1.2701,
+    "mad": 0.9641,
+    "spread": 1.4294,
+    "p10": 1.4371,
+    "p90": 4.7715,
+    "n": 4703,
+    "name": "Storytelling Style",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "S_TECH": {
+    "mean": 1.7088,
+    "median": 1.6676,
+    "std": 1.279,
+    "mad": 1.0066,
+    "spread": 1.4924,
+    "p10": 0.0,
+    "p90": 3.4256,
+    "n": 4703,
+    "name": "Teacher/Didactic Style",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "S_WHIS": {
+    "mean": 2.4586,
+    "median": 2.4039,
+    "std": 1.6666,
+    "mad": 1.3286,
+    "spread": 1.9698,
+    "p10": 0.0,
+    "p90": 4.7981,
+    "n": 5164,
+    "name": "Whisper-Talk Style",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 461
+  },
+  "Sadness": {
+    "mean": 0.1428,
+    "median": -0.0,
+    "std": 0.3711,
+    "mad": 0.0,
+    "spread": 0.3711,
+    "p10": -0.0,
+    "p90": 0.6463,
+    "n": 722,
+    "name": "Sadness",
+    "group": "emonet",
+    "synonyms": [
+      "sadness",
+      "sorrow",
+      "grief",
+      "melancholy",
+      "dejection",
+      "despair",
+      "self-pity",
+      "sullenness",
+      "heartache",
+      "mournfulness",
+      "misery"
+    ]
+  },
+  "Sexual Lust": {
+    "mean": 0.0727,
+    "median": -0.0207,
+    "std": 0.2645,
+    "mad": 0.0177,
+    "spread": 0.2645,
+    "p10": -0.0428,
+    "p90": 0.3105,
+    "n": 722,
+    "name": "Sexual Lust",
+    "group": "emonet",
+    "synonyms": [
+      "sexual lust",
+      "carnal desire",
+      "lust",
+      "feeling horny",
+      "feeling turned on"
+    ]
+  },
+  "Shame": {
+    "mean": 0.0677,
+    "median": 0.0108,
+    "std": 0.2189,
+    "mad": 0.0048,
+    "spread": 0.2189,
+    "p10": 0.0029,
+    "p90": 0.0955,
+    "n": 722,
+    "name": "Shame",
+    "group": "emonet",
+    "synonyms": [
+      "shame",
+      "guilt",
+      "remorse",
+      "humiliation",
+      "contrition"
+    ]
+  },
+  "Sourness": {
+    "mean": 0.1506,
+    "median": -0.0067,
+    "std": 0.3223,
+    "mad": 0.0042,
+    "spread": 0.3223,
+    "p10": -0.012,
+    "p90": 0.7216,
+    "n": 722,
+    "name": "Sourness",
+    "group": "emonet",
+    "synonyms": [
+      "sourness",
+      "tartness",
+      "acidity",
+      "acerbity",
+      "sharpness"
+    ]
+  },
+  "TEMP": {
+    "mean": 2.1874,
+    "median": 2.1363,
+    "std": 0.9734,
+    "mad": 0.7094,
+    "spread": 1.0518,
+    "p10": 0.9295,
+    "p90": 3.5315,
+    "n": 4703,
+    "name": "Tempo",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "TENS": {
+    "mean": 2.0757,
+    "median": 1.8749,
+    "std": 0.957,
+    "mad": 0.5433,
+    "spread": 0.8055,
+    "p10": 1.0515,
+    "p90": 3.4977,
+    "n": 5090,
+    "name": "Tension",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 387
+  },
+  "Teasing": {
+    "mean": 0.2224,
+    "median": 0.0,
+    "std": 0.4152,
+    "mad": 0.0,
+    "spread": 0.4152,
+    "p10": 0.0,
+    "p90": 0.9655,
+    "n": 722,
+    "name": "Teasing",
+    "group": "emonet",
+    "synonyms": [
+      "teasing",
+      "bantering",
+      "mocking playfully",
+      "ribbing",
+      "provoking lightly"
+    ]
+  },
+  "Thankfulness/Gratitude": {
+    "mean": 0.1949,
+    "median": 0.0404,
+    "std": 0.5151,
+    "mad": 0.0084,
+    "spread": 0.5151,
+    "p10": 0.0261,
+    "p90": 0.4561,
+    "n": 722,
+    "name": "Thankfulness/Gratitude",
+    "group": "emonet",
+    "synonyms": [
+      "thankfulness",
+      "gratitude",
+      "appreciation",
+      "gratefulness"
+    ]
+  },
+  "Triumph": {
+    "mean": 0.0942,
+    "median": -0.0087,
+    "std": 0.2897,
+    "mad": 0.0029,
+    "spread": 0.2897,
+    "p10": -0.0127,
+    "p90": 0.4164,
+    "n": 722,
+    "name": "Triumph",
+    "group": "emonet",
+    "synonyms": [
+      "triumph",
+      "superiority"
+    ]
+  },
+  "VALN": {
+    "mean": 2.3567,
+    "median": 2.3275,
+    "std": 1.0014,
+    "mad": 0.6857,
+    "spread": 1.0167,
+    "p10": 1.0998,
+    "p90": 3.6745,
+    "n": 4703,
+    "name": "Valence",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "VALS": {
+    "mean": 2.3117,
+    "median": 2.3194,
+    "std": 1.0089,
+    "mad": 0.7044,
+    "spread": 1.0444,
+    "p10": 0.9973,
+    "p90": 3.5966,
+    "n": 4703,
+    "name": "Valence Shift",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "VFLX": {
+    "mean": 2.5802,
+    "median": 2.5285,
+    "std": 1.0344,
+    "mad": 0.6274,
+    "spread": 0.9302,
+    "p10": 1.3078,
+    "p90": 3.903,
+    "n": 4703,
+    "name": "Velocity Flux",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "VOLT": {
+    "mean": 2.5389,
+    "median": 2.3141,
+    "std": 1.1339,
+    "mad": 0.8093,
+    "spread": 1.1999,
+    "p10": 1.2457,
+    "p90": 4.1937,
+    "n": 4703,
+    "name": "Volatility",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 0
+  },
+  "VULN": {
+    "mean": 2.1906,
+    "median": 2.0732,
+    "std": 0.9469,
+    "mad": 0.5585,
+    "spread": 0.8281,
+    "p10": 1.1393,
+    "p90": 3.4705,
+    "n": 5004,
+    "name": "Vulnerability",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 301
+  },
+  "WARM": {
+    "mean": 2.6915,
+    "median": 2.6179,
+    "std": 0.9038,
+    "mad": 0.5569,
+    "spread": 0.8257,
+    "p10": 1.6315,
+    "p90": 3.9042,
+    "n": 5450,
+    "name": "Warmth",
+    "group": "voicenet",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 747
+  },
+  "blend": {
+    "mean": 2.7188,
+    "median": 2.2062,
+    "std": 2.3155,
+    "mad": 1.5712,
+    "spread": 2.3295,
+    "p10": 0.0487,
+    "p90": 6.114,
+    "n": 5703,
+    "name": "Vocal-burst blend",
+    "group": "quality",
+    "range": [
+      0,
+      10
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 1000
+  },
+  "genuineness": {
+    "mean": 2.0508,
+    "median": 1.732,
+    "std": 1.4073,
+    "mad": 0.9794,
+    "spread": 1.452,
+    "p10": 0.4046,
+    "p90": 4.1527,
+    "n": 5703,
+    "name": "Genuineness",
+    "group": "quality",
+    "range": [
+      0,
+      6
+    ],
+    "n_emolia": 4703,
+    "n_bestof64": 1000
+  }
+}

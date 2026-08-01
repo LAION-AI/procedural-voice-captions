@@ -348,12 +348,14 @@ def _full_embedding_mlp():
 class BurstCaptioner:
     """Loads every scoring model once and captions clips with inserted bursts."""
 
-    def __init__(self, device=DEVICE, use_emonet=USE_EMONET, verbose=True):
+    def __init__(self, device=DEVICE, use_emonet=USE_EMONET, verbose=True, baseline=None):
         import torch
         torch.set_num_threads(2)                      # critical: box thrashes otherwise
         self.dev = device
         self.verbose = verbose
-        self.baseline = load_baseline()
+        # `baseline` is a name from caption.BASELINES ("default"/"dramabox"/"emolia") or a
+        # path; None -> $PVC_BASELINE -> the bundled in-domain default.
+        self.baseline = load_baseline(baseline)
         self._log("loading VoiceCLAP-commercial embedder + VoiceNet heads ...")
         from transformers import AutoModel
         vn_dir = resolve_voicenet_repo()
