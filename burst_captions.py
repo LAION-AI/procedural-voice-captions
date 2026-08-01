@@ -14,12 +14,16 @@ For each clip the pipeline produces:
 * **two selectable variants** of burst insertion (never both in one caption):
 
   - **Variant A — "locator" (precise position).** Run the burst *locator*
-    (``laion/vocalburst-locator``, a 50 fps per-frame burst-probability model)
-    over the whole clip at threshold ``0.7``. Every detected span's audio is fed
-    to the multi-label burst classifier (VoiceCLAP ``encode_waveform`` -> MLP,
-    83 outputs = 82 taxonomy classes + ``no_burst``). If ``P(no_burst) < 0.5``
-    the span's **top-1** class is inserted as its own ``(Class Name)`` inline at
-    the span's time, positioned between the two ASR words nearest that moment.
+    (``laion/vocalburst-locator``, checkpoint ``model_v2.pt``, a 50 fps per-frame
+    burst-probability model with a fixed 30 s / 1500-frame receptive field) over
+    the whole clip in **overlapping 30 s windows**, stitch the per-frame
+    probabilities back onto one global timeline, then extract events. Every
+    detected span's audio is fed to the burst classifier
+    (``laion/vocal-burst-detector-v2``: VoiceCLAP ``encode_waveform`` -> MLP,
+    83 softmax outputs = 82 taxonomy classes + ``no_burst``). If
+    ``P(no_burst) < 0.5`` the span's **top-1** class is inserted as its own
+    ``(Class Name)`` inline at the span's time, positioned between the two ASR
+    words nearest that moment.
   - **Variant B — "sentence-level".** Each sentence segment's audio is run
     through the same classifier; if ``P(no_burst) >= 0.5`` no burst is attached,
     otherwise the **top-1** class is woven into that sentence's caption with a
@@ -33,11 +37,13 @@ Scoring stack (all reused from the LAION voice stack):
   per-emotion heads. Optional (set ``BC_EMONET=0`` to skip; captions then fall
   back to VoiceNet + genuineness only).
 * Parakeet TDT (``nvidia/parakeet-tdt-0.6b-v3``) — word + sentence timestamps.
-* Burst locator + multi-label burst classifier (VoiceCLAP -> MLP 2048x4).
+* Burst locator ``laion/vocalburst-locator`` (``model_v2.pt``) + burst classifier
+  ``laion/vocal-burst-detector-v2`` (VoiceCLAP -> 219k-param MLP, softmax over 83).
 
-Everything is env-driven (see the ``ENV`` block). Import ``BurstCaptioner`` and
-call :meth:`BurstCaptioner.process`, or run this file as a CLI over a set of
-audio files to dump a per-clip results JSON.
+Everything is env-driven (see the ``ENV`` block) and **every model defaults to a
+public HuggingFace repo**, so a clean checkout runs without any local files.
+Import ``BurstCaptioner`` and call :meth:`BurstCaptioner.process`, or run this
+file as a CLI over a set of audio files to dump a per-clip results JSON.
 """
 import os, sys, io, json, glob, math, subprocess, argparse
 
@@ -49,55 +55,142 @@ os.environ.setdefault("HF_HOME", os.environ.get("HF_HOME", "/tmp/hf_cache"))
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from caption import caption_detail, load_baseline, render_caption, _groups, EI_GENDER_GATE  # noqa: E402
+from caption import (caption_detail, load_baseline, render_caption, _groups,  # noqa: E402
+                     EI_GENDER_GATE, stable_hash)
 
 # --------------------------------------------------------------------------- #
-# ENV — all model locations are overridable.
+# ENV — every model location is overridable; the defaults are public HF repos, so
+# an unset environment downloads everything and just works.
 DEVICE          = os.environ.get("BC_DEVICE", "cuda:0")
-VOICENET_REPO   = os.environ.get("VOICENET_REPO", "/run/user/1001/dim_heads/repo")
-GENU_PT         = os.environ.get("GENU_PT", "/tmp/genu_pred/genu_commercial_best.pt")
-BLEND_PT        = os.environ.get("BLEND_PT", "/tmp/vcblend_pkg/blend_head_commercial.pt")
-BURST_MLP_PT    = os.environ.get("BURST_MLP_PT", "/run/user/1001/vb_dataset/model_mlp_multi_m_h2048d4_dp3.pt")
+# Local directory laid out like `laion/voicenet-dimension-predictors-commercial`
+# (regression/*.pt); empty -> snapshot_download that repo.
+VOICENET_REPO   = os.environ.get("VOICENET_REPO", "")
+VOICENET_HF     = os.environ.get("VOICENET_HF", "laion/voicenet-dimension-predictors-commercial")
+VOICECLAP_HF    = os.environ.get("VOICECLAP_REPO", "laion/voiceclap-commercial")
+GENU_PT         = os.environ.get("GENU_PT", "")     # empty -> HF
+GENU_HF         = (os.environ.get("GENU_HF_REPO", "laion/voiceclap-commercial-genuineness"),
+                   os.environ.get("GENU_HF_FILE", "genuineness_head.pt"))
+BLEND_PT        = os.environ.get("BLEND_PT", "")    # empty -> HF
+BLEND_HF        = (os.environ.get("BLEND_HF_REPO", "laion/voiceclap-commercial-vocalburst-blend"),
+                   os.environ.get("BLEND_HF_FILE", "blend_head_commercial.pt"))
+# --- the two vocal-burst models (see README: LOCATOR finds, CLASSIFIER names) --
+LOCATOR_REPO    = os.environ.get("BURST_LOCATOR_REPO", "laion/vocalburst-locator")
+LOCATOR_FILE    = os.environ.get("BURST_LOCATOR_FILE", "model_v2.pt")   # v2 — 4.0x v1's F1 on real audio
+LOCATOR_PT      = os.environ.get("BURST_LOCATOR_PT", "")               # local .pt override
+BURST_CLF_REPO  = os.environ.get("BURST_CLF_REPO", "laion/vocal-burst-detector-v2")
+BURST_CLF_FILE  = os.environ.get("BURST_CLF_FILE", "vocal_burst_mlp_v2.pt")
+BURST_MLP_PT    = os.environ.get("BURST_MLP_PT", "")                   # local .pt override
 TAXONOMY_JSON   = os.environ.get("VOCALBURST_TAXONOMY", os.path.join(HERE, "vocalburst_taxonomy.json"))
 PARAKEET_MODEL  = os.environ.get("PARAKEET_MODEL", "nvidia/parakeet-tdt-0.6b-v3")
-ASR_HELPERS     = os.environ.get("ASR_HELPERS_DIR", "/run/user/1001/asr_moss_analysis")
+ASR_HELPERS     = os.environ.get("ASR_HELPERS_DIR", "")                # optional out-of-repo helpers
 USE_EMONET      = os.environ.get("BC_EMONET", "1") != "0"
-LOCATOR_THR     = float(os.environ.get("BURST_LOCATOR_THR", "0.75"))   # grid-searched on character voices
+
+# --- locator post-processing --------------------------------------------------
+# These are the operating point measured for `model_v2.pt` on 992 held-out real,
+# in-the-wild clips (event F1 0.607 @ IoU 0.5, P 0.678 / R 0.669). They are NOT the
+# defaults that shipped with locator v1 (0.65 / 0.30 / 0.50): real ground-truth
+# bursts have a median duration of ~180 ms, so a 0.5 s minimum discards ~96 % of
+# them. On an unchanged checkpoint, moving to these three values took event F1 from
+# 0.243 to 0.598 — a larger effect than any training change.
+LOCATOR_THR     = float(os.environ.get("BURST_LOCATOR_THR", "0.50"))
+MERGE_GAP       = float(os.environ.get("BURST_MERGE_GAP", "0.10"))
+MIN_BURST_DUR   = float(os.environ.get("BURST_MIN_DUR", "0.10"))
 NOBURST_GATE    = float(os.environ.get("BURST_NOBURST_GATE", "0.5"))
-# Duration gate: very short locator spans are dominated by transient false positives.
-# Empirically (character-voice grid) every rejected span was <0.6s, and the 0.10-0.16s
-# cluster was almost entirely Slap Face / Lip Smack / Resonant Hum firing at high p even
-# though nothing is really there. So we reject spans below a minimum duration, with a
-# stricter floor for the transient "smack / click / slap" groups.
+# The locator's receptive field is a fixed 30 s / 1500-frame window. Longer audio is
+# scanned in overlapping windows whose per-frame probabilities are stitched back onto
+# one global timeline before events are extracted (see `locator_probs`).
+CHUNK_SEC       = float(os.environ.get("BURST_CHUNK_SEC", "30.0"))
+CHUNK_OVERLAP   = float(os.environ.get("BURST_CHUNK_OVERLAP", "5.0"))
+# v1 used a stricter duration floor for the transient smack/click/slap groups because the
+# old multi-label classifier hallucinated `Slap Face` / `Lip Smack` on 0.1-0.2 s spans.
+# The v2 classifier *masks* the four hand/body classes and `Blowing a Kiss` (they can never
+# be predicted), and a 0.6 s floor contradicts the 180 ms median burst duration, so the
+# extra floor is disabled by default. Set BURST_TRANSIENT_MIN_DUR to re-enable it.
+TRANSIENT_MIN_DUR = float(os.environ.get("BURST_TRANSIENT_MIN_DUR", str(MIN_BURST_DUR)))
+TRANSIENT_GROUPS  = {"mouth_and_lip_sounds", "tongue_clicks", "hand_and_body_sounds"}
+# Extra audio taken on each side of a located span before it is handed to the classifier.
+# Default 0 = classify exactly the span the locator found, which reproduces the classifier
+# model card's own inference. Widening the cut does move labels (on the demo clips 0.25 s
+# flips a 0.38 s span from `Contented Sigh` to `Surprised Gasp`), but we have no held-out
+# measurement saying which is better, so the default stays at the faithful 0.
+CLF_CONTEXT     = float(os.environ.get("BURST_CLF_CONTEXT", "0.0"))
+
 # Surface form for procedural captions. Default "tags" = terse, on-the-point tags (intensity +
 # dimension as short words, no filler); set PROC_TEMPLATE to any TEMPLATE_NAMES value for prose.
 PROC_TEMPLATE     = os.environ.get("PROC_TEMPLATE", "tags")
 # Insert [pause X.Xs] markers from ASR word timestamps when the gap between consecutive words (or
 # between sentences) is at least this many seconds. Set BURST_PAUSE_THR=0 to disable pauses.
 PAUSE_THR         = float(os.environ.get("BURST_PAUSE_THR", "0.30"))
-MIN_BURST_DUR     = float(os.environ.get("BURST_MIN_DUR", "0.30"))            # global floor (s)
-TRANSIENT_MIN_DUR = float(os.environ.get("BURST_TRANSIENT_MIN_DUR", "0.60"))  # stricter for smack/click/slap
-TRANSIENT_GROUPS  = {"mouth_and_lip_sounds", "tongue_clicks", "hand_and_body_sounds"}
 
 SR = 16000
 VN_TARGET = 480000          # 30 s @ 16 kHz for the VoiceNet embedding
+LOC_FPS = 50                # locator frame rate (1500 frames / 30 s)
+
+
+# --------------------------------------------------------------------------- #
+# Model resolution — local path if given, otherwise the public HF repo.
+def _hf_file(repo, filename):
+    from huggingface_hub import hf_hub_download
+    return hf_hub_download(repo, filename)
+
+
+def resolve_voicenet_repo():
+    """Directory containing `regression/*.pt` (57 VoiceNet dimension heads)."""
+    if VOICENET_REPO:
+        return VOICENET_REPO
+    from huggingface_hub import snapshot_download
+    return snapshot_download(VOICENET_HF, allow_patterns=["regression/*"])
+
+
+def _ffmpeg():
+    """Path to an ffmpeg binary: system ffmpeg, else the one imageio-ffmpeg ships."""
+    from shutil import which
+    exe = os.environ.get("FFMPEG_BIN") or which("ffmpeg")
+    if exe:
+        return exe
+    try:
+        import imageio_ffmpeg
+        return imageio_ffmpeg.get_ffmpeg_exe()
+    except Exception:
+        return None
 
 
 # --------------------------------------------------------------------------- #
 # Audio
 def decode_16k(path):
-    """Decode any audio file to a 1-D float32 16 kHz mono torch tensor."""
+    """Decode any audio file to a 1-D float32 16 kHz mono torch tensor.
+
+    Uses ffmpeg when available (widest format coverage) and falls back to
+    soundfile + torchaudio, which covers wav/flac/ogg/mp3 on modern libsndfile.
+    """
     import numpy as np, torch, soundfile as sf, torchaudio
-    p = subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", path,
-                        "-ac", "1", "-ar", str(SR), "-f", "wav", "pipe:1"],
-                       capture_output=True)
-    data, sr = sf.read(io.BytesIO(p.stdout), dtype="float32", always_2d=False)
+    data = sr = None
+    exe = _ffmpeg()
+    if exe:
+        p = subprocess.run([exe, "-y", "-loglevel", "error", "-i", path,
+                            "-ac", "1", "-ar", str(SR), "-f", "wav", "pipe:1"],
+                           capture_output=True)
+        if p.returncode == 0 and p.stdout:
+            data, sr = sf.read(io.BytesIO(p.stdout), dtype="float32", always_2d=False)
+    if data is None:
+        data, sr = sf.read(path, dtype="float32", always_2d=False)
     w = torch.from_numpy(np.ascontiguousarray(data))
     if w.dim() == 2:
         w = w.mean(1)
     if sr != SR:
         w = torchaudio.functional.resample(w, sr, SR)
     return w.float()
+
+
+def write_mp3(src, dst, bitrate="128k"):
+    """Transcode `src` to a mono `bitrate` mp3 at `dst` (used by the demo builders)."""
+    exe = _ffmpeg()
+    if not exe:
+        raise RuntimeError("no ffmpeg binary found (set FFMPEG_BIN or pip install imageio-ffmpeg)")
+    os.makedirs(os.path.dirname(os.path.abspath(dst)), exist_ok=True)
+    subprocess.run([exe, "-y", "-loglevel", "error", "-i", src,
+                    "-ac", "1", "-b:a", bitrate, dst], capture_output=True, check=False)
+    return dst
 
 
 # --------------------------------------------------------------------------- #
@@ -128,14 +221,15 @@ def _load_head(path, dev):
 
 
 # --------------------------------------------------------------------------- #
-# Burst locator (WhisperSeg) + multi-label burst classifier (VoiceCLAP -> MLP)
+# LOCATOR — `laion/vocalburst-locator`, whisper-small encoder (LoRA merged) with a
+# per-frame head. Input is a fixed 30 s window; output is 1500 logits at 50 fps.
 def _whisper_seg():
     import torch.nn as nn
     from transformers import WhisperModel
     class WhisperSeg(nn.Module):
         def __init__(s):
             super().__init__(); s.whisper = WhisperModel.from_pretrained("openai/whisper-small")
-            d = s.whisper.config.d_model; h = max(256, d // 2)
+            d = s.whisper.config.d_model; h = max(256, d // 2)          # 768 -> 384
             s.proj = nn.Sequential(nn.Linear(d, h), nn.GELU(), nn.Dropout(0.1))
             s.temporal = nn.Sequential(nn.Conv1d(h, h, 7, padding=3), nn.GELU(), nn.Dropout(0.1))
             s.out = nn.Linear(h, 1)
@@ -146,18 +240,77 @@ def _whisper_seg():
     return WhisperSeg()
 
 
-def _burst_mlp(out):
+def extract_events(probs, threshold=None, merge_gap=None, min_dur=None, fps=LOC_FPS):
+    """Frame probabilities -> [(start_s, end_s, mean_confidence), ...].
+
+    Identical post-processing to the model card's `extract_events`: threshold ->
+    contiguous runs -> merge runs separated by less than `merge_gap` -> drop
+    anything shorter than `min_dur`. Works on a timeline of any length, so a
+    stitched multi-window probability track can be processed in one go.
+    """
+    import numpy as np
+    thr = LOCATOR_THR if threshold is None else threshold
+    gap = MERGE_GAP if merge_gap is None else merge_gap
+    mind = MIN_BURST_DUR if min_dur is None else min_dur
+    b = np.asarray(probs) > thr
+    runs, i, n = [], 0, len(b)
+    while i < n:
+        if b[i]:
+            j = i
+            while j + 1 < n and b[j + 1]:
+                j += 1
+            runs.append((i, j + 1))
+            i = j + 1
+        else:
+            i += 1
+    if not runs:
+        return []
+    merged = [list(runs[0])]
+    for s, e in runs[1:]:
+        if (s - merged[-1][1]) / fps <= gap:
+            merged[-1][1] = e
+        else:
+            merged.append([s, e])
+    out = []
+    for s, e in merged:
+        if (e - s) / fps >= mind:
+            out.append((round(s / fps, 3), round(e / fps, 3), round(float(np.asarray(probs)[s:e].max()), 3)))
+    return out
+
+
+# --------------------------------------------------------------------------- #
+# CLASSIFIER — `laion/vocal-burst-detector-v2`: frozen VoiceCLAP 768-d embedding ->
+# Linear(768,256) -> BatchNorm -> GELU -> Dropout(0.3) -> Linear(256,83), softmax.
+# 83 = 82 taxonomy classes + `no_burst` at index 82.
+def _asr_helpers():
+    """(tokens_to_words, sentences_from_words, split_sentences).
+
+    Prefers the out-of-repo helper package when ``ASR_HELPERS_DIR`` points at one
+    (historical behaviour on the LAION boxes); otherwise uses the bundled,
+    dependency-free implementations in ``asr_words.py``.
+    """
+    if ASR_HELPERS and os.path.isdir(ASR_HELPERS):
+        try:
+            sys.path.insert(0, ASR_HELPERS)
+            from run_parakeet import _tokens_to_words, _sentences_from_words   # noqa
+            from asr_common import split_sentences                            # noqa
+            return _tokens_to_words, _sentences_from_words, split_sentences
+        except Exception:
+            pass
+    from asr_words import tokens_to_words, sentences_from_words, split_sentences
+    return tokens_to_words, sentences_from_words, split_sentences
+
+
+def _burst_mlp_v2(D=768, H=256, C=83, p=0.3):
     import torch.nn as nn
     class MLP(nn.Module):
-        def __init__(s, out, d=768, h=2048, depth=4):
+        def __init__(s):
             super().__init__()
-            L = [nn.Linear(d, h), nn.LayerNorm(h), nn.GELU(), nn.Dropout(0.2)]
-            for _ in range(depth - 1):
-                L += [nn.Linear(h, h), nn.LayerNorm(h), nn.GELU(), nn.Dropout(0.2)]
-            L += [nn.Linear(h, out)]; s.net = nn.Sequential(*L)
+            s.net = nn.Sequential(nn.Linear(D, H), nn.BatchNorm1d(H), nn.GELU(),
+                                  nn.Dropout(p), nn.Linear(H, C))
         def forward(s, x):
             return s.net(x)
-    return MLP(out=out)
+    return MLP()
 
 
 # --------------------------------------------------------------------------- #
@@ -203,40 +356,54 @@ class BurstCaptioner:
         self.baseline = load_baseline()
         self._log("loading VoiceCLAP-commercial embedder + VoiceNet heads ...")
         from transformers import AutoModel
-        self.vc = AutoModel.from_pretrained(os.path.join(VOICENET_REPO, "voiceclap_commercial"),
-                                            trust_remote_code=True).to(device).eval()
+        vn_dir = resolve_voicenet_repo()
+        vc_src = (os.path.join(VOICENET_REPO, "voiceclap_commercial")
+                  if VOICENET_REPO and os.path.isdir(os.path.join(VOICENET_REPO, "voiceclap_commercial"))
+                  else VOICECLAP_HF)
+        self.vc = AutoModel.from_pretrained(vc_src, trust_remote_code=True).to(device).eval()
         self.reg = {}
-        for p in sorted(glob.glob(os.path.join(VOICENET_REPO, "regression", "*.pt"))):
+        for p in sorted(glob.glob(os.path.join(vn_dir, "regression", "*.pt"))):
             self.reg[os.path.basename(p)[:-3]] = _load_head(p, device)
+        if not self.reg:
+            raise RuntimeError(f"no VoiceNet regression heads under {vn_dir}/regression")
         self.dims = sorted(self.reg)
-        self.genu = _load_head(GENU_PT, device)
-        self.blend = _load_head(BLEND_PT, device)
+        self.genu = _load_head(GENU_PT or _hf_file(*GENU_HF), device)
+        self.blend = _load_head(BLEND_PT or _hf_file(*BLEND_HF), device)
+        self._log(f"VoiceNet: {len(self.dims)} dimension heads + genuineness + blend")
 
-        # burst taxonomy / classes
+        # burst taxonomy / classes (bundled; identical order to the classifier's classes.json)
         tax = json.load(open(TAXONOMY_JSON))["categories"]
         self.classes = [n for g, d in tax.items() for n in d.get("items", {})] + ["no_burst"]
         self.label_group = {n: g for g, d in tax.items() for n in d.get("items", {})}
         self.NB = len(self.classes) - 1
-        self._log(f"burst taxonomy: {self.NB} classes + no_burst")
 
-        self._log("loading burst locator + multi-label classifier ...")
-        from huggingface_hub import hf_hub_download
+        self._log(f"loading LOCATOR {LOCATOR_REPO}/{LOCATOR_FILE} ...")
         from transformers import WhisperFeatureExtractor
         self.seg = _whisper_seg().to(device).eval()
-        self.seg.load_state_dict(torch.load(hf_hub_download("laion/vocalburst-locator", "model.pt"),
-                                            map_location="cpu"), strict=True)
+        self.seg.load_state_dict(
+            torch.load(LOCATOR_PT or _hf_file(LOCATOR_REPO, LOCATOR_FILE), map_location="cpu"),
+            strict=True)
         self.wfe = WhisperFeatureExtractor.from_pretrained("openai/whisper-small")
-        self.clf = _burst_mlp(len(self.classes)).to(device).eval()
-        self.clf.load_state_dict(torch.load(BURST_MLP_PT, map_location=device))
+
+        self._log(f"loading CLASSIFIER {BURST_CLF_REPO}/{BURST_CLF_FILE} ...")
+        ck = torch.load(BURST_MLP_PT or _hf_file(BURST_CLF_REPO, BURST_CLF_FILE),
+                        map_location="cpu", weights_only=False)
+        arch = ck.get("arch", {})
+        self.clf = _burst_mlp_v2(arch.get("D", 768), arch.get("H", 256),
+                                 arch.get("C", len(self.classes)), arch.get("dropout", 0.3))
+        self.clf.load_state_dict(ck["state_dict"] if "state_dict" in ck else ck)
+        self.clf = self.clf.to(device).eval()
+        if ck.get("classes"):                        # trust the checkpoint's own class order
+            self.classes = list(ck["classes"])
+            self.NB = self.classes.index("no_burst") if "no_burst" in self.classes else len(self.classes) - 1
+        # Classes folded into `no_burst` during v2 training (hand/body impacts + a blown kiss are
+        # not audible vocal bursts). They are masked so they can never be predicted.
+        self.folded = self._folded_indices()
+        self._log(f"burst classes: {self.NB} + no_burst, {len(self.folded)} folded/masked")
 
         self._log(f"loading Parakeet ({PARAKEET_MODEL}) ...")
-        sys.path.insert(0, ASR_HELPERS)
         from transformers import AutoProcessor, ParakeetForTDT
-        from run_parakeet import _tokens_to_words, _sentences_from_words
-        from asr_common import split_sentences
-        self._tokens_to_words = _tokens_to_words
-        self._sentences_from_words = _sentences_from_words
-        self._split_sentences = split_sentences
+        self._tokens_to_words, self._sentences_from_words, self._split_sentences = _asr_helpers()
         self.pk_proc = AutoProcessor.from_pretrained(PARAKEET_MODEL)
         self.pk = ParakeetForTDT.from_pretrained(PARAKEET_MODEL).to(device).eval()
 
@@ -370,38 +537,105 @@ class BurstCaptioner:
             [dict(text=s, start=None, end=None) for s in self._split_sentences(text)]
         return text, words, sents
 
+    # -- LOCATOR: 30 s windowing ---------------------------------------------- #
+    def locator_probs(self, wav):
+        """Per-frame burst probability at 50 fps over the WHOLE clip.
+
+        The locator has a hard 30 s / 1500-frame input. Audio longer than that is cut
+        into windows of ``CHUNK_SEC`` with ``CHUNK_OVERLAP`` seconds of overlap
+        (hop = 30 - overlap). Each window is scored independently and its 1500 frame
+        probabilities are written back into one global frame track at the window's
+        offset. Inside an overlap region the two windows are **cross-faded**: each
+        window's contribution is linearly ramped from 0 at its shared edge to 1 at the
+        inner end of the overlap, and the track is the weight-normalised sum. So a
+        frame is always dominated by the window that sees it with the most context,
+        transitions are continuous, and — because events are extracted **after**
+        stitching — a burst that straddles a seam stays one event and can never be
+        reported twice.
+        """
+        import numpy as np, torch
+        n_samp = int(wav.shape[0])
+        dur = n_samp / SR
+        win_samp = int(CHUNK_SEC * SR)
+        ov = max(0.0, min(CHUNK_OVERLAP, CHUNK_SEC / 2))
+        hop_samp = max(1, int((CHUNK_SEC - ov) * SR))
+        starts = [0] if n_samp <= win_samp else list(range(0, max(1, n_samp - win_samp + hop_samp), hop_samp))
+        if starts[-1] + win_samp < n_samp:                  # make sure the tail is covered
+            starts.append(max(0, n_samp - win_samp))
+
+        n_frames = max(1, int(math.ceil(dur * LOC_FPS)))
+        acc = np.zeros(n_frames, np.float64)
+        wgt = np.zeros(n_frames, np.float64)
+        ov_frames = int(round(ov * LOC_FPS))
+        for k, s0 in enumerate(starts):
+            seg = wav[s0:s0 + win_samp]
+            if seg.shape[0] < win_samp:
+                seg = torch.nn.functional.pad(seg, (0, win_samp - seg.shape[0]))
+            f = self.wfe(seg.numpy(), sampling_rate=SR, return_tensors="pt").input_features.to(self.dev)
+            with torch.no_grad():
+                pr = torch.sigmoid(self.seg(f))[0].float().cpu().numpy()   # [1500]
+            f0 = int(round(s0 / SR * LOC_FPS))
+            m = min(len(pr), n_frames - f0)
+            if m <= 0:
+                continue
+            w = np.ones(m, np.float64)
+            if ov_frames > 0 and len(starts) > 1:
+                r = min(ov_frames, m)
+                if k > 0:                                    # ramp in over the shared head
+                    w[:r] *= np.linspace(0.0, 1.0, r, endpoint=False) + 1.0 / max(r, 1)
+                if k < len(starts) - 1:                      # ramp out over the shared tail
+                    w[-r:] *= (np.linspace(0.0, 1.0, r, endpoint=False) + 1.0 / max(r, 1))[::-1]
+            acc[f0:f0 + m] += pr[:m] * w
+            wgt[f0:f0 + m] += w
+        probs = np.where(wgt > 0, acc / np.maximum(wgt, 1e-9), 0.0)
+        return probs.astype(np.float32), len(starts)
+
     def locator_spans(self, wav):
-        """Burst locator @ threshold. Returns [(start_s, end_s, peak_prob), ...]."""
-        import torch
-        f = self.wfe(wav.numpy(), sampling_rate=SR, return_tensors="pt").input_features.to(self.dev)
-        with torch.no_grad():
-            pr = torch.sigmoid(self.seg(f))[0].float().cpu().numpy()
-        n = min(len(pr), int(wav.shape[0] / SR * 50) + 1)
-        pr = pr[:n]; out = []; i = 0
-        while i < n:
-            if pr[i] >= LOCATOR_THR:
-                j = i
-                while j + 1 < n and pr[j + 1] >= LOCATOR_THR:
-                    j += 1
-                if j - i >= 2:                          # >= ~60 ms
-                    out.append((i / 50.0, (j + 1) / 50.0, float(pr[i:j + 1].max())))
-                i = j + 1
-            else:
-                i += 1
-        return out
+        """Locator over the whole clip -> [(start_s, end_s, peak_prob), ...] (global timeline)."""
+        probs, _ = self.locator_probs(wav)
+        return extract_events(probs)
+
+    # -- CLASSIFIER ----------------------------------------------------------- #
+    def _folded_indices(self):
+        """Indices the v2 classifier masks (folded into `no_burst` during training)."""
+        idx = set()
+        try:
+            fold = json.load(open(_hf_file(BURST_CLF_REPO, "folded_classes.json")))
+            for name, meta in fold.items():
+                i = meta.get("original_index")
+                if i is None and name in self.classes:
+                    i = self.classes.index(name)
+                if i is not None:
+                    idx.add(int(i))
+        except Exception:
+            # offline / older checkpoint: fall back to the documented list
+            for name in ("Blowing a Kiss", "Finger Snaps", "Hand Scratching Head",
+                         "Hand Slaps", "Slap Face"):
+                if name in self.classes:
+                    idx.add(self.classes.index(name))
+        return sorted(i for i in idx if 0 <= i < len(self.classes))
 
     def classify_burst(self, seg_wav):
-        """VoiceCLAP -> MLP -> sigmoid. Returns (label_or_None, prob, p_noburst)."""
+        """VoiceCLAP -> v2 MLP -> softmax. Returns (label_or_None, prob, p_noburst).
+
+        `label` is None when the `no_burst` class wins the gate; otherwise it is the
+        top-1 over the *recognised* burst classes (folded classes are masked out)."""
         import torch
-        if seg_wav.shape[0] < int(0.1 * SR):
+        if seg_wav.shape[0] < int(0.04 * SR):
             return None, 0.0, 1.0
         with torch.no_grad():
-            e = self.vc.encode_waveform(seg_wav.to(self.dev))
-            p = torch.sigmoid(self.clf(e)).squeeze(0).cpu().numpy()
+            e = self.vc.encode_waveform(seg_wav.unsqueeze(0).to(self.dev)).float()
+            if e.dim() == 1:
+                e = e.unsqueeze(0)
+            logits = self.clf(e)[0]
+            for i in self.folded:
+                logits[i] = float("-inf")
+            p = torch.softmax(logits, -1).cpu().numpy()
         p_nb = float(p[self.NB])
         if p_nb >= NOBURST_GATE:
             return None, p_nb, p_nb
-        top = int(p[:self.NB].argmax())                 # top-1 over the 82 burst classes
+        pp = p.copy(); pp[self.NB] = -1.0
+        top = int(pp.argmax())
         return self.classes[top], float(p[top]), p_nb
 
     # -- caption composition -------------------------------------------------- #
@@ -467,9 +701,12 @@ class BurstCaptioner:
         return " ".join(toks).strip()
 
     def dur_ok(self, label, dur):
-        """Duration gate. Short locator spans are dominated by transient false positives, so a
-        span must clear a minimum duration to be kept — a stricter floor for the smack/click/slap
-        groups. Returns (ok, floor_used)."""
+        """Duration gate, applied *after* the locator's own `min_duration` post-processing.
+
+        With locator v2 the floor is 0.10 s (real bursts have a ~180 ms median duration), and the
+        stricter transient floor of v1 is disabled by default — the v2 classifier can no longer
+        emit the hand/body classes it was there to suppress. Both remain tunable via
+        BURST_MIN_DUR / BURST_TRANSIENT_MIN_DUR. Returns (ok, floor_used)."""
         if label is None:
             return False, 0.0
         floor = TRANSIENT_MIN_DUR if self.label_group.get(label) in TRANSIENT_GROUPS else MIN_BURST_DUR
@@ -530,7 +767,7 @@ class BurstCaptioner:
         import random
         tpl = ["punctuated by a ({b})", "with an audible ({b})", "broken by a ({b})",
                "carrying a ({b})", "interrupted by a ({b})", "marked by a ({b})"]
-        rng = random.Random((seed or 0) ^ (hash(label) & 0xFFFFFFFF))
+        rng = random.Random((seed or 0) ^ stable_hash(label))
         return rng.choice(tpl).replace("{b}", label)
 
     # -- full clip ------------------------------------------------------------ #
@@ -542,7 +779,7 @@ class BurstCaptioner:
         cid = cid or os.path.splitext(os.path.basename(path))[0]
         wav = decode_16k(path)
         dur = wav.shape[0] / SR
-        seed = abs(hash(cid)) % (1 << 30)
+        seed = stable_hash(cid) % (1 << 30)   # stable across processes (see caption.stable_hash)
 
         # --- ASR sentences + words ---
         transcript, words, sents = self.parakeet(wav)
@@ -592,12 +829,15 @@ class BurstCaptioner:
                            "genu": round(s_vn["genu"], 4), "blend": round(s_vn["blend"], 4)},
             })
 
-        # --- Variant A: locator over whole clip ---
-        spans = self.locator_spans(wav)
+        # --- Variant A: locator over the whole clip (30 s windows, stitched) ---
+        probs, n_windows = self.locator_probs(wav)
+        spans = extract_events(probs)
         a_bursts = []
         for (a, b, pk) in spans:
             dur_span = b - a
-            seg = wav[int(a * SR):int(b * SR)]
+            # give the classifier a little context around the located span
+            ca, cb = max(0.0, a - CLF_CONTEXT), min(dur, b + CLF_CONTEXT)
+            seg = wav[int(ca * SR):int(cb * SR)]
             lab, prob, p_nb = self.classify_burst(seg)   # lab is None if no_burst gate fires
             ok, floor = self.dur_ok(lab, dur_span)       # duration gate on the span
             gated = (lab is not None) and (not ok)       # confirmed a class but span too short
@@ -611,9 +851,7 @@ class BurstCaptioner:
         script_lines = self._assign_bursts(sent_out, words, [x for x in a_bursts if x["kept"]])
 
         if mp3_out:
-            os.makedirs(os.path.dirname(mp3_out), exist_ok=True)
-            subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", path,
-                            "-ac", "1", "-b:a", "120k", mp3_out], capture_output=True)
+            write_mp3(path, mp3_out, os.environ.get("BC_MP3_BITRATE", "128k"))
 
         return {
             "id": cid, "dur": round(dur, 2), "transcript": transcript,
@@ -629,6 +867,12 @@ class BurstCaptioner:
             "variant_a_bursts": a_bursts,
             "variant_a_inline": variant_a_inline,
             "n_spans": len(spans), "n_words_ts": len([w for w in words if w.get("start") is not None]),
+            "n_locator_windows": n_windows,
+            "locator": f"{LOCATOR_REPO}/{LOCATOR_FILE}",
+            "classifier": f"{BURST_CLF_REPO}/{BURST_CLF_FILE}",
+            "locator_postproc": {"threshold": LOCATOR_THR, "merge_gap": MERGE_GAP,
+                                 "min_duration": MIN_BURST_DUR, "no_burst_gate": NOBURST_GATE,
+                                 "chunk_sec": CHUNK_SEC, "chunk_overlap": CHUNK_OVERLAP},
             "emonet": self.use_emonet,
         }
 

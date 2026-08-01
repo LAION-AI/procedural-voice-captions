@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
-"""Build the burst-captions demo: run `burst_captions.BurstCaptioner` over a
-diverse set of real clips (LAION character voices + a few in-the-wild demo
-clips), write 120 kbps mono mp3s, and render docs/burst-captions/index.html
-showing the global caption, per-sentence captions, and BOTH burst-insertion
-variants side by side."""
+"""Build the (historical) burst-captions demo page, docs/burst-captions/index.html.
+
+Runs `burst_captions.BurstCaptioner` over LAION character voices + a few in-the-wild
+demo clips and renders the global caption, the per-sentence captions and BOTH
+burst-insertion variants side by side.
+
+NOTE: this builder needs character-voice wavs from an out-of-repo directory
+(`ARCHEVO`). The current, self-contained builder is `build_burst_demo_v2.py`, which
+re-annotates clips that already ship in `docs/` with the default locator v2 +
+classifier v2 and writes docs/burst-captions-v2/."""
 import os, sys, glob, json, html
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import burst_captions as B
@@ -74,7 +79,7 @@ def render(results):
             else:
                 spans.append(f'<span class="sp disc">{b["start"]:.1f}–{b["end"]:.1f}s → '
                              f'discarded (P(no_burst)={b["p_noburst"]:.2f})</span>')
-        spans_html = " ".join(spans) if spans else '<span class="sp">no span ≥ 0.7</span>'
+        spans_html = " ".join(spans) if spans else '<span class="sp">no span above threshold</span>'
         emo_note = "" if r["emonet"] else ' <span class="warn">(EmoNet off — VoiceNet+genuineness only)</span>'
         cards.append(f"""<div class="card">
   <div class="hd"><span class="tag {kind.replace(' ','-')}">{esc(kind)}</span>
@@ -83,7 +88,7 @@ def render(results):
   <div class="asr"><b>ASR:</b> {esc(r['transcript']) or '<i>(no speech recognised)</i>'}</div>
   <div class="sec"><div class="lbl">Global caption</div><div class="gcap">{esc(r['global_caption'])}</div></div>
   <div class="sec"><div class="lbl">Per-sentence captions + Variant B (sentence-level bursts)</div>{''.join(srows) or '<i>(single segment)</i>'}</div>
-  <div class="sec"><div class="lbl">Variant A — locator (precise inline bursts) &nbsp; <span class="k">{r['n_spans']} span(s) @0.7</span></div>
+  <div class="sec"><div class="lbl">Variant A — locator (precise inline bursts) &nbsp; <span class="k">{r['n_spans']} span(s) @{B.LOCATOR_THR}</span></div>
     <div class="ainline">{a_inline}</div>
     <div class="spans">{spans_html}</div></div>
 </div>""")
@@ -150,7 +155,7 @@ the captions</b>. Every number below is produced by models listening to the clip
 <p><b>Scoring stack (all run on the audio):</b> VoiceNet 57-dim predictors + genuineness + vocal-burst-blend
 (VoiceCLAP-commercial embedding → per-dim MLP heads); EmoNet-40 ({emo_state});
 Parakeet-TDT for word + sentence timestamps; the <code>vocalburst-locator</code> (50 fps burst probability)
-and a VoiceCLAP→MLP multi-label burst classifier (82 taxonomy classes + <code>no_burst</code>).</p></div>
+and the VoiceCLAP→MLP burst classifier (82 taxonomy classes + <code>no_burst</code>).</p></div>
 
 <div class="box"><p><b>Caption composition.</b><br>
 • <b>Global caption</b> = Top-5 VoiceNet dims + Top-3 EmoNet emotions + genuineness + Age + Gender + Tempo.
@@ -158,7 +163,7 @@ Bursts are <i>not</i> placed at global level.<br>
 • <b>Per-sentence caption</b> = Top-3 VoiceNet dims + Top-3 emotions (no Age/Gender/Tempo — those are global only).</p>
 <p><b>Two burst-insertion variants (compare them per clip below):</b><br>
 <span class="burst">Variant A — locator (precise position).</span> Scan the whole clip with the burst locator at
-threshold <b>0.7</b>; each detected time-span's audio → classifier → if <code>P(no_burst) &lt; 0.5</code> take the
+threshold <b>{B.LOCATOR_THR}</b>; each detected time-span's audio → classifier → if <code>P(no_burst) &lt; {B.NOBURST_GATE}</code> take the
 <b>top-1</b> class and insert it as its own <span class="burst">(Class)</span> inline at that moment, between the
 two ASR words nearest the burst time. Otherwise the span is discarded (no false alarm).<br>
 <span class="burst">Variant B — sentence-level.</span> Run the classifier on each whole sentence segment; if
