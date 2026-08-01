@@ -1,0 +1,236 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Procedural Voice Captions — locator v2 + classifier v2</title><style>
+body{background:#0f1117;color:#e6e9f0;font:14px/1.6 -apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;margin:0;padding:20px 26px;max-width:1080px}
+h1{font-size:25px;margin:0 0 4px}h2{font-size:18px;margin:28px 0 8px;color:#cfe7ff}
+a{color:#7cc4ff}code{background:#1b1f2b;padding:1px 5px;border-radius:4px;font-size:12.5px}
+.sub{color:#8b93a7;margin-top:2px}
+.box{background:#12141b;border:1px solid #23283a;border-radius:10px;padding:14px 18px;margin:14px 0;color:#aab3c5}
+.box b{color:#cfe7ff}
+.legend{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;align-items:baseline;margin-top:8px}
+.card{background:#161922;border:1px solid #262b3a;border-radius:10px;padding:13px 16px;margin:14px 0}
+.hd{display:flex;align-items:center;gap:9px;margin-bottom:7px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:600}
+.character{background:rgba(255,150,90,.18);color:#ffb27a}
+.in-the-wild{background:rgba(120,180,255,.18);color:#8fbaff}
+.long-form{background:rgba(150,255,190,.15);color:#8fe6b4}
+.cid{font-weight:600;color:#e6e9f0;text-decoration:none}
+.cid:hover{color:#7cc4ff}
+.card{scroll-margin-top:14px}.meta{color:#7f889c;font-size:12px}.warn{color:#e0b062}
+.note{color:#8fe6b4;font-size:12.5px;margin:2px 0 6px}
+audio{height:34px;width:360px;margin:3px 0}
+.sec{margin-top:10px}
+.lbl{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#6f7a90;margin-bottom:4px}
+.gcap{background:#11141c;border-left:3px solid #4a6cff;padding:7px 11px;border-radius:5px}
+.sl{background:#11141c;border-left:3px solid #2a3040;padding:5px 11px;border-radius:5px;margin:4px 0}
+.cue{color:#9fb4d8}
+.burst{color:#ffb27a;font-weight:700}
+.pause{color:#7f889c}
+.spans .sp{display:inline-block;background:#1c2130;padding:2px 8px;border-radius:5px;margin:2px;font-size:11.5px;color:#aeb6c8}
+.sp.keep{background:rgba(255,150,90,.16);color:#ffb27a;font-weight:600}
+.sp.disc{color:#7f889c;font-style:italic}
+details.old{margin-top:10px;color:#7f889c;font-size:12.5px}
+details.old summary{cursor:pointer}
+.oldline{background:#11141c;border-left:3px solid #3a3040;padding:6px 11px;border-radius:5px;margin-top:5px;color:#9aa3b5}
+table{border-collapse:collapse;margin-top:8px;font-size:13px}
+th,td{border:1px solid #262b3a;padding:5px 10px;text-align:left}th{color:#cfe7ff}
+</style></head><body>
+<h1>Procedural voice captions <span style="color:#ffb27a">— current defaults</span></h1>
+<p class="sub">14 clips re-annotated with <b>vocalburst-locator <code>model_v2.pt</code></b> +
+<b>vocal-burst-detector-v2</b> · 16 bursts written into the scripts ·
+<a href="../">← caption grid</a> · <a href="../burst-captions/">← previous burst page (v1)</a></p>
+
+<div class="box"><p><b>How to read a caption.</b> Every clip gets one <b>GENERAL</b> line describing how the
+voice sounds overall, then a <b>SCRIPT</b> with one line per sentence.</p>
+<div class="legend">
+<span class="cue">(round brackets)</span><span>a <b>delivery cue</b> at the head of a sentence, or a
+<span class="burst">(vocal burst)</span> written inline at the moment the locator found it.</span>
+<span class="pause">[square brackets]</span><span>a <b>silence</b>, <code>[pause X.Xs]</code>, taken from the
+Parakeet-v3 word timestamps (any gap ≥ 0.30 s).</span>
+</div></div>
+
+<div class="box"><p><b>The two burst models are different stages.</b>
+The <b>locator</b> (<code>laion/vocalburst-locator</code>, <code>model_v2.pt</code>) says <i>where</i> a burst is:
+a 50 fps burst probability per frame over a fixed 30 s window. Longer audio is scanned in overlapping
+30 s windows whose frame probabilities are stitched onto one timeline before events are extracted, so a
+burst on a seam is neither lost nor counted twice. The <b>classifier</b>
+(<code>laion/vocal-burst-detector-v2</code>) says <i>what</i> it is: it names the cut-out span with one of
+82 taxonomy classes, or vetoes it with <code>no_burst</code>.</p>
+<p>Post-processing here is <b>threshold 0.5 · merge_gap 0.1 s · min_duration 0.1 s</b>
+— the operating point measured for <code>model_v2.pt</code> on 992 held-out real clips (event F1 0.607),
+not the v1 defaults of 0.65 / 0.30 / 0.50. Spans whose <code>P(no_burst) ≥ 0.5</code> are dropped.
+Where the same clip was annotated by the old pipeline, expand <i>previous output</i> under a card to compare.</p></div>
+
+<div class="card" id="pain_scream5">
+  <div class="hd"><span class="tag character">character</span>
+    <a class="cid" href="#pain_scream5">pain_scream5</a>
+    <span class="meta">9.0s · 1 locator window · 2 burst(s) kept
+    of 2 located · genu 1.94 · blend 3.28</span></div>
+  
+  <audio controls preload="none" src="audio/pain_scream5.mp3"></audio>
+  <div class="sec"><div class="lbl">GENERAL</div><div class="gcap">very flat-resonance, very vulnerable, very jerky, very strained, very tense, young, low-register, very physical pain, very submission, very liberation, genuine</div></div>
+  <div class="sec"><div class="lbl">SCRIPT</div><div class="sl"><span class="cue">(very flat-resonance, very vulnerable, very breathy, very physical pain, very submission, very concern)</span> <span class="burst">(Contented Sigh)</span> No, <span class="pause">[pause 0.9s]</span> no, <span class="pause">[pause 0.3s]</span> oh, it hurts.</div><div class="sl"><span class="cue">(very flat-resonance, very vulnerable, very breathy, very solace, very weariness, no absorption)</span> <span class="pause">[pause 0.3s]</span> Ah, <span class="burst">(Contented Sigh)</span> Eng, <span class="pause">[pause 0.6s]</span> get it off me.</div></div>
+  <div class="sec"><div class="lbl">Located spans</div><div class="spans"><span class="sp keep">1.00–1.38s → Contented Sigh (p=0.62)</span> <span class="sp keep">5.96–6.30s → Contented Sigh (p=0.43)</span></div></div>
+  <details class="old"><summary>previous output — locator v1 + multi-label classifier, defaults 0.75 / 0.30 / 0.30 (5 burst(s) kept of 10 spans)</summary><div class="oldline"><span class="burst">(Surprised Gasp)</span> No, no, <span class="burst">(Surprised Gasp)</span> oh, it hurts. <span class="burst">(Surprised Gasp)</span> Ah, <span class="burst">(Slap Face)</span> Hang, <span class="burst">(Slap Face)</span> get it off me.</div></details>
+</div>
+<div class="card" id="zombie5">
+  <div class="hd"><span class="tag character">character</span>
+    <a class="cid" href="#zombie5">zombie5</a>
+    <span class="meta">12.4s · 1 locator window · 1 burst(s) kept
+    of 1 located · genu 2.21 · blend 3.67</span></div>
+  
+  <audio controls preload="none" src="audio/zombie5.mp3"></audio>
+  <div class="sec"><div class="lbl">GENERAL</div><div class="gcap">very flat-resonance, very vulnerable, very meek, very explicit, very choppy, young, feminine, low-register, very slow, very lethargy, no engrossment, very feeling horny, genuine, with-bursts</div></div>
+  <div class="sec"><div class="lbl">SCRIPT</div><div class="sl"><span class="cue">(very flat-resonance, very vulnerable, very meek, very lethargy, very suffering, very submission)</span> So hungry.</div><div class="sl"><span class="cue">(very flat-resonance, very smooth, very flat, very burnout, very respite, no engrossment)</span> <span class="pause">[pause 0.5s]</span> Hmm. <span class="burst">(Wistful Sigh)</span></div><div class="sl"><span class="cue">(very flat-resonance, very mumbled, very jerky, very desperation, very despair, very torment)</span> <span class="pause">[pause 1.3s]</span> Help me.</div><div class="sl"><span class="cue">(very flat-resonance, very choppy, very soft-onset, very burnout, very desperation, very dejection)</span> <span class="pause">[pause 0.3s]</span> I can&#x27;t stop.</div></div>
+  <div class="sec"><div class="lbl">Located spans</div><div class="spans"><span class="sp keep">3.32–3.60s → Wistful Sigh (p=0.24)</span></div></div>
+  <details class="old"><summary>previous output — locator v1 + multi-label classifier, defaults 0.75 / 0.30 / 0.30 (6 burst(s) kept of 11 spans)</summary><div class="oldline">So hungry. Hmm. <span class="burst">(Relief Sigh)</span> Help <span class="burst">(Lip Smack)</span> me. <span class="burst">(Relief Sigh)</span> I can&#x27;t <span class="burst">(Slap Face)</span> <span class="burst">(Lip Smack)</span> stop. <span class="burst">(Chuckle)</span></div></details>
+</div>
+<div class="card" id="goblin5">
+  <div class="hd"><span class="tag character">character</span>
+    <a class="cid" href="#goblin5">goblin5</a>
+    <span class="meta">8.3s · 1 locator window · 1 burst(s) kept
+    of 1 located · genu 1.74 · blend 6.53</span></div>
+  
+  <audio controls preload="none" src="audio/goblin5.mp3"></audio>
+  <div class="sec"><div class="lbl">GENERAL</div><div class="gcap">very flat-resonance, very warm, very decelerating, very mumbled, very soft-onset, middle-aged, low-register, slow, very pining, no absorption, very helplessness, genuine, with-bursts</div></div>
+  <div class="sec"><div class="lbl">SCRIPT</div><div class="sl"><span class="cue">(very flat-resonance, very smooth, very non-narrative, no deep focus, very fatigue, no interest)</span> Huh. <span class="burst">(Chuckle)</span></div><div class="sl"><span class="cue">(very flat-resonance, very flat, very mumbled, very helplessness, very misery, no absorption)</span> <span class="pause">[pause 0.4s]</span> What have we here?</div><div class="sl"><span class="cue">(very flat-resonance, very meek, very warm, fondness, feeling turned on, altered perception)</span> <span class="pause">[pause 0.5s]</span> A lost little traveller with shiny pockets?</div></div>
+  <div class="sec"><div class="lbl">Located spans</div><div class="spans"><span class="sp keep">0.22–0.70s → Chuckle (p=0.58)</span></div></div>
+  <details class="old"><summary>previous output — locator v1 + multi-label classifier, defaults 0.75 / 0.30 / 0.30 (5 burst(s) kept of 7 spans)</summary><div class="oldline"><span class="burst">(Clears Throat)</span> Huh. <span class="burst">(Deep Breath)</span> What have <span class="burst">(Purr)</span> we here? <span class="burst">(Slap Face)</span> A lost little traveller with <span class="burst">(Lip Smack)</span> shiny pockets?</div></details>
+</div>
+<div class="card" id="mouse5">
+  <div class="hd"><span class="tag character">character</span>
+    <a class="cid" href="#mouse5">mouse5</a>
+    <span class="meta">11.8s · 1 locator window · 0 burst(s) kept
+    of 0 located · genu 0.97 · blend 2.9</span></div>
+  
+  <audio controls preload="none" src="audio/mouse5.mp3"></audio>
+  <div class="sec"><div class="lbl">GENERAL</div><div class="gcap">very flat-resonance, very raspy, very jerky, very choppy, very breathy, middle-aged, low-register, slow, wonder, exhilaration, no absorption, semi-genuine</div></div>
+  <div class="sec"><div class="lbl">SCRIPT</div><div class="sl"><span class="cue">(very flat-resonance, very raspy, very jerky, wonder, excitement, surprise)</span> Eee wait, wait, ooh, did you see it?</div><div class="sl"><span class="cue">(very flat-resonance, very swelling, very breathy, awe, no deep focus, amazement)</span> Did you see how teeny tiny it was?</div></div>
+  <div class="sec"><div class="lbl">Located spans</div><div class="spans"><span class="sp">no span above threshold</span></div></div>
+  <details class="old"><summary>previous output — locator v1 + multi-label classifier, defaults 0.75 / 0.30 / 0.30 (6 burst(s) kept of 10 spans)</summary><div class="oldline">Eee wait wait ooh did you see it? Did you see how teeny tiny it was? <span class="burst">(Slap Face)</span> <span class="burst">(Lip Smack)</span> <span class="burst">(Lip Smack)</span> <span class="burst">(Lip Smack)</span> <span class="burst">(Lip Smack)</span> <span class="burst">(Slap Face)</span></div></details>
+</div>
+<div class="card" id="sad_woman5">
+  <div class="hd"><span class="tag character">character</span>
+    <a class="cid" href="#sad_woman5">sad_woman5</a>
+    <span class="meta">11.8s · 1 locator window · 1 burst(s) kept
+    of 1 located · genu 1.35 · blend 1.56</span></div>
+  
+  <audio controls preload="none" src="audio/sad_woman5.mp3"></audio>
+  <div class="sec"><div class="lbl">GENERAL</div><div class="gcap">very flat-resonance, very vulnerable, very strained, very meek, very decelerating, young, feminine, mid-register, slow, helplessness, contrition, suffering, semi-genuine</div></div>
+  <div class="sec"><div class="lbl">SCRIPT</div><div class="sl"><span class="cue">(very flat-resonance, very smooth, very meek, contrition, agony, helplessness)</span> No <span class="pause">[pause 0.7s]</span> no please <span class="pause">[pause 0.3s]</span> Don&#x27;t leave me to <span class="burst">(Contented Sigh)</span> I can&#x27;t <span class="pause">[pause 0.5s]</span> I can&#x27;t lose anyone else</div></div>
+  <div class="sec"><div class="lbl">Located spans</div><div class="spans"><span class="sp keep">5.10–5.36s → Contented Sigh (p=0.41)</span></div></div>
+  <details class="old"><summary>previous output — locator v1 + multi-label classifier, defaults 0.75 / 0.30 / 0.30 (2 burst(s) kept of 3 spans)</summary><div class="oldline">No no please Don&#x27;t leave me to <span class="burst">(Deep Breath)</span> I can&#x27;t I can&#x27;t lose anyone else <span class="burst">(Surprised Gasp)</span></div></details>
+</div>
+<div class="card" id="asmr_woman5">
+  <div class="hd"><span class="tag character">character</span>
+    <a class="cid" href="#asmr_woman5">asmr_woman5</a>
+    <span class="meta">11.8s · 1 locator window · 1 burst(s) kept
+    of 1 located · genu 1.65 · blend 3.1</span></div>
+  
+  <audio controls preload="none" src="audio/asmr_woman5.mp3"></audio>
+  <div class="sec"><div class="lbl">GENERAL</div><div class="gcap">very flat-resonance, very oral-muted, very noisy, very soft-onset, very choppy, middle-aged, masculine, low-register, slow, respite, compassion, lethargy, semi-genuine</div></div>
+  <div class="sec"><div class="lbl">SCRIPT</div><div class="sl"><span class="cue">(very flat-resonance, very warm, very relaxed, butterflies in the stomach, lust, warmth)</span> <span class="burst">(Deep Breath)</span> There now, my love, close your eyes.</div><div class="sl"><span class="cue">(very flat-resonance, very meek, very warm, devotion, carnal desire, fondness)</span> <span class="pause">[pause 0.3s]</span> I have you, safe and warm.</div></div>
+  <div class="sec"><div class="lbl">Located spans</div><div class="spans"><span class="sp keep">0.10–0.98s → Deep Breath (p=0.17)</span></div></div>
+  <details class="old"><summary>previous output — locator v1 + multi-label classifier, defaults 0.75 / 0.30 / 0.30 (2 burst(s) kept of 3 spans)</summary><div class="oldline"><span class="burst">(Hiss)</span> There now, my love, close your eyes. I have you, safe and warm. <span class="burst">(Breathy Giggle)</span></div></details>
+</div>
+<div class="card" id="ranting5">
+  <div class="hd"><span class="tag character">character</span>
+    <a class="cid" href="#ranting5">ranting5</a>
+    <span class="meta">11.9s · 1 locator window · 0 burst(s) kept
+    of 0 located · genu 1.52 · blend 9.62</span></div>
+  
+  <audio controls preload="none" src="audio/ranting5.mp3"></audio>
+  <div class="sec"><div class="lbl">GENERAL</div><div class="gcap">very flat-resonance, very breathy, very vulnerable, very denasal, very jerky, young, masculine, low-register, slightly slow, envy, fondness, agony, semi-genuine, with-bursts</div></div>
+  <div class="sec"><div class="lbl">SCRIPT</div><div class="sl"><span class="cue">(very flat-resonance, very vulnerable, very breathy, very having a crush, very helplessness, very terror)</span> Enough I am sick to death of this.</div><div class="sl"><span class="cue">(very flat-resonance, very denasal, very oral-muted, very revulsion, very contempt, very spite)</span> You pathetic, spineless fool.</div><div class="sl"><span class="cue">(very flat-resonance, very raspy, very breathy, adoration, rage, feeling horny)</span> How dare you how dare you waste my time again and again?</div></div>
+  <div class="sec"><div class="lbl">Located spans</div><div class="spans"><span class="sp">no span above threshold</span></div></div>
+  <details class="old"><summary>previous output — locator v1 + multi-label classifier, defaults 0.75 / 0.30 / 0.30 (2 burst(s) kept of 3 spans)</summary><div class="oldline">Enough. <span class="burst">(Breathy Giggle)</span> I am sick to death of this. You pathetic, <span class="burst">(Slap Face)</span> spineless fool. How dare you how dare you waste my time again and again?</div></details>
+</div>
+<div class="card" id="dragon5">
+  <div class="hd"><span class="tag character">character</span>
+    <a class="cid" href="#dragon5">dragon5</a>
+    <span class="meta">7.1s · 1 locator window · 0 burst(s) kept
+    of 0 located · genu 0.97 · blend 4.16</span></div>
+  
+  <audio controls preload="none" src="audio/dragon5.mp3"></audio>
+  <div class="sec"><div class="lbl">GENERAL</div><div class="gcap">very flat-resonance, very raspy, very full, very throaty, very denasal, middle-aged, masculine, low-register, slow, butterflies in the stomach, feeling horny, desire to harm, semi-genuine, with-bursts</div></div>
+  <div class="sec"><div class="lbl">SCRIPT</div><div class="sl"><span class="cue">(very flat-resonance, very raspy, very denasal, infatuation, carnal desire, sadism)</span> You dare enter my lair, mortal.</div><div class="sl"><span class="cue">(very flat-resonance, very metallic, very oral-muted, fondness, sadism, sexual lust)</span> Your bones will join the others.</div></div>
+  <div class="sec"><div class="lbl">Located spans</div><div class="spans"><span class="sp">no span above threshold</span></div></div>
+  <details class="old"><summary>previous output — locator v1 + multi-label classifier, defaults 0.75 / 0.30 / 0.30 (3 burst(s) kept of 6 spans)</summary><div class="oldline">You dare enter my lair, mortal. <span class="burst">(Slap Face)</span> Your bones will <span class="burst">(Displeased Grunt)</span> join the others. <span class="burst">(Wolf Whistle)</span></div></details>
+</div>
+<div class="card" id="evil_ghost5">
+  <div class="hd"><span class="tag character">character</span>
+    <a class="cid" href="#evil_ghost5">evil_ghost5</a>
+    <span class="meta">7.1s · 1 locator window · 1 burst(s) kept
+    of 1 located · genu 1.3 · blend 6.75</span></div>
+  
+  <audio controls preload="none" src="audio/evil_ghost5.mp3"></audio>
+  <div class="sec"><div class="lbl">GENERAL</div><div class="gcap">very flat-resonance, very raspy, very full, very throaty, very denasal, elderly, low-register, very slow, malice, apprehension, loathing, semi-genuine, with-bursts</div></div>
+  <div class="sec"><div class="lbl">SCRIPT</div><div class="sl"><span class="cue">(very flat-resonance, very denasal, very breathy, no engrossment, very disapproval, very peevishness)</span> Ugh <span class="burst">(Exhausted Groan)</span> you should not have come here.</div><div class="sl"><span class="cue">(very flat-resonance, very raspy, very metallic, carnal desire, longing, sadness)</span> <span class="pause">[pause 0.6s]</span> This house feeds on the living.</div></div>
+  <div class="sec"><div class="lbl">Located spans</div><div class="spans"><span class="sp keep">0.22–1.20s → Exhausted Groan (p=0.58)</span></div></div>
+  <details class="old"><summary>previous output — locator v1 + multi-label classifier, defaults 0.75 / 0.30 / 0.30 (1 burst(s) kept of 1 spans)</summary><div class="oldline"><span class="burst">(Exasperated Sigh)</span> You should not have come here. This house feeds on the living.</div></details>
+</div>
+<div class="card" id="ZH_B00039_S04341_W000000">
+  <div class="hd"><span class="tag in-the-wild">in-the-wild</span>
+    <a class="cid" href="#ZH_B00039_S04341_W000000">ZH_B00039_S04341_W000000</a>
+    <span class="meta">3.8s · 1 locator window · 0 burst(s) kept
+    of 0 located · genu 2.22 · blend 9.1</span></div>
+  
+  <audio controls preload="none" src="audio/ZH_B00039_S04341_W000000.mp3"></audio>
+  <div class="sec"><div class="lbl">GENERAL</div><div class="gcap">very flat-resonance, very mumbled, very soft-onset, very warm, very dark, elderly, masculine, low-register, slow, very weariness, very carnal desire, very butterflies in the stomach, genuine, with-bursts</div></div>
+  <div class="sec"><div class="lbl">SCRIPT</div><div class="sl"><span class="cue">(very flat-resonance, very smooth, very flat, very romantic desire, no concentration, very feeling horny)</span> Tiva.</div><div class="sl"><span class="cue">(very flat-resonance, very dark, very relaxed, no attention, exhaustion, insensitivity)</span> <span class="pause">[pause 1.2s]</span> Tia Baya Gokufu Tsiwa.</div></div>
+  <div class="sec"><div class="lbl">Located spans</div><div class="spans"><span class="sp">no span above threshold</span></div></div>
+  <details class="old"><summary>previous output — locator v1 + multi-label classifier, defaults 0.75 / 0.30 / 0.30 (3 burst(s) kept of 5 spans)</summary><div class="oldline">Tiva. <span class="burst">(Slap Face)</span> <span class="burst">(Deep Breath)</span> Tia Baya Gokufu Tsiwa. <span class="burst">(Clears Throat)</span></div></details>
+</div>
+<div class="card" id="FR_B00001_S08689_W000031">
+  <div class="hd"><span class="tag in-the-wild">in-the-wild</span>
+    <a class="cid" href="#FR_B00001_S08689_W000031">FR_B00001_S08689_W000031</a>
+    <span class="meta">18.2s · 1 locator window · 0 burst(s) kept
+    of 0 located · genu 0.92 · blend 8.05</span></div>
+  
+  <audio controls preload="none" src="audio/FR_B00001_S08689_W000031.mp3"></audio>
+  <div class="sec"><div class="lbl">GENERAL</div><div class="gcap">very flat-resonance, very narrator, very warm, very decelerating, very formal, middle-aged, masculine, low-register, slightly slow, alleviation, fear, desperation, semi-genuine, with-bursts</div></div>
+  <div class="sec"><div class="lbl">SCRIPT</div><div class="sl"><span class="cue">(very flat-resonance, very hi-fi, very smooth, no absorption, solace, surprise)</span> Soudain, on frappe à sa porte.</div><div class="sl"><span class="cue">(very flat-resonance, very denasal, very thin-head, abhorrence, no concentration, spite)</span> <span class="pause">[pause 0.3s]</span> Chloé sursaute.</div><div class="sl"><span class="cue">(very flat-resonance, very hi-fi, very smooth, no attention, respite, desperation)</span> <span class="pause">[pause 0.6s]</span> Elle se sent incapable de bouger.</div><div class="sl"><span class="cue">(very flat-resonance, very commanding, very effortless, no engrossment, determination, exhilaration)</span> <span class="pause">[pause 0.6s]</span> On frappe à nouveau.</div><div class="sl"><span class="cue">(very flat-resonance, very noisy, very warm, alleviation, no attention, torment)</span> <span class="pause">[pause 0.3s]</span> Chloé retient sa respiration.</div><div class="sl"><span class="cue">(very flat-resonance, very smooth, very smooth, covetousness, fear, submission)</span> <span class="pause">[pause 0.6s]</span> Elle a peur.</div><div class="sl"><span class="cue">(very flat-resonance, very commanding, very hi-fi, wonder, apprehension, nostalgia)</span> Elle a l&#x27;impression de vivre un mauvais rêve.</div></div>
+  <div class="sec"><div class="lbl">Located spans</div><div class="spans"><span class="sp">no span above threshold</span></div></div>
+  <details class="old"><summary>previous output — locator v1 + multi-label classifier, defaults 0.75 / 0.30 / 0.30 (0 burst(s) kept of 0 spans)</summary><div class="oldline">Soudain, on frappe à sa porte. Chloé sursaute. Elle se sent incapable de bouger. On frappe à nouveau. Chloé retient sa respiration. Elle a peur. Elle a l&#x27;impression de vivre un mauvais rêve.</div></details>
+</div>
+<div class="card" id="EN_B00000_S03298_W000123">
+  <div class="hd"><span class="tag in-the-wild">in-the-wild</span>
+    <a class="cid" href="#EN_B00000_S03298_W000123">EN_B00000_S03298_W000123</a>
+    <span class="meta">13.4s · 1 locator window · 1 burst(s) kept
+    of 1 located · genu 5.13 · blend 5.22</span></div>
+  
+  <audio controls preload="none" src="audio/EN_B00000_S03298_W000123.mp3"></audio>
+  <div class="sec"><div class="lbl">GENERAL</div><div class="gcap">oral-bright, full, halting, naturalistic, slightly non-narrative, adult, masculine, low-register, very mirth, existential void, short-temperedness, genuine, with-bursts</div></div>
+  <div class="sec"><div class="lbl">SCRIPT</div><div class="sl"><span class="cue">(very flat-resonance, very oral-bright, dialogic, no attention, very ribbing, very disdain)</span> So that people go, What is that? <span class="burst">(Breathy Giggle)</span></div><div class="sl"><span class="cue">(very flat-resonance, very commanding, very oral-bright, no engrossment, no thoughtfulness, no fascination)</span> I need to find out about that.</div><div class="sl"><span class="cue">(very oral-bright, very blended-resonance, smooth, very bantering, very existential void, very suspicion)</span> <span class="pause">[pause 0.7s]</span> So this is me making stuff up right in the moment, but I&#x27;m like, okay, I&#x27;m gonna use these oblique strategies as a way of</div></div>
+  <div class="sec"><div class="lbl">Located spans</div><div class="spans"><span class="sp keep">1.50–1.84s → Breathy Giggle (p=0.35)</span></div></div>
+  <details class="old"><summary>previous output — locator v1 + multi-label classifier, defaults 0.75 / 0.30 / 0.30 (0 burst(s) kept of 0 spans)</summary><div class="oldline">So that people go, What is that? I need to find out about that. So this is me making stuff up right in the moment, but I&#x27;m like, okay, I&#x27;m gonna use these oblique strategies as a way of</div></details>
+</div>
+<div class="card" id="EN_B00026_S00187_W000083">
+  <div class="hd"><span class="tag in-the-wild">in-the-wild</span>
+    <a class="cid" href="#EN_B00026_S00187_W000083">EN_B00026_S00187_W000083</a>
+    <span class="meta">3.2s · 1 locator window · 0 burst(s) kept
+    of 0 located · genu 0.65 · blend 7.38</span></div>
+  
+  <audio controls preload="none" src="audio/EN_B00026_S00187_W000083.mp3"></audio>
+  <div class="sec"><div class="lbl">GENERAL</div><div class="gcap">very flat-resonance, very pleasing, very hi-fi, very effortless, very soft-onset, adult, feminine, mid-register, slow, romantic desire, pleasure, relaxation, semi-genuine, with-bursts</div></div>
+  <div class="sec"><div class="lbl">SCRIPT</div><div class="sl"><span class="cue">(very flat-resonance, very soft-onset, very hi-fi, fondness, calmness, bliss)</span> The woman coos and sings a sweet song</div></div>
+  <div class="sec"><div class="lbl">Located spans</div><div class="spans"><span class="sp">no span above threshold</span></div></div>
+  <details class="old"><summary>previous output — locator v1 + multi-label classifier, defaults 0.75 / 0.30 / 0.30 (0 burst(s) kept of 0 spans)</summary><div class="oldline">The woman coos and sings a sweet song</div></details>
+</div>
+<div class="card" id="longform_concat_91s">
+  <div class="hd"><span class="tag long-form">long-form</span>
+    <a class="cid" href="#longform_concat_91s">longform_concat_91s</a>
+    <span class="meta">91.4s · <b>4 locator windows</b> · 8 burst(s) kept
+    of 8 located · genu 1.43 · blend 1.9</span></div>
+  <div class="note">Constructed by concatenating the nine character clips above — the only way to show the &gt;30 s path with audio that ships in this repo.</div>
+  <audio controls preload="none" src="audio/longform_concat_91s.mp3"></audio>
+  <div class="sec"><div class="lbl">GENERAL</div><div class="gcap">very flat-resonance, very vulnerable, very meek, very jerky, very decelerating, young, androgynous, low-register, very slow, being drunk, respite, no concentration, semi-genuine</div></div>
+  <div class="sec"><div class="lbl">SCRIPT</div><div class="sl"><span class="cue">(very flat-resonance, very vulnerable, very meek, very lethargy, very agony, very helplessness)</span> So hungry.</div><div class="sl"><span class="cue">(very flat-resonance, very smooth, very flat, very weariness, very solace, no engrossment)</span> <span class="pause">[pause 0.5s]</span> Hmm. <span class="burst">(Wistful Sigh)</span></div><div class="sl"><span class="cue">(very flat-resonance, very mumbled, very jerky, very submission, very dejection, very feeling horny)</span> <span class="pause">[pause 1.4s]</span> Help me.</div><div class="sl"><span class="cue">(very flat-resonance, very choppy, very soft-onset, very burnout, very desperation, very self-pity)</span> <span class="pause">[pause 0.3s]</span> I can&#x27;t stop.</div><div class="sl"><span class="cue">(very flat-resonance, very breathy, very jerky, no concentration, schadenfreude, no fascination)</span> <span class="pause">[pause 3.9s]</span> Eee, <span class="burst">(Surprised Gasp)</span> wait!</div><div class="sl"><span class="cue">(very breathy, very metallic, very tense, no concentration, astonishment, no interest)</span> <span class="pause">[pause 0.3s]</span> Wait!</div><div class="sl"><span class="cue">(very flat-resonance, very jerky, very oral-muted, revulsion, alleviation, no concentration)</span> <span class="pause">[pause 0.3s]</span> Ooh!</div><div class="sl"><span class="cue">(very flat-resonance, very breathy, very swelling, very awestruck, very astonishment, very excitement)</span> Did you see it?</div><div class="sl"><span class="cue">(very flat-resonance, very swelling, very breathy, awestruck, no attention, amazement)</span> Did you see how teeny tiny it was.</div><div class="sl"><span class="cue">(very flat-resonance, very smooth, very non-narrative, no concentration, very weariness, no interest)</span> <span class="pause">[pause 3.2s]</span> Huh. <span class="burst">(Chuckle)</span></div><div class="sl"><span class="cue">(very flat-resonance, very flat, very mumbled, very powerlessness, very grief, no attention)</span> <span class="pause">[pause 0.5s]</span> What have we here?</div><div class="sl"><span class="cue">(very flat-resonance, very meek, very warm, infatuation, feeling turned on, intoxication)</span> <span class="pause">[pause 0.5s]</span> A lost little traveler with shiny pockets.</div><div class="sl"><span class="cue">(very flat-resonance, very mumbled, very flat, no attention, very having a crush, no fascination)</span> <span class="pause">[pause 2.5s]</span> Enough.</div><div class="sl"><span class="cue">(very flat-resonance, very breathy, very denasal, very romantic desire, very suffering, very submission)</span> <span class="pause">[pause 1.1s]</span> I am sick to death of this.</div><div class="sl"><span class="cue">(very flat-resonance, very denasal, very oral-muted, very repulsion, very contempt, very desire to harm)</span> <span class="pause">[pause 0.3s]</span> You pathetic, spineless fool.</div><div class="sl"><span class="cue">(very flat-resonance, very choppy, very denasal, romantic desire, anger, feeling turned on)</span> How dare you?</div><div class="sl"><span class="cue">(very flat-resonance, very raspy, very breathy, butterflies in the stomach, lust, hate)</span> How dare you waste my time again and again.</div><div class="sl"><span class="cue">(very flat-resonance, very smooth, very jerky, no absorption, no intrigue, despair)</span> <span class="pause">[pause 0.3s]</span> No.</div><div class="sl"><span class="cue">(very flat-resonance, very choppy, very smooth, desperation, no attention, despair)</span> <span class="pause">[pause 0.6s]</span> No, please.</div><div class="sl"><span class="cue">(very flat-resonance, very smooth, very choppy, desperation, fondness, sullenness)</span> <span class="pause">[pause 0.3s]</span> Don&#x27;t leave me to.</div><div class="sl"><span class="cue">(very flat-resonance, very breathy, very vulnerable, very desperation, very dejection, very agony)</span> <span class="pause">[pause 1.2s]</span> <span class="burst">(Contented Sigh)</span> I can&#x27;t.</div><div class="sl"><span class="cue">(very flat-resonance, very breathy, very vulnerable, adoration, helplessness, covetousness)</span> <span class="pause">[pause 0.5s]</span> I can&#x27;t lose anyone else.</div><div class="sl"><span class="cue">(very flat-resonance, very flat, very dissociated, very fondness, very sympathy, very feeling turned on)</span> <span class="pause">[pause 5.0s]</span> There now, my love.</div><div class="sl"><span class="cue">(very flat-resonance, very smooth, very relaxed, lust, fondness, no engrossment)</span> Close your eyes.</div><div class="sl"><span class="cue">(very flat-resonance, very meek, very warm, forgiveness, infatuation, sexual lust)</span> <span class="pause">[pause 0.3s]</span> I have you safe and warm.</div><div class="sl"><span class="cue">(very flat-resonance, very oral-muted, very denasal, romantic desire, carnal desire, sadism)</span> <span class="pause">[pause 2.1s]</span> You dare enter my lair, mortal.</div><div class="sl"><span class="cue">(very flat-resonance, very metallic, very oral-muted, infatuation, sadism, feeling horny)</span> Your bones will join the others. <span class="burst">(Contented Sigh)</span></div><div class="sl"><span class="cue">(very flat-resonance, very jerky, very choppy, no absorption, very dejection, no curiosity)</span> <span class="pause">[pause 2.9s]</span> <span class="burst">(Contented Sigh)</span> No.</div><div class="sl"><span class="cue">(very flat-resonance, very tense, very dialogic, no absorption, heartache, no curiosity)</span> <span class="pause">[pause 0.9s]</span> No.</div><div class="sl"><span class="cue">(very flat-resonance, very breathy, very swelling, very physical pain, very respite, very helplessness)</span> <span class="pause">[pause 0.5s]</span> Oh, it hurts. <span class="burst">(Contented Sigh)</span></div><div class="sl"><span class="cue">(very flat-resonance, very breathy, very vulnerable, very having a crush, very ache, very helplessness)</span> <span class="pause">[pause 1.1s]</span> Hang, get it off me.</div><div class="sl"><span class="cue">(very flat-resonance, very full, very denasal, no attention, schadenfreude, fury)</span> <span class="pause">[pause 1.3s]</span> <span class="burst">(Exhausted Groan)</span> You should not have come here.</div><div class="sl"><span class="cue">(very flat-resonance, very raspy, very metallic, carnal desire, craving, sadness)</span> <span class="pause">[pause 0.7s]</span> This house feeds on the living.</div></div>
+  <div class="sec"><div class="lbl">Located spans</div><div class="spans"><span class="sp keep">3.32–3.60s → Wistful Sigh (p=0.24)</span> <span class="sp keep">13.08–13.52s → Surprised Gasp (p=0.26)</span> <span class="sp keep">24.64–24.90s → Chuckle (p=0.29)</span> <span class="sp keep">49.58–49.78s → Contented Sigh (p=0.32)</span> <span class="sp keep">74.88–75.06s → Contented Sigh (p=0.13)</span> <span class="sp keep">76.28–76.64s → Contented Sigh (p=0.57)</span> <span class="sp keep">81.24–81.58s → Contented Sigh (p=0.43)</span> <span class="sp keep">84.54–85.50s → Exhausted Groan (p=0.56)</span></div></div>
+  
+</div>
+
+<p style="color:#6f7a90;margin-top:26px;font-size:12px">Generated by <code>build_burst_demo_v2.py</code> ·
+pipeline in <code>burst_captions.py</code>. Every dimension, emotion, timestamp and burst on this page is a
+model prediction; nothing is hand-written.</p>
+</body></html>

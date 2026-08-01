@@ -30,6 +30,11 @@ while keeping burst positions. See the up-to-date grid →
 <a href="../character-captions/" style="color:#7cc7ff">character-captions</a>.</div>
 <p style="color:#8b93a7;margin-top:2px">16 LAION character voices + 8 in-the-wild clips ·
 <a href="../">← back to the caption grid</a></p>
+<div class="box" style="border-color:#3a5;background:#10160f"><p><b style="color:#8fe6a0">This page is the previous pipeline.</b>
+It was produced with locator <code>model.pt</code> (v1) and the multi-label burst classifier at the v1
+post-processing defaults (threshold 0.75, merge_gap 0.30 s, min_duration 0.30 s). The current defaults are
+<code>model_v2.pt</code> + <code>laion/vocal-burst-detector-v2</code> at 0.50 / 0.10 / 0.10 —
+<a href="../burst-captions-v2/">see the current output here</a>. This page is kept for comparison.</p></div>
 
 <div class="box"><p><b>What this page adds.</b> The base <a href="../">procedural captioner</a> turns
 model predictions into a voice description. Here we additionally <b>detect the non-verbal vocal bursts</b>

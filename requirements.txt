@@ -1,11 +1,16 @@
-# Runtime for caption.py (procedural caption generation): stdlib only.
-# numpy is only needed by compute_baseline.py (recomputing the baseline).
-numpy>=1.23
+# caption.py / augment.py / asr_words.py run on the stdlib alone — nothing below is
+# needed just to turn stored predictions into captions with the bundled baseline.
 
-# --- recomputing the baseline from scratch (compute_baseline.py) ---
-# Heavy deps; not needed just to USE caption.py with the bundled baseline_stats.json.
+# --- burst_captions.py (the full audio pipeline) and compute_baseline.py ---
+numpy>=1.23
 torch>=2.1
 torchaudio>=2.1
-transformers>=4.44
+# ParakeetForTDT must be present in the installed transformers (verified with 5.14.1).
+transformers>=4.57
 huggingface_hub>=0.24
-pandas>=2.0
+soundfile>=0.12          # audio decode, and the fallback when no ffmpeg is on PATH
+pandas>=2.0              # compute_baseline.py only
+
+# Optional: ships a static ffmpeg binary, used to decode exotic containers and to write
+# the demo mp3s on machines with no system ffmpeg.
+imageio-ffmpeg>=0.4.9

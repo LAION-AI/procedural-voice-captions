@@ -32,11 +32,22 @@ Usage
                                                  #        "genu":x,"blend":y}
     python caption.py - --kv 5 --ke 3            # read JSON from stdin
 """
-import os, sys, json, math, random, argparse
+import os, sys, json, math, random, zlib, argparse
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 _BASE_PATH = os.path.join(HERE, "baseline_stats.json")
 EPS = 1e-6
+
+
+def stable_hash(s):
+    """Deterministic 32-bit hash of a string.
+
+    CPython salts the builtin ``hash()`` of str/bytes per process (PYTHONHASHSEED),
+    so using it to derive a caption's RNG made the *same* `synonym_seed` render
+    different synonyms in different processes. Everything that mixes a name into a
+    seed goes through this instead, which is what makes the documented determinism
+    actually hold."""
+    return zlib.crc32(str(s).encode("utf-8")) & 0xFFFFFFFF
 
 ALWAYS_ON = ["AGEV", "GEND", "REGS", "TEMP"]        # always described
 
@@ -263,7 +274,7 @@ def _emotion_word(name, stat, seed):
     syns = list(stat.get("synonyms") or [])
     if not syns:
         return name.lower()
-    rng = random.Random((seed if seed is not None else random.randrange(1 << 30)) ^ (hash(name) & 0xFFFFFFFF))
+    rng = random.Random((seed if seed is not None else random.randrange(1 << 30)) ^ stable_hash(name))
     return rng.choice(syns)
 
 
