@@ -47,11 +47,49 @@ EPS = 1e-6
 # measurement (256,000 clips). "emolia" is the previously published baseline, kept
 # verbatim so captions and demo pages produced before the swap stay reproducible.
 BASELINES = {
-    "default":  _BASE_PATH,
-    "dramabox": _BASE_PATH,
-    "emolia":   os.path.join(HERE, "baseline_stats_emolia.json"),
+    "default":   _BASE_PATH,
+    "dramabox":  _BASE_PATH,
+    "emolia":    os.path.join(HERE, "baseline_stats_emolia.json"),
+    # Measured over the FULL annotated LAION-TTS corpus -- 130,785,282 utterances,
+    # 8 datasets, every language -- rather than a sample, in the same schema and with
+    # the same IQR/1.349 spread convention as the dramabox default. See
+    # `make_laiontts_baseline.py` and the README section "The baseline".
+    "laion-tts": os.path.join(HERE, "baseline_stats_laiontts.json"),
 }
 DEFAULT_BASELINE = os.environ.get("PVC_BASELINE", "default")
+
+# Opt-in percentile gate for the EMOTION clause only (PVC_EMO_PERCENTILE=1).
+#
+# The emotion heads are too zero-inflated for a (median, spread) pair to describe:
+# measured over the full corpus, Awe is at-or-below zero on 94.4 % of utterances and
+# its IQR is 0.0002, so |z| ranks emotions by their own scale rather than by the clip.
+# The concrete damage is measurable -- across 165,516,420 regenerated LAION-TTS
+# captions an absolute-threshold gate named Interest on 90.6 % of all rows.
+#
+# When enabled, emotions are ranked by their empirical percentile instead, and only
+# those in the top (1 - floor) tail are eligible. The percentile is converted back to
+# an equivalent z via the normal quantile, so the existing intensity bands, the
+# neutral band and the genuineness cap all keep working unchanged.
+EMO_PERCENTILE = os.environ.get("PVC_EMO_PERCENTILE", "0") != "0"
+EMO_PERCENTILE_FLOOR = float(os.environ.get("PVC_EMO_PERCENTILE_FLOOR", "0.90"))
+_EMO_GATE = None
+
+
+def _emo_gate():
+    """Lazy singleton so importing caption.py costs nothing when the gate is off."""
+    global _EMO_GATE
+    if _EMO_GATE is None:
+        from emotion_gate import EmotionGate
+        _EMO_GATE = EmotionGate()
+    return _EMO_GATE
+
+
+def _percentile_as_z(u):
+    """Percentile -> equivalent z, so downstream intensity wording is unchanged.
+    0.90 -> 1.28, 0.95 -> 1.64, 0.99 -> 2.33."""
+    import statistics
+    u = min(max(float(u), 1e-6), 1.0 - 1e-6)
+    return statistics.NormalDist().inv_cdf(u)
 
 # --------------------------------------------------------------------------- #
 # SPREAD FLOOR — a safety net against an under-estimated baseline spread.
@@ -560,6 +598,13 @@ def caption_detail(preds, baseline=None, k_voicenet=5, k_emonet=3,
             try:
                 val = _val(v)
             except Exception:
+                continue
+            if EMO_PERCENTILE:
+                u = _emo_gate().percentile(name, val)
+                if u is None or u < EMO_PERCENTILE_FLOOR:
+                    continue          # not unusual for THIS emotion -> not worth naming
+                z = _percentile_as_z(u)
+                es.append((name, val, z, u))
                 continue
             z = _zscore(val, st, baseline)
             # Same effective ranking as VoiceNet. No EmoNet emotion has a published

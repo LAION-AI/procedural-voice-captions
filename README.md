@@ -789,6 +789,104 @@ python eval_baseline_swap.py --sentences
 The paths to the Emolia index, embeddings and heads are constants at the top of
 `compute_baseline.py`; adjust them for your environment.
 
+
+### A corpus-scale baseline — and why it is *not* the new default
+
+`baseline_stats_laiontts.json` measures the same 99 dimensions over the **full annotated
+LAION-TTS corpus — 130,785,282 utterances, 8 datasets, every language** — instead of a
+sample, in this repo's exact schema and with the same `IQR/1.349` spread convention.
+Build it with `make_laiontts_baseline.py`; select it with `--baseline laion-tts` or
+`PVC_BASELINE=laion-tts`.
+
+It is **not** the default, and the reason is measured rather than assumed. More data makes
+the VoiceNet half better and the EmoNet half *worse*, because most emotion heads are
+zero-inflated and their IQR collapses toward zero as the sample grows:
+
+| baseline | emonet median spread | spread floor | median &#124;z&#124; | &#124;z&#124; > 3 | &#124;z&#124; > 6 |
+|---|--:|--:|--:|--:|--:|
+| `default` (DramaBox, 256 k) | 0.3859 | 0.1286 | 0.23 | 4.9 % | 1.8 % |
+| `laion-tts` (130.8 M) | **0.0169** | 0.0056 | 0.54 | **25.3 %** | **20.1 %** |
+
+*(4,000 podcast rows, all 40 emotions, spread floor applied.)* A quarter of emotion
+z-scores past 3 means the intensity wording saturates — the same clip that reads
+*"detestation, brooding"* under the default reads *"very laughter, very contempt, very
+bitterness"* under `laion-tts`. The VoiceNet group has no such problem (0 of 57 dims
+floored, spreads within ~2 % of the DramaBox estimate), so the honest recommendation is:
+
+- **VoiceNet dimensions** — `laion-tts` is a genuine improvement: same quantity, ~511× the data.
+- **EmoNet emotions** — do **not** z-score against it. Use the percentile gate below.
+
+### Two captioners, two normalisations — which is authoritative for what
+
+This repo's `caption.py` and the LAION-TTS corpus captioner (`caption2.py`, which produces
+the `caption_general` column of `laion/laion-tts-annotated-v1`) are **different captioners**
+and neither supersedes the other. They are documented together because they are easy to
+confuse:
+
+| | `caption.py` (this repo) | `caption2.py` (LAION-TTS corpus) |
+|---|---|---|
+| output | prose caption from stored predictions | the `caption_general` corpus column |
+| dimension wording | z-score bands vs a baseline | fixed ordinal ladders per bucket |
+| normalisation | `baseline_stats.json` (median + IQR/1.349) | `capnorm.npz` (tie-aware mid-rank ECDF) |
+| emotion gate | ranked by &#124;z&#124;, top-k | percentile ≥ 0.90, top 3, else *"no dominant emotion"* |
+| **authoritative for** | **captions produced by this repo** | **the published corpus column** |
+
+Two consequences worth stating plainly:
+
+- **The GEND/BKGN polarity bug never affected this repo.** It was a defect in `caption2.py`'s
+  ordinal ladders (high `GEND` is masculine, high `BKGN` is *cleaner*; both were rendered
+  backwards) and was repaired across 165,516,420 corpus rows on 2026-08-23. `caption.py`
+  derives its wording from signed z-scores and was always the correct way round. Nothing here
+  needed fixing.
+- **`baseline_stats.json` stays authoritative for this repo** even though `capnorm.npz` is
+  built from ~511× more data, because they answer different questions: a z-score against an
+  in-domain baseline drives *intensity wording*, while an ECDF percentile drives *selection*.
+
+---
+
+## A percentile gate for the emotion clause
+
+`emotion_gate.py` (stdlib only — `bisect` + `json`) ranks emotions by their **empirical
+percentile** instead of `|z|`, backed by `emotion_percentiles.json`: a tie-aware mid-rank
+ECDF over **132,833,726 utterances**. Enable it with `PVC_EMO_PERCENTILE=1`; it is **off by
+default** and changes nothing else in the caption.
+
+```bash
+PVC_EMO_PERCENTILE=1 PVC_BASELINE=laion-tts python caption.py --pred clip.json
+python emotion_gate.py            # self-test: thresholds for a few emotions
+```
+
+An emotion is named when it lands in the top 10 % **for that emotion** (`U ≥ 0.90`, at most
+3), so *"reads as sadness"* means *"unusually sad for this corpus"* — which is what a reader
+already assumes. A clip that clears nothing honestly reports **no dominant emotion**. The
+selected percentile is converted back to an equivalent z through the normal quantile, so the
+existing intensity bands, neutral band and genuineness cap keep working untouched.
+
+Why it matters, measured on the corpus rather than argued: under an **absolute** threshold
+across 165,516,420 regenerated captions, `Interest` was named on **90.6 %** of all rows and
+`Bitterness` on 0.1 % — the gate was reporting the *scale of the head*, not the emotion of the
+clip. Under the percentile gate, `Interest` falls to **5.3 %**, all 40 emotions occur, and
+17.88 % of rows name none.
+
+**Provenance.** The normalisation artefact and its pooled-scope design are **not** from this
+repo — they come from the LAION-TTS trajectory-grid work, and `provenance/` carries the code
+that reproduces `capnorm.npz` end to end: `emosample.py` (stratified sampling, 11.0 M rows
+across 7 datasets and up to 25 languages), `emofit.py` (fits `vprof_vc` into `globalhist`'s
+bins, measures the merge shift, tunes the gate), `emocap.py` (the clause rewrite), plus
+`capnorm.json`, `caption_shift.json` and `sample_report.json`. The shipped
+`capnorm.npz` is byte-identical to that agent's file (md5 `a89d6fa0…`).
+
+**Pooled, deliberately not per-dataset.** Under the pooled norm the datasets genuinely
+differ — median percentile: emolia 0.441, snippets 0.441, podcast 0.542, vprof 0.544,
+eurospeech 0.547, evasnippets 0.608, mls 0.615. Per-dataset normalisation would force every
+one of them to 0.500 by construction and erase exactly that signal.
+
+`emotion_gate.py` reproduces the corpus captioner's selection on **99.4 %** of rows
+(identical set of named emotions; 99.1 % identical order) over 900 rows sampled from three
+datasets. The residual is knot quantisation: the shipped table has 201 knots where the
+corpus renderer uses the full 4096-bin ECDF, which only reorders emotions already inside the
+tail. The 0.90 decision itself never flipped in that sample.
+
 ---
 
 ## Evaluation notes
@@ -850,6 +948,19 @@ by `laion/vocal-burst-detector-v2`.
 
 ## Known issues
 
+- **The `laion-tts` baseline must not be used to z-score emotions.** Its VoiceNet half is a
+  strict improvement (130.8 M utterances, 0 of 57 dims floored), but at that sample size the
+  IQR of a zero-inflated emotion head collapses — the EmoNet median spread falls from 0.3859
+  to 0.0169 and 25.3 % of emotion z-scores land past |z| > 3, saturating the intensity
+  wording. Use `PVC_EMO_PERCENTILE=1` for emotions and keep `default` for their z-scoring.
+- **The percentile gate cannot express absence.** Because it selects only the top
+  (1 − floor) tail, every emotion it names has `z ≥ 1.28`, so the *"notably free of X"*
+  direction that z-scoring can produce is unreachable while `PVC_EMO_PERCENTILE=1`. This is
+  a deliberate consequence of a one-sided gate, not an oversight.
+- **The percentile knot table is quantised.** `emotion_percentiles.json` stores 201 knots per
+  emotion; the corpus renderer uses the full 4096-bin ECDF. Selection agrees on 99.4 % of
+  sampled rows and the 0.90 decision did not flip once, but reported percentile *values* can
+  differ by up to ~0.44 deep inside a tie pile, where many clips share one value.
 - **The default baseline is in-domain for one domain.** It is measured on 256,000 DramaBox
   edge-case clips — expressive, acted, mostly dramatic speech. That is a far better match for
   voice-acting captions than the previous 4,703-clip Emolia baseline, and it is what fixed
@@ -880,6 +991,12 @@ by `laion/vocal-burst-detector-v2`.
 caption.py                  # caption() / caption_detail() + 11 templates + gates  (stdlib only)
 baseline_stats.json         # DEFAULT baseline — 256k DramaBox clips, in-domain (99 dims + _meta)
 baseline_stats_emolia.json  # the previously published baseline, kept for reproducibility
+baseline_stats_laiontts.json # corpus-scale baseline — 130.8M utterances, VoiceNet-grade (see README)
+make_laiontts_baseline.py   # builds it from the corpus histograms
+emotion_gate.py             # percentile gate for the emotion clause  (stdlib only)
+emotion_percentiles.json    # per-emotion ECDF — 132,833,726 utterances, 201 knots
+make_emotion_percentiles.py # builds it from the corpus ECDF
+provenance/                 # code + stats reproducing capnorm.npz (LAION-TTS trajectory work)
 burst_captions.py           # full pipeline: score -> timestamps -> locate -> classify -> insert
 asr_words.py                # bundled Parakeet token -> word -> sentence helpers (stdlib only)
 augment.py                  # score once, caption many times (train-time text augmentation)
@@ -924,6 +1041,18 @@ LAION / third-party releases linked above.
 
 ## Changelog
 
+- **Corpus-scale baseline and a percentile gate for emotions.**
+  `baseline_stats_laiontts.json` measures all 99 dimensions over 130,785,282 utterances of the
+  annotated LAION-TTS corpus, selectable as `laion-tts`. It is deliberately **not** the default:
+  measured on 4,000 podcast rows, its EmoNet median spread collapses 0.3859 → 0.0169 and 25.3 %
+  of emotion z-scores exceed |z| > 3 (vs 4.9 %), saturating the intensity wording. Its VoiceNet
+  half floors 0 of 57 dims and is a strict improvement. For emotions, `PVC_EMO_PERCENTILE=1`
+  enables `emotion_gate.py`, which ranks by empirical percentile from a tie-aware mid-rank ECDF
+  over 132,833,726 utterances and reports *"no dominant emotion"* when nothing clears the top
+  10 %. Off by default; reproduces the corpus captioner's selection on 99.4 % of sampled rows.
+  The README now also states which normalisation is authoritative for which captioner, and
+  records that the GEND/BKGN polarity defect was in the *corpus* captioner (`caption2.py`) and
+  never affected this repo.
 - **The default baseline is now measured in-domain**, on 256,000 DramaBox edge-case clips
   (`baseline_stats.json`); the previously published one is kept as
   `baseline_stats_emolia.json` and is selectable by name, path or `$PVC_BASELINE`. This
