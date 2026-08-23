@@ -868,6 +868,30 @@ across 165,516,420 regenerated captions, `Interest` was named on **90.6 %** of a
 clip. Under the percentile gate, `Interest` falls to **5.3 %**, all 40 emotions occur, and
 17.88 % of rows name none.
 
+**Scope that number per dataset rather than assuming it is uniform.** 90.6 % is the
+row-weighted corpus figure; the per-dataset spread is wide, and the saturation is worst
+exactly where the speech is most uniform:
+
+| dataset | rows | `interest` before | after |
+|---|--:|--:|--:|
+| eurospeech | 9,119,466 | 99.2 % | 5.3 % |
+| mls | 432,177 | 97.1 % | 0.4 % |
+| podcast | 26,606,892 | 95.9 % | 9.7 % |
+| emolia | 81,824,581 | 94.0 % | 6.0 % |
+| kartoffelphon | 2,616,656 | 92.6 % | 4.1 % |
+| vprof_vc | 6,508,056 | 90.2 % | 1.6 % |
+| evasnippets | 500,007 | 87.4 % | 11.6 % |
+| snippets | 2,633,037 | 86.7 % | 3.2 % |
+| vprof_base | 20,079,381 | 84.3 % | 2.0 % |
+| vprof_repaired | 8,133,552 | 78.5 % | 1.0 % |
+| commonvoice | 7,062,615 | 53.2 % | 0.0 % |
+
+So "≈95 % of captions said interest" is true of `eurospeech`, `mls`, `podcast` and `emolia`
+but overstates `commonvoice` by 40 points. If you quote a motivating figure, quote it against
+the dataset it was measured on. (A figure of ~2.3 % has been reported for the voice-profile
+corpus; it is not reproducible as a *before* number on any tree here — those measure
+78.5–90.2 % before and 1.0–2.0 % after, so it is an after-figure or a different column.)
+
 **Provenance.** The normalisation artefact and its pooled-scope design are **not** from this
 repo — they come from the LAION-TTS trajectory-grid work, and `provenance/` carries the code
 that reproduces `capnorm.npz` end to end: `emosample.py` (stratified sampling, 11.0 M rows
