@@ -1,0 +1,324 @@
+{
+ "source": "traj2/stats/globalhist.npz (130,785,282 rows, 8 datasets) + vprof_vc fitted here",
+ "n_global": 130785282,
+ "n_vprof": 2048444,
+ "n_total": 132833726,
+ "estimator": "tie-aware mid-rank ECDF, 4096 bins (NormHist 'ecdfm')",
+ "scope": "POOLED across datasets and languages",
+ "vprof_merge_shift": {
+  "median": 0.00093,
+  "p95": 0.00313,
+  "max": 0.00501,
+  "n": 8126120
+ },
+ "per_dataset": {
+  "emolia": {
+   "median_pct": 0.4406,
+   "mean_pct": 0.4738,
+   "frac_any_above_85": 0.8458
+  },
+  "eurospeech": {
+   "median_pct": 0.5474,
+   "mean_pct": 0.5494,
+   "frac_any_above_85": 0.9895
+  },
+  "evasnippets": {
+   "median_pct": 0.6083,
+   "mean_pct": 0.5824,
+   "frac_any_above_85": 0.9853
+  },
+  "mls": {
+   "median_pct": 0.6145,
+   "mean_pct": 0.5888,
+   "frac_any_above_85": 0.9956
+  },
+  "podcast": {
+   "median_pct": 0.5421,
+   "mean_pct": 0.5555,
+   "frac_any_above_85": 0.9699
+  },
+  "snippets": {
+   "median_pct": 0.4411,
+   "mean_pct": 0.4911,
+   "frac_any_above_85": 0.8704
+  },
+  "vprof_vc": {
+   "median_pct": 0.5439,
+   "mean_pct": 0.5594,
+   "frac_any_above_85": 0.969
+  }
+ },
+ "diagnosis": {
+  "emo_Affection": {
+   "median": 0.0073,
+   "zeros_pct": 0.2,
+   "p90": 0.9277,
+   "mean": 0.211
+  },
+  "emo_Amusement": {
+   "median": -0.0006,
+   "zeros_pct": 66.14,
+   "p90": 1.1355,
+   "mean": 0.2723
+  },
+  "emo_Anger": {
+   "median": 0.0069,
+   "zeros_pct": 37.26,
+   "p90": 1.023,
+   "mean": 0.3355
+  },
+  "emo_Astonishment_Surprise": {
+   "median": 0.0049,
+   "zeros_pct": 2.22,
+   "p90": 0.838,
+   "mean": 0.1807
+  },
+  "emo_Awe": {
+   "median": 0.0,
+   "zeros_pct": 91.28,
+   "p90": -0.0,
+   "mean": 0.0617
+  },
+  "emo_Bitterness": {
+   "median": 0.0122,
+   "zeros_pct": 5.45,
+   "p90": 0.8015,
+   "mean": 0.1854
+  },
+  "emo_Concentration": {
+   "median": 1.543,
+   "zeros_pct": 6.08,
+   "p90": 1.9671,
+   "mean": 1.3833
+  },
+  "emo_Confusion": {
+   "median": -0.0022,
+   "zeros_pct": 65.41,
+   "p90": 0.7387,
+   "mean": 0.1609
+  },
+  "emo_Contemplation": {
+   "median": 0.804,
+   "zeros_pct": 0.05,
+   "p90": 1.222,
+   "mean": 0.6585
+  },
+  "emo_Contempt": {
+   "median": -0.0004,
+   "zeros_pct": 56.28,
+   "p90": 0.8985,
+   "mean": 0.2305
+  },
+  "emo_Contentment": {
+   "median": 0.3079,
+   "zeros_pct": 9.73,
+   "p90": 0.8995,
+   "mean": 0.4074
+  },
+  "emo_Disappointment": {
+   "median": 0.0,
+   "zeros_pct": 68.25,
+   "p90": 1.0544,
+   "mean": 0.283
+  },
+  "emo_Disgust": {
+   "median": 0.0068,
+   "zeros_pct": 1.74,
+   "p90": 0.7521,
+   "mean": 0.1775
+  },
+  "emo_Distress": {
+   "median": 0.0,
+   "zeros_pct": 81.54,
+   "p90": 0.5832,
+   "mean": 0.1327
+  },
+  "emo_Doubt": {
+   "median": 0.0056,
+   "zeros_pct": 0.34,
+   "p90": 0.768,
+   "mean": 0.1841
+  },
+  "emo_Elation": {
+   "median": 0.0124,
+   "zeros_pct": 0.02,
+   "p90": 1.0164,
+   "mean": 0.2767
+  },
+  "emo_Embarrassment": {
+   "median": -0.0091,
+   "zeros_pct": 57.69,
+   "p90": 0.5662,
+   "mean": 0.1307
+  },
+  "emo_Emotional_Numbness": {
+   "median": 0.005,
+   "zeros_pct": 37.75,
+   "p90": 0.9607,
+   "mean": 0.2741
+  },
+  "emo_Fatigue_Exhaustion": {
+   "median": 0.0184,
+   "zeros_pct": 5.24,
+   "p90": 0.0445,
+   "mean": 0.0727
+  },
+  "emo_Fear": {
+   "median": -0.0147,
+   "zeros_pct": 74.74,
+   "p90": 0.3629,
+   "mean": 0.0852
+  },
+  "emo_Helplessness": {
+   "median": -0.0042,
+   "zeros_pct": 79.65,
+   "p90": 0.4355,
+   "mean": 0.1012
+  },
+  "emo_Hope_Enthusiasm_Optimism": {
+   "median": 0.2198,
+   "zeros_pct": 33.98,
+   "p90": 1.5109,
+   "mean": 0.5566
+  },
+  "emo_Impatience_and_Irritability": {
+   "median": 0.0584,
+   "zeros_pct": 33.26,
+   "p90": 1.3076,
+   "mean": 0.4117
+  },
+  "emo_Infatuation": {
+   "median": -0.0168,
+   "zeros_pct": 87.73,
+   "p90": 0.0191,
+   "mean": 0.0327
+  },
+  "emo_Interest": {
+   "median": 2.0815,
+   "zeros_pct": 0.0,
+   "p90": 2.5406,
+   "mean": 1.9912
+  },
+  "emo_Intoxication_Altered_States_of_Consciousness": {
+   "median": -0.0296,
+   "zeros_pct": 85.69,
+   "p90": 0.0771,
+   "mean": 0.0325
+  },
+  "emo_Longing": {
+   "median": -0.0065,
+   "zeros_pct": 56.14,
+   "p90": 0.71,
+   "mean": 0.1743
+  },
+  "emo_Malevolence_Malice": {
+   "median": 0.0521,
+   "zeros_pct": 0.13,
+   "p90": 0.7962,
+   "mean": 0.2051
+  },
+  "emo_Pain": {
+   "median": -0.0038,
+   "zeros_pct": 84.6,
+   "p90": 0.0041,
+   "mean": 0.0256
+  },
+  "emo_Pleasure_Ecstasy": {
+   "median": -0.0019,
+   "zeros_pct": 65.69,
+   "p90": 0.8374,
+   "mean": 0.1811
+  },
+  "emo_Pride": {
+   "median": 0.0018,
+   "zeros_pct": 1.17,
+   "p90": 1.0069,
+   "mean": 0.2883
+  },
+  "emo_Relief": {
+   "median": 0.0268,
+   "zeros_pct": 3.07,
+   "p90": 0.823,
+   "mean": 0.1931
+  },
+  "emo_Sadness": {
+   "median": 0.0,
+   "zeros_pct": 77.23,
+   "p90": 0.7059,
+   "mean": 0.1583
+  },
+  "emo_Sexual_Lust": {
+   "median": -0.021,
+   "zeros_pct": 69.46,
+   "p90": 0.2827,
+   "mean": 0.0679
+  },
+  "emo_Shame": {
+   "median": 0.0103,
+   "zeros_pct": 4.16,
+   "p90": 0.241,
+   "mean": 0.0878
+  },
+  "emo_Sourness": {
+   "median": -0.0061,
+   "zeros_pct": 61.89,
+   "p90": 0.8764,
+   "mean": 0.212
+  },
+  "emo_Teasing": {
+   "median": 0.0,
+   "zeros_pct": 65.67,
+   "p90": 0.9464,
+   "mean": 0.2356
+  },
+  "emo_Thankfulness_Gratitude": {
+   "median": 0.0434,
+   "zeros_pct": 0.16,
+   "p90": 1.1127,
+   "mean": 0.3019
+  },
+  "emo_Triumph": {
+   "median": -0.0083,
+   "zeros_pct": 69.86,
+   "p90": 0.6054,
+   "mean": 0.1365
+  },
+  "emo_Jealousy_and_Envy": {
+   "median": 0.0511,
+   "zeros_pct": 0.36,
+   "p90": 0.1938,
+   "mean": 0.115
+  }
+ },
+ "gate_tuning": {
+  "0.80": {
+   "none_pct": 3.46,
+   "mean_named": 2.739,
+   "interest_pct": 20.48
+  },
+  "0.85": {
+   "none_pct": 6.75,
+   "mean_named": 2.564,
+   "interest_pct": 14.93
+  },
+  "0.90": {
+   "none_pct": 13.35,
+   "mean_named": 2.246,
+   "interest_pct": 9.72
+  },
+  "0.93": {
+   "none_pct": 20.89,
+   "mean_named": 1.927,
+   "interest_pct": 6.71
+  }
+ },
+ "sample_rows": {
+  "emolia": 2210306,
+  "eurospeech": 1856931,
+  "evasnippets": 500007,
+  "mls": 432177,
+  "podcast": 2002944,
+  "snippets": 1919446,
+  "vprof_vc": 2048444
+ }
+}
