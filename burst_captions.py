@@ -29,6 +29,17 @@ For each clip the pipeline produces:
     otherwise the **top-1** class is woven into that sentence's caption with a
     small procedurally-generated phrase (``... punctuated by a (Gasp).``).
 
+A **second naming head** can be switched on next to the first: ``BURST_X2=1`` adds
+``laion/vocal-burst-detector-x2``, which names a span over **17 classes = 16 bursts +
+``no_burst``** instead of 83, and writes each class only as strongly as its measured
+per-class recall allows (``(Chuckle)`` / ``(Breathy Giggle?)`` / ``(Breath)`` /
+``(Vocal Burst)``). It is an **addition, never a replacement**: its 16 classes are a
+strict subset of this repo's 82-class taxonomy, and on the corpus this repo captions
+83.8 % of burst events carry a label it cannot emit at all. So ``BURST_LABEL_SOURCE``
+stays at ``v2`` by default — the x2 head is recorded beside every span and changes no
+caption until you ask it to. See :mod:`burst_x2` for the whole argument, the tiers and
+the ``union`` policy that gives each vocabulary the spans it actually covers.
+
 Scoring stack (all reused from the LAION voice stack):
 
 * VoiceNet 57 dims + genuineness + vocal-burst blend — VoiceCLAP-commercial
@@ -57,6 +68,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 from caption import (caption_detail, load_baseline, render_caption, _groups,  # noqa: E402
                      EI_GENDER_GATE, stable_hash)
+import burst_x2                                                              # noqa: E402
 
 # --------------------------------------------------------------------------- #
 # ENV — every model location is overridable; the defaults are public HF repos, so
@@ -115,12 +127,51 @@ TRANSIENT_GROUPS  = {"mouth_and_lip_sounds", "tongue_clicks", "hand_and_body_sou
 # measurement saying which is better, so the default stays at the faithful 0.
 CLF_CONTEXT     = float(os.environ.get("BURST_CLF_CONTEXT", "0.0"))
 
+# --- the x2 second-opinion head (see burst_x2.py) ------------------------------
+# `BURST_LABEL_SOURCE` is the switch that matters. It stays at `v2`, so loading the x2
+# head is observable but never rewrites a caption behind your back; `x2` / `union` opt in.
+LABEL_SOURCE    = burst_x2.LABEL_SOURCE                 # v2 (default) | x2 | union
+X2_HEAD         = burst_x2.X2_HEAD_NAME                 # large-v2 (default) | commercial
+_X2_ENV         = os.environ.get("BURST_X2", "").strip()
+# Asking for x2 labels implies loading the x2 head; BURST_X2=0 still wins, in which case
+# the label source falls back to `v2` rather than half-configuring the pipeline.
+USE_X2          = (_X2_ENV not in ("", "0")) or (LABEL_SOURCE != "v2" and _X2_ENV != "0")
+if not USE_X2:
+    LABEL_SOURCE = "v2"
+# Score every located span with x2, not just the ones the v2 gate kept. Costs one extra
+# forward pass per rejected span and makes the two heads' disagreement auditable.
+X2_ALL_SPANS    = os.environ.get("BURST_X2_ALL_SPANS", "1") != "0"
+# Optional second no_burst gate from the x2 head — OFF by default. The v2 gate alone
+# decides *whether* a span is a burst; letting a 16-class head veto spans whose sound it
+# has no word for would delete bursts rather than rename them.
+X2_GATE         = burst_x2.X2_GATE
+
 # Surface form for procedural captions. Default "tags" = terse, on-the-point tags (intensity +
 # dimension as short words, no filler); set PROC_TEMPLATE to any TEMPLATE_NAMES value for prose.
 PROC_TEMPLATE     = os.environ.get("PROC_TEMPLATE", "tags")
 # Insert [pause X.Xs] markers from ASR word timestamps when the gap between consecutive words (or
 # between sentences) is at least this many seconds. Set BURST_PAUSE_THR=0 to disable pauses.
 PAUSE_THR         = float(os.environ.get("BURST_PAUSE_THR", "0.30"))
+# A Parakeet-TDT token's duration is the encoder advance to the NEXT token, not the extent of the
+# word. Consecutive spans therefore come out exactly contiguous (measured: 65.5 % of word pairs on
+# 96 real clips have a gap of exactly 0.000 s) and the silence inside a pause is attributed to the
+# word before it. So `end` alone under-reports pauses: on those clips the shipped code printed 233
+# `[pause]` markers where 313 are audible — every marker real, but a quarter of the pauses missing,
+# and the ones it prints understated by a median 0.02 s / mean 0.134 s / max 1.22 s.
+#
+# The fix is to trim each word's end back to where its speech actually stops, using the waveform
+# that is already in hand. A blind duration cap — the correction used elsewhere in this project for
+# a different question — was measured and rejected here: at 0.30 s it produces 431 markers of which
+# 154 are invented (precision 0.643), because 681 of the 910 words longer than 0.30 s are simply
+# long words. No fixed cap beats the energy rule; see README, "Pauses".
+#
+# `end_span` keeps the raw span to the next token, `end` becomes the speech end. Set
+# BURST_WORD_END=raw for the old behaviour.
+WORD_END          = os.environ.get("BURST_WORD_END", "energy")      # energy | raw
+# Silence floor as a fraction of the clip's 90th-percentile frame RMS. The true-pause count moves
+# 273 -> 348 across 0.03 ... 0.30, so nothing here hangs on the exact value; 0.10 is the middle.
+SILENCE_FLOOR     = float(os.environ.get("BURST_SILENCE_FLOOR", "0.10"))
+RMS_HOP, RMS_WIN  = 0.010, 0.025
 
 SR = 16000
 VN_TARGET = 480000          # 30 s @ 16 kHz for the VoiceNet embedding
@@ -180,6 +231,72 @@ def decode_16k(path):
     if sr != SR:
         w = torchaudio.functional.resample(w, sr, SR)
     return w.float()
+
+
+def frame_rms(wav, sr=SR, hop_s=RMS_HOP, win_s=RMS_WIN):
+    """Short-time RMS envelope at `hop_s`, computed in one pass from a cumulative sum."""
+    import numpy as np
+    x = np.asarray(wav.numpy() if hasattr(wav, "numpy") else wav, dtype=np.float64).reshape(-1)
+    h, w = max(1, int(hop_s * sr)), max(1, int(win_s * sr))
+    if x.size < w:
+        return np.asarray([np.sqrt(np.mean(x ** 2)) if x.size else 0.0], dtype=np.float32)
+    c = np.concatenate(([0.0], np.cumsum(x * x)))
+    idx = np.arange(1 + (x.size - w) // h) * h
+    return np.sqrt((c[idx + w] - c[idx]) / w).astype(np.float32)
+
+
+def trim_word_ends(wav, words, floor_frac=None, mode=None, sr=SR):
+    """Move each word's `end` back to where its speech stops; keep the raw span in `end_span`.
+
+    A Parakeet-TDT token's duration runs to the *next* token, so a word span swallows the
+    silence that follows it and the gap between consecutive words comes out as 0.000 s
+    (measured on 96 real clips: 65.5 % of word pairs). Every `[pause X.Xs]` marker in this
+    repo is derived from that gap, so without this step a quarter of the audible pauses are
+    never printed and the printed ones are too short.
+
+    The trim is deliberately conservative and cannot invent a pause:
+
+    * an end only ever moves **earlier**, never later, and never before the word's own start;
+    * it moves only across frames whose RMS is below `floor_frac` of the clip's 90th-percentile
+      frame RMS — i.e. across audible silence, not across quiet speech;
+    * a word with no frame above the floor at all is left exactly as it was, because that is a
+      threshold artefact rather than a measurement.
+
+    Returns new dicts; the input list is not mutated. `mode="raw"` returns the words unchanged
+    apart from `end_span`, which is always present so downstream code can rely on it.
+    """
+    import numpy as np
+    out = []
+    for w in words or []:
+        w = dict(w)
+        w.setdefault("end_span", w.get("end"))
+        out.append(w)
+    if (mode or WORD_END).lower() == "raw" or not out or wav is None:
+        return out
+    frac = SILENCE_FLOOR if floor_frac is None else float(floor_frac)
+    if frac <= 0:
+        return out
+    rms = frame_rms(wav, sr=sr)
+    thr = frac * float(np.percentile(rms, 90))
+    if not (thr > 0):                       # digital silence, or a constant-level clip
+        return out
+    voiced = rms >= thr
+    for w in out:
+        s, e = w.get("start"), w.get("end_span")
+        if s is None or e is None or e <= s:
+            continue
+        # Only frames whose whole window lies inside [s, e) count — the frame sitting exactly
+        # on `e` already contains the next word's onset and would defeat the trim entirely.
+        i0 = max(0, int(s / RMS_HOP))
+        i1 = min(len(rms) - 1, int((e - RMS_WIN) / RMS_HOP))
+        if i1 < i0:
+            continue
+        nz = np.nonzero(voiced[i0:i1 + 1])[0]
+        if nz.size == 0:
+            continue                        # no voiced frame in the span: leave it alone
+        last = i0 + int(nz[-1])
+        w["end"] = round(min(e, max(s, last * RMS_HOP + RMS_WIN)), 3)
+    return out
 
 
 def write_mp3(src, dst, bitrate="128k"):
@@ -348,7 +465,8 @@ def _full_embedding_mlp():
 class BurstCaptioner:
     """Loads every scoring model once and captions clips with inserted bursts."""
 
-    def __init__(self, device=DEVICE, use_emonet=USE_EMONET, verbose=True, baseline=None):
+    def __init__(self, device=DEVICE, use_emonet=USE_EMONET, verbose=True, baseline=None,
+                 use_x2=None, x2_head=None, label_source=None):
         import torch
         torch.set_num_threads(2)                      # critical: box thrashes otherwise
         self.dev = device
@@ -402,6 +520,31 @@ class BurstCaptioner:
         # not audible vocal bursts). They are masked so they can never be predicted.
         self.folded = self._folded_indices()
         self._log(f"burst classes: {self.NB} + no_burst, {len(self.folded)} folded/masked")
+
+        # --- the x2 second opinion: 16 burst classes + no_burst, recall-tiered ------
+        # Built AFTER `self.vc`, on purpose: with `x2_head="commercial"` the x2 ensemble
+        # runs on the encoder that is already in memory, so it costs five small MLPs and
+        # no second tower. `large-v2` is the better head and brings its own 3584-d encoder.
+        self.x2 = None
+        self.x2_table = None
+        self.x2_head = x2_head or X2_HEAD
+        self.label_source = (label_source or LABEL_SOURCE).lower()
+        want_x2 = USE_X2 if use_x2 is None else bool(use_x2)
+        if not want_x2:
+            self.label_source = "v2"
+        else:
+            self._log(f"loading x2 CLASSIFIER {burst_x2.X2_REPO} (head {self.x2_head}) ...")
+            embed_fn = None
+            if self.x2_head == "commercial":
+                embed_fn = lambda w: burst_x2.embed_commercial(self.vc, w, self.dev)  # noqa: E731
+            self.x2 = burst_x2.X2Classifier(head=self.x2_head, device=device,
+                                            embed_fn=embed_fn, verbose=verbose)
+            self.x2_table = self.x2.table
+            tiers = self.x2_table.summary()
+            self._log(f"x2: {len(self.x2.classes) - 1} burst classes + no_burst, tiers "
+                      + ", ".join(f"{k} {len(v)}" for k, v in tiers.items())
+                      + f"; recall source '{self.x2_table.source}'"
+                      + f"; label source '{self.label_source}'")
 
         self._log(f"loading Parakeet ({PARAKEET_MODEL}) ...")
         from transformers import AutoProcessor, ParakeetForTDT
@@ -535,6 +678,10 @@ class BurstCaptioner:
         except Exception:
             pass
         words = self._tokens_to_words(toks, 1.0) if toks else []
+        # TDT spans run to the next token; trim each word's end back to its speech so that the
+        # gap between two words is the silence a listener actually hears (see `trim_word_ends`).
+        # Done here, before sentence assembly, so sentence ends are speech ends too.
+        words = trim_word_ends(wav, words)
         sents = self._sentences_from_words(text, words) if words else \
             [dict(text=s, start=None, end=None) for s in self._split_sentences(text)]
         return text, words, sents
@@ -640,6 +787,61 @@ class BurstCaptioner:
         top = int(pp.argmax())
         return self.classes[top], float(p[top]), p_nb
 
+    # -- the x2 second opinion ------------------------------------------------ #
+    def classify_x2(self, cuts):
+        """Name a batch of already-cut spans with the x2 head. [] when x2 is not loaded.
+
+        One call per clip, not per span: the ensemble batches by length internally, and
+        with the `large-v2` encoder a per-span call would pay a 3584-d forward pass each
+        time. Returns one dict per cut, in input order, dropping nothing — the `no_burst`
+        class is masked out of the argmax because the v2 gate has already ruled on whether
+        these spans are bursts (its probability is still reported)."""
+        if self.x2 is None or not cuts:
+            return []
+        return self.x2.classify(cuts)
+
+    def merge_burst_label(self, v2_label, x2_res):
+        """Which vocabulary writes this span, and what it may say. See burst_x2.merge_label.
+
+        `v2_label is None` means the v2 `no_burst` gate rejected the span, and that stays
+        the last word regardless of policy: the x2 head names bursts, it does not vote on
+        their existence (unless BURST_X2_GATE is set explicitly)."""
+        if v2_label is None:
+            return {"label": None, "written": None, "vocab": None, "tier": None,
+                    "source": None, "policy": self.label_source, "out_of_x2_vocab": None}
+        if self.x2 is None:
+            return {"label": v2_label, "written": v2_label, "vocab": "v2-83", "tier": "named",
+                    "source": "v2", "policy": "v2", "out_of_x2_vocab": None}
+        return burst_x2.merge_label(v2_label, x2_res, self.x2_table, self.label_source)
+
+    def x2_meta(self):
+        """What the x2 head was configured to be, recorded on every clip so a stored result
+        can always be read back against the thresholds that produced it."""
+        if self.x2 is None:
+            return {"enabled": False, "label_source": "v2",
+                    "classifier": f"{BURST_CLF_REPO}/{BURST_CLF_FILE}", "n_classes": 83}
+        t = self.x2_table
+        return {"enabled": True, "repo": burst_x2.X2_REPO, "head": self.x2_head,
+                "encoder": t.encoder, "encoder_dim": self.x2.dim,
+                "n_members": len(self.x2.members), "n_classes": len(self.x2.classes),
+                "label_source": self.label_source, "recall_source": t.source,
+                "thresholds": {"strict_min": t.strict_min, "hedge_min": t.hedge_min,
+                               "family_min": t.family_min},
+                "tiers": {k: len(v) for k, v in t.summary().items()},
+                "no_burst_gate": X2_GATE or None, "all_spans": X2_ALL_SPANS}
+
+    @staticmethod
+    def _x2_fields(x2_res):
+        """The x2 columns attached to every span, whether or not it writes the caption."""
+        if not x2_res:
+            return {}
+        return {"x2_label": x2_res["label"], "x2_prob": round(x2_res["prob"], 3),
+                "x2_top": [[n, round(p, 3)] for n, p in x2_res["labels"]],
+                "x2_family": x2_res["family"],
+                "x2_p_noburst": round(x2_res["no_burst_prob"], 3),
+                "x2_tier": x2_res["tier"], "x2_written": x2_res["written"],
+                "x2_recall": x2_res["recall"], "x2_family_recall": x2_res["family_recall"]}
+
     # -- caption composition -------------------------------------------------- #
     def global_caption(self, preds, seed=0, ei_gender=None, template=None):
         """Top-5 VoiceNet + Top-3 emotions + genuineness + Age/Gender/Tempo. `ei_gender`
@@ -739,7 +941,9 @@ class BurstCaptioner:
             a, b = s.get("start"), s.get("end")
             sw = [w for w in words if w.get("start") is not None and a is not None and b is not None
                   and a - 1e-6 <= w["start"] <= b + 1e-6]
-            sb = sorted([(x["start"], x["end"], x["label"], x["prob"]) for x in buckets[i]], key=lambda z: z[0])
+            # `written` is the recall-tiered text (== `label` whenever x2 is off or `named`)
+            bx = sorted(buckets[i], key=lambda x: x["start"])
+            sb = [(x["start"], x["end"], x.get("written") or x["label"], x["prob"]) for x in bx]
             if sw and sb:
                 inline = self.variant_a(sw, sb)
             elif sb:
@@ -749,7 +953,9 @@ class BurstCaptioner:
             # [pause X.Xs] before this sentence when there was a silent gap after the previous one
             if PAUSE_THR > 0 and prev_send is not None and a is not None and (a - prev_send) >= PAUSE_THR:
                 inline = f"[pause {a - prev_send:.1f}s] " + inline
-            lines.append({"cue": s["caption"], "text": inline, "bursts": [l for _, _, l, _ in sb]})
+            lines.append({"cue": s["caption"], "text": inline,
+                          "bursts": [l for _, _, l, _ in sb],
+                          "burst_vocab": [x.get("vocab") for x in bx]})
             if b is not None:
                 prev_send = b
         return lines
@@ -764,11 +970,17 @@ class BurstCaptioner:
         return "\n".join(out)
 
     @staticmethod
-    def variant_b_phrase(label, seed=0):
-        """A small procedurally-generated phrase attaching a burst to a sentence."""
+    def variant_b_phrase(label, seed=0, tier="named"):
+        """A small procedurally-generated phrase attaching a burst to a sentence.
+
+        `tier` comes from the x2 recall floor (`named` / `hedged` / `family` / `generic`).
+        Only `hedged` changes the wording — *"with what sounds like a (Yawn?)"* rather than
+        *"with an audible (Yawn)"* — because the other two tiers already carry their
+        uncertainty in the label itself and saying it twice reads as mush. With the x2 head
+        off, every burst is `named` and the six original templates are the only ones used,
+        so this is byte-identical to the previous behaviour."""
         import random
-        tpl = ["punctuated by a ({b})", "with an audible ({b})", "broken by a ({b})",
-               "carrying a ({b})", "interrupted by a ({b})", "marked by a ({b})"]
+        tpl = burst_x2.phrases_for(tier)
         rng = random.Random((seed or 0) ^ stable_hash(label))
         return rng.choice(tpl).replace("{b}", label)
 
@@ -809,6 +1021,14 @@ class BurstCaptioner:
         g_text, g_detail = self.global_caption(g_preds, seed, ei_gender=ei_gender)
 
         # --- per-sentence scoring + captions ---
+        # Variant B's classification is hoisted out of the loop so the x2 head sees all the
+        # sentence segments as one batch. With x2 off this is the same work in the same order.
+        sent_v2 = [self.classify_burst(units_wav[i + 1]) for i in range(len(sents))]
+        sent_x2 = {}
+        if self.x2 is not None:
+            ix = [i for i, (lab, _, _) in enumerate(sent_v2) if lab is not None]
+            for i, r in zip(ix, self.classify_x2([units_wav[i + 1] for i in ix])):
+                sent_x2[i] = r
         sent_out = []
         for i, s in enumerate(sents):
             seg = units_wav[i + 1]
@@ -817,24 +1037,31 @@ class BurstCaptioner:
                        "genu": s_vn["genu"], "blend": s_vn["blend"]}
             s_text, _ = self.sentence_caption(s_preds, seed ^ (i + 1))
             # Variant B burst for this sentence
-            lab, prob, p_nb = self.classify_burst(seg)
+            lab, prob, p_nb = sent_v2[i]
+            m = self.merge_burst_label(lab, sent_x2.get(i))
             b_text = s_text
-            if lab is not None:
-                b_text = s_text.rstrip(".") + ", " + self.variant_b_phrase(lab, seed ^ (i + 1)) + "."
+            if m["written"]:
+                b_text = (s_text.rstrip(".") + ", "
+                          + self.variant_b_phrase(m["written"], seed ^ (i + 1), m["tier"]) + ".")
             sent_out.append({
                 "text": s.get("text", ""), "start": s.get("start"), "end": s.get("end"),
                 "caption": s_text,
-                "variant_b_burst": lab, "variant_b_prob": round(prob, 3),
-                "variant_b_caption": b_text,
+                # `variant_b_burst` is what the caption says; `variant_b_label` is the raw
+                # class, and `variant_b_vocab` which vocabulary earned the right to say it.
+                "variant_b_burst": m["written"], "variant_b_prob": round(prob, 3),
+                "variant_b_label": lab, "variant_b_vocab": m["vocab"],
+                "variant_b_tier": m["tier"], "variant_b_caption": b_text,
                 # raw scores for on-the-fly caption augmentation (see augment.py)
                 "scores": {"dims": s_vn["dims"], "emo": emo_scores[i + 1],
                            "genu": round(s_vn["genu"], 4), "blend": round(s_vn["blend"], 4)},
+                **self._x2_fields(sent_x2.get(i)),
             })
 
         # --- Variant A: locator over the whole clip (30 s windows, stitched) ---
         probs, n_windows = self.locator_probs(wav)
         spans = extract_events(probs)
         a_bursts = []
+        x2_cuts, x2_ix = [], []
         for (a, b, pk) in spans:
             dur_span = b - a
             # give the classifier a little context around the located span
@@ -847,7 +1074,33 @@ class BurstCaptioner:
                              "peak": round(pk, 3), "label": lab, "prob": round(prob, 3),
                              "p_noburst": round(p_nb, 3), "dur_floor": round(floor, 2),
                              "dur_gated": gated, "kept": (lab is not None) and ok})
-        kept = [(x["start"], x["end"], x["label"], x["prob"]) for x in a_bursts if x["kept"]]
+            if self.x2 is not None and (X2_ALL_SPANS or ((lab is not None) and ok)):
+                x2_cuts.append(seg)
+                x2_ix.append(len(a_bursts) - 1)
+
+        # --- the x2 second opinion over this clip's spans, in one batched pass ---
+        for i, r in zip(x2_ix, self.classify_x2(x2_cuts)):
+            a_bursts[i].update(self._x2_fields(r))
+            a_bursts[i]["_x2"] = r
+        for x in a_bursts:
+            r = x.pop("_x2", None)
+            m = self.merge_burst_label(x["label"], r)
+            # `written` is the text that goes into the script; `vocab` says which vocabulary
+            # earned the right to say it (v2-83 / x2-17 / x2-17-family / generic).
+            x["written"] = m["written"]
+            x["vocab"] = m["vocab"]
+            x["tier"] = m["tier"]
+            x["label_source"] = m["source"]
+            if m.get("out_of_x2_vocab") is not None:
+                x["out_of_x2_vocab"] = m["out_of_x2_vocab"]
+            if m.get("agrees_with_v2") is not None:
+                x["x2_agrees"] = m["agrees_with_v2"]
+            # Opt-in second gate. Off by default; when on, the rejection is recorded, not silent.
+            if X2_GATE and x["kept"] and x.get("x2_p_noburst", 0.0) >= X2_GATE:
+                x["kept"] = False
+                x["x2_gated"] = True
+
+        kept = [(x["start"], x["end"], x["written"], x["prob"]) for x in a_bursts if x["kept"]]
         variant_a_inline = self.variant_a(words, kept)
         # default procedural output: kept bursts mapped inline into per-sentence script lines
         script_lines = self._assign_bursts(sent_out, words, [x for x in a_bursts if x["kept"]])
@@ -872,9 +1125,12 @@ class BurstCaptioner:
             "n_locator_windows": n_windows,
             "locator": f"{LOCATOR_REPO}/{LOCATOR_FILE}",
             "classifier": f"{BURST_CLF_REPO}/{BURST_CLF_FILE}",
+            "x2": self.x2_meta(),
             "locator_postproc": {"threshold": LOCATOR_THR, "merge_gap": MERGE_GAP,
                                  "min_duration": MIN_BURST_DUR, "no_burst_gate": NOBURST_GATE,
                                  "chunk_sec": CHUNK_SEC, "chunk_overlap": CHUNK_OVERLAP},
+            "pause": {"threshold": PAUSE_THR, "word_end": WORD_END,
+                      "silence_floor": SILENCE_FLOOR},
             "emonet": self.use_emonet,
         }
 
@@ -887,11 +1143,20 @@ def main():
     ap.add_argument("--mp3-dir", default=None, help="also write 120kbps mono mp3s here")
     ap.add_argument("--no-emonet", action="store_true")
     ap.add_argument("--device", default=DEVICE)
+    ap.add_argument("--x2", action="store_true",
+                    help="also run laion/vocal-burst-detector-x2 (17 classes) on every span")
+    ap.add_argument("--x2-head", default=None, choices=["large-v2", "commercial"],
+                    help="x2 encoder: large-v2 (default, best) or commercial (free here)")
+    ap.add_argument("--label-source", default=None, choices=["v2", "x2", "union"],
+                    help="which vocabulary writes the caption (default v2 = unchanged)")
     A = ap.parse_args()
     paths = []
     for a in A.audio:
         paths += sorted(glob.glob(a)) if any(c in a for c in "*?[") else [a]
-    bc = BurstCaptioner(device=A.device, use_emonet=not A.no_emonet)
+    bc = BurstCaptioner(device=A.device, use_emonet=not A.no_emonet,
+                        use_x2=(True if (A.x2 or A.x2_head or
+                                         (A.label_source and A.label_source != "v2")) else None),
+                        x2_head=A.x2_head, label_source=A.label_source)
     results = []
     for i, p in enumerate(paths):
         cid = os.path.splitext(os.path.basename(p))[0]

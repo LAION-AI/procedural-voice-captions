@@ -1,0 +1,1159 @@
+{
+ "detector": "laion/vocal-burst-detector-x2 (production, VoiceCLAP)",
+ "encoder": "voiceclap-commercial",
+ "encoder_dim": 768,
+ "n_members": 5,
+ "classes": [
+  "Affirmative Grunt",
+  "Breathy Giggle",
+  "Chuckle",
+  "Deep Breath",
+  "Exasperated Sigh",
+  "Exhausted Groan",
+  "Frustrated Groan",
+  "Heavy Breathing",
+  "Humming",
+  "Panting",
+  "Relief Sigh",
+  "Scream",
+  "Sharp Inhale",
+  "Soft Hum",
+  "Wistful Sigh",
+  "Yawn",
+  "no_burst"
+ ],
+ "family_of": {
+  "Affirmative Grunt": "groan",
+  "Breathy Giggle": "laugh",
+  "Chuckle": "laugh",
+  "Deep Breath": "breath",
+  "Exasperated Sigh": "sigh",
+  "Exhausted Groan": "groan",
+  "Frustrated Groan": "groan",
+  "Heavy Breathing": "breath",
+  "Humming": "hum",
+  "Panting": "breath",
+  "Relief Sigh": "sigh",
+  "Scream": "scream",
+  "Sharp Inhale": "breath",
+  "Soft Hum": "hum",
+  "Wistful Sigh": "sigh",
+  "Yawn": "yawn",
+  "no_burst": "no_burst"
+ },
+ "chance": 0.0588,
+ "min_reliable_n": 30,
+ "note": "recall[class][source] \u2014 strict = the detector named this exact class; family = it named some class in the same burst family. A measured hit rate for a class cannot meaningfully exceed its recall here.",
+ "recall": {
+  "Affirmative Grunt": {
+   "real": {
+    "n_heldout": 30,
+    "n_correct": 17,
+    "recall": 0.5667,
+    "recall_ci95": [
+     0.392,
+     0.7262
+    ],
+    "n_correct_family": 18,
+    "family_recall": 0.6,
+    "family_recall_ci95": [
+     0.4232,
+     0.7541
+    ],
+    "reliable": true,
+    "recall_5split_balanced_mean": 0.544,
+    "top_confusion": [
+     [
+      "no_burst",
+      6
+     ],
+     [
+      "Soft Hum",
+      4
+     ],
+     [
+      "Chuckle",
+      1
+     ]
+    ],
+    "n_train_segments": 152
+   },
+   "dramabox": {
+    "n_heldout": 25,
+    "n_correct": 19,
+    "recall": 0.76,
+    "recall_ci95": [
+     0.5657,
+     0.885
+    ],
+    "n_correct_family": 20,
+    "family_recall": 0.8,
+    "family_recall_ci95": [
+     0.6087,
+     0.9114
+    ],
+    "reliable": false,
+    "recall_5split_balanced_mean": 0.696,
+    "top_confusion": [
+     [
+      "Sharp Inhale",
+      2
+     ],
+     [
+      "Chuckle",
+      1
+     ],
+     [
+      "Exasperated Sigh",
+      1
+     ]
+    ],
+    "n_train_segments": 1699
+   }
+  },
+  "Breathy Giggle": {
+   "real": {
+    "n_heldout": 32,
+    "n_correct": 9,
+    "recall": 0.2812,
+    "recall_ci95": [
+     0.1556,
+     0.4537
+    ],
+    "n_correct_family": 23,
+    "family_recall": 0.7188,
+    "family_recall_ci95": [
+     0.5463,
+     0.8444
+    ],
+    "reliable": true,
+    "recall_5split_balanced_mean": 0.336,
+    "top_confusion": [
+     [
+      "Chuckle",
+      14
+     ],
+     [
+      "Panting",
+      3
+     ],
+     [
+      "Sharp Inhale",
+      3
+     ]
+    ],
+    "n_train_segments": 139
+   },
+   "dramabox": {
+    "n_heldout": 28,
+    "n_correct": 24,
+    "recall": 0.8571,
+    "recall_ci95": [
+     0.6851,
+     0.943
+    ],
+    "n_correct_family": 27,
+    "family_recall": 0.9643,
+    "family_recall_ci95": [
+     0.8229,
+     0.9937
+    ],
+    "reliable": false,
+    "recall_5split_balanced_mean": 0.856,
+    "top_confusion": [
+     [
+      "Chuckle",
+      3
+     ],
+     [
+      "Panting",
+      1
+     ]
+    ],
+    "n_train_segments": 1601
+   }
+  },
+  "Chuckle": {
+   "real": {
+    "n_heldout": 53,
+    "n_correct": 33,
+    "recall": 0.6226,
+    "recall_ci95": [
+     0.4881,
+     0.7406
+    ],
+    "n_correct_family": 39,
+    "family_recall": 0.7358,
+    "family_recall_ci95": [
+     0.6042,
+     0.8356
+    ],
+    "reliable": true,
+    "recall_5split_balanced_mean": 0.6,
+    "top_confusion": [
+     [
+      "Breathy Giggle",
+      6
+     ],
+     [
+      "Sharp Inhale",
+      5
+     ],
+     [
+      "Panting",
+      3
+     ]
+    ],
+    "n_train_segments": 793
+   },
+   "dramabox": {
+    "n_heldout": 40,
+    "n_correct": 24,
+    "recall": 0.6,
+    "recall_ci95": [
+     0.446,
+     0.7365
+    ],
+    "n_correct_family": 34,
+    "family_recall": 0.85,
+    "family_recall_ci95": [
+     0.7093,
+     0.9294
+    ],
+    "reliable": true,
+    "recall_5split_balanced_mean": 0.608,
+    "top_confusion": [
+     [
+      "Breathy Giggle",
+      10
+     ],
+     [
+      "Panting",
+      3
+     ],
+     [
+      "Affirmative Grunt",
+      1
+     ]
+    ],
+    "n_train_segments": 9893
+   }
+  },
+  "Deep Breath": {
+   "real": {
+    "n_heldout": 59,
+    "n_correct": 3,
+    "recall": 0.0508,
+    "recall_ci95": [
+     0.0174,
+     0.1392
+    ],
+    "n_correct_family": 39,
+    "family_recall": 0.661,
+    "family_recall_ci95": [
+     0.5337,
+     0.7686
+    ],
+    "reliable": true,
+    "recall_5split_balanced_mean": 0.032,
+    "top_confusion": [
+     [
+      "Sharp Inhale",
+      26
+     ],
+     [
+      "Scream",
+      6
+     ],
+     [
+      "Heavy Breathing",
+      5
+     ]
+    ],
+    "n_train_segments": 533
+   },
+   "dramabox": {
+    "n_heldout": 51,
+    "n_correct": 26,
+    "recall": 0.5098,
+    "recall_ci95": [
+     0.3768,
+     0.6414
+    ],
+    "n_correct_family": 40,
+    "family_recall": 0.7843,
+    "family_recall_ci95": [
+     0.6537,
+     0.8751
+    ],
+    "reliable": true,
+    "recall_5split_balanced_mean": 0.504,
+    "top_confusion": [
+     [
+      "Sharp Inhale",
+      11
+     ],
+     [
+      "no_burst",
+      5
+     ],
+     [
+      "Exasperated Sigh",
+      3
+     ]
+    ],
+    "n_train_segments": 18121
+   }
+  },
+  "Exasperated Sigh": {
+   "real": {
+    "n_heldout": 53,
+    "n_correct": 5,
+    "recall": 0.0943,
+    "recall_ci95": [
+     0.041,
+     0.2025
+    ],
+    "n_correct_family": 11,
+    "family_recall": 0.2075,
+    "family_recall_ci95": [
+     0.12,
+     0.3346
+    ],
+    "reliable": true,
+    "recall_5split_balanced_mean": 0.112,
+    "top_confusion": [
+     [
+      "Sharp Inhale",
+      15
+     ],
+     [
+      "Frustrated Groan",
+      11
+     ],
+     [
+      "Panting",
+      5
+     ]
+    ],
+    "n_train_segments": 557
+   },
+   "dramabox": {
+    "n_heldout": 42,
+    "n_correct": 14,
+    "recall": 0.3333,
+    "recall_ci95": [
+     0.2101,
+     0.4845
+    ],
+    "n_correct_family": 23,
+    "family_recall": 0.5476,
+    "family_recall_ci95": [
+     0.3995,
+     0.6878
+    ],
+    "reliable": true,
+    "recall_5split_balanced_mean": 0.296,
+    "top_confusion": [
+     [
+      "Deep Breath",
+      7
+     ],
+     [
+      "Wistful Sigh",
+      5
+     ],
+     [
+      "Relief Sigh",
+      4
+     ]
+    ],
+    "n_train_segments": 17771
+   }
+  },
+  "Exhausted Groan": {
+   "real": {
+    "n_heldout": 31,
+    "n_correct": 8,
+    "recall": 0.2581,
+    "recall_ci95": [
+     0.137,
+     0.4325
+    ],
+    "n_correct_family": 26,
+    "family_recall": 0.8387,
+    "family_recall_ci95": [
+     0.6737,
+     0.9291
+    ],
+    "reliable": true,
+    "recall_5split_balanced_mean": 0.216,
+    "top_confusion": [
+     [
+      "Frustrated Groan",
+      14
+     ],
+     [
+      "Affirmative Grunt",
+      4
+     ],
+     [
+      "Yawn",
+      2
+     ]
+    ],
+    "n_train_segments": 161
+   },
+   "dramabox": {
+    "n_heldout": 25,
+    "n_correct": 6,
+    "recall": 0.24,
+    "recall_ci95": [
+     0.115,
+     0.4343
+    ],
+    "n_correct_family": 14,
+    "family_recall": 0.56,
+    "family_recall_ci95": [
+     0.3707,
+     0.7333
+    ],
+    "reliable": false,
+    "recall_5split_balanced_mean": 0.248,
+    "top_confusion": [
+     [
+      "Frustrated Groan",
+      8
+     ],
+     [
+      "Soft Hum",
+      3
+     ],
+     [
+      "Yawn",
+      3
+     ]
+    ],
+    "n_train_segments": 1440
+   }
+  },
+  "Frustrated Groan": {
+   "real": {
+    "n_heldout": 32,
+    "n_correct": 19,
+    "recall": 0.5938,
+    "recall_ci95": [
+     0.4226,
+     0.7448
+    ],
+    "n_correct_family": 23,
+    "family_recall": 0.7188,
+    "family_recall_ci95": [
+     0.5463,
+     0.8444
+    ],
+    "reliable": true,
+    "recall_5split_balanced_mean": 0.544,
+    "top_confusion": [
+     [
+      "Chuckle",
+      4
+     ],
+     [
+      "Exhausted Groan",
+      3
+     ],
+     [
+      "Sharp Inhale",
+      3
+     ]
+    ],
+    "n_train_segments": 150
+   },
+   "dramabox": {
+    "n_heldout": 26,
+    "n_correct": 14,
+    "recall": 0.5385,
+    "recall_ci95": [
+     0.3546,
+     0.7124
+    ],
+    "n_correct_family": 16,
+    "family_recall": 0.6154,
+    "family_recall_ci95": [
+     0.4253,
+     0.7757
+    ],
+    "reliable": false,
+    "recall_5split_balanced_mean": 0.568,
+    "top_confusion": [
+     [
+      "Scream",
+      3
+     ],
+     [
+      "Yawn",
+      2
+     ],
+     [
+      "Affirmative Grunt",
+      1
+     ]
+    ],
+    "n_train_segments": 1810
+   }
+  },
+  "Heavy Breathing": {
+   "real": {
+    "n_heldout": 25,
+    "n_correct": 4,
+    "recall": 0.16,
+    "recall_ci95": [
+     0.064,
+     0.3465
+    ],
+    "n_correct_family": 15,
+    "family_recall": 0.6,
+    "family_recall_ci95": [
+     0.4074,
+     0.766
+    ],
+    "reliable": false,
+    "recall_5split_balanced_mean": 0.12,
+    "top_confusion": [
+     [
+      "Panting",
+      9
+     ],
+     [
+      "Scream",
+      5
+     ],
+     [
+      "Yawn",
+      3
+     ]
+    ],
+    "n_train_segments": 159
+   },
+   "dramabox": {
+    "n_heldout": 25,
+    "n_correct": 16,
+    "recall": 0.64,
+    "recall_ci95": [
+     0.4452,
+     0.7975
+    ],
+    "n_correct_family": 23,
+    "family_recall": 0.92,
+    "family_recall_ci95": [
+     0.7503,
+     0.9778
+    ],
+    "reliable": false,
+    "recall_5split_balanced_mean": 0.56,
+    "top_confusion": [
+     [
+      "Deep Breath",
+      4
+     ],
+     [
+      "Panting",
+      3
+     ],
+     [
+      "Yawn",
+      2
+     ]
+    ],
+    "n_train_segments": 1212
+   }
+  },
+  "Humming": {
+   "real": {
+    "n_heldout": 36,
+    "n_correct": 5,
+    "recall": 0.1389,
+    "recall_ci95": [
+     0.0608,
+     0.2866
+    ],
+    "n_correct_family": 16,
+    "family_recall": 0.4444,
+    "family_recall_ci95": [
+     0.2954,
+     0.6042
+    ],
+    "reliable": true,
+    "recall_5split_balanced_mean": 0.192,
+    "top_confusion": [
+     [
+      "Affirmative Grunt",
+      11
+     ],
+     [
+      "Soft Hum",
+      11
+     ],
+     [
+      "Sharp Inhale",
+      3
+     ]
+    ],
+    "n_train_segments": 225
+   },
+   "dramabox": {
+    "n_heldout": 31,
+    "n_correct": 10,
+    "recall": 0.3226,
+    "recall_ci95": [
+     0.1857,
+     0.4986
+    ],
+    "n_correct_family": 18,
+    "family_recall": 0.5806,
+    "family_recall_ci95": [
+     0.4077,
+     0.7358
+    ],
+    "reliable": true,
+    "recall_5split_balanced_mean": 0.344,
+    "top_confusion": [
+     [
+      "Soft Hum",
+      8
+     ],
+     [
+      "Affirmative Grunt",
+      4
+     ],
+     [
+      "Frustrated Groan",
+      2
+     ]
+    ],
+    "n_train_segments": 10449
+   }
+  },
+  "Panting": {
+   "real": {
+    "n_heldout": 34,
+    "n_correct": 27,
+    "recall": 0.7941,
+    "recall_ci95": [
+     0.632,
+     0.8965
+    ],
+    "n_correct_family": 29,
+    "family_recall": 0.8529,
+    "family_recall_ci95": [
+     0.6987,
+     0.9355
+    ],
+    "reliable": true,
+    "recall_5split_balanced_mean": 0.728,
+    "top_confusion": [
+     [
+      "Chuckle",
+      2
+     ],
+     [
+      "Sharp Inhale",
+      2
+     ],
+     [
+      "Breathy Giggle",
+      1
+     ]
+    ],
+    "n_train_segments": 327
+   },
+   "dramabox": {
+    "n_heldout": 26,
+    "n_correct": 14,
+    "recall": 0.5385,
+    "recall_ci95": [
+     0.3546,
+     0.7124
+    ],
+    "n_correct_family": 16,
+    "family_recall": 0.6154,
+    "family_recall_ci95": [
+     0.4253,
+     0.7757
+    ],
+    "reliable": false,
+    "recall_5split_balanced_mean": 0.496,
+    "top_confusion": [
+     [
+      "Breathy Giggle",
+      3
+     ],
+     [
+      "Chuckle",
+      2
+     ],
+     [
+      "Exasperated Sigh",
+      2
+     ]
+    ],
+    "n_train_segments": 975
+   }
+  },
+  "Relief Sigh": {
+   "real": {
+    "n_heldout": 32,
+    "n_correct": 2,
+    "recall": 0.0625,
+    "recall_ci95": [
+     0.0173,
+     0.2015
+    ],
+    "n_correct_family": 13,
+    "family_recall": 0.4062,
+    "family_recall_ci95": [
+     0.2552,
+     0.5774
+    ],
+    "reliable": true,
+    "recall_5split_balanced_mean": 0.088,
+    "top_confusion": [
+     [
+      "Exasperated Sigh",
+      9
+     ],
+     [
+      "Sharp Inhale",
+      7
+     ],
+     [
+      "Frustrated Groan",
+      5
+     ]
+    ],
+    "n_train_segments": 138
+   },
+   "dramabox": {
+    "n_heldout": 32,
+    "n_correct": 9,
+    "recall": 0.2812,
+    "recall_ci95": [
+     0.1556,
+     0.4537
+    ],
+    "n_correct_family": 20,
+    "family_recall": 0.625,
+    "family_recall_ci95": [
+     0.4525,
+     0.7707
+    ],
+    "reliable": true,
+    "recall_5split_balanced_mean": 0.224,
+    "top_confusion": [
+     [
+      "Deep Breath",
+      6
+     ],
+     [
+      "Exasperated Sigh",
+      6
+     ],
+     [
+      "Wistful Sigh",
+      5
+     ]
+    ],
+    "n_train_segments": 6043
+   }
+  },
+  "Scream": {
+   "real": {
+    "n_heldout": 37,
+    "n_correct": 30,
+    "recall": 0.8108,
+    "recall_ci95": [
+     0.6579,
+     0.9052
+    ],
+    "n_correct_family": 30,
+    "family_recall": 0.8108,
+    "family_recall_ci95": [
+     0.6579,
+     0.9052
+    ],
+    "reliable": true,
+    "recall_5split_balanced_mean": 0.768,
+    "top_confusion": [
+     [
+      "Frustrated Groan",
+      4
+     ],
+     [
+      "Heavy Breathing",
+      2
+     ],
+     [
+      "Exhausted Groan",
+      1
+     ]
+    ],
+    "n_train_segments": 184
+   },
+   "dramabox": {
+    "n_heldout": 27,
+    "n_correct": 22,
+    "recall": 0.8148,
+    "recall_ci95": [
+     0.633,
+     0.9182
+    ],
+    "n_correct_family": 22,
+    "family_recall": 0.8148,
+    "family_recall_ci95": [
+     0.633,
+     0.9182
+    ],
+    "reliable": false,
+    "recall_5split_balanced_mean": 0.792,
+    "top_confusion": [
+     [
+      "Sharp Inhale",
+      2
+     ],
+     [
+      "Deep Breath",
+      1
+     ],
+     [
+      "Frustrated Groan",
+      1
+     ]
+    ],
+    "n_train_segments": 3637
+   }
+  },
+  "Sharp Inhale": {
+   "real": {
+    "n_heldout": 39,
+    "n_correct": 26,
+    "recall": 0.6667,
+    "recall_ci95": [
+     0.5098,
+     0.7937
+    ],
+    "n_correct_family": 29,
+    "family_recall": 0.7436,
+    "family_recall_ci95": [
+     0.5892,
+     0.8543
+    ],
+    "reliable": true,
+    "recall_5split_balanced_mean": 0.608,
+    "top_confusion": [
+     [
+      "Panting",
+      3
+     ],
+     [
+      "Affirmative Grunt",
+      2
+     ],
+     [
+      "Frustrated Groan",
+      2
+     ]
+    ],
+    "n_train_segments": 485
+   },
+   "dramabox": {
+    "n_heldout": 32,
+    "n_correct": 13,
+    "recall": 0.4062,
+    "recall_ci95": [
+     0.2552,
+     0.5774
+    ],
+    "n_correct_family": 23,
+    "family_recall": 0.7188,
+    "family_recall_ci95": [
+     0.5463,
+     0.8444
+    ],
+    "reliable": true,
+    "recall_5split_balanced_mean": 0.44,
+    "top_confusion": [
+     [
+      "Deep Breath",
+      9
+     ],
+     [
+      "no_burst",
+      5
+     ],
+     [
+      "Soft Hum",
+      2
+     ]
+    ],
+    "n_train_segments": 5937
+   }
+  },
+  "Soft Hum": {
+   "real": {
+    "n_heldout": 28,
+    "n_correct": 12,
+    "recall": 0.4286,
+    "recall_ci95": [
+     0.2651,
+     0.6093
+    ],
+    "n_correct_family": 12,
+    "family_recall": 0.4286,
+    "family_recall_ci95": [
+     0.2651,
+     0.6093
+    ],
+    "reliable": false,
+    "recall_5split_balanced_mean": 0.384,
+    "top_confusion": [
+     [
+      "Affirmative Grunt",
+      15
+     ],
+     [
+      "no_burst",
+      1
+     ]
+    ],
+    "n_train_segments": 102
+   },
+   "dramabox": {
+    "n_heldout": 25,
+    "n_correct": 10,
+    "recall": 0.4,
+    "recall_ci95": [
+     0.234,
+     0.5926
+    ],
+    "n_correct_family": 14,
+    "family_recall": 0.56,
+    "family_recall_ci95": [
+     0.3707,
+     0.7333
+    ],
+    "reliable": false,
+    "recall_5split_balanced_mean": 0.344,
+    "top_confusion": [
+     [
+      "Affirmative Grunt",
+      6
+     ],
+     [
+      "Humming",
+      4
+     ],
+     [
+      "Sharp Inhale",
+      2
+     ]
+    ],
+    "n_train_segments": 1527
+   }
+  },
+  "Wistful Sigh": {
+   "real": {
+    "n_heldout": 28,
+    "n_correct": 3,
+    "recall": 0.1071,
+    "recall_ci95": [
+     0.0371,
+     0.272
+    ],
+    "n_correct_family": 7,
+    "family_recall": 0.25,
+    "family_recall_ci95": [
+     0.1268,
+     0.4336
+    ],
+    "reliable": false,
+    "recall_5split_balanced_mean": 0.152,
+    "top_confusion": [
+     [
+      "Sharp Inhale",
+      5
+     ],
+     [
+      "Exasperated Sigh",
+      4
+     ],
+     [
+      "Exhausted Groan",
+      3
+     ]
+    ],
+    "n_train_segments": 133
+   },
+   "dramabox": {
+    "n_heldout": 25,
+    "n_correct": 14,
+    "recall": 0.56,
+    "recall_ci95": [
+     0.3707,
+     0.7333
+    ],
+    "n_correct_family": 16,
+    "family_recall": 0.64,
+    "family_recall_ci95": [
+     0.4452,
+     0.7975
+    ],
+    "reliable": false,
+    "recall_5split_balanced_mean": 0.488,
+    "top_confusion": [
+     [
+      "Exhausted Groan",
+      3
+     ],
+     [
+      "Exasperated Sigh",
+      2
+     ],
+     [
+      "Yawn",
+      2
+     ]
+    ],
+    "n_train_segments": 1478
+   }
+  },
+  "Yawn": {
+   "real": {
+    "n_heldout": 37,
+    "n_correct": 11,
+    "recall": 0.2973,
+    "recall_ci95": [
+     0.1749,
+     0.4578
+    ],
+    "n_correct_family": 11,
+    "family_recall": 0.2973,
+    "family_recall_ci95": [
+     0.1749,
+     0.4578
+    ],
+    "reliable": true,
+    "recall_5split_balanced_mean": 0.264,
+    "top_confusion": [
+     [
+      "Exhausted Groan",
+      9
+     ],
+     [
+      "Frustrated Groan",
+      8
+     ],
+     [
+      "Scream",
+      8
+     ]
+    ],
+    "n_train_segments": 190
+   },
+   "dramabox": {
+    "n_heldout": 30,
+    "n_correct": 8,
+    "recall": 0.2667,
+    "recall_ci95": [
+     0.1418,
+     0.4445
+    ],
+    "n_correct_family": 8,
+    "family_recall": 0.2667,
+    "family_recall_ci95": [
+     0.1418,
+     0.4445
+    ],
+    "reliable": true,
+    "recall_5split_balanced_mean": 0.32,
+    "top_confusion": [
+     [
+      "Frustrated Groan",
+      5
+     ],
+     [
+      "Scream",
+      5
+     ],
+     [
+      "Humming",
+      3
+     ]
+    ],
+    "n_train_segments": 4089
+   }
+  },
+  "no_burst": {
+   "real": {
+    "n_heldout": 802,
+    "n_correct": 763,
+    "recall": 0.9514,
+    "recall_ci95": [
+     0.9342,
+     0.9642
+    ],
+    "n_correct_family": 763,
+    "family_recall": 0.9514,
+    "family_recall_ci95": [
+     0.9342,
+     0.9642
+    ],
+    "reliable": true,
+    "recall_5split_balanced_mean": 0.824,
+    "top_confusion": [
+     [
+      "Sharp Inhale",
+      10
+     ],
+     [
+      "Affirmative Grunt",
+      7
+     ],
+     [
+      "Chuckle",
+      7
+     ]
+    ],
+    "n_train_segments": 6494
+   },
+   "dramabox": {
+    "n_heldout": 110,
+    "n_correct": 104,
+    "recall": 0.9455,
+    "recall_ci95": [
+     0.8861,
+     0.9748
+    ],
+    "n_correct_family": 104,
+    "family_recall": 0.9455,
+    "family_recall_ci95": [
+     0.8861,
+     0.9748
+    ],
+    "reliable": true,
+    "recall_5split_balanced_mean": 0.928,
+    "top_confusion": [
+     [
+      "Deep Breath",
+      3
+     ],
+     [
+      "Sharp Inhale",
+      3
+     ]
+    ],
+    "n_train_segments": 40000
+   }
+  }
+ }
+}

@@ -157,7 +157,75 @@ Per sentence the same machinery runs on that sentence's audio only, with
 and tempo are properties of the speaker, so they belong in GENERAL and would only be noise
 repeated on every line (`sentence_caption()` in [`burst_captions.py`](burst_captions.py)).
 Sentences and word times come from **Parakeet-TDT v3**; gaps ≥ `BURST_PAUSE_THR` (0.30 s)
-become `[pause X.Xs]`, both inside a sentence and between sentences.
+become `[pause X.Xs]`, both inside a sentence and between sentences — but the gap has to be
+measured correctly first, which it was not. See [Pauses](#pauses--why-a-tdt-word-span-is-not-a-word).
+
+---
+
+## Pauses — why a TDT word span is not a word
+
+`[pause X.Xs]` is computed from one subtraction: `next_word.start − this_word.end`. That is
+only a silence if `this_word.end` is where the word stops. **It is not.**
+
+A Parakeet-TDT token carries a predicted *duration*, and that duration is the encoder advance
+**to the next token**, not the extent of the token's own sound. Consecutive spans therefore come
+out exactly contiguous — `('My', 1.52, 1.84) ('cousin', 1.84, 2.72)` — and the silence inside a
+pause is billed to the word *before* it. Measured on 96 of this repo's own demo clips
+(1,763 word pairs, `docs/audio/*.mp3`, Parakeet-TDT-0.6b-v3):
+
+| | median gap | gap exactly 0.000 s | gaps ≥ 0.30 s |
+|---|---:|---:|---:|
+| raw token pairs | 0.000 s | **82.2 %** | 5.9 % |
+| raw word pairs | 0.000 s | **65.5 %** | 11.4 % |
+
+So the markers were not absent — TDT does emit real gaps when its duration head saturates — but
+they were **systematically incomplete and systematically short**. Against the audio itself
+(a word's speech end = the last 25 ms frame whose RMS clears 10 % of the clip's 90th-percentile
+frame RMS):
+
+* **313** pauses ≥ 0.30 s are audible; the shipped code printed **233**. Every one of those 233
+  was real — **zero false positives** — but **80 (25.6 %) were missing entirely**.
+* The ones it did print were **too short**: understated by a median 0.02 s, a mean 0.134 s, a
+  90th percentile of 0.418 s and a worst case of **1.22 s**. Only 47.6 % were essentially exact.
+* Nothing hangs on the silence floor: sweeping it over 0.03 … 0.30 moves the true count over
+  273 … 348 and the old recall over 0.853 … 0.670.
+
+### The fix is energy, not a cap
+
+The obvious repair — cap every word extent at some fixed duration — was measured here and
+**rejected**, because most long spans are simply long words:
+
+| `WORD_CAP` | markers | true | invented | missed | precision | recall |
+|---|---:|---:|---:|---:|---:|---:|
+| 0.20 s | 527 | 287 | 240 | 26 | 0.545 | 0.917 |
+| **0.30 s** | 431 | 277 | **154** | 36 | **0.643** | 0.885 |
+| 0.50 s | 299 | 245 | 54 | 68 | 0.819 | 0.783 |
+| 1.00 s | 238 | 234 | 4 | 79 | 0.983 | 0.748 |
+| none (shipped) | 233 | 233 | 0 | 80 | 1.000 | 0.744 |
+
+Of the 910 words whose span exceeds 0.30 s, **681 are genuinely long** — German compounds,
+drawn-out vowels — and a blind cap turns each of them into a pause that nobody said. There is no
+fixed cap that buys recall without buying invented silence with it.
+
+So `burst_captions.trim_word_ends()` uses the waveform, which is already in hand:
+each word's `end` is moved back to the last frame above the silence floor. The rule is
+one-directional and cannot invent a pause — an end only ever moves **earlier**, never before the
+word's own start, and only across frames that are actually quiet; a word with no frame above the
+floor is left exactly as it was. The raw TDT span is kept as `end_span`, so both readings are
+available and nothing that wants the old number has to guess.
+
+On the same 96 clips this takes the marker count from **233 to 291 (+25 %)** and the share of
+word pairs reporting a gap of exactly 0.000 s from **65.5 % to 1.9 %**. It is a small edit to
+each timestamp — median 0.005 s, mean 0.033 s, 3.6 % of words untouched — and an independent
+level check says the 58 new pause windows peak at a median of **−28.1 dBFS**, against
+−19.4 dBFS for the pauses the code already accepted and −6.3 dBFS for speech. The new markers
+sit in *quieter* audio than the old ones.
+
+| env | default | |
+|---|---|---|
+| `BURST_WORD_END` | `energy` | `raw` restores the previous, contiguous-span behaviour |
+| `BURST_SILENCE_FLOOR` | `0.10` | silence floor as a fraction of the clip's p90 frame RMS |
+| `BURST_PAUSE_THR` | `0.30` | unchanged — and note it no longer shares a value with any word-duration cap, because there is no cap |
 
 ---
 
@@ -278,6 +346,104 @@ labels — on the demo clips, 0.25 s of extra context flips a 0.38 s span from `
 to `Surprised Gasp` — but there is no held-out measurement saying which is better, so the
 faithful cut is the default.
 
+### A second, narrower classifier — `laion/vocal-burst-detector-x2`
+
+There is a newer naming head, and it is **better and smaller-mouthed at the same time**. It is
+wired in as an *addition*; the default output of this repo does not change until you ask it to.
+
+`vocal-burst-detector-x2` names a span over **17 classes = 16 bursts + `no_burst`**, on a frozen
+`laion/voiceclap-large-v2` embedding (3584-d) through a five-member ensemble of
+`3584 → 256 → 17` MLPs averaged in probability space. On held-out audio, with chance at 0.0588:
+
+| head | encoder | dim | val acc | real, all | real, family | load |
+|---|---|---:|---:|---:|---:|---:|
+| **`large-v2`** (default) | `laion/voiceclap-large-v2` | 3584 | **0.7056** | **0.7536** | **0.8480** | ~101 s |
+| `commercial` | `laion/voiceclap-commercial` | 768 | 0.6258 | 0.7039 | 0.7954 | ~0 s |
+
+`large-v2` wins every cell, so it is the default. `commercial` is the selectable alternative and
+it is nearly free *here specifically*: `BurstCaptioner` already holds the
+`laion/voiceclap-commercial` encoder for the VoiceNet heads and the v2 classifier, so the
+commercial x2 head costs five small MLPs — about 1 MB — and no second tower. (A third head on
+`voiceclap-small-v2` scores between them and is **not** wired in: it is CC BY-NC 4.0.)
+
+#### The catch, stated first: the new vocabulary is *narrower*, not different
+
+**All 16 x2 classes already exist in this repo's 82-class `vocalburst_taxonomy.json`.** The new
+head adds no vocabulary at all — it removes 66 classes, and with them seven of the taxonomy's
+sixteen groups entirely:
+
+| group | classes the x2 head can still say | of |
+|---|---:|---:|
+| sighs | 3 | 4 |
+| breathing | 3 | 7 |
+| groans_and_moans · humming · laughter | 2 each | 4 · 4 · 8 |
+| gasps_and_inhales · grunts · screams_and_shrieks · coughing_and_sneezing | 1 each | 3 · 3 · 2 · 7 |
+| **crying_and_distress · eating_and_drinking · hand_and_body_sounds · mouth_and_lip_sounds · throat_and_vocal_sounds · tongue_clicks · whistling** | **0** | 5 · 6 · 4 · 9 · 7 · 4 · 5 |
+
+On 61,579 rows / **12,894 burst events** of the annotated LAION-TTS corpus, **83.8 % carry a
+label the x2 head cannot emit**: `Low Mumble` 26.3 %, `Ahem` 26.2 %, `Contented Sigh` 20.5 %,
+`Surprised Gasp` 7.2 % — the four commonest labels in the corpus, none of them expressible.
+Swapping the classifier would delete exactly the sounds that occur most.
+
+So the choice of vocabulary is explicit, per `BURST_LABEL_SOURCE`:
+
+| value | who names a span | what it costs |
+|---|---|---|
+| **`v2`** (default) | the 83-class head, exactly as before | nothing changes; x2 is recorded beside every span and captions are byte-identical |
+| `x2` | the 17-class head, on every span | honest, and much poorer coverage — 83.8 % of events lose their name |
+| `union` | the 17-class head **only where the v2 label is one of its 16 classes**; otherwise the v2 label stands, flagged `out_of_x2_vocab` | the accuracy of the new head exactly where it applies, the coverage of the old one everywhere else |
+
+#### Certainty is written to match the measured recall
+
+`per_class_recall.json` ships with the detector and is bundled here as
+`vocalburst_x2_recall.json` / `vocalburst_x2_recall_commercial.json`. Its own README puts the
+rule plainly: *"a class recalled at 20 % cannot show a hit rate meaningfully above 20 %."*
+Before this change the repo asserted every class with the same certainty — `(Sharp Inhale)`
+(recalled 0.897 on real audio) and `(Relief Sigh)` (recalled 0.062) were written the same way.
+They no longer are:
+
+| tier | condition (recall on real audio) | written | `large-v2` classes |
+|---|---|---|---|
+| `named` | strict ≥ `BURST_X2_STRICT_MIN` (0.50) | `(Chuckle)` | Affirmative Grunt, Chuckle, Frustrated Groan, Panting, Scream, Sharp Inhale |
+| `hedged` | strict ≥ `BURST_X2_HEDGE_MIN` (0.25) | `(Breathy Giggle?)` | Breathy Giggle, Exhausted Groan, Humming, Soft Hum, Yawn |
+| `family` | family recall ≥ `BURST_X2_FAMILY_MIN` (0.50) | `(Breath)` | Deep Breath, Heavy Breathing |
+| `generic` | nothing clears | `(Vocal Burst)` | Exasperated Sigh, Relief Sigh, Wistful Sigh |
+
+The `family` tier is the one that earns its keep: the head confuses `Deep Breath` with
+`Heavy Breathing` far more than it confuses either with a laugh — strict recall 0.186, family
+recall 0.712 — so naming the *family* is a true statement where naming the class is a coin flip.
+The `generic` tier falls back to what the binary burst/no-burst discriminator supports on its
+own, which is 98.6 % accurate for `large-v2`. In Variant B the `hedged` tier also gets its own
+phrasing (*"with what sounds like a (Yawn?)"* rather than *"with an audible (Yawn)"*); the other
+tiers keep the six original templates, because their uncertainty is already in the label.
+
+`BURST_X2_RECALL_SOURCE` picks which measurement the thresholds read — `real` (the in-the-wild
+held-out set, default and conservative), `dramabox` (in-domain), or `min` (the worse of the two).
+
+#### What lands in the output
+
+Every span in `variant_a_bursts` carries `x2_label`, `x2_prob`, `x2_top`, `x2_family`,
+`x2_p_noburst`, `x2_tier` and `x2_recall` whether or not x2 wrote the caption, plus
+**`written`** (the text that went into the script), **`vocab`** (`v2-83` / `x2-17` /
+`x2-17-family` / `generic`) and `x2_agrees`. `result["x2"]` records the head, the encoder, the
+thresholds and the recall source, so a stored result can always be read back against the
+configuration that produced it.
+
+The x2 head **never removes a burst**. The v2 `no_burst` gate alone decides whether a span is a
+burst; a 16-class head has no vocabulary for most of what it would be vetoing. `BURST_X2_GATE`
+enables a second gate for anyone who wants it, and records the rejection rather than hiding it.
+
+```bash
+# name spans with both heads, let the wider vocabulary keep what the narrower one cannot say
+python burst_captions.py clip.wav --x2 --label-source union
+
+# the cheap head — no second encoder, because voiceclap-commercial is already loaded
+BURST_X2=1 BURST_X2_HEAD=commercial python burst_captions.py clip.wav
+
+# what the thresholds do to each head's vocabulary, no models needed
+python burst_x2.py
+```
+
 ### Two burst-insertion variants
 
 - **Variant A — locator, precise position (the default).** Everything described above:
@@ -295,6 +461,10 @@ Both are computed on every clip; `result["script_lines"]` is Variant A, and
 ---
 
 ## Quickstart
+
+```bash
+python -m unittest discover        # 60 tests, stdlib only, no models and no network
+```
 
 ```bash
 pip install -r requirements.txt
@@ -891,6 +1061,11 @@ build_caption_grid.py       # rebuilds docs/captions.json + the DATA block in do
 build_burst_demo_v2.py      # renders docs/burst-captions-v2/ (--recaption = no models needed)
 build_burst_demo.py         # renders the older docs/burst-captions/ (needs out-of-repo wavs)
 vocalburst_taxonomy.json    # 82 vocal-burst classes (class order for the classifier)
+burst_x2.py                 # the 17-class second-opinion head: recall tiers + merge policy
+vocalburst_x2_recall.json   # per-class recall floor, laion/voiceclap-large-v2 head
+vocalburst_x2_recall_commercial.json  # ... and the voiceclap-commercial head
+test_burst_x2.py            # tiers, vocabulary relation, merge policies (stdlib, no models)
+test_burst_pipeline.py      # burst insertion, pause markers, word-end trimming
 examples/                   # real complete predictions (dims + emo + genu + blend)
 docs/                       # the published GitHub Pages demos
 requirements.txt
@@ -923,6 +1098,32 @@ Built for the LAION voice-acting effort. Models and taxonomies are the respectiv
 LAION / third-party releases linked above.
 
 ## Changelog
+
+- **A second, narrower burst classifier — added, not swapped in.**
+  `laion/vocal-burst-detector-x2` names a span over 17 classes (16 bursts + `no_burst`) on the
+  3584-d `laion/voiceclap-large-v2` encoder, and beats the shipped head on every measured cell
+  (val 0.7056, real 0.7536, family 0.8480 vs chance 0.0588); `BURST_X2_HEAD=commercial` selects a
+  768-d alternative that reuses the encoder this repo already loads. But **all 16 of its classes
+  are already in the 82-class taxonomy** — it removes 66 classes and seven whole taxonomy groups,
+  and 83.8 % of the 12,894 burst events in the annotated LAION-TTS corpus carry a label it cannot
+  emit (`Low Mumble` 26.3 %, `Ahem` 26.2 %, `Contented Sigh` 20.5 %, `Surprised Gasp` 7.2 %). So
+  `BURST_LABEL_SOURCE` stays at `v2` and captions are unchanged by default; `union` gives the new
+  head the spans it has jurisdiction over and leaves the rest to the old vocabulary. Each class is
+  written only as strongly as its measured per-class recall allows — `(Chuckle)`,
+  `(Breathy Giggle?)`, `(Breath)`, `(Vocal Burst)` — and every burst record says which vocabulary
+  produced it.
+- **`[pause X.Xs]` was missing a quarter of the pauses, and shortening the rest.** A Parakeet-TDT
+  token's duration runs to the *next* token, so word spans are contiguous (65.5 % of word pairs on
+  96 real clips report a gap of exactly 0.000 s) and each pause is billed to the word before it.
+  Against the audio, 313 pauses ≥ 0.30 s are audible where the code printed 233 — all real, but 80
+  missing, and those printed understated by a mean 0.134 s (max 1.22 s). `trim_word_ends()` now
+  moves each word's end back to its last non-silent frame and keeps the raw span as `end_span`:
+  233 → 291 markers, gap-exactly-zero 65.5 % → 1.9 %. A blind duration cap was measured and
+  rejected — at 0.30 s it invents 154 pauses out of 431, because 681 of the 910 spans longer than
+  0.30 s are genuinely long words. `BURST_WORD_END=raw` restores the old behaviour.
+- **The repo has tests.** `python -m unittest discover` — 60 of them, stdlib only, no models and
+  no network, covering the vocabulary relation, the recall tiers, the merge policies, burst
+  insertion, pause markers and word-end trimming.
 
 - **The default baseline is now measured in-domain**, on 256,000 DramaBox edge-case clips
   (`baseline_stats.json`); the previously published one is kept as

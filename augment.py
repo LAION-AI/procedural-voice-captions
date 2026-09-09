@@ -43,17 +43,37 @@ def _baseline():
 def score_record(result):
     """Distill a BurstCaptioner.process() result into the minimal record needed to re-caption:
     global + per-sentence raw scores, the sentence texts/timings, kept burst labels per sentence,
-    and the EI gender value (for the gender gate). Audio is not needed after this."""
+    and the EI gender value (for the gender gate). Audio is not needed after this.
+
+    Each kept burst is stored as a small dict rather than a bare string, because with the x2
+    head on, *what a caption may say* and *which class was predicted* are no longer the same
+    thing: `written` is the recall-tiered text (`Chuckle`, `Breathy Giggle?`, `Breath`,
+    `Vocal Burst`), `label` the raw class, and `vocab` the vocabulary that earned the right to
+    say it. Records written before this change hold plain strings and still load — see
+    `_burst_text`."""
     kept = [x for x in result.get("variant_a_bursts", []) if x.get("kept")]
     sents = []
     for s in result.get("sentences", []):
         a, b = s.get("start"), s.get("end")
-        sb = [x["label"] for x in kept
+        sb = [{"written": x.get("written") or x.get("label"), "label": x.get("label"),
+               "vocab": x.get("vocab", "v2-83"), "tier": x.get("tier", "named")}
+              for x in kept
               if a is not None and b is not None and a - 0.2 <= (x["start"] + x["end"]) / 2 <= b + 0.2]
         sents.append({"text": s.get("text", ""), "start": a, "end": b,
                       "scores": s.get("scores", {}), "bursts": sb})
-    return {"id": result.get("id"), "ei_gender": result.get("ei_gender"),
-            "global_scores": result.get("scores", {}), "sentences": sents}
+    rec = {"id": result.get("id"), "ei_gender": result.get("ei_gender"),
+           "global_scores": result.get("scores", {}), "sentences": sents}
+    if result.get("x2"):                      # which naming head produced these labels
+        rec["x2"] = result["x2"]
+    return rec
+
+
+def _burst_text(b):
+    """A stored burst is either a bare label (records written before the x2 head existed) or a
+    dict carrying the recall-tiered `written` form. Both are accepted, forever."""
+    if isinstance(b, dict):
+        return b.get("written") or b.get("label") or ""
+    return b
 
 
 def load_record(path):
@@ -96,7 +116,8 @@ def augment_script(rec, seed, template=None, gate_gender=True):
         cue = augment_sentence(s, seed ^ (i + 1) * 0x9E3779B1, template=template)
         text = s.get("text", "")
         if s.get("bursts"):
-            text = (text.rstrip(".") + " " + " ".join(f"({b})" for b in s["bursts"])).strip()
+            marks = [_burst_text(b) for b in s["bursts"]]
+            text = (text.rstrip(".") + " " + " ".join(f"({b})" for b in marks if b)).strip()
         out.append(f"({cue}) {text}")
     return "\n".join(out)
 
