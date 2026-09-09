@@ -14,3 +14,11 @@ pandas>=2.0              # compute_baseline.py only
 # Optional: ships a static ffmpeg binary, used to decode exotic containers and to write
 # the demo mp3s on machines with no system ffmpeg.
 imageio-ffmpeg>=0.4.9
+
+# Optional: only for the x2 classifier's DEFAULT head (BURST_X2_HEAD=large-v2), whose encoder
+# `laion/voiceclap-large-v2` is a Qwen2.5-Omni thinker with a LoRA adapter. `BURST_X2_HEAD=
+# commercial` needs nothing beyond what is already above, and burst_x2.py's recall tables and
+# merge policy — the half that decides what a caption may say — run on the stdlib alone.
+# sentence-transformers is deliberately NOT required: burst_x2.VoiceCLAPLargeV2 reproduces its
+# four steps from the model repo's own config files.
+peft>=0.11
