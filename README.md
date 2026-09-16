@@ -1166,3 +1166,30 @@ LAION / third-party releases linked above.
 - **Pause markers** — `[pause X.Xs]` is inserted into the SCRIPT from the ASR word timestamps
   at any silent gap ≥ `BURST_PAUSE_THR` (default 0.30 s), within and between sentences; `0`
   disables. The markers are copied verbatim into the LLM-reword output.
+
+## Timed prompt scheme (prompting guide §3) — default ON
+
+`BC_TIMED=1` (default) makes `process()` additionally emit **`script_timed`** and
+`procedural_caption()` prefer it, matching the prompting guide:
+
+```
+(very smooth, very formal) [1.52 seconds duration] Es riecht nach Sonnencreme.
+[0.66 seconds pause]
+(very brisk, curious) [2.08 seconds duration] (Chuckle, 0.34 seconds) Why what's that?
+```
+
+* `[N.NN seconds duration]` — next segment's spoken time, measured **first word onset →
+  last word offset**; sub-threshold gaps fold into the neighbouring sentence so printed
+  numbers add up to the clip length; a bounded ≤ 0.30 s rounding residue is absorbed into
+  the last numeric tag (`BC_TIMED_ABSORB`), anything larger is a loud `ValueError`.
+* `[N.NN seconds pause]` — every silence ≥ `BURST_PAUSE_THR` (default 0.20 s), including
+  before the first and after the last word.
+* Bursts print `(Label, N.NN seconds)` at the nearest word gap; when speech overlap
+  leaves < 50 ms free they collapse to a bare `(Label)`. Direction cues stay digit-free.
+* `verify_timed_script(script, transcript, dur)` re-parses independently (length sum,
+  transcript identity) — `process()` withholds the timed form (`timed_ok: false`) rather
+  than emitting a broken prompt. `BC_TIMED=0` restores the legacy untimed lines exactly.
+
+Tests: `python3 test_timed.py` (4 cases, no GPU). The 20k/50k/100k ladder packs still emit
+the untimed arm via their own template; the timed repair of that packed data lives in
+`m2_multitask/repair_prompts.py` (timed-v2) and predates this module.
