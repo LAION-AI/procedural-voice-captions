@@ -2,23 +2,24 @@
 """Procedural voice captioning from model predictions + baseline statistics.
 
 Given one clip's raw predictions (57 VoiceNet dimensions + genuineness + vocal-
-burst blend + 40 EmoNet emotions) and `baseline_stats.json`, describe the voice
+burst blend + 40 EmoNet emotions + Content Enjoyment), describe the voice
 in plain English by how far it deviates from the average voice.
 
 Pipeline
 --------
-1. z-score every dimension:  z = (value - median) / spread,
-   spread = the baseline's robust scale, floored so that no dimension can be more
-   than 1/SPREAD_FLOOR_FRAC times narrower than its group's median spread.
+1. The Medium default uses z = (value - arithmetic mean) / population std,
+   measured from Medium predictions. Explicit legacy baselines retain their
+   median / robust-spread calculation and historical spread floor.
 2. Rank the dimensions by an *effective* score  |z| * reliability, where
-   reliability is the dimension's measured predictor quality (`reg_pearson`).
+   Legacy reliability is the dimension's measured predictor quality (`reg_pearson`).
+   Medium does not inherit teacher reliability coefficients: its rank is |z|.
    Pick the top-k VoiceNet dimensions (default k=5) and the top-k EmoNet
    emotions (default k=3); both k are configurable.
 3. ALWAYS include Age (AGEV), Gender (GEND), Register (REGS) and Tempo (TEMP),
    even when they are close to the baseline.
 4. Emotion wording rotates through each emotion's synonym cluster for variety.
 5. Genuineness gate: extreme emotion wording is only allowed when genuineness is
-   at/above its baseline median; below -> intensity is capped; well below ->
+   at/above its baseline center (Medium: mean); below -> intensity is capped; well below ->
    emotion phrases are dropped.  A graded genuineness descriptor is emitted
    (deeply/genuinely -> genuine -> slightly genuine -> measured/performed).
 6. Each phrase carries a direction (above/below baseline) and an intensity from
@@ -27,7 +28,8 @@ Pipeline
 Usage
 -----
     from caption import caption, caption_detail, load_baseline
-    base = load_baseline()                       # bundled baseline_stats.json
+    base = load_baseline()                       # measured Medium mean/std baseline
+    base = load_baseline("dramabox")             # preserved legacy teacher baseline
     base = load_baseline("emolia")               # the previously published baseline
     text = caption(preds, base, k_voicenet=5, k_emonet=3)
 
@@ -40,15 +42,16 @@ Usage
 import os, sys, json, math, random, zlib, argparse
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-_BASE_PATH = os.path.join(HERE, "baseline_stats.json")
+_LEGACY_BASE_PATH = os.path.join(HERE, "baseline_stats.json")
+_BASE_PATH = os.path.join(HERE, "baseline_stats_humaneness_medium.json")
 EPS = 1e-6
 
-# Selectable baselines. "default" == `baseline_stats.json` == the in-domain DramaBox
-# measurement (256,000 clips). "emolia" is the previously published baseline, kept
-# verbatim so captions and demo pages produced before the swap stay reproducible.
+# "default" uses the measured Medium student mean/std reference. "dramabox"
+# and "emolia" preserve the earlier teacher baselines and their robust scaling.
 BASELINES = {
     "default":  _BASE_PATH,
-    "dramabox": _BASE_PATH,
+    "humaneness-medium": _BASE_PATH,
+    "dramabox": _LEGACY_BASE_PATH,
     "emolia":   os.path.join(HERE, "baseline_stats_emolia.json"),
 }
 DEFAULT_BASELINE = os.environ.get("PVC_BASELINE", "default")
@@ -282,7 +285,8 @@ ABSOLUTE_BANDS = {
 # --------------------------------------------------------------------------- #
 def baseline_path(which=None):
     """Resolve a baseline selector to a path. Accepts a name from BASELINES
-    ('default' / 'dramabox' / 'emolia'), or any path, or None -> $PVC_BASELINE."""
+    ('default' / 'humaneness-medium' / 'dramabox' / 'emolia'), or any path,
+    or None -> $PVC_BASELINE."""
     which = which if which is not None else DEFAULT_BASELINE
     return BASELINES.get(which, which)
 
@@ -335,6 +339,10 @@ def spread_floors(baseline, frac=None):
 def _spread(stat, baseline=None):
     """Robust scale for z-scoring, floored against the dimension's group when a
     baseline is supplied (no baseline -> raw spread, the pre-floor behaviour)."""
+    if stat.get("normalization") == "mean_std":
+        # The Medium reference uses an actual population standard deviation.
+        # The historical MAD/floor heuristic must not alter its reported z.
+        return max(float(stat.get("std") or 0.0), EPS)
     sp = _raw_spread(stat)
     if baseline is not None and SPREAD_FLOOR_FRAC > 0:
         sp = max(sp, spread_floors(baseline).get(stat.get("group") or "?", 0.0))
@@ -378,6 +386,9 @@ def _intensity(az, cap=None):
 
 
 def _zscore(value, stat, baseline=None):
+    if stat.get("normalization") == "mean_std":
+        std = float(stat.get("std") or 0.0)
+        return (value - float(stat["mean"])) / std if std > EPS else 0.0
     return (value - float(stat["median"])) / (_spread(stat, baseline) + EPS)
 
 
@@ -389,7 +400,8 @@ def _genuineness_gate(genu, baseline):
         return "open", None, None
     g = _val(genu)
     zg = _zscore(g, st, baseline)
-    if g >= float(st["median"]):
+    centre = st["mean"] if st.get("normalization") == "mean_std" else st["median"]
+    if g >= float(centre):
         gate = "open"
     elif zg > -1.0:
         gate = "capped"
@@ -456,6 +468,10 @@ def caption_detail(preds, baseline=None, k_voicenet=5, k_emonet=3,
     """
     if baseline is None:
         baseline = load_baseline()
+    if preds.get("score_backend") == "humaneness-medium":
+        provenance = baseline.get("_provenance", {})
+        if provenance.get("model_variant") != "medium":
+            raise ValueError("Humaneness Ears Medium scores require its measured Medium baseline")
     rel_on = RELIABILITY_WEIGHTING if reliability_weighting is None else bool(reliability_weighting)
     rel_min = RELIABILITY_MIN if reliability_min is None else float(reliability_min)
     k_voicenet = max(0, int(k_voicenet)); k_emonet = max(0, int(k_emonet))
@@ -463,6 +479,7 @@ def caption_detail(preds, baseline=None, k_voicenet=5, k_emonet=3,
 
     # normalise prediction layout ------------------------------------------------
     dims, emo, genu, blend = {}, {}, None, None
+    content_enjoyment = preds.get("content_enjoyment")
     nested = isinstance(preds.get("dims"), dict) or isinstance(preds.get("emo"), dict)
     if nested:
         dims = dict(preds.get("dims", {}))
@@ -496,6 +513,10 @@ def caption_detail(preds, baseline=None, k_voicenet=5, k_emonet=3,
     # deviation alone. `scored` keeps both numbers; only the ordering uses the product.
     scored = []
     for code, v in dims.items():
+        # Keep ESTH in the raw scores/statistics, but never use it as the
+        # caption's pleasantness judgement. That is AudioBox Content Enjoyment.
+        if code == "ESTH":
+            continue
         st = baseline.get(code)
         if not st or st.get("group") != "voicenet" or code not in DESC:
             continue
@@ -588,6 +609,16 @@ def caption_detail(preds, baseline=None, k_voicenet=5, k_emonet=3,
 
     # ---- quality (genuineness + blend) ----
     quality = []
+    if content_enjoyment is not None and "content_enjoyment" in baseline:
+        ce = _val(content_enjoyment)
+        cz = _zscore(ce, baseline["content_enjoyment"], baseline)
+        if abs(cz) >= NEUTRAL_BAND:
+            adverb = _intensity(abs(cz)).lower()
+            phrase = f"{adverb} enjoyable to listen to" if cz >= 0 else f"{adverb} less enjoyable to listen to"
+            quality.append({"dim": "content_enjoyment", "name": "Predicted AudioBox Content Enjoyment",
+                "value": round(ce, 3), "z": round(cz, 2), "phrase": phrase,
+                "tag": "enjoyable" if cz >= 0 else "less-enjoyable",
+                "source_target": "audiobox:CE"})
     if gen_desc is not None:
         gtag = "genuine" if (zg is not None and zg >= 0) else ("semi-genuine" if (zg is not None and zg > -1.0) else "performed")
         quality.append({"dim": "genuineness", "name": "Genuineness",

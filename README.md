@@ -1,5 +1,109 @@
 # Procedural Voice Captions
 
+**Turn speech into reproducible voice-acting descriptions using Humaneness Ears Medium and Parakeet v3.**
+
+▶ **[Listen to the new 40-clip Medium grid](https://projects.laion.ai/procedural-voice-captions/humaneness-medium/)** · [Methods and reproduction](HUMANENESS_MEDIUM.md) · [Measured prediction normalization](baseline_stats_humaneness_medium.json) · [Encoder weights and inference](https://huggingface.co/laion/humaneness-ears-base-medium)
+
+## Current default: Humaneness Ears Medium
+
+The acoustic scoring backend is now **Humaneness Ears Medium**, pinned to model revision
+`818506970d93c809a3295a0a02c40dee8ff2bfc3`. Medium is built on the **Whisper Small
+encoder**, with **97,102,031 total parameters** in this checkpoint. It is an encoder-only
+multi-task model: it does **not** perform ASR. **Parakeet-TDT v3 remains the separate ASR
+and word-timestamp model**, including the existing RMS word-end trimming and timed-script
+verification.
+
+| Component | Current behavior |
+|---|---|
+| Emotion | All 40 EmoNet-style regression targets from Medium |
+| Voice / prosody / style | All 57 VoiceNet regression targets from Medium |
+| Vocal bursts | 20-ms frame probabilities; onset/duration interval proposals with **start and end times**; event-local top three predictions from the 53-class head |
+| Pleasantness wording | **Predicted AudioBox Content Enjoyment (`audiobox:CE`)**; VoiceNet `ESTH` is retained in raw outputs but excluded from caption selection |
+| Additional targets | Genuineness, vocal-burst blend, EIV extras, AudioBox, DNSMOS, VoiceCLAP attributes, characters per second and estimated burst count |
+| Orange embeddings | Predicted **128D timbre** and **250D identity** vectors, kept in sidecars |
+| Transcript / words | [Parakeet v3](https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3), unchanged |
+| Caption writer | Deterministic Python rules, optional seeded synonym/template variation; no generative language model |
+
+### Fresh normalization from the student model
+
+The reference comprises **118,692 clips**: **41,771 S10** clips, **38,427 successfully
+packed Gemini acting performances**, and **38,494 seeded multilingual Emilia examples**.
+The Emilia component balances German, English, French, Japanese, Korean and Chinese.
+Original audio and existing teacher annotations remain unchanged.
+
+```text
+z = (raw Medium prediction − arithmetic mean) / population standard deviation
+```
+
+Statistics use equal weight per clip, `ddof=0`, and float64 arithmetic over saved float32
+predictions. Both the raw score and z-score are saved for all **192 scalar targets plus
+CPS and estimated burst count**. Training-standardized outputs remain separate from these
+new reference z-scores. No legacy teacher reliability coefficients are transferred to
+Medium. Caption selection ranks absolute reference z within its emotion and VoiceNet
+pools. A z-score is a deviation from this reference, not a probability, a human judgment,
+or a held-out benchmark result.
+
+Every new column uses the **`humaneness_ears_medium`** namespace. The preserved
+`baseline_stats.json` and `baseline_stats_emolia.json` describe earlier teacher pipelines;
+`baseline_stats_humaneness_medium.json` is the measured student reference.
+
+### Run the current pipeline
+
+```bash
+pip install -r requirements.txt
+python burst_captions.py 'my_clips/*.wav' --scorer humaneness-medium --language en \
+  --out medium-captions.json --mp3-dir mp3/
+```
+
+```python
+from burst_captions import BurstCaptioner
+from augment import score_record, augment_script
+
+cap = BurstCaptioner(score_backend="humaneness-medium", threads=4)
+result = cap.process("clip.wav", language="en")
+print(cap.procedural_caption(result))
+record = score_record(result)  # also retains all Medium outputs, both event times, and provenance
+print(augment_script(record, seed=123))
+```
+
+The pinned weights download on first use. Set `HUMANENESS_EARS_DIR` to a staged model
+snapshot and `PARAKEET_MODEL` to a staged Parakeet directory for offline operation.
+The verified runtime is PyTorch 2.9.1, Transformers 5.14.1, mono 16-kHz input, and bfloat16
+inference on CUDA (float32 on CPU). Four CPU threads per GPU are used for this annotation
+run. Full batch inference and sidecar/statistics scripts are included; see the methods
+page for commands and schemas.
+
+**Known languages:** pass the actual language. Parakeet is used for the German, English
+and French demo clips. It is explicitly skipped for Japanese, Korean and Chinese, outside
+its supported language set. Existing corpus transcripts are displayed separately, without
+invented word timestamps. Medium still predicts acoustic scores and burst intervals.
+
+**Long audio:** 30-second windows with overlap, weighted global aggregation, blended
+frame probabilities and full-recording event timestamps. Event names with top-1 softmax
+below 0.5 are written as generic “Vocal Burst”; the unhedged label and all top-three values
+are preserved. Softmax values are not calibrated event-label accuracy estimates. This
+checkpoint has no `no_burst` class; detection is driven by onset proposals.
+
+### Verification
+
+The integration was checked against the original pinned inference implementation: maximum
+raw-score difference **0.0** on the GPU preflight clip. The same test verified finite
+192-score outputs, 53 event classes, event start/end bounds, and genuine Parakeet word
+spans. Batch versus single inference differed by at most **0.03125 training-standardized
+units** in the two-clip bfloat16 check. These are implementation checks, not quality
+benchmarks. Routing, normalization, pleasantness selection and the retained timed-script
+behavior are covered by the repository tests.
+
+## Earlier pipelines and retained experiments
+
+The sections below document the **legacy teacher-model stack and its existing demos**.
+Their performance tables, model-specific calibration, robust spread floors and classifier
+recall policies apply to those named older models. They are retained for comparison and do
+not describe the new Medium default. Use `--scorer legacy --baseline dramabox` to run that
+stack. New Medium results are on the linked listening page and in the methods document.
+
+---
+
 **Turn a speech clip into a voice-acting caption, entirely from model predictions.**
 A stack of listening models scores the clip — 57 VoiceNet voice dimensions, 40 EmoNet
 emotions, genuineness, ASR with word timestamps, and vocal-burst detection — and this
@@ -108,7 +212,7 @@ Mirror: [`laion-ai.github.io/procedural-voice-captions`](https://laion-ai.github
 
 ---
 
-## The default path
+## Legacy caption selection
 
 ### What goes into the GENERAL line
 
@@ -460,7 +564,7 @@ Both are computed on every clip; `result["script_lines"]` is Variant A, and
 
 ---
 
-## Quickstart
+## Legacy stack quickstart
 
 ```bash
 python -m unittest discover        # 60 tests, stdlib only, no models and no network
@@ -472,10 +576,10 @@ export HF_TOKEN=...            # the LAION model repos
 export HF_HOME=/path/to/hf_cache
 
 # full pipeline on audio -> per-clip JSON (+ mp3s for a demo page)
-python burst_captions.py 'my_clips/*.wav' --out out.json --mp3-dir mp3/
+python burst_captions.py 'my_clips/*.wav' --scorer legacy --baseline dramabox --out out.json --mp3-dir mp3/
 
 # caption from already-computed predictions, no audio, no models, stdlib only
-python caption.py examples/worker_0_EN_tDPU-wXSB5y_W000085.json --kv 5 --ke 3
+python caption.py examples/worker_0_EN_tDPU-wXSB5y_W000085.json --baseline dramabox --kv 5 --ke 3
 
 # same clip against the previously published baseline, ranked by raw |z|
 python caption.py examples/worker_0_EN_tDPU-wXSB5y_W000085.json --baseline emolia --no-reliability
@@ -490,7 +594,7 @@ From Python:
 
 ```python
 from burst_captions import BurstCaptioner
-cap = BurstCaptioner()                       # loads every model once
+cap = BurstCaptioner(score_backend="legacy", baseline="dramabox")
 r = cap.process("clip.wav")
 print(cap.procedural_caption(r))             # the GENERAL + SCRIPT block shown above
 r["variant_a_bursts"]                        # every located span, kept or dropped, with reasons
@@ -502,7 +606,7 @@ Or caption alone, from stored predictions (no torch, no audio):
 ```python
 from caption import caption, caption_detail, load_baseline
 
-base  = load_baseline()                      # bundled baseline_stats.json
+base  = load_baseline("dramabox")            # legacy baseline_stats.json
 preds = { ... }                              # see "Prediction format"
 print(caption(preds, base, k_voicenet=5, k_emonet=3))
 detail = caption_detail(preds, base)         # structured: per-dim {dim, z, direction, phrase, ...}
@@ -749,18 +853,18 @@ The fine-tuning prompt format that consumes these captions is described here:
 
 ---
 
-## The baseline
+## The legacy baseline
 
 `baseline_stats.json` describes "the average voice" so deviations are meaningful. Two
 baselines ship, and either can be selected — earlier published results stay reproducible:
 
-| file | measured on | default |
+| file | measured on | legacy selection |
 |---|---|---|
-| **`baseline_stats.json`** | **256,000 DramaBox edge-case clips, in-domain** | ✅ |
+| **`baseline_stats.json`** | **256,000 DramaBox edge-case clips, in-domain** | `dramabox` |
 | `baseline_stats_emolia.json` | 4,703 Emolia clips + 1,000 character takes (722 clips for the emotions) | — |
 
 ```python
-base = load_baseline()             # the default, in-domain
+base = load_baseline("dramabox")   # the legacy in-domain reference
 base = load_baseline("emolia")     # the previously published baseline
 base = load_baseline("/path/to/my_baseline.json")
 ```
@@ -802,7 +906,7 @@ configurations:
 | **A** emolia · no floor · no reliability *(previous default)* | **79/81** | 7.44 | 0.83 | 1.000 |
 | **B** emolia · floor · reliability | 76/81 | 4.29 | 0.83 | 1.000 |
 | **C** dramabox · floor · no reliability | 0/81 | 0.80 | 1.25 | 0.800 |
-| **D** dramabox · floor · reliability *(new default)* | **0/81** | 0.80 | 1.25 | 0.837 |
+| **D** dramabox · floor · reliability *(legacy default)* | **0/81** | 0.80 | 1.25 | 0.837 |
 
 On the 14 global captions alone, A gives `R_MIXD` **13/14** top-5 wins at mean |z| **7.39**
 against a median of **0.94** across the other 56 dims — reproducing the figure this README
@@ -1081,7 +1185,8 @@ Each has real audio players — GitHub READMEs cannot embed audio, so these are 
 
 | page | what |
 |---|---|
-| [**burst-captions-25**](https://projects.laion.ai/procedural-voice-captions/burst-captions-25/) | **Current stack, end to end.** 25 multilingual clips: locator `model_v2.pt` → `vocal-burst-detector-v2` → Empathic-Insight scoring → captions on the in-domain baseline with reliability weighting. Each card lists every selected dimension's `z`, reliability `r` and effective rank `|z|·r`, and expands to show what the *same* scores produced under the previous captioner. |
+| [**Humaneness Ears Medium — 40 clips**](https://projects.laion.ai/procedural-voice-captions/humaneness-medium/) | **Current default.** 10 German and 10 English Gemini performances plus 20 multilingual Emilia examples, all 192 raw/reference-normalized scores, burst interval timelines and unchanged Parakeet v3 ASR. |
+| [**burst-captions-25**](https://projects.laion.ai/procedural-voice-captions/burst-captions-25/) | **Retained legacy stack, end to end.** 25 multilingual clips: locator `model_v2.pt` → `vocal-burst-detector-v2` → Empathic-Insight scoring → captions on the in-domain baseline with reliability weighting. Each card lists every selected dimension's `z`, reliability `r` and effective rank `|z|·r`, and expands to show what the *same* scores produced under the previous captioner. |
 | [burst-captions-v2](https://projects.laion.ai/procedural-voice-captions/burst-captions-v2/) | 14 clips with locator `model_v2.pt` + `vocal-burst-detector-v2`, including a 91 s clip that needs 4 locator windows, and the locator-v1 output for comparison. Captions regenerated on the current baseline. |
 | [caption grid](https://projects.laion.ai/procedural-voice-captions/) | 100 real multilingual clips, captioned, with the 11 templates assigned round-robin. Rescored and re-captioned on the current baseline. |
 | [character-captions](https://projects.laion.ai/procedural-voice-captions/character-captions/) | LAION character voices: procedural vs LLM-assisted, side by side. |

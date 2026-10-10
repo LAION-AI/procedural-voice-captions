@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """On-the-fly caption augmentation from stored scores — *score once, caption many times*.
 
-Run the four scoring models (VoiceNet / EmoNet / genuineness / vocal-burst blend) ONCE per clip and
-store only the **raw scores** — per sentence and for the whole clip — plus the ASR sentences and the
-confirmed vocal-burst spans. Then, during training, regenerate a *different* procedural caption every
+Run Humaneness Ears Medium once per clip (the legacy model stack remains optional) and
+store the predictions — per sentence and for the whole clip — plus the ASR sentences and
+predicted vocal-burst intervals. Then, during training, regenerate a *different* procedural caption every
 epoch straight from those scores: different surface template, different synonym rotation, optional
 dim/emotion shuffle, terse tags vs. prose, gender gated or not. No audio and no model calls at train
 time — it is a few microseconds of string formatting.
@@ -32,12 +32,12 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from caption import (caption_detail, render_caption, load_baseline, TEMPLATE_NAMES, ALWAYS_ON,
                      EI_GENDER_GATE)
 
-_BASE = None
-def _baseline():
+_BASE = {}
+def _baseline(selector="dramabox"):
     global _BASE
-    if _BASE is None:
-        _BASE = load_baseline()
-    return _BASE
+    if selector not in _BASE:
+        _BASE[selector] = load_baseline(selector)
+    return _BASE[selector]
 
 
 def score_record(result):
@@ -56,15 +56,28 @@ def score_record(result):
     for s in result.get("sentences", []):
         a, b = s.get("start"), s.get("end")
         sb = [{"written": x.get("written") or x.get("label"), "label": x.get("label"),
+               **({"start": x["start"], "end": x["end"], "prob": x.get("prob"),
+                   "top3_classes": x.get("top3_classes"), "onset_probability": x.get("onset_probability")}
+                  if result.get("score_backend") == "humaneness-medium" else {}),
                "vocab": x.get("vocab", "v2-83"), "tier": x.get("tier", "named")}
               for x in kept
               if a is not None and b is not None and a - 0.2 <= (x["start"] + x["end"]) / 2 <= b + 0.2]
         sents.append({"text": s.get("text", ""), "start": a, "end": b,
                       "scores": s.get("scores", {}), "bursts": sb})
+        if "humaneness_ears_medium" in s:
+            sents[-1]["humaneness_ears_medium"] = s["humaneness_ears_medium"]
     rec = {"id": result.get("id"), "ei_gender": result.get("ei_gender"),
            "global_scores": result.get("scores", {}), "sentences": sents}
     if result.get("x2"):                      # which naming head produced these labels
         rec["x2"] = result["x2"]
+    if result.get("score_backend") == "humaneness-medium":
+        rec.update(score_backend="humaneness-medium", baseline="humaneness-medium",
+            humaneness_ears_medium=result["humaneness_ears_medium"],
+            normalization_provenance=result.get("normalization_provenance"),
+            burst_events=result.get("variant_a_bursts", []),
+            words=result.get("words", []), asr=result.get("asr"))
+    else:
+        rec["baseline"] = "dramabox"
     return rec
 
 
@@ -85,18 +98,20 @@ def augment_global(rec, seed, k_voicenet=5, k_emonet=3, template=None, gate_gend
     """Regenerate the GENERAL line from stored global scores with a (seeded) random template."""
     rng = random.Random(seed)
     tmpl = template or TEMPLATE_NAMES[rng.randrange(len(TEMPLATE_NAMES))]
-    d = caption_detail(rec["global_scores"], _baseline(), k_voicenet=k_voicenet, k_emonet=k_emonet,
+    selector=rec.get("baseline", "humaneness-medium" if rec.get("score_backend")=="humaneness-medium" else "dramabox")
+    d = caption_detail(rec["global_scores"], _baseline(selector), k_voicenet=k_voicenet, k_emonet=k_emonet,
                        always_on=ALWAYS_ON, synonym_seed=rng.randrange(1 << 30), template=tmpl,
                        shuffle_dims=rng.random() < 0.5,
                        ei_gender=(rec.get("ei_gender") if gate_gender else None))
     return render_caption(d)
 
 
-def augment_sentence(sent, seed, k_voicenet=3, k_emonet=3, template=None):
+def augment_sentence(sent, seed, k_voicenet=3, k_emonet=3, template=None, baseline=None):
     """Regenerate one sentence's style cue from its stored scores, no Age/Gender/Tempo."""
     rng = random.Random(seed)
     tmpl = template or TEMPLATE_NAMES[rng.randrange(len(TEMPLATE_NAMES))]
-    d = caption_detail(sent.get("scores", {}), _baseline(), k_voicenet=k_voicenet, k_emonet=k_emonet,
+    selector=baseline or ("humaneness-medium" if sent.get("scores",{}).get("score_backend")=="humaneness-medium" else "dramabox")
+    d = caption_detail(sent.get("scores", {}), _baseline(selector), k_voicenet=k_voicenet, k_emonet=k_emonet,
                        always_on=[], synonym_seed=rng.randrange(1 << 30), template=tmpl,
                        shuffle_dims=rng.random() < 0.5)
     if tmpl == "tags":
@@ -113,7 +128,7 @@ def augment_script(rec, seed, template=None, gate_gender=True):
     per-call random pick (recommended for training-time variety)."""
     out = ["GENERAL: " + augment_global(rec, seed, template=template, gate_gender=gate_gender), "SCRIPT:"]
     for i, s in enumerate(rec.get("sentences", [])):
-        cue = augment_sentence(s, seed ^ (i + 1) * 0x9E3779B1, template=template)
+        cue = augment_sentence(s, seed ^ (i + 1) * 0x9E3779B1, template=template, baseline=rec.get("baseline"))
         text = s.get("text", "")
         if s.get("bursts"):
             marks = [_burst_text(b) for b in s["bursts"]]

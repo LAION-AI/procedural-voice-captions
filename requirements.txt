@@ -6,9 +6,12 @@ numpy>=1.23
 torch>=2.1
 torchaudio>=2.1
 # ParakeetForTDT must be present in the installed transformers (verified with 5.14.1).
-transformers>=4.57
+transformers>=5.14.1,<6
 huggingface_hub>=0.24
 soundfile>=0.12          # audio decode, and the fallback when no ffmpeg is on PATH
+scipy>=1.13             # resampling for Medium sidecar annotation
+safetensors>=0.4        # pinned Medium checkpoint loading
+pyarrow>=16             # additive Parquet sidecars and measured normalization
 pandas>=2.0              # compute_baseline.py only
 
 # Optional: ships a static ffmpeg binary, used to decode exotic containers and to write

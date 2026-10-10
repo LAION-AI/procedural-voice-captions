@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "model_parameter_count": 97102031,
+  "batch_size": 2,
+  "first_batch_elapsed_s": 0.5367616990115494,
+  "batch_unbatch_max_training_z_error": 0.03125,
+  "public_inference_max_raw_error": 0.0,
+  "raw_score_count": 192,
+  "event_class_count": 53,
+  "model_finite_predictions": true,
+  "event_start_end_checks": true,
+  "parakeet": {
+    "word_count": 59,
+    "sentence_count": 14,
+    "raw_span_preserved": true,
+    "timestamp_checks_passed": true
+  }
+}

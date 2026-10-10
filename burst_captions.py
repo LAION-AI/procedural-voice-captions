@@ -473,7 +473,7 @@ def write_mp3(src, dst, bitrate="128k"):
         raise RuntimeError("no ffmpeg binary found (set FFMPEG_BIN or pip install imageio-ffmpeg)")
     os.makedirs(os.path.dirname(os.path.abspath(dst)), exist_ok=True)
     subprocess.run([exe, "-y", "-loglevel", "error", "-i", src,
-                    "-ac", "1", "-b:a", bitrate, dst], capture_output=True, check=False)
+                    "-ac", "1", "-b:a", bitrate, dst], capture_output=True, check=True)
     return dst
 
 
@@ -633,14 +633,33 @@ class BurstCaptioner:
     """Loads every scoring model once and captions clips with inserted bursts."""
 
     def __init__(self, device=DEVICE, use_emonet=USE_EMONET, verbose=True, baseline=None,
-                 use_x2=None, x2_head=None, label_source=None):
+                 use_x2=None, x2_head=None, label_source=None,
+                 score_backend=None, humaneness_dir=None, threads=4):
         import torch
         torch.set_num_threads(2)                      # critical: box thrashes otherwise
         self.dev = device
         self.verbose = verbose
+        self.score_backend = score_backend or os.environ.get("BC_SCORER", "humaneness-medium")
+        if self.score_backend == "humaneness-medium":
+            from humaneness_backend import HumanenessMedium
+            self.baseline = load_baseline(baseline or "humaneness-medium")
+            self.he = HumanenessMedium(humaneness_dir, device=device, threads=threads)
+            self._tokens_to_words, self._sentences_from_words, self._split_sentences = _asr_helpers()
+            from transformers import AutoProcessor, ParakeetForTDT
+            self._log("loading Humaneness Ears Medium + unchanged Parakeet v3 ASR ...")
+            self.pk_proc = AutoProcessor.from_pretrained(PARAKEET_MODEL)
+            self.pk = ParakeetForTDT.from_pretrained(PARAKEET_MODEL).to(device).eval()
+            self.use_emonet = True
+            self.x2 = None
+            self.x2_table = None
+            self.label_source = "humaneness-medium"
+            self._log("Humaneness Ears Medium and Parakeet v3 ready")
+            return
+        if self.score_backend != "legacy":
+            raise ValueError("BC_SCORER must be humaneness-medium or legacy")
         # `baseline` is a name from caption.BASELINES ("default"/"dramabox"/"emolia") or a
         # path; None -> $PVC_BASELINE -> the bundled in-domain default.
-        self.baseline = load_baseline(baseline)
+        self.baseline = load_baseline(baseline or "dramabox")
         self._log("loading VoiceCLAP-commercial embedder + VoiceNet heads ...")
         from transformers import AutoModel
         vn_dir = resolve_voicenet_repo()
@@ -1156,10 +1175,13 @@ class BurstCaptioner:
         return rng.choice(tpl).replace("{b}", label)
 
     # -- full clip ------------------------------------------------------------ #
-    def process(self, path, cid=None, mp3_out=None):
+    def process(self, path, cid=None, mp3_out=None, language=None):
         """Score one audio file end-to-end and return a result dict with both
         burst-insertion variants. If `mp3_out` is given, also write a 120 kbps
         mono mp3 there for the demo player."""
+        if getattr(self, "score_backend", "legacy") == "humaneness-medium":
+            from humaneness_captions import process_humaneness
+            return process_humaneness(self, path, cid=cid, mp3_out=mp3_out, language=language)
         import torch
         cid = cid or os.path.splitext(os.path.basename(path))[0]
         wav = decode_16k(path)
@@ -1336,6 +1358,10 @@ def main():
     ap.add_argument("--mp3-dir", default=None, help="also write 120kbps mono mp3s here")
     ap.add_argument("--no-emonet", action="store_true")
     ap.add_argument("--device", default=DEVICE)
+    ap.add_argument("--scorer", choices=["humaneness-medium", "legacy"], default=None)
+    ap.add_argument("--humaneness-dir", default=None, help="Optional staged pinned Medium model")
+    ap.add_argument("--baseline", default=None)
+    ap.add_argument("--language", default=None, help="Known language; unsupported Parakeet languages skip ASR explicitly")
     ap.add_argument("--x2", action="store_true",
                     help="also run laion/vocal-burst-detector-x2 (17 classes) on every span")
     ap.add_argument("--x2-head", default=None, choices=["large-v2", "commercial"],
@@ -1349,13 +1375,14 @@ def main():
     bc = BurstCaptioner(device=A.device, use_emonet=not A.no_emonet,
                         use_x2=(True if (A.x2 or A.x2_head or
                                          (A.label_source and A.label_source != "v2")) else None),
-                        x2_head=A.x2_head, label_source=A.label_source)
+                        x2_head=A.x2_head, label_source=A.label_source,
+                        score_backend=A.scorer, humaneness_dir=A.humaneness_dir, baseline=A.baseline)
     results = []
     for i, p in enumerate(paths):
         cid = os.path.splitext(os.path.basename(p))[0]
         mp3 = os.path.join(A.mp3_dir, cid + ".mp3") if A.mp3_dir else None
         try:
-            r = bc.process(p, cid=cid, mp3_out=mp3)
+            r = bc.process(p, cid=cid, mp3_out=mp3, language=A.language)
         except Exception as e:
             r = {"id": cid, "error": repr(e)}
         results.append(r)

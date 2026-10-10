@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Tests for the timed-script builder + verifier in burst_captions.py (no GPU)."""
 import sys
-sys.path.insert(0, '/e/scratch/reformo/schuhmann1_moss/gh/procedural-voice-captions-github')
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 import burst_captions as bc
 
 

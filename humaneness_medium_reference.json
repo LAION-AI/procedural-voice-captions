@@ -1,0 +1,26 @@
+{
+  "seed": 20261010,
+  "counts": {
+    "s10": 41771,
+    "gemini_acting": 38427,
+    "emilia_multilingual": 38494
+  },
+  "emilia_language_counts": {
+    "de": 6416,
+    "en": 6416,
+    "fr": 6416,
+    "ja": 6416,
+    "ko": 6415,
+    "zh": 6415
+  },
+  "n": 118692,
+  "source_archives_unchanged": true,
+  "normalization_reference_only": true,
+  "sampling": "All local S10 t0; all packed Gemini performances at frozen snapshot; Emilia language-balanced random shard quotas then uniform rows",
+  "emilia_s10_overlap": "Excluded exact S10 UIDs from Emilia selection",
+  "manifest_sha256": "3e85ac1e833e656913ea7ed66dc1f1a2dcaedf83a9eb34e72305748fb485657d",
+  "model_repo": "laion/humaneness-ears-base-medium",
+  "model_revision": "818506970d93c809a3295a0a02c40dee8ff2bfc3",
+  "frozen_utc": "2026-10-10T18:53:25.914022+00:00",
+  "snapshot_update": "Included ten additional successfully packed reviewed ordinary acting scenes before any annotation job began."
+}
