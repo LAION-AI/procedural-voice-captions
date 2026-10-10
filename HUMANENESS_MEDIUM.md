@@ -75,8 +75,9 @@ std  = sqrt(sum((raw_i - mean)^2) / N)    # population standard deviation, ddof=
 z_i  = (raw_i - mean) / std
 ```
 
-Model predictions are stored in float32; summaries use float64. The JSON also includes
-the median as a descriptive statistic, but **the median is not used for this z-score**.
+Model predictions are stored in float32; summaries use float64. The preserved mixed-reference
+JSON also includes medians as descriptive statistics. The pooled speech-default reference
+reports means/stds only; medians cannot be pooled from source medians. **The median is not used for this z-score**.
 If standard deviation is below `1e-6`, normalization is marked undefined and sidecar
 z-values are null; the caption selector treats that dimension as neutral. No robust
 spread floor is applied to the Medium baseline.

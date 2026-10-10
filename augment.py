@@ -74,6 +74,7 @@ def score_record(result):
         rec.update(score_backend="humaneness-medium", baseline="humaneness-medium",
             humaneness_ears_medium=result["humaneness_ears_medium"],
             normalization_provenance=result.get("normalization_provenance"),
+            caption_settings=result.get("caption_settings"),
             burst_events=result.get("variant_a_bursts", []),
             words=result.get("words", []), asr=result.get("asr"))
     else:
@@ -94,11 +95,22 @@ def load_record(path):
         return json.load(f)
 
 
-def augment_global(rec, seed, k_voicenet=5, k_emonet=3, template=None, gate_gender=True):
+def augment_global(rec, seed, k_voicenet=None, k_emonet=None, template=None, gate_gender=True):
     """Regenerate the GENERAL line from stored global scores with a (seeded) random template."""
     rng = random.Random(seed)
     tmpl = template or TEMPLATE_NAMES[rng.randrange(len(TEMPLATE_NAMES))]
     selector=rec.get("baseline", "humaneness-medium" if rec.get("score_backend")=="humaneness-medium" else "dramabox")
+    if rec.get("score_backend")=="humaneness-medium":
+        from humaneness_caption_settings import load_settings,caption_view_from_scores
+        settings=rec.get("caption_settings") or load_settings()
+        base=_baseline(selector)
+        d=caption_detail(caption_view_from_scores(rec["global_scores"],base,settings),base,
+            k_voicenet=settings['kv'] if k_voicenet is None else k_voicenet,
+            k_emonet=settings['ke'] if k_emonet is None else k_emonet,
+            always_on=['TEMP'],synonym_seed=rng.randrange(1<<30),template=template or settings['template'])
+        return render_caption(d)
+    k_voicenet=5 if k_voicenet is None else k_voicenet
+    k_emonet=3 if k_emonet is None else k_emonet
     d = caption_detail(rec["global_scores"], _baseline(selector), k_voicenet=k_voicenet, k_emonet=k_emonet,
                        always_on=ALWAYS_ON, synonym_seed=rng.randrange(1 << 30), template=tmpl,
                        shuffle_dims=rng.random() < 0.5,
@@ -106,11 +118,21 @@ def augment_global(rec, seed, k_voicenet=5, k_emonet=3, template=None, gate_gend
     return render_caption(d)
 
 
-def augment_sentence(sent, seed, k_voicenet=3, k_emonet=3, template=None, baseline=None):
+def augment_sentence(sent, seed, k_voicenet=None, k_emonet=None, template=None, baseline=None):
     """Regenerate one sentence's style cue from its stored scores, no Age/Gender/Tempo."""
     rng = random.Random(seed)
     tmpl = template or TEMPLATE_NAMES[rng.randrange(len(TEMPLATE_NAMES))]
     selector=baseline or ("humaneness-medium" if sent.get("scores",{}).get("score_backend")=="humaneness-medium" else "dramabox")
+    if sent.get("scores",{}).get("score_backend")=="humaneness-medium":
+        from humaneness_caption_settings import load_settings,caption_view_from_scores
+        settings=sent.get('caption_settings') or load_settings();base=_baseline(selector)
+        detail=caption_detail(caption_view_from_scores(sent.get('scores',{}),base,settings),base,
+            k_voicenet=min(3,settings['kv']) if k_voicenet is None else k_voicenet,
+            k_emonet=settings['ke'] if k_emonet is None else k_emonet,
+            always_on=[],synonym_seed=rng.randrange(1<<30),template=template or settings['template'])
+        return render_caption(detail)
+    k_voicenet=3 if k_voicenet is None else k_voicenet
+    k_emonet=3 if k_emonet is None else k_emonet
     d = caption_detail(sent.get("scores", {}), _baseline(selector), k_voicenet=k_voicenet, k_emonet=k_emonet,
                        always_on=[], synonym_seed=rng.randrange(1 << 30), template=tmpl,
                        shuffle_dims=rng.random() < 0.5)

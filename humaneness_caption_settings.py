@@ -16,7 +16,10 @@ def filter_events(events,settings):
  return sorted(selected,key=lambda e:e['start_s'])
 
 def caption_view(prediction,baseline,settings):
- p=caption_scores(prediction);p['blend']=None
+ return caption_view_from_scores(caption_scores(prediction),baseline,settings)
+
+def caption_view_from_scores(scores,baseline,settings):
+ p=copy.deepcopy(scores);p['blend']=None
  if settings.get('omit_genuineness_wording'):p['genu']=None
  if settings.get('omit_demographic_wording'):p['dims']={k:v for k,v in p['dims'].items() if k not in {'AGEV','GEND','REGS'}}
  minimum=settings.get('min_emotion_z')
