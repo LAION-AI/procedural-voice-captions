@@ -2,9 +2,11 @@
 from __future__ import annotations
 
 import os
+import copy
 
 from caption import caption_detail, render_caption, stable_hash
 from humaneness_backend import NAMESPACE, caption_scores
+from humaneness_caption_settings import load_settings,filter_events,caption_view
 
 PARAKEET_LANGUAGES = set("bg hr cs da nl en et fi fr de el hu it lv lt mt pl pt ro sk sl es sv ru uk".split())
 
@@ -25,7 +27,7 @@ def add_reference_z(prediction, baseline):
     return prediction
 
 
-def process_humaneness(cap, path, cid=None, mp3_out=None, language=None):
+def process_humaneness(cap, path, cid=None, mp3_out=None, language=None, precomputed_prediction=None):
     from burst_captions import (SR, PROC_TEMPLATE, BC_TIMED, PAUSE_THR, WORD_END,
         SILENCE_FLOOR, decode_16k, write_mp3, build_timed_script, verify_timed_script)
     cid = cid or os.path.splitext(os.path.basename(path))[0]
@@ -34,11 +36,16 @@ def process_humaneness(cap, path, cid=None, mp3_out=None, language=None):
     seed = stable_hash(cid) % (1 << 30)
     asr_supported = language is None or language.lower() in PARAKEET_LANGUAGES
     transcript, words, sentences = cap.parakeet(wav) if asr_supported else ("", [], [])
-    global_prediction = add_reference_z(cap.he.predict_waveform(wav), cap.baseline)
+    settings=getattr(cap,'medium_caption_settings',None) or load_settings()
+    global_prediction = add_reference_z(copy.deepcopy(precomputed_prediction) if precomputed_prediction is not None else cap.he.predict_waveform(wav), cap.baseline)
+    selected_events=filter_events(global_prediction['burst_event_proposals'],settings)
+    global_prediction['selected_burst_event_proposals']=selected_events
+    global_prediction['caption_settings']=settings
     scores = caption_scores(global_prediction)
-    detail = caption_detail(scores, cap.baseline, synonym_seed=seed, template=PROC_TEMPLATE)
+    detail = caption_detail(caption_view(global_prediction,cap.baseline,settings), cap.baseline,
+        k_voicenet=settings['kv'],k_emonet=settings['ke'],always_on=['TEMP'],synonym_seed=seed,template=settings['template'])
     events = []
-    for event in global_prediction["burst_event_proposals"]:
+    for event in selected_events:
         top = event["top3_classes"]
         if not top:
             continue
@@ -62,7 +69,9 @@ def process_humaneness(cap, path, cid=None, mp3_out=None, language=None):
             else:
                 prediction = add_reference_z(cap.he.predict_waveform(cut, include_frames=False), cap.baseline)
         sentence_scores = caption_scores(prediction)
-        cue, selected = cap.sentence_caption(sentence_scores, seed=seed+i+1)
+        selected=caption_detail(caption_view(prediction,cap.baseline,settings),cap.baseline,
+            k_voicenet=min(3,settings['kv']),k_emonet=settings['ke'],always_on=[],synonym_seed=seed+i+1,template=settings['template'])
+        cue=render_caption(selected)
         sent_out.append(dict(sent, caption=cue, scores=sentence_scores,
             caption_detail=selected, **{NAMESPACE: prediction}))
     # Existing word alignment, pause rendering and verification are reused.
@@ -86,7 +95,8 @@ def process_humaneness(cap, path, cid=None, mp3_out=None, language=None):
         "scores":scores,"score_backend":"humaneness-medium",NAMESPACE:global_prediction,
         "normalization_provenance":cap.baseline.get("_provenance"),
         "genu":scores["genu"],"blend":scores["blend"],"content_enjoyment":scores["content_enjoyment"],
-        "global_caption":render_caption(detail),"global_caption_detail":detail,
+        "global_caption":render_caption(detail)+('; vocal-burst candidates are marked in the timed event list' if selected_events else ''),"global_caption_detail":detail,
+        "caption_settings":settings,
         "sentences":sent_out,"script_lines":script_lines,"script_timed":timed,"timed_ok":timed_ok,
         "variant_a_bursts":events,"variant_a_inline":inline,"n_spans":len(events),
         "n_words_ts":len(words),"n_locator_windows":global_prediction["n_windows"],

@@ -7,6 +7,11 @@ from humaneness_captions import PARAKEET_LANGUAGES
 
 
 class MediumBackendTests(unittest.TestCase):
+    def test_low_blend_score_does_not_claim_burst_absence(self):
+        base={'_provenance':{'model_variant':'medium'},'blend':{'mean':5,'std':1,'normalization':'mean_std'}}
+        detail=caption_detail({'dims':{},'emo':{},'blend':0,'score_backend':'humaneness-medium'},base,always_on=[])
+        self.assertFalse(any(q['dim']=='blend' for q in detail['quality']))
+
     def test_taxonomy_is_explicit_and_raw_values_are_preserved(self):
         view=caption_scores({"scores_raw":{"emo_Hope_Enthusiasm_Optimism":7.25,
             "vn_TEMP_reg":-1.5,"audiobox:CE":3.7,"vn_ESTH_reg":100}})

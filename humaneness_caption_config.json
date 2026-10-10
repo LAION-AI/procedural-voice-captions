@@ -1,0 +1,18 @@
+{
+  "id": "c12",
+  "normalization": "speech",
+  "threshold": 0.7,
+  "kv": 3,
+  "ke": 2,
+  "template": "two_sentence",
+  "nms": true,
+  "audible_only": true,
+  "normalization_file": "baseline_stats_humaneness_medium_speech.json",
+  "baseline_sha256": "c96503622619f63528a12ddcb28b19d4beddff7d94522d11b6a83dabad654f43",
+  "nms_overlap_fraction": 0.5,
+  "min_duration_s": 0.08,
+  "min_emotion_z": 0.5,
+  "omit_demographic_wording": true,
+  "omit_genuineness_wording": true,
+  "blend_is_not_a_detector": true
+}

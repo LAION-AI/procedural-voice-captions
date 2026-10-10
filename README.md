@@ -2,7 +2,7 @@
 
 **Turn speech into reproducible voice-acting descriptions using Humaneness Ears Medium and Parakeet v3.**
 
-▶ **[Listen to the new 40-clip Medium grid](https://projects.laion.ai/procedural-voice-captions/humaneness-medium/)** · [Methods and reproduction](HUMANENESS_MEDIUM.md) · [Measured prediction normalization](baseline_stats_humaneness_medium.json) · [Encoder weights and inference](https://huggingface.co/laion/humaneness-ears-base-medium)
+▶ **[Listen to the new 40-clip Medium grid](https://projects.laion.ai/procedural-voice-captions/humaneness-medium/)** · [Methods and reproduction](HUMANENESS_MEDIUM.md) · [Reviewed caption normalization](baseline_stats_humaneness_medium_speech.json) · [Encoder weights and inference](https://huggingface.co/laion/humaneness-ears-base-medium)
 
 ## Current default: Humaneness Ears Medium
 
@@ -26,7 +26,7 @@ verification.
 
 ### Fresh normalization from the student model
 
-The reference comprises **118,692 clips**: **41,771 S10** clips, **38,427 successfully
+The preserved mixed reference comprises **118,692 clips**: **41,771 S10** clips, **38,427 successfully
 packed Gemini acting performances**, and **38,494 seeded multilingual Emilia examples**.
 The Emilia component balances German, English, French, Japanese, Korean and Chinese.
 Original audio and existing teacher annotations remain unchanged.
@@ -39,13 +39,28 @@ Statistics use equal weight per clip, `ddof=0`, and float64 arithmetic over save
 predictions. Both the raw score and z-score are saved for all **192 scalar targets plus
 CPS and estimated burst count**. Training-standardized outputs remain separate from these
 new reference z-scores. No legacy teacher reliability coefficients are transferred to
-Medium. Caption selection ranks absolute reference z within its emotion and VoiceNet
-pools. A z-score is a deviation from this reference, not a probability, a human judgment,
+Medium. The reviewed caption default ranks distinctive VoiceNet properties and emotions
+with z ≥ +0.5 against the speech-only reference. A z-score is a deviation from this reference, not a probability, a human judgment,
 or a held-out benchmark result.
 
 Every new column uses the **`humaneness_ears_medium`** namespace. The preserved
 `baseline_stats.json` and `baseline_stats_emolia.json` describe earlier teacher pipelines;
 `baseline_stats_humaneness_medium.json` is the measured student reference.
+
+### Reviewed settings and measured audio pilot
+
+The current caption default is stored in [`humaneness_caption_config.json`](humaneness_caption_config.json): onset threshold **0.7**, overlap suppression at **half the shorter interval**, minimum duration **0.08 s**, three VoiceNet phrases, up to two emotions at **z ≥ +0.5**, tempo always included, and a two-sentence template. Demographic and authenticity wording is omitted; every numeric prediction stays available. A blend regression score never declares a clip burst-free. Raw event proposals remain alongside `selected_burst_event_proposals`.
+
+Caption selection now uses [`baseline_stats_humaneness_medium_speech.json`](baseline_stats_humaneness_medium_speech.json), measured from **80,265 clips**: 41,771 S10 and 38,494 multilingual Emilia. Exact pooled population variance includes the between-source mean differences. The original 118,692-clip mixed normalizer remains available as `humaneness-medium-global`.
+
+| Procedural caption setting | Selection, 10 clips | Confirmation, 10 other clips | Descriptive combined, 20 |
+|---|---:|---:|---:|
+| Original captions | 2.675 | 2.485 | 2.580 |
+| Reviewed default | 3.735 | 3.405 | 3.570 |
+
+All values are **0–5 automated audio-reviewer composite scores**, not human benchmark results. Each split contains five synthetic acting and five Emilia recordings. The rubric weights caption fidelity 30%, timing 25%, event precision 15%, event recall 15%, consistency 10% and readability 5%. The same twenty clips were later used for a separate MOSS decoding study, with a different rubric. MOSS works best with **greedy temperature 0.0** as a practical starting point; the threshold trade-off is documented without claiming a universal optimum.
+
+[English tuning report with all settings and scores](https://laion-moss-voice-acting-captions.static.hf.space/settings.html) · [Machine-readable procedural evaluation](evaluations/procedural_caption_pilot.json) · [MOSS locator/temperature study](evaluations/locator_decoding_pilot.json).
 
 ### Run the current pipeline
 

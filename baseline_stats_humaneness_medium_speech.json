@@ -1,0 +1,6197 @@
+{
+  "Affection": {
+    "n": 80265,
+    "mean": 0.2983702570232847,
+    "std": 0.4829748707120018,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Affection",
+    "group": "emonet",
+    "target_name": "emo_Affection",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "sympathy",
+      "compassion",
+      "warmth",
+      "trust",
+      "caring",
+      "clemency",
+      "forgiveness",
+      "devotion",
+      "tenderness",
+      "reverence"
+    ]
+  },
+  "Amusement": {
+    "n": 80265,
+    "mean": 0.6746340696783923,
+    "std": 0.7843605411495563,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Amusement",
+    "group": "emonet",
+    "target_name": "emo_Amusement",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "lighthearted fun",
+      "amusement",
+      "mirth",
+      "joviality",
+      "laughter",
+      "playfulness",
+      "silliness",
+      "jesting"
+    ]
+  },
+  "Anger": {
+    "n": 80265,
+    "mean": 0.17905662714462572,
+    "std": 0.448886617505526,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Anger",
+    "group": "emonet",
+    "target_name": "emo_Anger",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "anger",
+      "rage",
+      "fury",
+      "hate",
+      "irascibility",
+      "enragement",
+      "vexation",
+      "wrath",
+      "peevishness",
+      "annoyance"
+    ]
+  },
+  "Astonishment/Surprise": {
+    "n": 80265,
+    "mean": 0.25699586134521946,
+    "std": 0.47353158215653235,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Astonishment/Surprise",
+    "group": "emonet",
+    "target_name": "emo_Astonishment_Surprise",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "astonishment",
+      "surprise",
+      "amazement",
+      "shock",
+      "startlement"
+    ]
+  },
+  "Awe": {
+    "n": 80265,
+    "mean": 0.1514004024395335,
+    "std": 0.3856934565106132,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Awe",
+    "group": "emonet",
+    "target_name": "emo_Awe",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "awe",
+      "awestruck",
+      "wonder"
+    ]
+  },
+  "Bitterness": {
+    "n": 80265,
+    "mean": 0.17218647318323949,
+    "std": 0.42063913710934764,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Bitterness",
+    "group": "emonet",
+    "target_name": "emo_Bitterness",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "resentment",
+      "acrimony",
+      "bitterness",
+      "cynicism",
+      "rancor"
+    ]
+  },
+  "Concentration": {
+    "n": 80265,
+    "mean": 1.8449700240472693,
+    "std": 0.6850386341917359,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Concentration",
+    "group": "emonet",
+    "target_name": "emo_Concentration",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "concentration",
+      "deep focus",
+      "engrossment",
+      "absorption",
+      "attention"
+    ]
+  },
+  "Confusion": {
+    "n": 80265,
+    "mean": 0.24588675690277456,
+    "std": 0.40990556042420195,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Confusion",
+    "group": "emonet",
+    "target_name": "emo_Confusion",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "confusion",
+      "bewilderment",
+      "flabbergasted",
+      "disorientation",
+      "perplexity"
+    ]
+  },
+  "Contemplation": {
+    "n": 80265,
+    "mean": 1.5239896153002892,
+    "std": 0.6862287255733363,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Contemplation",
+    "group": "emonet",
+    "target_name": "emo_Contemplation",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "contemplation",
+      "thoughtfulness",
+      "pondering",
+      "reflection",
+      "meditation",
+      "brooding",
+      "pensiveness"
+    ]
+  },
+  "Contempt": {
+    "n": 80265,
+    "mean": 0.12668237668590138,
+    "std": 0.3597144131159563,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Contempt",
+    "group": "emonet",
+    "target_name": "emo_Contempt",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "contempt",
+      "disapproval",
+      "scorn",
+      "disdain",
+      "loathing",
+      "detestation"
+    ]
+  },
+  "Contentment": {
+    "n": 80265,
+    "mean": 1.3516643216286837,
+    "std": 0.6395024565328838,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Contentment",
+    "group": "emonet",
+    "target_name": "emo_Contentment",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "contentment",
+      "relaxation",
+      "peacefulness",
+      "calmness",
+      "satisfaction",
+      "ease",
+      "serenity",
+      "fulfillment",
+      "gladness",
+      "lightness",
+      "tranquility"
+    ]
+  },
+  "Disappointment": {
+    "n": 80265,
+    "mean": 0.32444540187074833,
+    "std": 0.5306776274020552,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Disappointment",
+    "group": "emonet",
+    "target_name": "emo_Disappointment",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "disappointment",
+      "regret",
+      "dismay",
+      "letdown",
+      "chagrin"
+    ]
+  },
+  "Disgust": {
+    "n": 80265,
+    "mean": 0.08584510192323432,
+    "std": 0.2850258956890147,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Disgust",
+    "group": "emonet",
+    "target_name": "emo_Disgust",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "disgust",
+      "revulsion",
+      "repulsion",
+      "abhorrence",
+      "loathing"
+    ]
+  },
+  "Distress": {
+    "n": 80265,
+    "mean": 0.35168887047502445,
+    "std": 0.6196476786088025,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Distress",
+    "group": "emonet",
+    "target_name": "emo_Distress",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "worry",
+      "anxiety",
+      "unease",
+      "anguish",
+      "trepidation",
+      "concern",
+      "upset",
+      "pessimism",
+      "foreboding"
+    ]
+  },
+  "Doubt": {
+    "n": 80265,
+    "mean": 0.521275236878931,
+    "std": 0.5183196019469453,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Doubt",
+    "group": "emonet",
+    "target_name": "emo_Doubt",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "doubt",
+      "distrust",
+      "suspicion",
+      "skepticism",
+      "uncertainty",
+      "pessimism"
+    ]
+  },
+  "Elation": {
+    "n": 80265,
+    "mean": 0.3004824729595512,
+    "std": 0.5617128627403656,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Elation",
+    "group": "emonet",
+    "target_name": "emo_Elation",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "happiness",
+      "excitement",
+      "joy",
+      "exhilaration",
+      "delight",
+      "jubilation",
+      "bliss",
+      "cheerfulness"
+    ]
+  },
+  "Embarrassment": {
+    "n": 80265,
+    "mean": 0.0635039507206459,
+    "std": 0.20081761367676926,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Embarrassment",
+    "group": "emonet",
+    "target_name": "emo_Embarrassment",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "embarrassment",
+      "shyness",
+      "mortification",
+      "discomfiture",
+      "awkwardness",
+      "self-consciousness"
+    ]
+  },
+  "Emotional Numbness": {
+    "n": 80265,
+    "mean": 0.22991371521322926,
+    "std": 0.37090028756717586,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Emotional Numbness",
+    "group": "emonet",
+    "target_name": "emo_Emotional_Numbness",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "numbness",
+      "detachment",
+      "insensitivity",
+      "emotional blunting",
+      "apathy",
+      "existential void",
+      "boredom",
+      "stoicism",
+      "indifference"
+    ]
+  },
+  "Fatigue/Exhaustion": {
+    "n": 80265,
+    "mean": 0.2988365195594925,
+    "std": 0.5307779895888237,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Fatigue/Exhaustion",
+    "group": "emonet",
+    "target_name": "emo_Fatigue_Exhaustion",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "fatigue",
+      "exhaustion",
+      "weariness",
+      "lethargy",
+      "burnout"
+    ]
+  },
+  "Fear": {
+    "n": 80265,
+    "mean": 0.10340708948452577,
+    "std": 0.3468629727352475,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Fear",
+    "group": "emonet",
+    "target_name": "emo_Fear",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "fear",
+      "terror",
+      "dread",
+      "apprehension",
+      "alarm",
+      "horror",
+      "panic",
+      "nervousness"
+    ]
+  },
+  "Helplessness": {
+    "n": 80265,
+    "mean": 0.285578959536521,
+    "std": 0.5700011425200489,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Helplessness",
+    "group": "emonet",
+    "target_name": "emo_Helplessness",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "helplessness",
+      "powerlessness",
+      "desperation",
+      "submission"
+    ]
+  },
+  "Hope/Optimism": {
+    "n": 80265,
+    "mean": 0.9276635484060759,
+    "std": 0.6160196741987968,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Hope/Optimism",
+    "group": "emonet",
+    "target_name": "emo_Hope_Enthusiasm_Optimism",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "hope",
+      "enthusiasm",
+      "optimism",
+      "anticipation",
+      "courage",
+      "encouragement",
+      "zeal",
+      "fervor",
+      "inspiration",
+      "determination"
+    ]
+  },
+  "Impatience and Irritability": {
+    "n": 80265,
+    "mean": 0.33272009823576,
+    "std": 0.5442437780676052,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Impatience and Irritability",
+    "group": "emonet",
+    "target_name": "emo_Impatience_and_Irritability",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "impatience",
+      "irritability",
+      "irritation",
+      "restlessness",
+      "short-temperedness",
+      "exasperation"
+    ]
+  },
+  "Infatuation": {
+    "n": 80265,
+    "mean": 0.03583530472152168,
+    "std": 0.21336372599344672,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Infatuation",
+    "group": "emonet",
+    "target_name": "emo_Infatuation",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "infatuation",
+      "having a crush",
+      "romantic desire",
+      "fondness",
+      "butterflies in the stomach",
+      "adoration"
+    ]
+  },
+  "Interest": {
+    "n": 80265,
+    "mean": 1.9795586597730195,
+    "std": 0.6302926452664661,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Interest",
+    "group": "emonet",
+    "target_name": "emo_Interest",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "interest",
+      "fascination",
+      "curiosity",
+      "intrigue"
+    ]
+  },
+  "Intoxication/Altered States": {
+    "n": 80265,
+    "mean": 0.020915536195568546,
+    "std": 0.12934266758640117,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Intoxication/Altered States",
+    "group": "emonet",
+    "target_name": "emo_Intoxication_Altered_States_of_Consciousness",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "being drunk",
+      "stupor",
+      "intoxication",
+      "disorientation",
+      "altered perception"
+    ]
+  },
+  "Jealousy & Envy": {
+    "n": 80265,
+    "mean": 0.010494983047988734,
+    "std": 0.09399411926062615,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Jealousy & Envy",
+    "group": "emonet",
+    "target_name": "emo_Jealousy_and_Envy",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "jealousy",
+      "envy",
+      "covetousness"
+    ]
+  },
+  "Longing": {
+    "n": 80265,
+    "mean": 0.1928173856197469,
+    "std": 0.42391152988304653,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Longing",
+    "group": "emonet",
+    "target_name": "emo_Longing",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "yearning",
+      "longing",
+      "pining",
+      "wistfulness",
+      "nostalgia",
+      "craving",
+      "desire",
+      "envy",
+      "homesickness",
+      "saudade"
+    ]
+  },
+  "Malevolence/Malice": {
+    "n": 80265,
+    "mean": 0.048554678881688955,
+    "std": 0.19421323045025882,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Malevolence/Malice",
+    "group": "emonet",
+    "target_name": "emo_Malevolence_Malice",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "spite",
+      "sadism",
+      "malevolence",
+      "malice",
+      "desire to harm",
+      "schadenfreude"
+    ]
+  },
+  "Pain": {
+    "n": 80265,
+    "mean": 0.12199900682492518,
+    "std": 0.3961930220549478,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Pain",
+    "group": "emonet",
+    "target_name": "emo_Pain",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "physical pain",
+      "suffering",
+      "torment",
+      "ache",
+      "agony"
+    ]
+  },
+  "Pleasure/Ecstasy": {
+    "n": 80265,
+    "mean": 0.14901428676129355,
+    "std": 0.3663575098599557,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Pleasure/Ecstasy",
+    "group": "emonet",
+    "target_name": "emo_Pleasure_Ecstasy",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "ecstasy",
+      "pleasure",
+      "bliss",
+      "rapture",
+      "beatitude"
+    ]
+  },
+  "Pride": {
+    "n": 80265,
+    "mean": 0.528448709132183,
+    "std": 0.4333561903567353,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Pride",
+    "group": "emonet",
+    "target_name": "emo_Pride",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "pride",
+      "dignity",
+      "self-confidently",
+      "honor",
+      "self-consciousness"
+    ]
+  },
+  "Relief": {
+    "n": 80265,
+    "mean": 0.2597913253360914,
+    "std": 0.45143568662769695,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Relief",
+    "group": "emonet",
+    "target_name": "emo_Relief",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "relief",
+      "respite",
+      "alleviation",
+      "solace",
+      "comfort",
+      "liberation"
+    ]
+  },
+  "Sadness": {
+    "n": 80265,
+    "mean": 0.23185466628238768,
+    "std": 0.5203029832305311,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Sadness",
+    "group": "emonet",
+    "target_name": "emo_Sadness",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "sadness",
+      "sorrow",
+      "grief",
+      "melancholy",
+      "dejection",
+      "despair",
+      "self-pity",
+      "sullenness",
+      "heartache",
+      "mournfulness",
+      "misery"
+    ]
+  },
+  "Sexual Lust": {
+    "n": 80265,
+    "mean": 0.019626682818550966,
+    "std": 0.1438440696323763,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Sexual Lust",
+    "group": "emonet",
+    "target_name": "emo_Sexual_Lust",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "sexual lust",
+      "carnal desire",
+      "lust",
+      "feeling horny",
+      "feeling turned on"
+    ]
+  },
+  "Shame": {
+    "n": 80265,
+    "mean": 0.04539233187984073,
+    "std": 0.26424134275204325,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Shame",
+    "group": "emonet",
+    "target_name": "emo_Shame",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "shame",
+      "guilt",
+      "remorse",
+      "humiliation",
+      "contrition"
+    ]
+  },
+  "Sourness": {
+    "n": 80265,
+    "mean": 0.17649316030791845,
+    "std": 0.36521811285366723,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Sourness",
+    "group": "emonet",
+    "target_name": "emo_Sourness",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "sourness",
+      "tartness",
+      "acidity",
+      "acerbity",
+      "sharpness"
+    ]
+  },
+  "Teasing": {
+    "n": 80265,
+    "mean": 0.3324378563695825,
+    "std": 0.5296726625641378,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Teasing",
+    "group": "emonet",
+    "target_name": "emo_Teasing",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "teasing",
+      "bantering",
+      "mocking playfully",
+      "ribbing",
+      "provoking lightly"
+    ]
+  },
+  "Thankfulness/Gratitude": {
+    "n": 80265,
+    "mean": 0.14557761023292617,
+    "std": 0.4236522584050728,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Thankfulness/Gratitude",
+    "group": "emonet",
+    "target_name": "emo_Thankfulness_Gratitude",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "thankfulness",
+      "gratitude",
+      "appreciation",
+      "gratefulness"
+    ]
+  },
+  "Triumph": {
+    "n": 80265,
+    "mean": 0.1790879781129414,
+    "std": 0.3623252221922291,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Triumph",
+    "group": "emonet",
+    "target_name": "emo_Triumph",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "synonyms": [
+      "triumph",
+      "superiority"
+    ]
+  },
+  "AGEV": {
+    "n": 80265,
+    "mean": 3.116046423100537,
+    "std": 0.38370166471240985,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Voice Age",
+    "group": "voicenet",
+    "target_name": "vn_AGEV_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "AROU": {
+    "n": 80265,
+    "mean": 2.6546666776577736,
+    "std": 0.6529314363281082,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Arousal",
+    "group": "voicenet",
+    "target_name": "vn_AROU_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "ARSH": {
+    "n": 80265,
+    "mean": 2.9119083297473205,
+    "std": 0.28201112438533044,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Arousal Shift",
+    "group": "voicenet",
+    "target_name": "vn_ARSH_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "ATCK": {
+    "n": 80265,
+    "mean": 2.904763798422437,
+    "std": 0.5428694464189584,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Attack",
+    "group": "voicenet",
+    "target_name": "vn_ATCK_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "BKGN": {
+    "n": 80265,
+    "mean": 3.6007893413960628,
+    "std": 0.3225271991755081,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Background Noise",
+    "group": "voicenet",
+    "target_name": "vn_BKGN_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      4
+    ]
+  },
+  "BRGT": {
+    "n": 80265,
+    "mean": 3.166160337972335,
+    "std": 0.4524072351125147,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Brightness",
+    "group": "voicenet",
+    "target_name": "vn_BRGT_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "CHNK": {
+    "n": 80265,
+    "mean": 2.6894530202710043,
+    "std": 0.48633406051742367,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Chunking",
+    "group": "voicenet",
+    "target_name": "vn_CHNK_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "CLRT": {
+    "n": 80265,
+    "mean": 3.6827191767934355,
+    "std": 0.6145557576194552,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Articulation Clarity",
+    "group": "voicenet",
+    "target_name": "vn_CLRT_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "COGL": {
+    "n": 80265,
+    "mean": 1.7007234995410432,
+    "std": 0.7575537725723328,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Cognitive Load",
+    "group": "voicenet",
+    "target_name": "vn_COGL_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "DARC": {
+    "n": 80265,
+    "mean": 2.9627449411800226,
+    "std": 0.362136948681119,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Dynamic Arc",
+    "group": "voicenet",
+    "target_name": "vn_DARC_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "DFLU": {
+    "n": 80265,
+    "mean": 1.28250886937532,
+    "std": 0.9855657607245953,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Disfluency",
+    "group": "voicenet",
+    "target_name": "vn_DFLU_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "EMPH": {
+    "n": 80265,
+    "mean": 3.2289971772848443,
+    "std": 0.6139778769287674,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Emphasis",
+    "group": "voicenet",
+    "target_name": "vn_EMPH_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "ESTH": {
+    "n": 80265,
+    "mean": 3.633205611157891,
+    "std": 0.4405564959065457,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Esthetics",
+    "group": "voicenet",
+    "target_name": "vn_ESTH_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "EXPL": {
+    "n": 80265,
+    "mean": 0.02418355546363139,
+    "std": 0.07506056811968372,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Content Appropriateness (3-point Scale)",
+    "group": "voicenet",
+    "target_name": "vn_EXPL_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      2
+    ]
+  },
+  "FOCS": {
+    "n": 80265,
+    "mean": 3.8276959423379333,
+    "std": 0.47237147674820823,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Focus",
+    "group": "voicenet",
+    "target_name": "vn_FOCS_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "FULL": {
+    "n": 80265,
+    "mean": 3.180504607472592,
+    "std": 0.3717332212384729,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Fullness",
+    "group": "voicenet",
+    "target_name": "vn_FULL_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "GEND": {
+    "n": 80265,
+    "mean": 3.5591078013417463,
+    "std": 1.6799779199885119,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Perceived Gender",
+    "group": "voicenet",
+    "target_name": "vn_GEND_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "HARM": {
+    "n": 80265,
+    "mean": 3.4660870348048984,
+    "std": 0.4323100734746661,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Harmonicity",
+    "group": "voicenet",
+    "target_name": "vn_HARM_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "METL": {
+    "n": 80265,
+    "mean": 1.6718152438210994,
+    "std": 0.39803363271901815,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Metallic Character",
+    "group": "voicenet",
+    "target_name": "vn_METL_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "RANG": {
+    "n": 80265,
+    "mean": 2.8869491515401395,
+    "std": 0.6160496767960377,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Pitch Range",
+    "group": "voicenet",
+    "target_name": "vn_RANG_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "RCQL": {
+    "n": 80265,
+    "mean": 3.7206144041430798,
+    "std": 0.4140797097853239,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Recording Quality",
+    "group": "voicenet",
+    "target_name": "vn_RCQL_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "REGS": {
+    "n": 80265,
+    "mean": 2.155623940247823,
+    "std": 1.2296954415059531,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Register",
+    "group": "voicenet",
+    "target_name": "vn_REGS_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "RESP": {
+    "n": 80265,
+    "mean": 2.098290710788066,
+    "std": 0.595499496113196,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Respiration",
+    "group": "voicenet",
+    "target_name": "vn_RESP_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "ROUG": {
+    "n": 80265,
+    "mean": 1.866187125657538,
+    "std": 0.6608192644257609,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Roughness",
+    "group": "voicenet",
+    "target_name": "vn_ROUG_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "R_CHST": {
+    "n": 80265,
+    "mean": 3.0249132440267363,
+    "std": 0.7245719927687032,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Chest Resonance",
+    "group": "voicenet",
+    "target_name": "vn_R_CHST_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "R_HEAD": {
+    "n": 80265,
+    "mean": 2.1607543544138674,
+    "std": 0.746451337349315,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Head Resonance",
+    "group": "voicenet",
+    "target_name": "vn_R_HEAD_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "R_MASK": {
+    "n": 80265,
+    "mean": 2.8393103055498616,
+    "std": 0.46788134219158384,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Mask Resonance",
+    "group": "voicenet",
+    "target_name": "vn_R_MASK_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "R_MIXD": {
+    "n": 80265,
+    "mean": 3.336706062510683,
+    "std": 0.39589693199025494,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Mixed Resonance",
+    "group": "voicenet",
+    "target_name": "vn_R_MIXD_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "R_NASL": {
+    "n": 80265,
+    "mean": 1.9294239550188443,
+    "std": 0.337342739045877,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Nasal Resonance",
+    "group": "voicenet",
+    "target_name": "vn_R_NASL_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "R_ORAL": {
+    "n": 80265,
+    "mean": 3.4960138400410563,
+    "std": 0.3419774350021507,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Oral Resonance",
+    "group": "voicenet",
+    "target_name": "vn_R_ORAL_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "R_THRT": {
+    "n": 80265,
+    "mean": 2.615518582632837,
+    "std": 0.4580924815720006,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Throat Resonance",
+    "group": "voicenet",
+    "target_name": "vn_R_THRT_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "SMTH": {
+    "n": 80265,
+    "mean": 3.292810046696584,
+    "std": 0.5429506354919705,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Smoothness",
+    "group": "voicenet",
+    "target_name": "vn_SMTH_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "STNC": {
+    "n": 80265,
+    "mean": 3.2727585045804246,
+    "std": 0.6615636668027326,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Stance",
+    "group": "voicenet",
+    "target_name": "vn_STNC_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "STRU": {
+    "n": 80265,
+    "mean": 3.5502411489634325,
+    "std": 0.7204419121807533,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Structure",
+    "group": "voicenet",
+    "target_name": "vn_STRU_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "S_ASMR": {
+    "n": 80265,
+    "mean": 0.5505147438970686,
+    "std": 0.6764955785294178,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "ASMR Style",
+    "group": "voicenet",
+    "target_name": "vn_S_ASMR_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "S_AUTH": {
+    "n": 80265,
+    "mean": 2.6420976059173076,
+    "std": 0.9494657228000165,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Authoritative Style",
+    "group": "voicenet",
+    "target_name": "vn_S_AUTH_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "S_CART": {
+    "n": 80265,
+    "mean": 0.5323797021468915,
+    "std": 0.6225848674709452,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Cartoonish Style",
+    "group": "voicenet",
+    "target_name": "vn_S_CART_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "S_CASU": {
+    "n": 80265,
+    "mean": 3.107497868832394,
+    "std": 1.0699088400179066,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Casual Style",
+    "group": "voicenet",
+    "target_name": "vn_S_CASU_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "S_CONV": {
+    "n": 80265,
+    "mean": 3.3591056107494617,
+    "std": 0.9798088524688056,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Conversational Style",
+    "group": "voicenet",
+    "target_name": "vn_S_CONV_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "S_DRAM": {
+    "n": 80265,
+    "mean": 2.1173668807517836,
+    "std": 0.8301977724267456,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Dramatic Style",
+    "group": "voicenet",
+    "target_name": "vn_S_DRAM_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "S_FORM": {
+    "n": 80265,
+    "mean": 1.975420595486698,
+    "std": 1.0091927459730368,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Formal Style",
+    "group": "voicenet",
+    "target_name": "vn_S_FORM_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "S_MONO": {
+    "n": 80265,
+    "mean": 2.443802403330261,
+    "std": 0.8104816754042917,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Monologue Style",
+    "group": "voicenet",
+    "target_name": "vn_S_MONO_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "S_NARR": {
+    "n": 80265,
+    "mean": 2.4364933650407377,
+    "std": 1.0639679221747442,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Narrator Style",
+    "group": "voicenet",
+    "target_name": "vn_S_NARR_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "S_NEWS": {
+    "n": 80265,
+    "mean": 0.9023283997035545,
+    "std": 0.7619671644240363,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Newsreader Style",
+    "group": "voicenet",
+    "target_name": "vn_S_NEWS_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "S_PLAY": {
+    "n": 80265,
+    "mean": 1.6214577783337971,
+    "std": 0.9378459339965008,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Playful Style",
+    "group": "voicenet",
+    "target_name": "vn_S_PLAY_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "S_RANT": {
+    "n": 80265,
+    "mean": 0.5762759755136796,
+    "std": 0.61657900657457,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Ranting/Angry Style",
+    "group": "voicenet",
+    "target_name": "vn_S_RANT_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "S_STRY": {
+    "n": 80265,
+    "mean": 2.0744363460856405,
+    "std": 0.6384474701954254,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Storytelling Style",
+    "group": "voicenet",
+    "target_name": "vn_S_STRY_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "S_TECH": {
+    "n": 80265,
+    "mean": 1.9265604498175137,
+    "std": 0.9816679331739374,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Teacher/Didactic Style",
+    "group": "voicenet",
+    "target_name": "vn_S_TECH_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "S_WHIS": {
+    "n": 80265,
+    "mean": 0.3882210116674486,
+    "std": 0.5817185769930753,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Whisper-Talk Style",
+    "group": "voicenet",
+    "target_name": "vn_S_WHIS_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "TEMP": {
+    "n": 80265,
+    "mean": 2.960395855711441,
+    "std": 0.522194798250367,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Tempo",
+    "group": "voicenet",
+    "target_name": "vn_TEMP_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "TENS": {
+    "n": 80265,
+    "mean": 2.222907271057633,
+    "std": 0.5214790838836176,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Tension",
+    "group": "voicenet",
+    "target_name": "vn_TENS_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "VALN": {
+    "n": 80265,
+    "mean": 3.0062458565168693,
+    "std": 0.6668327700220872,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Valence",
+    "group": "voicenet",
+    "target_name": "vn_VALN_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "VALS": {
+    "n": 80265,
+    "mean": 2.9040320210966866,
+    "std": 0.3282576368686635,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Valence Shift",
+    "group": "voicenet",
+    "target_name": "vn_VALS_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "VFLX": {
+    "n": 80265,
+    "mean": 2.9209423750692802,
+    "std": 0.22311808794525326,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Velocity Flux",
+    "group": "voicenet",
+    "target_name": "vn_VFLX_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "VOLT": {
+    "n": 80265,
+    "mean": 1.6980754254005828,
+    "std": 0.5035181530908591,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Volatility",
+    "group": "voicenet",
+    "target_name": "vn_VOLT_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "VULN": {
+    "n": 80265,
+    "mean": 1.9677650293917561,
+    "std": 0.8193635973558386,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Vulnerability",
+    "group": "voicenet",
+    "target_name": "vn_VULN_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "WARM": {
+    "n": 80265,
+    "mean": 3.2747801542608848,
+    "std": 0.33672213859910116,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Warmth",
+    "group": "voicenet",
+    "target_name": "vn_WARM_reg",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "genuineness": {
+    "n": 80265,
+    "mean": 4.4812159625658,
+    "std": 0.4776907076119297,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Genuineness",
+    "group": "quality",
+    "target_name": "genuineness_0_6",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      6
+    ]
+  },
+  "blend": {
+    "n": 80265,
+    "mean": 7.879558602049515,
+    "std": 0.8938645030239049,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "Vocal-burst blend",
+    "group": "quality",
+    "target_name": "blend_0_10",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10",
+    "teacher_ordinal_reference_range": [
+      0,
+      10
+    ]
+  },
+  "content_enjoyment": {
+    "n": 80265,
+    "mean": 5.263651705934779,
+    "std": 0.7085166999572352,
+    "z_defined": true,
+    "normalization": "mean_std",
+    "name": "content_enjoyment",
+    "group": "quality",
+    "target_name": "audiobox:CE",
+    "source": "Humaneness Ears Medium predictions over frozen emilia_multilingual + s10"
+  },
+  "_provenance": {
+    "schema": "humaneness-medium-procedural-mean-std-v1",
+    "created_utc": "2026-10-10T19:42:17.141809+00:00",
+    "model_repo": "laion/humaneness-ears-base-medium",
+    "model_revision": "818506970d93c809a3295a0a02c40dee8ff2bfc3",
+    "model_variant": "medium",
+    "namespace": "humaneness_ears_medium",
+    "formula": "z = (raw - arithmetic mean) / population standard deviation",
+    "std_ddof": 0,
+    "weighting": "equal weight per successfully annotated clip",
+    "prediction_storage": "float32; statistics calculated in float64",
+    "n": 80265,
+    "source_counts": {
+      "s10": 41771,
+      "emilia_multilingual": 38494
+    },
+    "language_counts": {
+      "de": 27434,
+      "en": 27169,
+      "fr": 6416,
+      "ja": 6416,
+      "ko": 6415,
+      "zh": 6415
+    },
+    "source_manifest": {
+      "n": 80265,
+      "counts": {
+        "s10": 41771,
+        "emilia_multilingual": 38494
+      },
+      "language_counts": {
+        "de": 27434,
+        "en": 27169,
+        "fr": 6416,
+        "ja": 6416,
+        "ko": 6415,
+        "zh": 6415
+      },
+      "manifest_sha256": "d8c861f14cfef2d4e84ac7c3e21f739892286db78f3a672533c304dff234bcd1",
+      "sampling": "Exact source-filtered subset of the frozen reference; no additional sampling",
+      "included_sources": [
+        "emilia_multilingual",
+        "s10"
+      ],
+      "parent_manifest_sha256": "3e85ac1e833e656913ea7ed66dc1f1a2dcaedf83a9eb34e72305748fb485657d",
+      "parent_manifest_n": 118692,
+      "model_repo": "laion/humaneness-ears-base-medium",
+      "model_revision": "818506970d93c809a3295a0a02c40dee8ff2bfc3",
+      "source_archives_unchanged": true,
+      "normalization_reference_only": true
+    },
+    "interpretation": "Reference-relative model deviation; not an emotion probability or population-unbiased survey",
+    "old_teacher_correlations_reused": false,
+    "ranking_reliability_default": 1.0,
+    "pleasantness_target": "audiobox:CE; VoiceNet ESTH remains in raw outputs only",
+    "original_annotations_preserved": true,
+    "coverage_verified": true,
+    "event_boundary_rule": "Clamp sub-sample end-time rounding to stored float32 duration in derived sidecars; preserve original end_s in end_s_before_boundary_clamp",
+    "normalization_reference": "speech",
+    "derived_from_normalizer_sha256": "7f246b6df26a54a325fa6cd72dc6ee6d841650f2b023205eb5822d0f0fab1ea0"
+  },
+  "_raw_targets": {
+    "emo_Affection": {
+      "n": 80265,
+      "mean": 0.2983702570232847,
+      "std": 0.4829748707120018,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Amusement": {
+      "n": 80265,
+      "mean": 0.6746340696783923,
+      "std": 0.7843605411495563,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Anger": {
+      "n": 80265,
+      "mean": 0.17905662714462572,
+      "std": 0.448886617505526,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Astonishment_Surprise": {
+      "n": 80265,
+      "mean": 0.25699586134521946,
+      "std": 0.47353158215653235,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Awe": {
+      "n": 80265,
+      "mean": 0.1514004024395335,
+      "std": 0.3856934565106132,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Bitterness": {
+      "n": 80265,
+      "mean": 0.17218647318323949,
+      "std": 0.42063913710934764,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Concentration": {
+      "n": 80265,
+      "mean": 1.8449700240472693,
+      "std": 0.6850386341917359,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Confusion": {
+      "n": 80265,
+      "mean": 0.24588675690277456,
+      "std": 0.40990556042420195,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Contemplation": {
+      "n": 80265,
+      "mean": 1.5239896153002892,
+      "std": 0.6862287255733363,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Contempt": {
+      "n": 80265,
+      "mean": 0.12668237668590138,
+      "std": 0.3597144131159563,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Contentment": {
+      "n": 80265,
+      "mean": 1.3516643216286837,
+      "std": 0.6395024565328838,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Disappointment": {
+      "n": 80265,
+      "mean": 0.32444540187074833,
+      "std": 0.5306776274020552,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Disgust": {
+      "n": 80265,
+      "mean": 0.08584510192323432,
+      "std": 0.2850258956890147,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Distress": {
+      "n": 80265,
+      "mean": 0.35168887047502445,
+      "std": 0.6196476786088025,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Doubt": {
+      "n": 80265,
+      "mean": 0.521275236878931,
+      "std": 0.5183196019469453,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Elation": {
+      "n": 80265,
+      "mean": 0.3004824729595512,
+      "std": 0.5617128627403656,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Embarrassment": {
+      "n": 80265,
+      "mean": 0.0635039507206459,
+      "std": 0.20081761367676926,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Emotional_Numbness": {
+      "n": 80265,
+      "mean": 0.22991371521322926,
+      "std": 0.37090028756717586,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Fatigue_Exhaustion": {
+      "n": 80265,
+      "mean": 0.2988365195594925,
+      "std": 0.5307779895888237,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Fear": {
+      "n": 80265,
+      "mean": 0.10340708948452577,
+      "std": 0.3468629727352475,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Helplessness": {
+      "n": 80265,
+      "mean": 0.285578959536521,
+      "std": 0.5700011425200489,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Hope_Enthusiasm_Optimism": {
+      "n": 80265,
+      "mean": 0.9276635484060759,
+      "std": 0.6160196741987968,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Impatience_and_Irritability": {
+      "n": 80265,
+      "mean": 0.33272009823576,
+      "std": 0.5442437780676052,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Infatuation": {
+      "n": 80265,
+      "mean": 0.03583530472152168,
+      "std": 0.21336372599344672,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Interest": {
+      "n": 80265,
+      "mean": 1.9795586597730195,
+      "std": 0.6302926452664661,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Intoxication_Altered_States_of_Consciousness": {
+      "n": 80265,
+      "mean": 0.020915536195568546,
+      "std": 0.12934266758640117,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Jealousy_and_Envy": {
+      "n": 80265,
+      "mean": 0.010494983047988734,
+      "std": 0.09399411926062615,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Longing": {
+      "n": 80265,
+      "mean": 0.1928173856197469,
+      "std": 0.42391152988304653,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Malevolence_Malice": {
+      "n": 80265,
+      "mean": 0.048554678881688955,
+      "std": 0.19421323045025882,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Pain": {
+      "n": 80265,
+      "mean": 0.12199900682492518,
+      "std": 0.3961930220549478,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Pleasure_Ecstasy": {
+      "n": 80265,
+      "mean": 0.14901428676129355,
+      "std": 0.3663575098599557,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Pride": {
+      "n": 80265,
+      "mean": 0.528448709132183,
+      "std": 0.4333561903567353,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Relief": {
+      "n": 80265,
+      "mean": 0.2597913253360914,
+      "std": 0.45143568662769695,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Sadness": {
+      "n": 80265,
+      "mean": 0.23185466628238768,
+      "std": 0.5203029832305311,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Sexual_Lust": {
+      "n": 80265,
+      "mean": 0.019626682818550966,
+      "std": 0.1438440696323763,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Shame": {
+      "n": 80265,
+      "mean": 0.04539233187984073,
+      "std": 0.26424134275204325,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Sourness": {
+      "n": 80265,
+      "mean": 0.17649316030791845,
+      "std": 0.36521811285366723,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Teasing": {
+      "n": 80265,
+      "mean": 0.3324378563695825,
+      "std": 0.5296726625641378,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Thankfulness_Gratitude": {
+      "n": 80265,
+      "mean": 0.14557761023292617,
+      "std": 0.4236522584050728,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "emo_Triumph": {
+      "n": 80265,
+      "mean": 0.1790879781129414,
+      "std": 0.3623252221922291,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_AGEV_reg": {
+      "n": 80265,
+      "mean": 3.116046423100537,
+      "std": 0.38370166471240985,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_AROU_reg": {
+      "n": 80265,
+      "mean": 2.6546666776577736,
+      "std": 0.6529314363281082,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_ARSH_reg": {
+      "n": 80265,
+      "mean": 2.9119083297473205,
+      "std": 0.28201112438533044,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_ATCK_reg": {
+      "n": 80265,
+      "mean": 2.904763798422437,
+      "std": 0.5428694464189584,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_BKGN_reg": {
+      "n": 80265,
+      "mean": 3.6007893413960628,
+      "std": 0.3225271991755081,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_BRGT_reg": {
+      "n": 80265,
+      "mean": 3.166160337972335,
+      "std": 0.4524072351125147,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_CHNK_reg": {
+      "n": 80265,
+      "mean": 2.6894530202710043,
+      "std": 0.48633406051742367,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_CLRT_reg": {
+      "n": 80265,
+      "mean": 3.6827191767934355,
+      "std": 0.6145557576194552,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_COGL_reg": {
+      "n": 80265,
+      "mean": 1.7007234995410432,
+      "std": 0.7575537725723328,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_DARC_reg": {
+      "n": 80265,
+      "mean": 2.9627449411800226,
+      "std": 0.362136948681119,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_DFLU_reg": {
+      "n": 80265,
+      "mean": 1.28250886937532,
+      "std": 0.9855657607245953,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_EMPH_reg": {
+      "n": 80265,
+      "mean": 3.2289971772848443,
+      "std": 0.6139778769287674,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_ESTH_reg": {
+      "n": 80265,
+      "mean": 3.633205611157891,
+      "std": 0.4405564959065457,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_EXPL_reg": {
+      "n": 80265,
+      "mean": 0.02418355546363139,
+      "std": 0.07506056811968372,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_FOCS_reg": {
+      "n": 80265,
+      "mean": 3.8276959423379333,
+      "std": 0.47237147674820823,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_FULL_reg": {
+      "n": 80265,
+      "mean": 3.180504607472592,
+      "std": 0.3717332212384729,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_GEND_reg": {
+      "n": 80265,
+      "mean": 3.5591078013417463,
+      "std": 1.6799779199885119,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_HARM_reg": {
+      "n": 80265,
+      "mean": 3.4660870348048984,
+      "std": 0.4323100734746661,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_METL_reg": {
+      "n": 80265,
+      "mean": 1.6718152438210994,
+      "std": 0.39803363271901815,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_RANG_reg": {
+      "n": 80265,
+      "mean": 2.8869491515401395,
+      "std": 0.6160496767960377,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_RCQL_reg": {
+      "n": 80265,
+      "mean": 3.7206144041430798,
+      "std": 0.4140797097853239,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_REGS_reg": {
+      "n": 80265,
+      "mean": 2.155623940247823,
+      "std": 1.2296954415059531,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_RESP_reg": {
+      "n": 80265,
+      "mean": 2.098290710788066,
+      "std": 0.595499496113196,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_ROUG_reg": {
+      "n": 80265,
+      "mean": 1.866187125657538,
+      "std": 0.6608192644257609,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_R_CHST_reg": {
+      "n": 80265,
+      "mean": 3.0249132440267363,
+      "std": 0.7245719927687032,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_R_HEAD_reg": {
+      "n": 80265,
+      "mean": 2.1607543544138674,
+      "std": 0.746451337349315,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_R_MASK_reg": {
+      "n": 80265,
+      "mean": 2.8393103055498616,
+      "std": 0.46788134219158384,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_R_MIXD_reg": {
+      "n": 80265,
+      "mean": 3.336706062510683,
+      "std": 0.39589693199025494,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_R_NASL_reg": {
+      "n": 80265,
+      "mean": 1.9294239550188443,
+      "std": 0.337342739045877,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_R_ORAL_reg": {
+      "n": 80265,
+      "mean": 3.4960138400410563,
+      "std": 0.3419774350021507,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_R_THRT_reg": {
+      "n": 80265,
+      "mean": 2.615518582632837,
+      "std": 0.4580924815720006,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_SMTH_reg": {
+      "n": 80265,
+      "mean": 3.292810046696584,
+      "std": 0.5429506354919705,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_STNC_reg": {
+      "n": 80265,
+      "mean": 3.2727585045804246,
+      "std": 0.6615636668027326,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_STRU_reg": {
+      "n": 80265,
+      "mean": 3.5502411489634325,
+      "std": 0.7204419121807533,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_S_ASMR_reg": {
+      "n": 80265,
+      "mean": 0.5505147438970686,
+      "std": 0.6764955785294178,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_S_AUTH_reg": {
+      "n": 80265,
+      "mean": 2.6420976059173076,
+      "std": 0.9494657228000165,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_S_CART_reg": {
+      "n": 80265,
+      "mean": 0.5323797021468915,
+      "std": 0.6225848674709452,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_S_CASU_reg": {
+      "n": 80265,
+      "mean": 3.107497868832394,
+      "std": 1.0699088400179066,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_S_CONV_reg": {
+      "n": 80265,
+      "mean": 3.3591056107494617,
+      "std": 0.9798088524688056,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_S_DRAM_reg": {
+      "n": 80265,
+      "mean": 2.1173668807517836,
+      "std": 0.8301977724267456,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_S_FORM_reg": {
+      "n": 80265,
+      "mean": 1.975420595486698,
+      "std": 1.0091927459730368,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_S_MONO_reg": {
+      "n": 80265,
+      "mean": 2.443802403330261,
+      "std": 0.8104816754042917,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_S_NARR_reg": {
+      "n": 80265,
+      "mean": 2.4364933650407377,
+      "std": 1.0639679221747442,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_S_NEWS_reg": {
+      "n": 80265,
+      "mean": 0.9023283997035545,
+      "std": 0.7619671644240363,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_S_PLAY_reg": {
+      "n": 80265,
+      "mean": 1.6214577783337971,
+      "std": 0.9378459339965008,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_S_RANT_reg": {
+      "n": 80265,
+      "mean": 0.5762759755136796,
+      "std": 0.61657900657457,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_S_STRY_reg": {
+      "n": 80265,
+      "mean": 2.0744363460856405,
+      "std": 0.6384474701954254,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_S_TECH_reg": {
+      "n": 80265,
+      "mean": 1.9265604498175137,
+      "std": 0.9816679331739374,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_S_WHIS_reg": {
+      "n": 80265,
+      "mean": 0.3882210116674486,
+      "std": 0.5817185769930753,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_TEMP_reg": {
+      "n": 80265,
+      "mean": 2.960395855711441,
+      "std": 0.522194798250367,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_TENS_reg": {
+      "n": 80265,
+      "mean": 2.222907271057633,
+      "std": 0.5214790838836176,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_VALN_reg": {
+      "n": 80265,
+      "mean": 3.0062458565168693,
+      "std": 0.6668327700220872,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_VALS_reg": {
+      "n": 80265,
+      "mean": 2.9040320210966866,
+      "std": 0.3282576368686635,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_VFLX_reg": {
+      "n": 80265,
+      "mean": 2.9209423750692802,
+      "std": 0.22311808794525326,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_VOLT_reg": {
+      "n": 80265,
+      "mean": 1.6980754254005828,
+      "std": 0.5035181530908591,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_VULN_reg": {
+      "n": 80265,
+      "mean": 1.9677650293917561,
+      "std": 0.8193635973558386,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "vn_WARM_reg": {
+      "n": 80265,
+      "mean": 3.2747801542608848,
+      "std": 0.33672213859910116,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "genuineness_0_6": {
+      "n": 80265,
+      "mean": 4.4812159625658,
+      "std": 0.4776907076119297,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "blend_0_10": {
+      "n": 80265,
+      "mean": 7.879558602049515,
+      "std": 0.8938645030239049,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "R_quality": {
+      "n": 80265,
+      "mean": 0.8709710491232371,
+      "std": 0.3140090402127963,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "eiv_extra:Age": {
+      "n": 80265,
+      "mean": 3.0983796867744386,
+      "std": 0.4623214394639713,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "eiv_extra:Arousal": {
+      "n": 80265,
+      "mean": 1.485799440319836,
+      "std": 0.6070108311377035,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "eiv_extra:Authenticity": {
+      "n": 80265,
+      "mean": 2.8197586606330516,
+      "std": 0.23127172840914256,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "eiv_extra:Background_Noise": {
+      "n": 80265,
+      "mean": 0.4653827273260395,
+      "std": 0.33256677632334297,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "eiv_extra:Confident_vs._Hesitant": {
+      "n": 80265,
+      "mean": 1.26279184145265,
+      "std": 0.41731806061944976,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "eiv_extra:Gender": {
+      "n": 80265,
+      "mean": -0.03976595155343653,
+      "std": 0.9466008819628222,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "eiv_extra:High-Pitched_vs._Low-Pitched": {
+      "n": 80265,
+      "mean": 1.6758856544492846,
+      "std": 0.4195895178422569,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "eiv_extra:Monotone_vs._Expressive": {
+      "n": 80265,
+      "mean": 1.8893959032959569,
+      "std": 0.6310502687246284,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "eiv_extra:Recording_Quality": {
+      "n": 80265,
+      "mean": 2.3637487851273105,
+      "std": 0.37269901587797366,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "eiv_extra:Serious_vs._Humorous": {
+      "n": 80265,
+      "mean": 0.9873153820132983,
+      "std": 0.40538362791358085,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "eiv_extra:Soft_vs._Harsh": {
+      "n": 80265,
+      "mean": 0.3477173434439404,
+      "std": 0.29067713229057257,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "eiv_extra:Submissive_vs._Dominant": {
+      "n": 80265,
+      "mean": 0.3892386638773536,
+      "std": 0.30388221870831783,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "eiv_extra:Valence": {
+      "n": 80265,
+      "mean": 0.2251643841986181,
+      "std": 0.640365875245956,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "eiv_extra:Vulnerable_vs._Emotionally_Detached": {
+      "n": 80265,
+      "mean": 1.4794451296402598,
+      "std": 0.5353088373876055,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "eiv_extra:Warm_vs._Cold": {
+      "n": 80265,
+      "mean": 0.19746656976239918,
+      "std": 0.3287640529565891,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "eiv_extra:score_background_quality": {
+      "n": 80265,
+      "mean": 3.502140969883458,
+      "std": 0.27627389840801714,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "eiv_extra:score_content_enjoyment": {
+      "n": 80265,
+      "mean": 4.540217963386635,
+      "std": 0.3144129147124241,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "eiv_extra:score_overall_quality": {
+      "n": 80265,
+      "mean": 2.768486796400892,
+      "std": 0.3232488907511603,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "eiv_extra:score_speech_quality": {
+      "n": 80265,
+      "mean": 1.8905937138253088,
+      "std": 0.08311457825601258,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "audiobox:CE": {
+      "n": 80265,
+      "mean": 5.263651705934779,
+      "std": 0.7085166999572352,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "audiobox:CU": {
+      "n": 80265,
+      "mean": 5.971019287952372,
+      "std": 0.7540004054122247,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "audiobox:PC": {
+      "n": 80265,
+      "mean": 1.6822480078806337,
+      "std": 0.28699560455030837,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "audiobox:PQ": {
+      "n": 80265,
+      "mean": 6.957567104966234,
+      "std": 0.7065186064994874,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "dnsmos:SIG_raw": {
+      "n": 80265,
+      "mean": 3.794401923548074,
+      "std": 0.5401779174793223,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "dnsmos:BAK_raw": {
+      "n": 80265,
+      "mean": 3.885621521402087,
+      "std": 0.5365954729998373,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "dnsmos:OVRL_raw": {
+      "n": 80265,
+      "mean": 3.4091132012793617,
+      "std": 0.5658749878982352,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "dnsmos:SIG": {
+      "n": 80265,
+      "mean": 3.4040398791386894,
+      "std": 0.37114494870040715,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "dnsmos:BAK": {
+      "n": 80265,
+      "mean": 3.8142416400418715,
+      "std": 0.39275100314052863,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "dnsmos:OVRL": {
+      "n": 80265,
+      "mean": 3.0368241118618404,
+      "std": 0.4062182621843669,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "dnsmos:P808_MOS": {
+      "n": 80265,
+      "mean": 3.6315841203225125,
+      "std": 0.40642441759746323,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "burst_count_log1p": {
+      "n": 80265,
+      "mean": 0.38849100070613163,
+      "std": 0.3363036799838643,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Affection": {
+      "n": 80265,
+      "mean": 0.325801712107052,
+      "std": 0.4103563843908939,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Age": {
+      "n": 80265,
+      "mean": 3.0772349759298625,
+      "std": 0.3703979380887067,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Amusement": {
+      "n": 80265,
+      "mean": 0.6329323217135319,
+      "std": 0.6779705507399618,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Anger": {
+      "n": 80265,
+      "mean": 0.20777784704510593,
+      "std": 0.3702816685844898,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Arousal": {
+      "n": 80265,
+      "mean": 1.545820667405448,
+      "std": 0.5838479340398497,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Astonishment_Surprise": {
+      "n": 80265,
+      "mean": 0.25122638242113854,
+      "std": 0.3575184973649446,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Authenticity": {
+      "n": 80265,
+      "mean": 2.8925841249142645,
+      "std": 0.19226777262809924,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Awe": {
+      "n": 80265,
+      "mean": 0.140239749420932,
+      "std": 0.2515465309922505,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Background_Noise": {
+      "n": 80265,
+      "mean": 0.40338011405695345,
+      "std": 0.24628637524736383,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Bitterness": {
+      "n": 80265,
+      "mean": 0.14705949598490647,
+      "std": 0.2759636678412993,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Concentration": {
+      "n": 80265,
+      "mean": 1.8289698218862855,
+      "std": 0.5827777557947175,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Confident_vs._Hesitant": {
+      "n": 80265,
+      "mean": 1.3796547812583224,
+      "std": 0.40032879487499345,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Confusion": {
+      "n": 80265,
+      "mean": 0.19845856598335948,
+      "std": 0.25713054061121665,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Contemplation": {
+      "n": 80265,
+      "mean": 1.5914298136622904,
+      "std": 0.5586363224450793,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Contempt": {
+      "n": 80265,
+      "mean": 0.13821012288209747,
+      "std": 0.24845953455187067,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Contentment": {
+      "n": 80265,
+      "mean": 1.3435629646625957,
+      "std": 0.5199026405447079,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Disappointment": {
+      "n": 80265,
+      "mean": 0.25495535235794625,
+      "std": 0.4574996582013101,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Disgust": {
+      "n": 80265,
+      "mean": 0.06028877356862592,
+      "std": 0.1666251475074844,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Distress": {
+      "n": 80265,
+      "mean": 0.29159411022952225,
+      "std": 0.5758572816462962,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Doubt": {
+      "n": 80265,
+      "mean": 0.45608978447740056,
+      "std": 0.3569988663720184,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Elation": {
+      "n": 80265,
+      "mean": 0.2129728717732118,
+      "std": 0.3911775532127053,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Embarrassment": {
+      "n": 80265,
+      "mean": 0.05412873855579591,
+      "std": 0.10253064904831521,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Emotional_Numbness": {
+      "n": 80265,
+      "mean": 0.09127056729040949,
+      "std": 0.17629010363313427,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Fatigue_Exhaustion": {
+      "n": 80265,
+      "mean": 0.23174932862823486,
+      "std": 0.4393587471940062,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Fear": {
+      "n": 80265,
+      "mean": 0.07292586530036684,
+      "std": 0.15943233834441564,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Gender": {
+      "n": 80265,
+      "mean": 0.023905385165720758,
+      "std": 0.8923756404548823,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Helplessness": {
+      "n": 80265,
+      "mean": 0.24585419459987437,
+      "std": 0.46592409919717637,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:High-Pitched_vs._Low-Pitched": {
+      "n": 80265,
+      "mean": 1.6722832421146137,
+      "std": 0.3757953725581621,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Hope_Enthusiasm_Optimism": {
+      "n": 80265,
+      "mean": 0.9014885386038545,
+      "std": 0.48917588867164213,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Impatience_and_Irritability": {
+      "n": 80265,
+      "mean": 0.3182779578775045,
+      "std": 0.4602814713776623,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Infatuation": {
+      "n": 80265,
+      "mean": 0.01737676898427202,
+      "std": 0.10424877914851102,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Interest": {
+      "n": 80265,
+      "mean": 2.0326783672856044,
+      "std": 0.5733908734313833,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Intoxication_Altered_States_of_Consciousness": {
+      "n": 80265,
+      "mean": 0.0038972355822125718,
+      "std": 0.11098164861735006,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Jealousy_&_Envy": {
+      "n": 80265,
+      "mean": 0.0231616855532029,
+      "std": 0.07145060573818537,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Longing": {
+      "n": 80265,
+      "mean": 0.10997032063650963,
+      "std": 0.23981383072819823,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Malevolence_Malice": {
+      "n": 80265,
+      "mean": 0.07113759365220648,
+      "std": 0.15866286761690343,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Monotone_vs._Expressive": {
+      "n": 80265,
+      "mean": 1.8918944864991758,
+      "std": 0.6001459423777196,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Pain": {
+      "n": 80265,
+      "mean": 0.07268006802979622,
+      "std": 0.24961453686787222,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Pleasure_Ecstasy": {
+      "n": 80265,
+      "mean": 0.09009623740885761,
+      "std": 0.2430135281827079,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Pride": {
+      "n": 80265,
+      "mean": 0.4903629668489528,
+      "std": 0.32047532025726494,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Recording_Quality": {
+      "n": 80265,
+      "mean": 2.405768594784595,
+      "std": 0.3093847819617267,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Relief": {
+      "n": 80265,
+      "mean": 0.2006514648002367,
+      "std": 0.28361488002326296,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Sadness": {
+      "n": 80265,
+      "mean": 0.1572117891234225,
+      "std": 0.3986026860704433,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Serious_vs._Humorous": {
+      "n": 80265,
+      "mean": 1.0173311789113686,
+      "std": 0.49239433374755565,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Sexual_Lust": {
+      "n": 80265,
+      "mean": 0.013289335968519613,
+      "std": 0.09748774409205843,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Shame": {
+      "n": 80265,
+      "mean": 0.04065555220175606,
+      "std": 0.10427800532564024,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Soft_vs._Harsh": {
+      "n": 80265,
+      "mean": 0.3194336144887315,
+      "std": 0.32298346306509557,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Sourness": {
+      "n": 80265,
+      "mean": 0.16437492735441064,
+      "std": 0.2845212496435887,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Submissive_vs._Dominant": {
+      "n": 80265,
+      "mean": 0.45845227535306526,
+      "std": 0.2760400588069359,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Teasing": {
+      "n": 80265,
+      "mean": 0.30198123121211135,
+      "std": 0.38167033311536125,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Thankfulness_Gratitude": {
+      "n": 80265,
+      "mean": 0.1553828516299513,
+      "std": 0.2700821661704468,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Triumph": {
+      "n": 80265,
+      "mean": 0.13649481257287074,
+      "std": 0.20290011845141126,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Valence": {
+      "n": 80265,
+      "mean": -0.01757678470140233,
+      "std": 0.5231142564922531,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Vulnerable_vs._Emotionally_Detached": {
+      "n": 80265,
+      "mean": 1.5649944175078156,
+      "std": 0.5129736906871312,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:Warm_vs._Cold": {
+      "n": 80265,
+      "mean": 0.13209580468822987,
+      "std": 0.3335876560377388,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:duration": {
+      "n": 80265,
+      "mean": 9.404959457920848,
+      "std": 5.387316401585783,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:score_background_quality": {
+      "n": 80265,
+      "mean": 3.467639141915068,
+      "std": 0.22435375848358113,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:score_content_enjoyment": {
+      "n": 80265,
+      "mean": 4.736815257278297,
+      "std": 0.15781800287212946,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:score_overall_quality": {
+      "n": 80265,
+      "mean": 2.746745433700736,
+      "std": 0.27691476402704657,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:score_speech_quality": {
+      "n": 80265,
+      "mean": 1.960331729932759,
+      "std": 0.0714844488188979,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "voiceclap_attribute:talking_speed": {
+      "n": 80265,
+      "mean": 13.263392784681695,
+      "std": 4.225468905396252,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "characters_per_second": {
+      "n": 80265,
+      "mean": 14.334349125912203,
+      "std": 7.290938064390466,
+      "z_defined": true,
+      "normalization": "mean_std"
+    },
+    "estimated_burst_count": {
+      "n": 80265,
+      "mean": 0.7676425198028022,
+      "std": 2.582577712778386,
+      "z_defined": true,
+      "normalization": "mean_std"
+    }
+  },
+  "_by_source": {
+    "s10": {
+      "emo_Affection": {
+        "n": 41771,
+        "mean": 0.3968739158865107,
+        "std": 0.5958442489656598,
+        "median": 0.1553633064031601,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Amusement": {
+        "n": 41771,
+        "mean": 0.8215972230279875,
+        "std": 0.9305616320551127,
+        "median": 0.42436233162879944,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Anger": {
+        "n": 41771,
+        "mean": 0.24258112820792835,
+        "std": 0.5750105820618735,
+        "median": 0.05694521963596344,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Astonishment_Surprise": {
+        "n": 41771,
+        "mean": 0.3474478444870077,
+        "std": 0.5714476585487894,
+        "median": 0.10843658447265625,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Awe": {
+        "n": 41771,
+        "mean": 0.22688609136249283,
+        "std": 0.4969256862069773,
+        "median": 0.05668671056628227,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Bitterness": {
+        "n": 41771,
+        "mean": 0.25571357230715935,
+        "std": 0.5360762538664725,
+        "median": 0.05097636207938194,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Concentration": {
+        "n": 41771,
+        "mean": 1.47227133412532,
+        "std": 0.7048491552442686,
+        "median": 1.5609875917434692,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Confusion": {
+        "n": 41771,
+        "mean": 0.30134361587707925,
+        "std": 0.48116578317141606,
+        "median": 0.09480786323547363,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Contemplation": {
+        "n": 41771,
+        "mean": 1.462967875094542,
+        "std": 0.8117545774773082,
+        "median": 1.4995293617248535,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Contempt": {
+        "n": 41771,
+        "mean": 0.1695516536150571,
+        "std": 0.46109446310480207,
+        "median": 0.04135660454630852,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Contentment": {
+        "n": 41771,
+        "mean": 1.1965714996203323,
+        "std": 0.7552142812465166,
+        "median": 1.2398608922958374,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Disappointment": {
+        "n": 41771,
+        "mean": 0.47670561721496624,
+        "std": 0.6664079117962646,
+        "median": 0.17196686565876007,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Disgust": {
+        "n": 41771,
+        "mean": 0.12865114323259294,
+        "std": 0.3767057888084081,
+        "median": 0.032881543040275574,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Distress": {
+        "n": 41771,
+        "mean": 0.5322420261455874,
+        "std": 0.7961269863272931,
+        "median": 0.1843491494655609,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Doubt": {
+        "n": 41771,
+        "mean": 0.5628121574444395,
+        "std": 0.5870951020330422,
+        "median": 0.3560295104980469,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Elation": {
+        "n": 41771,
+        "mean": 0.42618677055312465,
+        "std": 0.6966958675647283,
+        "median": 0.11800180375576019,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Embarrassment": {
+        "n": 41771,
+        "mean": 0.09790176296208616,
+        "std": 0.2691809822809196,
+        "median": 0.03609228879213333,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Emotional_Numbness": {
+        "n": 41771,
+        "mean": 0.30042633154008863,
+        "std": 0.4862782801803873,
+        "median": 0.11817524582147598,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Fatigue_Exhaustion": {
+        "n": 41771,
+        "mean": 0.46362929348042214,
+        "std": 0.6727029583628564,
+        "median": 0.18608850240707397,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Fear": {
+        "n": 41771,
+        "mean": 0.16892825557313149,
+        "std": 0.46692632115245963,
+        "median": 0.03738604113459587,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Helplessness": {
+        "n": 41771,
+        "mean": 0.45993928888294383,
+        "std": 0.7339746549983527,
+        "median": 0.14608821272850037,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Hope_Enthusiasm_Optimism": {
+        "n": 41771,
+        "mean": 0.9304001390441607,
+        "std": 0.7378342852618734,
+        "median": 0.7555477619171143,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Impatience_and_Irritability": {
+        "n": 41771,
+        "mean": 0.42672451513196885,
+        "std": 0.6705921103328496,
+        "median": 0.16146531701087952,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Infatuation": {
+        "n": 41771,
+        "mean": 0.07431288789268707,
+        "std": 0.2881323299028942,
+        "median": 0.012388603761792183,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Interest": {
+        "n": 41771,
+        "mean": 1.7865385384735437,
+        "std": 0.7677158447090491,
+        "median": 1.8847846984863281,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Intoxication_Altered_States_of_Consciousness": {
+        "n": 41771,
+        "mean": 0.041185241633343465,
+        "std": 0.17359543923967322,
+        "median": 0.013855967670679092,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Jealousy_and_Envy": {
+        "n": 41771,
+        "mean": 0.019013589597412353,
+        "std": 0.12899576652046404,
+        "median": 0.007436569780111313,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Longing": {
+        "n": 41771,
+        "mean": 0.2991782413708893,
+        "std": 0.552227950799463,
+        "median": 0.07495743036270142,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Malevolence_Malice": {
+        "n": 41771,
+        "mean": 0.07158804524742576,
+        "std": 0.26028843551721825,
+        "median": 0.024320967495441437,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Pain": {
+        "n": 41771,
+        "mean": 0.2188488721553518,
+        "std": 0.5278775258651864,
+        "median": 0.046892158687114716,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Pleasure_Ecstasy": {
+        "n": 41771,
+        "mean": 0.24935572438098166,
+        "std": 0.47118107732680153,
+        "median": 0.06568154692649841,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Pride": {
+        "n": 41771,
+        "mean": 0.4854512296035264,
+        "std": 0.5091537349788019,
+        "median": 0.35031118988990784,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Relief": {
+        "n": 41771,
+        "mean": 0.37129117832891345,
+        "std": 0.573994914643393,
+        "median": 0.1804882436990738,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Sadness": {
+        "n": 41771,
+        "mean": 0.3843280032150617,
+        "std": 0.6747461592838988,
+        "median": 0.12593452632427216,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Sexual_Lust": {
+        "n": 41771,
+        "mean": 0.04530235476415972,
+        "std": 0.19380008735741228,
+        "median": 0.008891971781849861,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Shame": {
+        "n": 41771,
+        "mean": 0.07970753493091284,
+        "std": 0.3616866825606683,
+        "median": 0.017719822004437447,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Sourness": {
+        "n": 41771,
+        "mean": 0.2377964574049994,
+        "std": 0.4644324198697389,
+        "median": 0.07998908311128616,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Teasing": {
+        "n": 41771,
+        "mean": 0.4420509766136194,
+        "std": 0.6274631188452842,
+        "median": 0.14388282597064972,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Thankfulness_Gratitude": {
+        "n": 41771,
+        "mean": 0.20132413977663988,
+        "std": 0.522520230587032,
+        "median": 0.06507734954357147,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Triumph": {
+        "n": 41771,
+        "mean": 0.22200977286571452,
+        "std": 0.45180299208933905,
+        "median": 0.08069995790719986,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_AGEV_reg": {
+        "n": 41771,
+        "mean": 3.020911238445281,
+        "std": 0.38951053509542005,
+        "median": 3.0383498668670654,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_AROU_reg": {
+        "n": 41771,
+        "mean": 2.6895014140345137,
+        "std": 0.7788880636665132,
+        "median": 2.6269962787628174,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_ARSH_reg": {
+        "n": 41771,
+        "mean": 2.8826198915294716,
+        "std": 0.33462624304241495,
+        "median": 2.876923084259033,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_ATCK_reg": {
+        "n": 41771,
+        "mean": 2.7962061001566645,
+        "std": 0.6722342209773582,
+        "median": 2.8182337284088135,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_BKGN_reg": {
+        "n": 41771,
+        "mean": 3.636118479743174,
+        "std": 0.3697412894971671,
+        "median": 3.686352252960205,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_BRGT_reg": {
+        "n": 41771,
+        "mean": 3.1371012292683718,
+        "std": 0.49159643360525973,
+        "median": 3.103572130203247,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_CHNK_reg": {
+        "n": 41771,
+        "mean": 2.622979966531677,
+        "std": 0.5618592346858986,
+        "median": 2.6999356746673584,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_CLRT_reg": {
+        "n": 41771,
+        "mean": 3.4758616533284785,
+        "std": 0.6837418347989787,
+        "median": 3.5908610820770264,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_COGL_reg": {
+        "n": 41771,
+        "mean": 1.6665981590064418,
+        "std": 0.7554726293087926,
+        "median": 1.5767321586608887,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_DARC_reg": {
+        "n": 41771,
+        "mean": 2.8921668999800865,
+        "std": 0.44502428278294903,
+        "median": 2.9108259677886963,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_DFLU_reg": {
+        "n": 41771,
+        "mean": 1.2175062017410556,
+        "std": 0.9825853698715568,
+        "median": 1.0156009197235107,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_EMPH_reg": {
+        "n": 41771,
+        "mean": 3.175615894722154,
+        "std": 0.7722032867023677,
+        "median": 3.245647430419922,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_ESTH_reg": {
+        "n": 41771,
+        "mean": 3.6272324046200266,
+        "std": 0.49907523901172324,
+        "median": 3.645112991333008,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_EXPL_reg": {
+        "n": 41771,
+        "mean": 0.048056249123702696,
+        "std": 0.0853041161943195,
+        "median": 0.04010896384716034,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_FOCS_reg": {
+        "n": 41771,
+        "mean": 3.753280739140292,
+        "std": 0.5847415592847899,
+        "median": 3.871352434158325,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_FULL_reg": {
+        "n": 41771,
+        "mean": 3.1087616149405037,
+        "std": 0.3960321290046263,
+        "median": 3.0900933742523193,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_GEND_reg": {
+        "n": 41771,
+        "mean": 3.322063838775119,
+        "std": 1.602313006429959,
+        "median": 3.6666879653930664,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_HARM_reg": {
+        "n": 41771,
+        "mean": 3.383212828420131,
+        "std": 0.505547325295511,
+        "median": 3.4548957347869873,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_METL_reg": {
+        "n": 41771,
+        "mean": 1.591507256200307,
+        "std": 0.4801619916757543,
+        "median": 1.547465205192566,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_RANG_reg": {
+        "n": 41771,
+        "mean": 2.899239905389199,
+        "std": 0.6723437605529187,
+        "median": 2.849695920944214,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_RCQL_reg": {
+        "n": 41771,
+        "mean": 3.7589561311215363,
+        "std": 0.4474883491442612,
+        "median": 3.7502212524414062,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_REGS_reg": {
+        "n": 41771,
+        "mean": 2.3112609447885384,
+        "std": 1.1905746897698177,
+        "median": 1.991783618927002,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_RESP_reg": {
+        "n": 41771,
+        "mean": 2.330062977843184,
+        "std": 0.6417036556723297,
+        "median": 2.2198781967163086,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_ROUG_reg": {
+        "n": 41771,
+        "mean": 1.8711757576992718,
+        "std": 0.7193314994489688,
+        "median": 1.823014736175537,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_R_CHST_reg": {
+        "n": 41771,
+        "mean": 2.853785513921156,
+        "std": 0.7249308448242756,
+        "median": 2.920123338699341,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_R_HEAD_reg": {
+        "n": 41771,
+        "mean": 2.2819115099946647,
+        "std": 0.7496430295622164,
+        "median": 2.22385311126709,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_R_MASK_reg": {
+        "n": 41771,
+        "mean": 2.7775054389766467,
+        "std": 0.5004535956962658,
+        "median": 2.7943098545074463,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_R_MIXD_reg": {
+        "n": 41771,
+        "mean": 3.2247723427375012,
+        "std": 0.4446622658993254,
+        "median": 3.259356737136841,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_R_NASL_reg": {
+        "n": 41771,
+        "mean": 1.904214290891807,
+        "std": 0.3972298987052981,
+        "median": 1.9133273363113403,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_R_ORAL_reg": {
+        "n": 41771,
+        "mean": 3.427710543307599,
+        "std": 0.34504989886055293,
+        "median": 3.405029296875,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_R_THRT_reg": {
+        "n": 41771,
+        "mean": 2.6512484667456486,
+        "std": 0.4877775760194506,
+        "median": 2.577575922012329,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_SMTH_reg": {
+        "n": 41771,
+        "mean": 3.1774546383159006,
+        "std": 0.5792741437035597,
+        "median": 3.2088205814361572,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_STNC_reg": {
+        "n": 41771,
+        "mean": 3.0709645864300135,
+        "std": 0.7598854698442187,
+        "median": 3.1010677814483643,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_STRU_reg": {
+        "n": 41771,
+        "mean": 3.3000414402840317,
+        "std": 0.7625502173839538,
+        "median": 3.4003236293792725,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_ASMR_reg": {
+        "n": 41771,
+        "mean": 0.7764910140844289,
+        "std": 0.781165661001178,
+        "median": 0.6445040702819824,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_AUTH_reg": {
+        "n": 41771,
+        "mean": 2.1592598479210454,
+        "std": 0.8855451878343833,
+        "median": 2.165144920349121,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_CART_reg": {
+        "n": 41771,
+        "mean": 0.602394621274524,
+        "std": 0.6872125819575938,
+        "median": 0.46002474427223206,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_CASU_reg": {
+        "n": 41771,
+        "mean": 3.3676922347728198,
+        "std": 0.9984187472378857,
+        "median": 3.3617231845855713,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_CONV_reg": {
+        "n": 41771,
+        "mean": 3.359856485882448,
+        "std": 1.0529451071642655,
+        "median": 3.4511849880218506,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_DRAM_reg": {
+        "n": 41771,
+        "mean": 2.337277170080274,
+        "std": 0.9074053753953663,
+        "median": 2.218568801879883,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_FORM_reg": {
+        "n": 41771,
+        "mean": 1.5530124450444156,
+        "std": 0.8639970772137082,
+        "median": 1.5389535427093506,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_MONO_reg": {
+        "n": 41771,
+        "mean": 2.3815789981162703,
+        "std": 0.8666749555691186,
+        "median": 2.330592632293701,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_NARR_reg": {
+        "n": 41771,
+        "mean": 2.0528087878594814,
+        "std": 1.044894305181043,
+        "median": 2.0775980949401855,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_NEWS_reg": {
+        "n": 41771,
+        "mean": 0.5824761009286966,
+        "std": 0.5275778217512418,
+        "median": 0.48746055364608765,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_PLAY_reg": {
+        "n": 41771,
+        "mean": 1.711465959163799,
+        "std": 1.0359544600794954,
+        "median": 1.6592018604278564,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_RANT_reg": {
+        "n": 41771,
+        "mean": 0.6456469700503331,
+        "std": 0.6838909482316428,
+        "median": 0.5569995641708374,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_STRY_reg": {
+        "n": 41771,
+        "mean": 2.018834283835921,
+        "std": 0.7370856620669552,
+        "median": 2.07234525680542,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_TECH_reg": {
+        "n": 41771,
+        "mean": 1.3761730977859965,
+        "std": 0.8400301141840938,
+        "median": 1.3945592641830444,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_WHIS_reg": {
+        "n": 41771,
+        "mean": 0.5349077543413705,
+        "std": 0.7028576064505009,
+        "median": 0.3556109070777893,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_TEMP_reg": {
+        "n": 41771,
+        "mean": 2.9093197775247814,
+        "std": 0.6090663353914094,
+        "median": 2.9404165744781494,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_TENS_reg": {
+        "n": 41771,
+        "mean": 2.249465981618625,
+        "std": 0.6594969244487779,
+        "median": 2.1536073684692383,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_VALN_reg": {
+        "n": 41771,
+        "mean": 2.894577489810121,
+        "std": 0.8095307312497951,
+        "median": 2.9364356994628906,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_VALS_reg": {
+        "n": 41771,
+        "mean": 2.8393897591732866,
+        "std": 0.3738254078900975,
+        "median": 2.8539464473724365,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_VFLX_reg": {
+        "n": 41771,
+        "mean": 2.907938642757082,
+        "std": 0.24820900003393082,
+        "median": 2.9235239028930664,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_VOLT_reg": {
+        "n": 41771,
+        "mean": 1.8279002486770473,
+        "std": 0.5442287765643837,
+        "median": 1.8159499168395996,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_VULN_reg": {
+        "n": 41771,
+        "mean": 2.3681173865126404,
+        "std": 0.8596000295634191,
+        "median": 2.289294481277466,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_WARM_reg": {
+        "n": 41771,
+        "mean": 3.2030226890260725,
+        "std": 0.3964414417449473,
+        "median": 3.227367639541626,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "genuineness_0_6": {
+        "n": 41771,
+        "mean": 4.5129958828660355,
+        "std": 0.5120092865798752,
+        "median": 4.507347106933594,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "blend_0_10": {
+        "n": 41771,
+        "mean": 8.182850176772474,
+        "std": 0.8018310407857945,
+        "median": 8.236586570739746,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "R_quality": {
+        "n": 41771,
+        "mean": 0.9802754958387662,
+        "std": 0.27774221348102524,
+        "median": 0.9515439867973328,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:Age": {
+        "n": 41771,
+        "mean": 2.9828377730663016,
+        "std": 0.5804954361919186,
+        "median": 3.1825852394104004,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:Arousal": {
+        "n": 41771,
+        "mean": 1.6448407672355092,
+        "std": 0.7104569262172149,
+        "median": 1.669643521308899,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:Authenticity": {
+        "n": 41771,
+        "mean": 2.8991327747809263,
+        "std": 0.26940360317806905,
+        "median": 2.896702289581299,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:Background_Noise": {
+        "n": 41771,
+        "mean": 0.4185435862953665,
+        "std": 0.35703535542402515,
+        "median": 0.3831409811973572,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:Confident_vs._Hesitant": {
+        "n": 41771,
+        "mean": 1.1688868199456581,
+        "std": 0.47635837167743394,
+        "median": 1.1726073026657104,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:Gender": {
+        "n": 41771,
+        "mean": 0.15705848077911966,
+        "std": 0.8700250081061531,
+        "median": 0.08788049966096878,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:High-Pitched_vs._Low-Pitched": {
+        "n": 41771,
+        "mean": 1.5079146181660084,
+        "std": 0.48841539335731127,
+        "median": 1.622934103012085,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:Monotone_vs._Expressive": {
+        "n": 41771,
+        "mean": 1.8382833103467897,
+        "std": 0.755328604952658,
+        "median": 1.9323590993881226,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:Recording_Quality": {
+        "n": 41771,
+        "mean": 2.420729398514803,
+        "std": 0.3964289059116064,
+        "median": 2.461747646331787,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:Serious_vs._Humorous": {
+        "n": 41771,
+        "mean": 0.9504065844203264,
+        "std": 0.4933228597201335,
+        "median": 0.9240079522132874,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:Soft_vs._Harsh": {
+        "n": 41771,
+        "mean": 0.36920135220274986,
+        "std": 0.3147801688854874,
+        "median": 0.36176198720932007,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:Submissive_vs._Dominant": {
+        "n": 41771,
+        "mean": 0.3905027737927607,
+        "std": 0.32690594123824346,
+        "median": 0.36086031794548035,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:Valence": {
+        "n": 41771,
+        "mean": 0.3428271521617222,
+        "std": 0.7977180672267367,
+        "median": 0.2008480727672577,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:Vulnerable_vs._Emotionally_Detached": {
+        "n": 41771,
+        "mean": 1.190711361426334,
+        "std": 0.47710137753940357,
+        "median": 1.1767855882644653,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:Warm_vs._Cold": {
+        "n": 41771,
+        "mean": 0.21394072529476774,
+        "std": 0.38028163664087505,
+        "median": 0.15172962844371796,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:score_background_quality": {
+        "n": 41771,
+        "mean": 3.4615219450046033,
+        "std": 0.32137858887955756,
+        "median": 3.518141984939575,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:score_content_enjoyment": {
+        "n": 41771,
+        "mean": 4.568993973813615,
+        "std": 0.3665121198351506,
+        "median": 4.674151420593262,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:score_overall_quality": {
+        "n": 41771,
+        "mean": 2.6972871044300764,
+        "std": 0.3889509142934023,
+        "median": 2.7683801651000977,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:score_speech_quality": {
+        "n": 41771,
+        "mean": 1.8972800146734046,
+        "std": 0.09064471778787234,
+        "median": 1.9029312133789062,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "audiobox:CE": {
+        "n": 41771,
+        "mean": 5.285495314455732,
+        "std": 0.8437183760459886,
+        "median": 5.418970584869385,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "audiobox:CU": {
+        "n": 41771,
+        "mean": 6.207195996399119,
+        "std": 0.7705015115810011,
+        "median": 6.370076656341553,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "audiobox:PC": {
+        "n": 41771,
+        "mean": 1.6454663437260013,
+        "std": 0.3294087522971545,
+        "median": 1.5488691329956055,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "audiobox:PQ": {
+        "n": 41771,
+        "mean": 7.035429005278001,
+        "std": 0.74637281855198,
+        "median": 7.142889499664307,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "dnsmos:SIG_raw": {
+        "n": 41771,
+        "mean": 3.6398741854766543,
+        "std": 0.6901954010501395,
+        "median": 3.8647396564483643,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "dnsmos:BAK_raw": {
+        "n": 41771,
+        "mean": 3.8105265102856567,
+        "std": 0.6487512918364855,
+        "median": 3.950813055038452,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "dnsmos:OVRL_raw": {
+        "n": 41771,
+        "mean": 3.267611799730751,
+        "std": 0.7107044749785026,
+        "median": 3.463681936264038,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "dnsmos:SIG": {
+        "n": 41771,
+        "mean": 3.296608972222955,
+        "std": 0.4779959709813732,
+        "median": 3.459775686264038,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "dnsmos:BAK": {
+        "n": 41771,
+        "mean": 3.7442306625769133,
+        "std": 0.4810724579398427,
+        "median": 3.8903136253356934,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "dnsmos:OVRL": {
+        "n": 41771,
+        "mean": 2.928415088730505,
+        "std": 0.5124857882125403,
+        "median": 3.0863049030303955,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "dnsmos:P808_MOS": {
+        "n": 41771,
+        "mean": 3.502976185880905,
+        "std": 0.4905459974390864,
+        "median": 3.6550559997558594,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "burst_count_log1p": {
+        "n": 41771,
+        "mean": 0.4939040557110913,
+        "std": 0.3709814343618562,
+        "median": 0.4559337794780731,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Affection": {
+        "n": 41771,
+        "mean": 0.3688096000192129,
+        "std": 0.5040501627901243,
+        "median": 0.3008996248245239,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Age": {
+        "n": 41771,
+        "mean": 2.975740969772527,
+        "std": 0.4074116442950877,
+        "median": 3.108325481414795,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Amusement": {
+        "n": 41771,
+        "mean": 0.7512334901973604,
+        "std": 0.794984474329965,
+        "median": 0.5353320837020874,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Anger": {
+        "n": 41771,
+        "mean": 0.3037808455049373,
+        "std": 0.4409498458526298,
+        "median": 0.19650384783744812,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Arousal": {
+        "n": 41771,
+        "mean": 1.6143818568157453,
+        "std": 0.7039028757323544,
+        "median": 1.617640495300293,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Astonishment_Surprise": {
+        "n": 41771,
+        "mean": 0.3258335949799307,
+        "std": 0.4026022811522624,
+        "median": 0.28061455488204956,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Authenticity": {
+        "n": 41771,
+        "mean": 2.9628235959603746,
+        "std": 0.20255276536770134,
+        "median": 2.938535213470459,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Awe": {
+        "n": 41771,
+        "mean": 0.14966371252035238,
+        "std": 0.3173944435047671,
+        "median": 0.07906810939311981,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Background_Noise": {
+        "n": 41771,
+        "mean": 0.3946093598886847,
+        "std": 0.27854506279961627,
+        "median": 0.3870503306388855,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Bitterness": {
+        "n": 41771,
+        "mean": 0.23186141100174187,
+        "std": 0.33168297914930367,
+        "median": 0.11395221948623657,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Concentration": {
+        "n": 41771,
+        "mean": 1.5277653136676888,
+        "std": 0.594179416597873,
+        "median": 1.525111198425293,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Confident_vs._Hesitant": {
+        "n": 41771,
+        "mean": 1.3970916664780737,
+        "std": 0.39919650887213076,
+        "median": 1.3423268795013428,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Confusion": {
+        "n": 41771,
+        "mean": 0.22964581549130175,
+        "std": 0.2812937092212438,
+        "median": 0.17346984148025513,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Contemplation": {
+        "n": 41771,
+        "mean": 1.4991574953553553,
+        "std": 0.6533377440804203,
+        "median": 1.5064793825149536,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Contempt": {
+        "n": 41771,
+        "mean": 0.1854290010409897,
+        "std": 0.30255799312380477,
+        "median": 0.11730188876390457,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Contentment": {
+        "n": 41771,
+        "mean": 1.2206127063935395,
+        "std": 0.636299793616948,
+        "median": 1.270530104637146,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Disappointment": {
+        "n": 41771,
+        "mean": 0.3706563680997392,
+        "std": 0.581186522116042,
+        "median": 0.17041441798210144,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Disgust": {
+        "n": 41771,
+        "mean": 0.11875807263336305,
+        "std": 0.18998579848177394,
+        "median": 0.0798371434211731,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Distress": {
+        "n": 41771,
+        "mean": 0.45577625989620885,
+        "std": 0.735383772350112,
+        "median": 0.17718636989593506,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Doubt": {
+        "n": 41771,
+        "mean": 0.4870758705747778,
+        "std": 0.39059167746845314,
+        "median": 0.4202832579612732,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Elation": {
+        "n": 41771,
+        "mean": 0.2899990037681335,
+        "std": 0.4694816077740807,
+        "median": 0.13704031705856323,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Embarrassment": {
+        "n": 41771,
+        "mean": 0.07856871956084341,
+        "std": 0.11836768288545543,
+        "median": 0.05018697679042816,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Emotional_Numbness": {
+        "n": 41771,
+        "mean": 0.11283545371252075,
+        "std": 0.22509181954390678,
+        "median": 0.06690661609172821,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Fatigue_Exhaustion": {
+        "n": 41771,
+        "mean": 0.41215248439499874,
+        "std": 0.5125557529006483,
+        "median": 0.23356319963932037,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Fear": {
+        "n": 41771,
+        "mean": 0.11103293422882202,
+        "std": 0.2008405679699821,
+        "median": 0.05748879909515381,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Gender": {
+        "n": 41771,
+        "mean": 0.18793740241643514,
+        "std": 0.8370113104746486,
+        "median": 0.03184564784169197,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Helplessness": {
+        "n": 41771,
+        "mean": 0.3944780879640401,
+        "std": 0.5878628397507556,
+        "median": 0.17059877514839172,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:High-Pitched_vs._Low-Pitched": {
+        "n": 41771,
+        "mean": 1.5529487839403449,
+        "std": 0.4159515674985354,
+        "median": 1.5394233465194702,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Hope_Enthusiasm_Optimism": {
+        "n": 41771,
+        "mean": 0.8582387628668611,
+        "std": 0.6052278898352182,
+        "median": 0.824928343296051,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Impatience_and_Irritability": {
+        "n": 41771,
+        "mean": 0.4206581783432181,
+        "std": 0.5479500658589557,
+        "median": 0.2648088335990906,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Infatuation": {
+        "n": 41771,
+        "mean": 0.04577395677973953,
+        "std": 0.12145416084981475,
+        "median": 0.03501369059085846,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Interest": {
+        "n": 41771,
+        "mean": 1.8381444093710657,
+        "std": 0.6841740807043118,
+        "median": 1.8542535305023193,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Intoxication_Altered_States_of_Consciousness": {
+        "n": 41771,
+        "mean": 0.023286295587833315,
+        "std": 0.12293494869618794,
+        "median": 0.013221676461398602,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Jealousy_&_Envy": {
+        "n": 41771,
+        "mean": 0.023530286675660726,
+        "std": 0.07777902427402004,
+        "median": 0.019609808921813965,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Longing": {
+        "n": 41771,
+        "mean": 0.18571197188046518,
+        "std": 0.2917327900220171,
+        "median": 0.11009252071380615,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Malevolence_Malice": {
+        "n": 41771,
+        "mean": 0.1111487599928135,
+        "std": 0.1919844474787902,
+        "median": 0.07319219410419464,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Monotone_vs._Expressive": {
+        "n": 41771,
+        "mean": 1.925535730303942,
+        "std": 0.6917382262033205,
+        "median": 1.938165545463562,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Pain": {
+        "n": 41771,
+        "mean": 0.16027776511502975,
+        "std": 0.3115691859584232,
+        "median": 0.05229118466377258,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Pleasure_Ecstasy": {
+        "n": 41771,
+        "mean": 0.131286743026162,
+        "std": 0.30257684371311966,
+        "median": 0.04792333021759987,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Pride": {
+        "n": 41771,
+        "mean": 0.42238341614137387,
+        "std": 0.36852476941208884,
+        "median": 0.39196789264678955,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Recording_Quality": {
+        "n": 41771,
+        "mean": 2.444534016218873,
+        "std": 0.32018697040736216,
+        "median": 2.4674956798553467,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Relief": {
+        "n": 41771,
+        "mean": 0.26798295812987977,
+        "std": 0.33546801591203246,
+        "median": 0.20186321437358856,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Sadness": {
+        "n": 41771,
+        "mean": 0.28528793964146426,
+        "std": 0.5056046307001999,
+        "median": 0.11218234896659851,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Serious_vs._Humorous": {
+        "n": 41771,
+        "mean": 1.1056320906506896,
+        "std": 0.5573976538967456,
+        "median": 0.9945855140686035,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Sexual_Lust": {
+        "n": 41771,
+        "mean": 0.043679901741373095,
+        "std": 0.10807741135189727,
+        "median": 0.03289881348609924,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Shame": {
+        "n": 41771,
+        "mean": 0.06884423226917295,
+        "std": 0.1250254794094695,
+        "median": 0.04865377023816109,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Soft_vs._Harsh": {
+        "n": 41771,
+        "mean": 0.38897404057176627,
+        "std": 0.3642437215046532,
+        "median": 0.3949451744556427,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Sourness": {
+        "n": 41771,
+        "mean": 0.2255348957584113,
+        "std": 0.3473802380404185,
+        "median": 0.1149749904870987,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Submissive_vs._Dominant": {
+        "n": 41771,
+        "mean": 0.4604888897385071,
+        "std": 0.3174664802386347,
+        "median": 0.4238559901714325,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Teasing": {
+        "n": 41771,
+        "mean": 0.38762270563008683,
+        "std": 0.4255243521805032,
+        "median": 0.2821769118309021,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Thankfulness_Gratitude": {
+        "n": 41771,
+        "mean": 0.21667475833837738,
+        "std": 0.30897555624915046,
+        "median": 0.16749301552772522,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Triumph": {
+        "n": 41771,
+        "mean": 0.1545257876618318,
+        "std": 0.24237303104199684,
+        "median": 0.09221671521663666,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Valence": {
+        "n": 41771,
+        "mean": 0.03372015289770926,
+        "std": 0.6537952506943431,
+        "median": 0.005689852871000767,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Vulnerable_vs._Emotionally_Detached": {
+        "n": 41771,
+        "mean": 1.280934291722104,
+        "std": 0.426071478245813,
+        "median": 1.2769867181777954,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Warm_vs._Cold": {
+        "n": 41771,
+        "mean": 0.18980651222694045,
+        "std": 0.37021492613299806,
+        "median": 0.15995754301548004,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:duration": {
+        "n": 41771,
+        "mean": 9.07769038316589,
+        "std": 5.878617427762896,
+        "median": 7.379941940307617,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:score_background_quality": {
+        "n": 41771,
+        "mean": 3.431447994072315,
+        "std": 0.2436035239292025,
+        "median": 3.455475330352783,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:score_content_enjoyment": {
+        "n": 41771,
+        "mean": 4.738010189782149,
+        "std": 0.1730159610328995,
+        "median": 4.736170768737793,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:score_overall_quality": {
+        "n": 41771,
+        "mean": 2.670256455207567,
+        "std": 0.31643179034671653,
+        "median": 2.6959779262542725,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:score_speech_quality": {
+        "n": 41771,
+        "mean": 1.9626567414309712,
+        "std": 0.07947066273295175,
+        "median": 1.9537161588668823,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:talking_speed": {
+        "n": 41771,
+        "mean": 12.831136068889869,
+        "std": 4.950366479712446,
+        "median": 12.896777153015137,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "characters_per_second": {
+        "n": 41771,
+        "mean": 15.794764721009168,
+        "std": 8.934951386832884,
+        "median": 15.380062103271484,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "estimated_burst_count": {
+        "n": 41771,
+        "mean": 1.1417679079586094,
+        "std": 3.5167167881685075,
+        "median": 0.5796454548835754,
+        "z_defined": true,
+        "normalization": "mean_std"
+      }
+    },
+    "emilia_multilingual": {
+      "emo_Affection": {
+        "n": 38494,
+        "mean": 0.19148096689038563,
+        "std": 0.2813873636824124,
+        "median": 0.09907805919647217,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Amusement": {
+        "n": 38494,
+        "mean": 0.5151599210171481,
+        "std": 0.5424804231938786,
+        "median": 0.3218366503715515,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Anger": {
+        "n": 38494,
+        "mean": 0.11012427576739256,
+        "std": 0.2285544220682448,
+        "median": 0.054679062217473984,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Astonishment_Surprise": {
+        "n": 38494,
+        "mean": 0.1588436872969097,
+        "std": 0.307716499993953,
+        "median": 0.05127544701099396,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Awe": {
+        "n": 38494,
+        "mean": 0.0694886054841396,
+        "std": 0.17126974221425295,
+        "median": 0.029221193864941597,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Bitterness": {
+        "n": 38494,
+        "mean": 0.08154869956903318,
+        "std": 0.20324637165645018,
+        "median": 0.03508078679442406,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Concentration": {
+        "n": 38494,
+        "mean": 2.2493966094042013,
+        "std": 0.3537080714773344,
+        "median": 2.2915701866149902,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Confusion": {
+        "n": 38494,
+        "mean": 0.18570884719695854,
+        "std": 0.3035792779432867,
+        "median": 0.06772099435329437,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Contemplation": {
+        "n": 38494,
+        "mean": 1.5902061454123653,
+        "std": 0.5083713754265727,
+        "median": 1.5823497772216797,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Contempt": {
+        "n": 38494,
+        "mean": 0.08016363177480447,
+        "std": 0.18691871342741176,
+        "median": 0.03959435224533081,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Contentment": {
+        "n": 38494,
+        "mean": 1.5199602188623003,
+        "std": 0.42357340646585057,
+        "median": 1.6137816905975342,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Disappointment": {
+        "n": 38494,
+        "mean": 0.15922325153190783,
+        "std": 0.22989313351860546,
+        "median": 0.09525766223669052,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Disgust": {
+        "n": 38494,
+        "mean": 0.0393949758897429,
+        "std": 0.10612105512192142,
+        "median": 0.021390844136476517,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Distress": {
+        "n": 38494,
+        "mean": 0.15576519755157964,
+        "std": 0.19768004927520139,
+        "median": 0.11410482972860336,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Doubt": {
+        "n": 38494,
+        "mean": 0.47620227202877635,
+        "std": 0.42691209689815857,
+        "median": 0.3621656596660614,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Elation": {
+        "n": 38494,
+        "mean": 0.16407694963692548,
+        "std": 0.30893978550829454,
+        "median": 0.0646786242723465,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Embarrassment": {
+        "n": 38494,
+        "mean": 0.026177847558147792,
+        "std": 0.052768951169043586,
+        "median": 0.01901998743414879,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Emotional_Numbness": {
+        "n": 38494,
+        "mean": 0.15339834927076443,
+        "std": 0.1378341325397737,
+        "median": 0.11629738658666611,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Fatigue_Exhaustion": {
+        "n": 38494,
+        "mean": 0.12001491205050002,
+        "std": 0.18690915547549397,
+        "median": 0.07993651181459427,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Fear": {
+        "n": 38494,
+        "mean": 0.032308096688579674,
+        "std": 0.0676487206561798,
+        "median": 0.026632776483893394,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Helplessness": {
+        "n": 38494,
+        "mean": 0.09637530917206354,
+        "std": 0.15522198134199194,
+        "median": 0.06587839126586914,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Hope_Enthusiasm_Optimism": {
+        "n": 38494,
+        "mean": 0.9246939913960629,
+        "std": 0.4477772940367239,
+        "median": 0.8281359672546387,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Impatience_and_Irritability": {
+        "n": 38494,
+        "mean": 0.2307130712141062,
+        "std": 0.3311305154200484,
+        "median": 0.1240517720580101,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Infatuation": {
+        "n": 38494,
+        "mean": -0.005917880882539973,
+        "std": 0.03854835530192394,
+        "median": -0.008753379806876183,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Interest": {
+        "n": 38494,
+        "mean": 2.189010612981322,
+        "std": 0.3232589592990177,
+        "median": 2.188293933868408,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Intoxication_Altered_States_of_Consciousness": {
+        "n": 38494,
+        "mean": -0.001079732309686717,
+        "std": 0.03539496072154577,
+        "median": -0.0035257642157375813,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Jealousy_and_Envy": {
+        "n": 38494,
+        "mean": 0.001251186243916045,
+        "std": 0.014186159710597052,
+        "median": 0.0013421948533505201,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Longing": {
+        "n": 38494,
+        "mean": 0.0774020142480794,
+        "std": 0.13485889505156154,
+        "median": 0.050120286643505096,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Malevolence_Malice": {
+        "n": 38494,
+        "mean": 0.023560478578701676,
+        "std": 0.06269377309503545,
+        "median": 0.018184036016464233,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Pain": {
+        "n": 38494,
+        "mean": 0.01690429791659529,
+        "std": 0.06083341914135868,
+        "median": 0.012067316100001335,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Pleasure_Ecstasy": {
+        "n": 38494,
+        "mean": 0.040130767490446334,
+        "std": 0.12715736278301143,
+        "median": 0.01321408897638321,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Pride": {
+        "n": 38494,
+        "mean": 0.5751065705493265,
+        "std": 0.3257189439773026,
+        "median": 0.5087218880653381,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Relief": {
+        "n": 38494,
+        "mean": 0.13879947311592283,
+        "std": 0.19821649515913584,
+        "median": 0.09733980894088745,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Sadness": {
+        "n": 38494,
+        "mean": 0.0664012512822649,
+        "std": 0.13354291534884194,
+        "median": 0.04383165389299393,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Sexual_Lust": {
+        "n": 38494,
+        "mean": -0.008234762935073579,
+        "std": 0.029936878604126884,
+        "median": -0.007634367328137159,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Shame": {
+        "n": 38494,
+        "mean": 0.00815587044049087,
+        "std": 0.03119260453290801,
+        "median": 0.0064615486189723015,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Sourness": {
+        "n": 38494,
+        "mean": 0.1099711043240724,
+        "std": 0.1885749895666362,
+        "median": 0.06394428014755249,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Teasing": {
+        "n": 38494,
+        "mean": 0.21349335474040226,
+        "std": 0.36135517507574455,
+        "median": 0.07032622396945953,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Thankfulness_Gratitude": {
+        "n": 38494,
+        "mean": 0.0850853702586324,
+        "std": 0.2663455254776654,
+        "median": 0.03537357226014137,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "emo_Triumph": {
+        "n": 38494,
+        "mean": 0.1325122445280168,
+        "std": 0.2192335593878288,
+        "median": 0.06419945508241653,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_AGEV_reg": {
+        "n": 38494,
+        "mean": 3.219280480310354,
+        "std": 0.34910550729171536,
+        "median": 3.2155351638793945,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_AROU_reg": {
+        "n": 38494,
+        "mean": 2.616866454942732,
+        "std": 0.4773611916969468,
+        "median": 2.586291551589966,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_ARSH_reg": {
+        "n": 38494,
+        "mean": 2.94369009710841,
+        "std": 0.20587109122805963,
+        "median": 2.9265565872192383,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_ATCK_reg": {
+        "n": 38494,
+        "mean": 3.0225630298418684,
+        "std": 0.3122005861330653,
+        "median": 3.0188302993774414,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_BKGN_reg": {
+        "n": 38494,
+        "mean": 3.5624526281966764,
+        "std": 0.2563832997828961,
+        "median": 3.579941749572754,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_BRGT_reg": {
+        "n": 38494,
+        "mean": 3.1976932529635866,
+        "std": 0.40325866105849667,
+        "median": 3.1415693759918213,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_CHNK_reg": {
+        "n": 38494,
+        "mean": 2.7615849350563066,
+        "std": 0.37499155820301455,
+        "median": 2.787580728530884,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_CLRT_reg": {
+        "n": 38494,
+        "mean": 3.907186512291298,
+        "std": 0.42824009546340414,
+        "median": 3.9361894130706787,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_COGL_reg": {
+        "n": 38494,
+        "mean": 1.7377539354393867,
+        "std": 0.758069702299369,
+        "median": 1.667327642440796,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_DARC_reg": {
+        "n": 38494,
+        "mean": 3.039331301624833,
+        "std": 0.21742456371048172,
+        "median": 3.0332067012786865,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_DFLU_reg": {
+        "n": 38494,
+        "mean": 1.3530452238656525,
+        "std": 0.9839434238505026,
+        "median": 1.3085846900939941,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_EMPH_reg": {
+        "n": 38494,
+        "mean": 3.28692281644747,
+        "std": 0.3640339385277569,
+        "median": 3.2579221725463867,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_ESTH_reg": {
+        "n": 38494,
+        "mean": 3.6396873176652202,
+        "std": 0.3665272931868735,
+        "median": 3.614694833755493,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_EXPL_reg": {
+        "n": 38494,
+        "mean": -0.001721424192284817,
+        "std": 0.05061671992056507,
+        "median": -0.0027409708127379417,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_FOCS_reg": {
+        "n": 38494,
+        "mean": 3.9084461229574763,
+        "std": 0.2858406377365505,
+        "median": 3.92337703704834,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_FULL_reg": {
+        "n": 38494,
+        "mean": 3.258355091731381,
+        "std": 0.326030102315644,
+        "median": 3.2281670570373535,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_GEND_reg": {
+        "n": 38494,
+        "mean": 3.8163313520345965,
+        "std": 1.7238934674706745,
+        "median": 4.77086067199707,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_HARM_reg": {
+        "n": 38494,
+        "mean": 3.5560163348230343,
+        "std": 0.3111567850664168,
+        "median": 3.5583865642547607,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_METL_reg": {
+        "n": 38494,
+        "mean": 1.758959862486557,
+        "std": 0.2560730787626865,
+        "median": 1.7485343217849731,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_RANG_reg": {
+        "n": 38494,
+        "mean": 2.8736120839704133,
+        "std": 0.5481533340984502,
+        "median": 2.8270599842071533,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_RCQL_reg": {
+        "n": 38494,
+        "mean": 3.679008640189812,
+        "std": 0.3700020843583243,
+        "median": 3.6728594303131104,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_REGS_reg": {
+        "n": 38494,
+        "mean": 1.9867375341411513,
+        "std": 1.2490342001514454,
+        "median": 1.3526487350463867,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_RESP_reg": {
+        "n": 38494,
+        "mean": 1.8467876358371824,
+        "std": 0.41357479296523386,
+        "median": 1.873113751411438,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_ROUG_reg": {
+        "n": 38494,
+        "mean": 1.8607738106210319,
+        "std": 0.5907582754312478,
+        "median": 1.9461441040039062,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_R_CHST_reg": {
+        "n": 38494,
+        "mean": 3.210609103491593,
+        "std": 0.676889556308598,
+        "median": 3.4275543689727783,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_R_HEAD_reg": {
+        "n": 38494,
+        "mean": 2.0292830719863333,
+        "std": 0.7202740026600437,
+        "median": 1.783116340637207,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_R_MASK_reg": {
+        "n": 38494,
+        "mean": 2.9063766296946576,
+        "std": 0.4195761013917922,
+        "median": 2.866267442703247,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_R_MIXD_reg": {
+        "n": 38494,
+        "mean": 3.45816871665537,
+        "std": 0.2896649618775978,
+        "median": 3.4685723781585693,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_R_NASL_reg": {
+        "n": 38494,
+        "mean": 1.9567797216383298,
+        "std": 0.25421582709401364,
+        "median": 1.9422050714492798,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_R_ORAL_reg": {
+        "n": 38494,
+        "mean": 3.5701318066813963,
+        "std": 0.32264845661320424,
+        "median": 3.5329205989837646,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_R_THRT_reg": {
+        "n": 38494,
+        "mean": 2.576747008120542,
+        "std": 0.4201090761537734,
+        "median": 2.6247599124908447,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_SMTH_reg": {
+        "n": 38494,
+        "mean": 3.4179856783137073,
+        "std": 0.4695247112037672,
+        "median": 3.4432506561279297,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_STNC_reg": {
+        "n": 38494,
+        "mean": 3.4917311692829966,
+        "std": 0.44031002831491645,
+        "median": 3.508047342300415,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_STRU_reg": {
+        "n": 38494,
+        "mean": 3.821740396411015,
+        "std": 0.5564470576813833,
+        "median": 3.8163235187530518,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_ASMR_reg": {
+        "n": 38494,
+        "mean": 0.3053010798975823,
+        "std": 0.4201689285989344,
+        "median": 0.26751115918159485,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_AUTH_reg": {
+        "n": 38494,
+        "mean": 3.16603941475146,
+        "std": 0.7080052691705055,
+        "median": 3.232428789138794,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_CART_reg": {
+        "n": 38494,
+        "mean": 0.45640440244095454,
+        "std": 0.5335399240381742,
+        "median": 0.3744501769542694,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_CASU_reg": {
+        "n": 38494,
+        "mean": 2.825153117450425,
+        "std": 1.0733007726883796,
+        "median": 2.888245105743408,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_CONV_reg": {
+        "n": 38494,
+        "mean": 3.3582908135036584,
+        "std": 0.8937001567744561,
+        "median": 3.481779098510742,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_DRAM_reg": {
+        "n": 38494,
+        "mean": 1.8787355954725096,
+        "std": 0.6589605958271888,
+        "median": 1.862533450126648,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_FORM_reg": {
+        "n": 38494,
+        "mean": 2.4337884152020974,
+        "std": 0.9538780340295687,
+        "median": 2.4035227298736572,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_MONO_reg": {
+        "n": 38494,
+        "mean": 2.511322896373166,
+        "std": 0.7388180807829187,
+        "median": 2.4871466159820557,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_NARR_reg": {
+        "n": 38494,
+        "mean": 2.852841067888929,
+        "std": 0.9179237503934429,
+        "median": 2.8204450607299805,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_NEWS_reg": {
+        "n": 38494,
+        "mean": 1.2494097726999849,
+        "std": 0.8228610888690714,
+        "median": 1.1288646459579468,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_PLAY_reg": {
+        "n": 38494,
+        "mean": 1.5237871875547142,
+        "std": 0.8069030200684163,
+        "median": 1.491623878479004,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_RANT_reg": {
+        "n": 38494,
+        "mean": 0.5009994177958389,
+        "std": 0.5237288348245381,
+        "median": 0.47725340723991394,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_STRY_reg": {
+        "n": 38494,
+        "mean": 2.1347718202435098,
+        "std": 0.5033780463709316,
+        "median": 2.1444778442382812,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_TECH_reg": {
+        "n": 38494,
+        "mean": 2.5238023597699355,
+        "std": 0.7471588667976075,
+        "median": 2.6172510385513306,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_S_WHIS_reg": {
+        "n": 38494,
+        "mean": 0.2290468045642015,
+        "std": 0.3476373354959419,
+        "median": 0.2119811326265335,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_TEMP_reg": {
+        "n": 38494,
+        "mean": 3.0158200481033712,
+        "std": 0.40018021985563784,
+        "median": 3.01545786857605,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_TENS_reg": {
+        "n": 38494,
+        "mean": 2.194087613478706,
+        "std": 0.3057332783690587,
+        "median": 2.160109519958496,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_VALN_reg": {
+        "n": 38494,
+        "mean": 3.127420568048734,
+        "std": 0.43340797659058866,
+        "median": 3.112978935241699,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_VALS_reg": {
+        "n": 38494,
+        "mean": 2.9741772884838724,
+        "std": 0.25215569613977334,
+        "median": 2.9912335872650146,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_VFLX_reg": {
+        "n": 38494,
+        "mean": 2.9350531170657685,
+        "std": 0.1912231624917197,
+        "median": 2.9376657009124756,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_VOLT_reg": {
+        "n": 38494,
+        "mean": 1.5571985954249712,
+        "std": 0.4112290491558711,
+        "median": 1.5174179077148438,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_VULN_reg": {
+        "n": 38494,
+        "mean": 1.5333306159949553,
+        "std": 0.48517016311246963,
+        "median": 1.48642897605896,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "vn_WARM_reg": {
+        "n": 38494,
+        "mean": 3.352646343285755,
+        "std": 0.23285149072207584,
+        "median": 3.3546128273010254,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "genuineness_0_6": {
+        "n": 38494,
+        "mean": 4.446730612878547,
+        "std": 0.43479498603804245,
+        "median": 4.507347106933594,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "blend_0_10": {
+        "n": 38494,
+        "mean": 7.550447770030169,
+        "std": 0.8718999213451946,
+        "median": 7.663264274597168,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "R_quality": {
+        "n": 38494,
+        "mean": 0.7523614984463948,
+        "std": 0.30798833380207424,
+        "median": 0.766588032245636,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:Age": {
+        "n": 38494,
+        "mean": 3.2237577009455456,
+        "std": 0.22318220822320967,
+        "median": 3.267643928527832,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:Arousal": {
+        "n": 38494,
+        "mean": 1.3132189013632563,
+        "std": 0.40415547758121406,
+        "median": 1.2106709480285645,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:Authenticity": {
+        "n": 38494,
+        "mean": 2.733627416229486,
+        "std": 0.13606785981594205,
+        "median": 2.718967914581299,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:Background_Noise": {
+        "n": 38494,
+        "mean": 0.5162092914657039,
+        "std": 0.2955107669976428,
+        "median": 0.559448778629303,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:Confident_vs._Hesitant": {
+        "n": 38494,
+        "mean": 1.364691011540678,
+        "std": 0.3113638193613592,
+        "median": 1.3502018451690674,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:Gender": {
+        "n": 38494,
+        "mean": -0.2533460773642955,
+        "std": 0.9794647101860333,
+        "median": -0.7672944068908691,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:High-Pitched_vs._Low-Pitched": {
+        "n": 38494,
+        "mean": 1.858156090272757,
+        "std": 0.21071858317603667,
+        "median": 1.865609884262085,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:Monotone_vs._Expressive": {
+        "n": 38494,
+        "mean": 1.9448597189576098,
+        "std": 0.4531542673617279,
+        "median": 1.9507277011871338,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:Recording_Quality": {
+        "n": 38494,
+        "mean": 2.301917403566315,
+        "std": 0.3342950611946564,
+        "median": 2.2785696983337402,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:Serious_vs._Humorous": {
+        "n": 38494,
+        "mean": 1.0273662310873364,
+        "std": 0.27476182419209755,
+        "median": 0.9880952835083008,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:Soft_vs._Harsh": {
+        "n": 38494,
+        "mean": 0.32440439779359925,
+        "std": 0.2600252908891055,
+        "median": 0.26413047313690186,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:Submissive_vs._Dominant": {
+        "n": 38494,
+        "mean": 0.38786694009503764,
+        "std": 0.2767333421825497,
+        "median": 0.3550221920013428,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:Valence": {
+        "n": 38494,
+        "mean": 0.09748496713136547,
+        "std": 0.3649574141567051,
+        "median": -0.010091112926602364,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:Vulnerable_vs._Emotionally_Detached": {
+        "n": 38494,
+        "mean": 1.7927588468965567,
+        "std": 0.40233362735243433,
+        "median": 1.7828278541564941,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:Warm_vs._Cold": {
+        "n": 38494,
+        "mean": 0.17958996689591172,
+        "std": 0.2604491228220944,
+        "median": 0.10457391291856766,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:score_background_quality": {
+        "n": 38494,
+        "mean": 3.546217898449328,
+        "std": 0.2081882596746143,
+        "median": 3.5614917278289795,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:score_content_enjoyment": {
+        "n": 38494,
+        "mean": 4.508992246871194,
+        "std": 0.24183916825683513,
+        "median": 4.508028984069824,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:score_overall_quality": {
+        "n": 38494,
+        "mean": 2.84574772884005,
+        "std": 0.20553145335739995,
+        "median": 2.859578847885132,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "eiv_extra:score_speech_quality": {
+        "n": 38494,
+        "mean": 1.8833382071820446,
+        "std": 0.07339659056650821,
+        "median": 1.8863296508789062,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "audiobox:CE": {
+        "n": 38494,
+        "mean": 5.239948547740549,
+        "std": 0.5226717013306436,
+        "median": 5.319687366485596,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "audiobox:CU": {
+        "n": 38494,
+        "mean": 5.714736820852849,
+        "std": 0.6442130545000059,
+        "median": 5.792596817016602,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "audiobox:PC": {
+        "n": 38494,
+        "mean": 1.722160900627637,
+        "std": 0.22569030457377734,
+        "median": 1.681389570236206,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "audiobox:PQ": {
+        "n": 38494,
+        "mean": 6.8730768093897066,
+        "std": 0.6500908786657583,
+        "median": 7.019242286682129,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "dnsmos:SIG_raw": {
+        "n": 38494,
+        "mean": 3.962084631164359,
+        "std": 0.19357800085288296,
+        "median": 3.9862701892852783,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "dnsmos:BAK_raw": {
+        "n": 38494,
+        "mean": 3.9671093820906207,
+        "std": 0.361820477746122,
+        "median": 4.029932022094727,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "dnsmos:OVRL_raw": {
+        "n": 38494,
+        "mean": 3.5626606383887043,
+        "std": 0.27255230226206706,
+        "median": 3.595475196838379,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "dnsmos:SIG": {
+        "n": 38494,
+        "mean": 3.520616395291263,
+        "std": 0.11479982583717105,
+        "median": 3.535142421722412,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "dnsmos:BAK": {
+        "n": 38494,
+        "mean": 3.8902126625307987,
+        "std": 0.24375288543655932,
+        "median": 3.9447219371795654,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "dnsmos:OVRL": {
+        "n": 38494,
+        "mean": 3.154462011410316,
+        "std": 0.18022781097504578,
+        "median": 3.178724765777588,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "dnsmos:P808_MOS": {
+        "n": 38494,
+        "mean": 3.771140467534036,
+        "std": 0.21419325969546055,
+        "median": 3.798553705215454,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "burst_count_log1p": {
+        "n": 38494,
+        "mean": 0.2741041165004848,
+        "std": 0.24767495482944096,
+        "median": 0.19500556588172913,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Affection": {
+        "n": 38494,
+        "mean": 0.27913255623915373,
+        "std": 0.26690737718044255,
+        "median": 0.2575788199901581,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Age": {
+        "n": 38494,
+        "mean": 3.1873691820710297,
+        "std": 0.28748329992522687,
+        "median": 3.2586004734039307,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Amusement": {
+        "n": 38494,
+        "mean": 0.5045601569933678,
+        "std": 0.4908656822261641,
+        "median": 0.40951189398765564,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Anger": {
+        "n": 38494,
+        "mean": 0.1036020989112249,
+        "std": 0.23247823165721057,
+        "median": 0.057769570499658585,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Arousal": {
+        "n": 38494,
+        "mean": 1.4714228536459653,
+        "std": 0.40308873833351005,
+        "median": 1.4206464290618896,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Astonishment_Surprise": {
+        "n": 38494,
+        "mean": 0.17026784665469935,
+        "std": 0.2793539771068113,
+        "median": 0.11600293219089508,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Authenticity": {
+        "n": 38494,
+        "mean": 2.8163651571513126,
+        "std": 0.14627907831643744,
+        "median": 2.793027400970459,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Awe": {
+        "n": 38494,
+        "mean": 0.13001352292781912,
+        "std": 0.14973928890783506,
+        "median": 0.1094677597284317,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Background_Noise": {
+        "n": 38494,
+        "mean": 0.41289752384452433,
+        "std": 0.20521029232598462,
+        "median": 0.4149046838283539,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Bitterness": {
+        "n": 38494,
+        "mean": 0.05503838120940296,
+        "std": 0.15213327677654592,
+        "median": 0.022155344486236572,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Concentration": {
+        "n": 38494,
+        "mean": 2.1558159151163734,
+        "std": 0.34611035319203565,
+        "median": 2.1965348720550537,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Confident_vs._Hesitant": {
+        "n": 38494,
+        "mean": 1.360733491381608,
+        "std": 0.4006963430469855,
+        "median": 1.3130278587341309,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Confusion": {
+        "n": 38494,
+        "mean": 0.16461634124193852,
+        "std": 0.22315418568289694,
+        "median": 0.1237117201089859,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Contemplation": {
+        "n": 38494,
+        "mean": 1.6915572882816854,
+        "std": 0.4101993399725621,
+        "median": 1.6584830284118652,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Contempt": {
+        "n": 38494,
+        "mean": 0.08697149453546976,
+        "std": 0.1560142693949712,
+        "median": 0.05360936373472214,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Contentment": {
+        "n": 38494,
+        "mean": 1.4769799968794803,
+        "std": 0.300099347465791,
+        "median": 1.4719691276550293,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Disappointment": {
+        "n": 38494,
+        "mean": 0.12940469177316855,
+        "std": 0.1990175042054104,
+        "median": 0.09778177738189697,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Disgust": {
+        "n": 38494,
+        "mean": -0.0031580257048487706,
+        "std": 0.10482794978313419,
+        "median": -0.017819106578826904,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Distress": {
+        "n": 38494,
+        "mean": 0.11343510950922386,
+        "std": 0.20889097664650577,
+        "median": 0.07328938692808151,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Doubt": {
+        "n": 38494,
+        "mean": 0.42246584821789146,
+        "std": 0.31308808517746217,
+        "median": 0.3924512267112732,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Elation": {
+        "n": 38494,
+        "mean": 0.12938949359583682,
+        "std": 0.2578086614625475,
+        "median": 0.06850734353065491,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Embarrassment": {
+        "n": 38494,
+        "mean": 0.027608178298045637,
+        "std": 0.0732450708048,
+        "median": 0.023141229525208473,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Emotional_Numbness": {
+        "n": 38494,
+        "mean": 0.06786985884914566,
+        "std": 0.09364991788331117,
+        "median": 0.07106565684080124,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Fatigue_Exhaustion": {
+        "n": 38494,
+        "mean": 0.03598842512292246,
+        "std": 0.20925812595368523,
+        "median": -0.014549246057868004,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Fear": {
+        "n": 38494,
+        "mean": 0.03157473587213123,
+        "std": 0.0771020560298988,
+        "median": 0.02623879909515381,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Gender": {
+        "n": 38494,
+        "mean": -0.15409070234349082,
+        "std": 0.9161614869459073,
+        "median": -0.5786203742027283,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Helplessness": {
+        "n": 38494,
+        "mean": 0.08457792687725353,
+        "std": 0.16634081075690554,
+        "median": 0.057422444224357605,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:High-Pitched_vs._Low-Pitched": {
+        "n": 38494,
+        "mean": 1.8017766606317172,
+        "std": 0.2729477165651927,
+        "median": 1.8190473318099976,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Hope_Enthusiasm_Optimism": {
+        "n": 38494,
+        "mean": 0.9484201742434333,
+        "std": 0.3118344939769155,
+        "median": 0.909703254699707,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Impatience_and_Irritability": {
+        "n": 38494,
+        "mean": 0.20718209387081973,
+        "std": 0.3036903134908834,
+        "median": 0.14623986184597015,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Infatuation": {
+        "n": 38494,
+        "mean": -0.01343787567215426,
+        "std": 0.06949334346593168,
+        "median": -0.016955886036157608,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Interest": {
+        "n": 38494,
+        "mean": 2.2437730302473176,
+        "std": 0.30327198007369527,
+        "median": 2.233522653579712,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Intoxication_Altered_States_of_Consciousness": {
+        "n": 38494,
+        "mean": -0.01714241801301744,
+        "std": 0.0918270908323475,
+        "median": -0.0194011852145195,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Jealousy_&_Envy": {
+        "n": 38494,
+        "mean": 0.02276170536184358,
+        "std": 0.0638756466259706,
+        "median": 0.023516058921813965,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Longing": {
+        "n": 38494,
+        "mean": 0.027780771249299507,
+        "std": 0.12076284819397964,
+        "median": 0.013412833213806152,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Malevolence_Malice": {
+        "n": 38494,
+        "mean": 0.027720270713216113,
+        "std": 0.0941959143581579,
+        "median": 0.013723480515182018,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Monotone_vs._Expressive": {
+        "n": 38494,
+        "mean": 1.855389358557967,
+        "std": 0.4787636842833644,
+        "median": 1.8263287544250488,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Pain": {
+        "n": 38494,
+        "mean": -0.02237483416138398,
+        "std": 0.08495676210748103,
+        "median": -0.03364631533622742,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Pleasure_Ecstasy": {
+        "n": 38494,
+        "mean": 0.04539917786346297,
+        "std": 0.141255062588932,
+        "median": 0.017332524061203003,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Pride": {
+        "n": 38494,
+        "mean": 0.5641296269156199,
+        "std": 0.23732653971933146,
+        "median": 0.5739603042602539,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Recording_Quality": {
+        "n": 38494,
+        "mean": 2.363703067202862,
+        "std": 0.2914430390072653,
+        "median": 2.3482956886291504,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Relief": {
+        "n": 38494,
+        "mean": 0.12758803133339722,
+        "std": 0.18800393383497485,
+        "median": 0.11412398517131805,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Sadness": {
+        "n": 38494,
+        "mean": 0.01823249668072697,
+        "std": 0.12953947779876135,
+        "median": 0.004616037011146545,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Serious_vs._Humorous": {
+        "n": 38494,
+        "mean": 0.9215131972970086,
+        "std": 0.38827958492222664,
+        "median": 0.8553113341331482,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Sexual_Lust": {
+        "n": 38494,
+        "mean": -0.019688383231819734,
+        "std": 0.07107696647666249,
+        "median": -0.022597316652536392,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Shame": {
+        "n": 38494,
+        "mean": 0.010067165567577472,
+        "std": 0.06255825023162001,
+        "median": 0.011229097843170166,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Soft_vs._Harsh": {
+        "n": 38494,
+        "mean": 0.24397320149152552,
+        "std": 0.25021479369552047,
+        "median": 0.19921332597732544,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Sourness": {
+        "n": 38494,
+        "mean": 0.09800840165680816,
+        "std": 0.17142559526191203,
+        "median": 0.06050858274102211,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Submissive_vs._Dominant": {
+        "n": 38494,
+        "mean": 0.45624228367918646,
+        "std": 0.2225057183305914,
+        "median": 0.4420866370201111,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Teasing": {
+        "n": 38494,
+        "mean": 0.20904908521758617,
+        "std": 0.3011059331927348,
+        "median": 0.1517762839794159,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Thankfulness_Gratitude": {
+        "n": 38494,
+        "mean": 0.08887315570025663,
+        "std": 0.20001388121304053,
+        "median": 0.0765104815363884,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Triumph": {
+        "n": 38494,
+        "mean": 0.11692885786717654,
+        "std": 0.14615178136182777,
+        "median": 0.09221671521663666,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Valence": {
+        "n": 38494,
+        "mean": -0.07324063830072924,
+        "std": 0.31749327410502526,
+        "median": -0.09957609325647354,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Vulnerable_vs._Emotionally_Detached": {
+        "n": 38494,
+        "mean": 1.873236624454222,
+        "std": 0.41124395014441445,
+        "median": 1.9153839349746704,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:Warm_vs._Cold": {
+        "n": 38494,
+        "mean": 0.0694721759512974,
+        "std": 0.27526726633244036,
+        "median": 0.04217736795544624,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:duration": {
+        "n": 38494,
+        "mean": 9.760088998150218,
+        "std": 4.772282563336358,
+        "median": 8.468538284301758,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:score_background_quality": {
+        "n": 38494,
+        "mean": 3.5069112476078934,
+        "std": 0.19389709120270815,
+        "median": 3.5109782218933105,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:score_content_enjoyment": {
+        "n": 38494,
+        "mean": 4.735518599990969,
+        "std": 0.13945341907889894,
+        "median": 4.717005729675293,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:score_overall_quality": {
+        "n": 38494,
+        "mean": 2.829745930418099,
+        "std": 0.1949377285918409,
+        "median": 2.8373043537139893,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:score_speech_quality": {
+        "n": 38494,
+        "mean": 1.9578087898565961,
+        "std": 0.06155977608403777,
+        "median": 1.9554251432418823,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "voiceclap_attribute:talking_speed": {
+        "n": 38494,
+        "mean": 13.732447579593641,
+        "std": 3.195940472461156,
+        "median": 13.849501609802246,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "characters_per_second": {
+        "n": 38494,
+        "mean": 12.749608131918453,
+        "std": 4.4028989263633065,
+        "median": 12.128863334655762,
+        "z_defined": true,
+        "normalization": "mean_std"
+      },
+      "estimated_burst_count": {
+        "n": 38494,
+        "mean": 0.3616677811771404,
+        "std": 0.41277201578733635,
+        "median": 0.2153177410364151,
+        "z_defined": true,
+        "normalization": "mean_std"
+      }
+    }
+  }
+}

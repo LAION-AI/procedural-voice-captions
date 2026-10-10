@@ -1,0 +1,2709 @@
+{
+  "schema": "moss-locator-decoding-pilot-v1",
+  "created_date": "2026-10-11",
+  "automated_audio_judge": true,
+  "human_ground_truth": false,
+  "judge_temperature": 0,
+  "scale": "0 to 5; 5 is fully correct/useful",
+  "selection_n": 10,
+  "confirmation_n": 10,
+  "sources_total": {
+    "synthetic_acting": 10,
+    "emilia_multilingual": 10
+  },
+  "generation_grid": {
+    "onset_thresholds": [
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9
+    ],
+    "temperatures": [
+      0,
+      0.3,
+      0.7
+    ],
+    "top_p": 0.9,
+    "top_k": 0,
+    "nms_overlap_fraction": 0.5,
+    "minimum_duration_s": 0.08,
+    "event_count_cap": null,
+    "sampling_repeats": 1
+  },
+  "full_audio_for_both_captioners": true,
+  "whole_caption_prompt_no_interval": true,
+  "burst_caption_prompt_requires_start_and_end": true,
+  "no_script_reference_or_type_label_in_moss_input": true,
+  "weights": {
+    "voice_caption_fidelity": 0.3,
+    "burst_caption_fidelity": 0.25,
+    "timing_accuracy": 0.2,
+    "event_precision": 0.15,
+    "event_recall": 0.1
+  },
+  "empty_burst_caption_policy": "A clip with no proposed captions scores 0 for burst-caption-set fidelity if the judge heard events; 5 if the judge heard no events. Conditional event averages exclude empty clips.",
+  "selected_on_selection_clips": "t50-d00",
+  "selection_results": {
+    "t50-d00": {
+      "n_clips": 10,
+      "n_events": 36,
+      "weighted_score": 3.5679761904761906,
+      "voice_caption_fidelity": 3.7,
+      "burst_caption_fidelity": 3.491904761904762,
+      "timing_accuracy": 3.4,
+      "event_precision": 3.5,
+      "event_recall": 3.8,
+      "burst_fidelity_event_average": 3.361111111111111,
+      "config": {
+        "id": "t50-d00",
+        "threshold": 0.5,
+        "temperature": 0.0,
+        "top_p": null,
+        "top_k": null,
+        "nms_overlap_fraction": 0.5,
+        "min_duration_s": 0.08,
+        "max_events": null
+      }
+    },
+    "t50-d30": {
+      "n_clips": 10,
+      "n_events": 36,
+      "weighted_score": 3.4546428571428573,
+      "voice_caption_fidelity": 3.4,
+      "burst_caption_fidelity": 3.3985714285714286,
+      "timing_accuracy": 3.4,
+      "event_precision": 3.5,
+      "event_recall": 3.8,
+      "burst_fidelity_event_average": 3.3333333333333335,
+      "config": {
+        "id": "t50-d30",
+        "threshold": 0.5,
+        "temperature": 0.3,
+        "top_p": 0.9,
+        "top_k": 0,
+        "nms_overlap_fraction": 0.5,
+        "min_duration_s": 0.08,
+        "max_events": null
+      }
+    },
+    "t50-d70": {
+      "n_clips": 10,
+      "n_events": 36,
+      "weighted_score": 3.559047619047619,
+      "voice_caption_fidelity": 3.7,
+      "burst_caption_fidelity": 3.4561904761904763,
+      "timing_accuracy": 3.4,
+      "event_precision": 3.5,
+      "event_recall": 3.8,
+      "burst_fidelity_event_average": 3.3333333333333335,
+      "config": {
+        "id": "t50-d70",
+        "threshold": 0.5,
+        "temperature": 0.7,
+        "top_p": 0.9,
+        "top_k": 0,
+        "nms_overlap_fraction": 0.5,
+        "min_duration_s": 0.08,
+        "max_events": null
+      }
+    },
+    "t60-d00": {
+      "n_clips": 10,
+      "n_events": 29,
+      "weighted_score": 3.2374404761904763,
+      "voice_caption_fidelity": 3.7,
+      "burst_caption_fidelity": 2.689761904761905,
+      "timing_accuracy": 3,
+      "event_precision": 3.5,
+      "event_recall": 3.3,
+      "burst_fidelity_event_average": 3.3448275862068964,
+      "config": {
+        "id": "t60-d00",
+        "threshold": 0.6,
+        "temperature": 0.0,
+        "top_p": null,
+        "top_k": null,
+        "nms_overlap_fraction": 0.5,
+        "min_duration_s": 0.08,
+        "max_events": null
+      }
+    },
+    "t60-d30": {
+      "n_clips": 10,
+      "n_events": 29,
+      "weighted_score": 3.148482142857143,
+      "voice_caption_fidelity": 3.4,
+      "burst_caption_fidelity": 2.6939285714285717,
+      "timing_accuracy": 3,
+      "event_precision": 3.5,
+      "event_recall": 3.3,
+      "burst_fidelity_event_average": 3.3448275862068964,
+      "config": {
+        "id": "t60-d30",
+        "threshold": 0.6,
+        "temperature": 0.3,
+        "top_p": 0.9,
+        "top_k": 0,
+        "nms_overlap_fraction": 0.5,
+        "min_duration_s": 0.08,
+        "max_events": null
+      }
+    },
+    "t60-d70": {
+      "n_clips": 10,
+      "n_events": 29,
+      "weighted_score": 3.2307738095238094,
+      "voice_caption_fidelity": 3.7,
+      "burst_caption_fidelity": 2.663095238095238,
+      "timing_accuracy": 3,
+      "event_precision": 3.5,
+      "event_recall": 3.3,
+      "burst_fidelity_event_average": 3.3448275862068964,
+      "config": {
+        "id": "t60-d70",
+        "threshold": 0.6,
+        "temperature": 0.7,
+        "top_p": 0.9,
+        "top_k": 0,
+        "nms_overlap_fraction": 0.5,
+        "min_duration_s": 0.08,
+        "max_events": null
+      }
+    },
+    "t70-d00": {
+      "n_clips": 10,
+      "n_events": 17,
+      "weighted_score": 3.302857142857143,
+      "voice_caption_fidelity": 3.7,
+      "burst_caption_fidelity": 2.8314285714285714,
+      "timing_accuracy": 3.1,
+      "event_precision": 3.7,
+      "event_recall": 3.1,
+      "burst_fidelity_event_average": 3.7058823529411766,
+      "config": {
+        "id": "t70-d00",
+        "threshold": 0.7,
+        "temperature": 0.0,
+        "top_p": null,
+        "top_k": null,
+        "nms_overlap_fraction": 0.5,
+        "min_duration_s": 0.08,
+        "max_events": null
+      }
+    },
+    "t70-d30": {
+      "n_clips": 10,
+      "n_events": 17,
+      "weighted_score": 3.192857142857143,
+      "voice_caption_fidelity": 3.4,
+      "burst_caption_fidelity": 2.7514285714285713,
+      "timing_accuracy": 3.1,
+      "event_precision": 3.7,
+      "event_recall": 3.1,
+      "burst_fidelity_event_average": 3.7058823529411766,
+      "config": {
+        "id": "t70-d30",
+        "threshold": 0.7,
+        "temperature": 0.3,
+        "top_p": 0.9,
+        "top_k": 0,
+        "nms_overlap_fraction": 0.5,
+        "min_duration_s": 0.08,
+        "max_events": null
+      }
+    },
+    "t70-d70": {
+      "n_clips": 10,
+      "n_events": 17,
+      "weighted_score": 3.3111904761904762,
+      "voice_caption_fidelity": 3.7,
+      "burst_caption_fidelity": 2.8647619047619046,
+      "timing_accuracy": 3.1,
+      "event_precision": 3.7,
+      "event_recall": 3.1,
+      "burst_fidelity_event_average": 3.6470588235294117,
+      "config": {
+        "id": "t70-d70",
+        "threshold": 0.7,
+        "temperature": 0.7,
+        "top_p": 0.9,
+        "top_k": 0,
+        "nms_overlap_fraction": 0.5,
+        "min_duration_s": 0.08,
+        "max_events": null
+      }
+    },
+    "t80-d00": {
+      "n_clips": 10,
+      "n_events": 7,
+      "weighted_score": 3.3075,
+      "voice_caption_fidelity": 3.7,
+      "burst_caption_fidelity": 2.85,
+      "timing_accuracy": 3.2,
+      "event_precision": 3.9,
+      "event_recall": 2.6,
+      "burst_fidelity_event_average": 3.7142857142857144,
+      "config": {
+        "id": "t80-d00",
+        "threshold": 0.8,
+        "temperature": 0.0,
+        "top_p": null,
+        "top_k": null,
+        "nms_overlap_fraction": 0.5,
+        "min_duration_s": 0.08,
+        "max_events": null
+      }
+    },
+    "t80-d30": {
+      "n_clips": 10,
+      "n_events": 7,
+      "weighted_score": 3.1925,
+      "voice_caption_fidelity": 3.4,
+      "burst_caption_fidelity": 2.75,
+      "timing_accuracy": 3.2,
+      "event_precision": 3.9,
+      "event_recall": 2.6,
+      "burst_fidelity_event_average": 3.5714285714285716,
+      "config": {
+        "id": "t80-d30",
+        "threshold": 0.8,
+        "temperature": 0.3,
+        "top_p": 0.9,
+        "top_k": 0,
+        "nms_overlap_fraction": 0.5,
+        "min_duration_s": 0.08,
+        "max_events": null
+      }
+    },
+    "t80-d70": {
+      "n_clips": 10,
+      "n_events": 7,
+      "weighted_score": 3.3449999999999998,
+      "voice_caption_fidelity": 3.7,
+      "burst_caption_fidelity": 3,
+      "timing_accuracy": 3.2,
+      "event_precision": 3.9,
+      "event_recall": 2.6,
+      "burst_fidelity_event_average": 4,
+      "config": {
+        "id": "t80-d70",
+        "threshold": 0.8,
+        "temperature": 0.7,
+        "top_p": 0.9,
+        "top_k": 0,
+        "nms_overlap_fraction": 0.5,
+        "min_duration_s": 0.08,
+        "max_events": null
+      }
+    },
+    "t90-d00": {
+      "n_clips": 10,
+      "n_events": 1,
+      "weighted_score": 2.775,
+      "voice_caption_fidelity": 3.7,
+      "burst_caption_fidelity": 1.4,
+      "timing_accuracy": 2.6,
+      "event_precision": 3.7,
+      "event_recall": 2.4,
+      "burst_fidelity_event_average": 4,
+      "config": {
+        "id": "t90-d00",
+        "threshold": 0.9,
+        "temperature": 0.0,
+        "top_p": null,
+        "top_k": null,
+        "nms_overlap_fraction": 0.5,
+        "min_duration_s": 0.08,
+        "max_events": null
+      }
+    },
+    "t90-d30": {
+      "n_clips": 10,
+      "n_events": 1,
+      "weighted_score": 2.685,
+      "voice_caption_fidelity": 3.4,
+      "burst_caption_fidelity": 1.4,
+      "timing_accuracy": 2.6,
+      "event_precision": 3.7,
+      "event_recall": 2.4,
+      "burst_fidelity_event_average": 4,
+      "config": {
+        "id": "t90-d30",
+        "threshold": 0.9,
+        "temperature": 0.3,
+        "top_p": 0.9,
+        "top_k": 0,
+        "nms_overlap_fraction": 0.5,
+        "min_duration_s": 0.08,
+        "max_events": null
+      }
+    },
+    "t90-d70": {
+      "n_clips": 10,
+      "n_events": 1,
+      "weighted_score": 2.775,
+      "voice_caption_fidelity": 3.7,
+      "burst_caption_fidelity": 1.4,
+      "timing_accuracy": 2.6,
+      "event_precision": 3.7,
+      "event_recall": 2.4,
+      "burst_fidelity_event_average": 4,
+      "config": {
+        "id": "t90-d70",
+        "threshold": 0.9,
+        "temperature": 0.7,
+        "top_p": 0.9,
+        "top_k": 0,
+        "nms_overlap_fraction": 0.5,
+        "min_duration_s": 0.08,
+        "max_events": null
+      }
+    }
+  },
+  "confirmation_results": {
+    "t50-d00": {
+      "n_clips": 10,
+      "n_events": 74,
+      "weighted_score": 3.5487752525252523,
+      "voice_caption_fidelity": 3.9,
+      "burst_caption_fidelity": 3.43510101010101,
+      "timing_accuracy": 3.3,
+      "event_precision": 3.2,
+      "event_recall": 3.8,
+      "burst_fidelity_event_average": 3.3783783783783785,
+      "config": {
+        "id": "t50-d00",
+        "threshold": 0.5,
+        "temperature": 0.0,
+        "top_p": null,
+        "top_k": null,
+        "nms_overlap_fraction": 0.5,
+        "min_duration_s": 0.08,
+        "max_events": null
+      }
+    },
+    "t50-d30": {
+      "n_clips": 10,
+      "n_events": 74,
+      "weighted_score": 3.5074242424242423,
+      "voice_caption_fidelity": 3.8,
+      "burst_caption_fidelity": 3.3896969696969697,
+      "timing_accuracy": 3.3,
+      "event_precision": 3.2,
+      "event_recall": 3.8,
+      "burst_fidelity_event_average": 3.310810810810811,
+      "config": {
+        "id": "t50-d30",
+        "threshold": 0.5,
+        "temperature": 0.3,
+        "top_p": 0.9,
+        "top_k": 0,
+        "nms_overlap_fraction": 0.5,
+        "min_duration_s": 0.08,
+        "max_events": null
+      }
+    },
+    "t50-d70": {
+      "n_clips": 10,
+      "n_events": 74,
+      "weighted_score": 3.501729797979798,
+      "voice_caption_fidelity": 3.8,
+      "burst_caption_fidelity": 3.366919191919192,
+      "timing_accuracy": 3.3,
+      "event_precision": 3.2,
+      "event_recall": 3.8,
+      "burst_fidelity_event_average": 3.27027027027027,
+      "config": {
+        "id": "t50-d70",
+        "threshold": 0.5,
+        "temperature": 0.7,
+        "top_p": 0.9,
+        "top_k": 0,
+        "nms_overlap_fraction": 0.5,
+        "min_duration_s": 0.08,
+        "max_events": null
+      }
+    },
+    "t60-d00": {
+      "n_clips": 10,
+      "n_events": 63,
+      "weighted_score": 3.6024305555555554,
+      "voice_caption_fidelity": 3.9,
+      "burst_caption_fidelity": 3.609722222222222,
+      "timing_accuracy": 3.3,
+      "event_precision": 3.4,
+      "event_recall": 3.6,
+      "burst_fidelity_event_average": 3.5238095238095237,
+      "config": {
+        "id": "t60-d00",
+        "threshold": 0.6,
+        "temperature": 0.0,
+        "top_p": null,
+        "top_k": null,
+        "nms_overlap_fraction": 0.5,
+        "min_duration_s": 0.08,
+        "max_events": null
+      }
+    },
+    "t70-d00": {
+      "n_clips": 10,
+      "n_events": 50,
+      "weighted_score": 3.4058333333333333,
+      "voice_caption_fidelity": 3.9,
+      "burst_caption_fidelity": 2.9233333333333333,
+      "timing_accuracy": 3.2,
+      "event_precision": 3.7,
+      "event_recall": 3.1,
+      "burst_fidelity_event_average": 3.54,
+      "config": {
+        "id": "t70-d00",
+        "threshold": 0.7,
+        "temperature": 0.0,
+        "top_p": null,
+        "top_k": null,
+        "nms_overlap_fraction": 0.5,
+        "min_duration_s": 0.08,
+        "max_events": null
+      }
+    }
+  },
+  "combined_descriptive_results": {
+    "t50-d00": {
+      "n_clips": 20,
+      "n_events": 110,
+      "weighted_score": 3.5583757215007217,
+      "voice_caption_fidelity": 3.8,
+      "burst_caption_fidelity": 3.463502886002886,
+      "timing_accuracy": 3.35,
+      "event_precision": 3.35,
+      "event_recall": 3.8,
+      "burst_fidelity_event_average": 3.3727272727272726
+    },
+    "t50-d30": {
+      "n_clips": 20,
+      "n_events": 110,
+      "weighted_score": 3.48103354978355,
+      "voice_caption_fidelity": 3.6,
+      "burst_caption_fidelity": 3.394134199134199,
+      "timing_accuracy": 3.35,
+      "event_precision": 3.35,
+      "event_recall": 3.8,
+      "burst_fidelity_event_average": 3.3181818181818183
+    },
+    "t50-d70": {
+      "n_clips": 20,
+      "n_events": 110,
+      "weighted_score": 3.5303887085137085,
+      "voice_caption_fidelity": 3.75,
+      "burst_caption_fidelity": 3.411554834054834,
+      "timing_accuracy": 3.35,
+      "event_precision": 3.35,
+      "event_recall": 3.8,
+      "burst_fidelity_event_average": 3.290909090909091
+    },
+    "t60-d00": {
+      "n_clips": 20,
+      "n_events": 92,
+      "weighted_score": 3.419935515873016,
+      "voice_caption_fidelity": 3.8,
+      "burst_caption_fidelity": 3.1497420634920634,
+      "timing_accuracy": 3.15,
+      "event_precision": 3.45,
+      "event_recall": 3.45,
+      "burst_fidelity_event_average": 3.467391304347826
+    },
+    "t70-d00": {
+      "n_clips": 20,
+      "n_events": 67,
+      "weighted_score": 3.354345238095238,
+      "voice_caption_fidelity": 3.8,
+      "burst_caption_fidelity": 2.8773809523809524,
+      "timing_accuracy": 3.15,
+      "event_precision": 3.7,
+      "event_recall": 3.1,
+      "burst_fidelity_event_average": 3.582089552238806
+    }
+  },
+  "paired_score_delta_t50_minus_t60": {
+    "mean": 0.13844020562770562,
+    "bootstrap_95pct_interval": [
+      -0.0746969696969697,
+      0.40927353896103896
+    ],
+    "n": 20,
+    "descriptive_only": true
+  },
+  "per_clip_results": [
+    {
+      "clip_sha256": "5db905abb076fb5d3145146e40b9a2266472ab05148f7e341521e105404e9cde",
+      "source": "synthetic_acting",
+      "language": "en",
+      "partition": "selection",
+      "config_results": {
+        "t50-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.3333333333333335,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.4833333333333334,
+          "n_events": 6,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.5,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.525,
+          "n_events": 6,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.3333333333333335,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.4833333333333334,
+          "n_events": 6,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.3333333333333335,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.4833333333333334,
+          "n_events": 6,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.5,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.525,
+          "n_events": 6,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.3333333333333335,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.4833333333333334,
+          "n_events": 6,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.6,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.55,
+          "n_events": 5,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.8,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.6,
+          "n_events": 5,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.6,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.55,
+          "n_events": 5,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 3.8,
+          "n_events": 2,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 3.8,
+          "n_events": 2,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 3.8,
+          "n_events": 2,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 3.8,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 3.8,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 3.8,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        }
+      }
+    },
+    {
+      "clip_sha256": "d64cdc6d81390d9103bfbf6bfacd5bb7738102a4af6f412753ec1b0063d40bf1",
+      "source": "synthetic_acting",
+      "language": "en",
+      "partition": "selection",
+      "config_results": {
+        "t50-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 2.5714285714285716,
+          "timing_accuracy": 3,
+          "event_precision": 2,
+          "event_recall": 4,
+          "weighted_score": 3.142857142857143,
+          "n_events": 7,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d30": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 2.5714285714285716,
+          "timing_accuracy": 3,
+          "event_precision": 2,
+          "event_recall": 4,
+          "weighted_score": 2.842857142857143,
+          "n_events": 7,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 2.7142857142857144,
+          "timing_accuracy": 3,
+          "event_precision": 2,
+          "event_recall": 4,
+          "weighted_score": 3.178571428571429,
+          "n_events": 7,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 2.6,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.3,
+          "n_events": 5,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d30": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 2.6,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.0,
+          "n_events": 5,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.4,
+          "n_events": 5,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3,
+          "timing_accuracy": 3,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 3.55,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d30": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 3,
+          "timing_accuracy": 3,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 3.25,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 3,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 3.8,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3,
+          "timing_accuracy": 3,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 3.55,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d30": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 3,
+          "timing_accuracy": 3,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 3.25,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 3,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 3.8,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 3,
+          "event_recall": 2,
+          "weighted_score": 2.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d30": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 3,
+          "event_recall": 2,
+          "weighted_score": 1.95,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 3,
+          "event_recall": 2,
+          "weighted_score": 2.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        }
+      }
+    },
+    {
+      "clip_sha256": "7a9e39f73cde1ab2e1c78a2839a079b763ec2f399f8eb911accd61f485916e76",
+      "source": "synthetic_acting",
+      "language": "en",
+      "partition": "selection",
+      "config_results": {
+        "t50-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.0,
+          "n_events": 4,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.0,
+          "n_events": 4,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d70": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 3.5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 3.575,
+          "n_events": 4,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 3,
+          "weighted_score": 3.9,
+          "n_events": 3,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 3,
+          "weighted_score": 3.9,
+          "n_events": 3,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d70": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 3.3333333333333335,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 3,
+          "weighted_score": 3.4333333333333336,
+          "n_events": 3,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 3,
+          "weighted_score": 3.9,
+          "n_events": 3,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 3,
+          "weighted_score": 3.9,
+          "n_events": 3,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d70": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 3.3333333333333335,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 3,
+          "weighted_score": 3.4333333333333336,
+          "n_events": 3,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 3.8,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 3.8,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d70": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 3.5,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.4,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.4,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d70": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.1,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        }
+      }
+    },
+    {
+      "clip_sha256": "a3a4211c1cad74cfa2728a5ba09d354356820d0d3a82e079687ec817b8bc772c",
+      "source": "emilia_multilingual",
+      "language": "de",
+      "partition": "selection",
+      "config_results": {
+        "t50-d00": {
+          "voice_caption_fidelity": 2,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 3.65,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d30": {
+          "voice_caption_fidelity": 2,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 3.65,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d00": {
+          "voice_caption_fidelity": 2,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 3.65,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d30": {
+          "voice_caption_fidelity": 2,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 3.65,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d00": {
+          "voice_caption_fidelity": 2,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 3.65,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d30": {
+          "voice_caption_fidelity": 2,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 3.65,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d00": {
+          "voice_caption_fidelity": 2,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 3.65,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d30": {
+          "voice_caption_fidelity": 2,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 3.65,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d00": {
+          "voice_caption_fidelity": 2,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 3.65,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d30": {
+          "voice_caption_fidelity": 2,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 3.65,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        }
+      }
+    },
+    {
+      "clip_sha256": "ebde3d917aa4c72f83f796b95d28df7ed2a95bb8c40f6222d929e8116715eaab",
+      "source": "emilia_multilingual",
+      "language": "en",
+      "partition": "selection",
+      "config_results": {
+        "t50-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 5,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        }
+      }
+    },
+    {
+      "clip_sha256": "d3762094e1746465f70709fa06eb65911aecea400d1a07cae03533bdfccd4052",
+      "source": "synthetic_acting",
+      "language": "en",
+      "partition": "selection",
+      "config_results": {
+        "t50-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.3,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.475,
+          "n_events": 10,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d30": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 3.2,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.15,
+          "n_events": 10,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.3,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.475,
+          "n_events": 10,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.25,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.4625,
+          "n_events": 8,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d30": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 3.125,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.13125,
+          "n_events": 8,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.25,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.4625,
+          "n_events": 8,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 3.8,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d30": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 3,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 3.25,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 3.8,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 3.8,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d30": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 3,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 3.25,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 3.8,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.4,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d30": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.1,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.4,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        }
+      }
+    },
+    {
+      "clip_sha256": "017b6b9b611a714b45d1aa8fd540e0ff0d9e96be6bad456d406fb904bb93836b",
+      "source": "emilia_multilingual",
+      "language": "de",
+      "partition": "selection",
+      "config_results": {
+        "t50-d00": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.1,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d30": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.1,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d70": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.1,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d00": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.1,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d30": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.1,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d70": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.1,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d00": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.1,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d30": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.1,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d70": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.1,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d00": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.1,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d30": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.1,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d70": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.1,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d00": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.1,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d30": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.1,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d70": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.1,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        }
+      }
+    },
+    {
+      "clip_sha256": "c67c47651c35b58265257342229ba8b7742d9aa97567ab789a18309ea58791d0",
+      "source": "emilia_multilingual",
+      "language": "de",
+      "partition": "selection",
+      "config_results": {
+        "t50-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.0,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d30": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 3,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 3.45,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.0,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 3,
+          "event_recall": 2,
+          "weighted_score": 2.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d30": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 3,
+          "event_recall": 2,
+          "weighted_score": 1.95,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 3,
+          "event_recall": 2,
+          "weighted_score": 2.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 3,
+          "event_recall": 2,
+          "weighted_score": 2.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d30": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 3,
+          "event_recall": 2,
+          "weighted_score": 1.95,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 3,
+          "event_recall": 2,
+          "weighted_score": 2.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 3,
+          "event_recall": 2,
+          "weighted_score": 2.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d30": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 3,
+          "event_recall": 2,
+          "weighted_score": 1.95,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 3,
+          "event_recall": 2,
+          "weighted_score": 2.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 3,
+          "event_recall": 2,
+          "weighted_score": 2.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d30": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 3,
+          "event_recall": 2,
+          "weighted_score": 1.95,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 3,
+          "event_recall": 2,
+          "weighted_score": 2.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        }
+      }
+    },
+    {
+      "clip_sha256": "95cebe7c9810b2199042c2f5d59fea98d4685f598731721ca25fac6df1668645",
+      "source": "synthetic_acting",
+      "language": "de",
+      "partition": "selection",
+      "config_results": {
+        "t50-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.7142857142857144,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.5785714285714287,
+          "n_events": 7,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.7142857142857144,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.5785714285714287,
+          "n_events": 7,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d70": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 3.7142857142857144,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.2785714285714285,
+          "n_events": 7,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.7142857142857144,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.5785714285714287,
+          "n_events": 7,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.7142857142857144,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.5785714285714287,
+          "n_events": 7,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d70": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 3.7142857142857144,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.2785714285714285,
+          "n_events": 7,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.7142857142857144,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.5785714285714287,
+          "n_events": 7,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.7142857142857144,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.5785714285714287,
+          "n_events": 7,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d70": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 3.7142857142857144,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.2785714285714285,
+          "n_events": 7,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.5,
+          "timing_accuracy": 3,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 3.475,
+          "n_events": 2,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.5,
+          "timing_accuracy": 3,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 3.475,
+          "n_events": 2,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d70": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 3,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 3.3,
+          "n_events": 2,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 3,
+          "event_recall": 2,
+          "weighted_score": 2.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 3,
+          "event_recall": 2,
+          "weighted_score": 2.25,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d70": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 3,
+          "event_recall": 2,
+          "weighted_score": 1.95,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        }
+      }
+    },
+    {
+      "clip_sha256": "8c93cf019f4cea3d7e33a969aa359473fa93d17fadcbb88f1892ed8707ad6df7",
+      "source": "emilia_multilingual",
+      "language": "en",
+      "partition": "selection",
+      "config_results": {
+        "t50-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.0,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.0,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.0,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.4,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.4,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.4,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.4,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.4,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.4,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.4,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.4,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t80-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.4,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.4,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.4,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t90-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.4,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        }
+      }
+    },
+    {
+      "clip_sha256": "f656a894d0f1e14202892d91f13ce353e964f3155b5801da20882cb039206d0d",
+      "source": "emilia_multilingual",
+      "language": "de",
+      "partition": "confirmation",
+      "config_results": {
+        "t50-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 2.6666666666666665,
+          "timing_accuracy": 3,
+          "event_precision": 2,
+          "event_recall": 4,
+          "weighted_score": 3.1666666666666665,
+          "n_events": 9,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 2.4444444444444446,
+          "timing_accuracy": 3,
+          "event_precision": 2,
+          "event_recall": 4,
+          "weighted_score": 3.111111111111111,
+          "n_events": 9,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 2,
+          "timing_accuracy": 3,
+          "event_precision": 2,
+          "event_recall": 4,
+          "weighted_score": 3.0,
+          "n_events": 9,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.0,
+          "n_events": 3,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 3.8,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        }
+      }
+    },
+    {
+      "clip_sha256": "c14dca4cb4f8e79cf6a6a86171f5d5f00da8133d05a491be7e329c3d99e9e116",
+      "source": "synthetic_acting",
+      "language": "de",
+      "partition": "confirmation",
+      "config_results": {
+        "t50-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 2.5555555555555554,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 3,
+          "weighted_score": 3.188888888888889,
+          "n_events": 9,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 2.5555555555555554,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 3,
+          "weighted_score": 3.188888888888889,
+          "n_events": 9,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d70": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 2.888888888888889,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 3,
+          "weighted_score": 2.9722222222222223,
+          "n_events": 9,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 2.5555555555555554,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 3,
+          "weighted_score": 3.188888888888889,
+          "n_events": 9,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 2.5,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 3,
+          "weighted_score": 3.175,
+          "n_events": 8,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        }
+      }
+    },
+    {
+      "clip_sha256": "6af576d7f8eaa5931fcb18656eccfb55435405486f273d0c512f9250bb4ac0e9",
+      "source": "emilia_multilingual",
+      "language": "fr",
+      "partition": "confirmation",
+      "config_results": {
+        "t50-d00": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 2.6666666666666665,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.0166666666666666,
+          "n_events": 3,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d30": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 2.6666666666666665,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.0166666666666666,
+          "n_events": 3,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 2.6666666666666665,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.3166666666666664,
+          "n_events": 3,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d00": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 3,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 3,
+          "weighted_score": 3.0,
+          "n_events": 2,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d00": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.1,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        }
+      }
+    },
+    {
+      "clip_sha256": "8ea1e1885527c052de41490e650df7c73a722c66da43b99118af0e588ac818bf",
+      "source": "emilia_multilingual",
+      "language": "fr",
+      "partition": "confirmation",
+      "config_results": {
+        "t50-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 3,
+          "weighted_score": 3.9,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 3,
+          "weighted_score": 3.9,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 3,
+          "weighted_score": 3.9,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 3,
+          "weighted_score": 3.9,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 3,
+          "weighted_score": 3.9,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        }
+      }
+    },
+    {
+      "clip_sha256": "83e321e8c018301b0e504361114f56672701ede034e32dec339c513a78ff8856",
+      "source": "synthetic_acting",
+      "language": "de",
+      "partition": "confirmation",
+      "config_results": {
+        "t50-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.4,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.5,
+          "n_events": 10,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d30": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 3.5,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.225,
+          "n_events": 10,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d70": {
+          "voice_caption_fidelity": 3,
+          "burst_caption_fidelity": 3.5,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.225,
+          "n_events": 10,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.4,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.5,
+          "n_events": 10,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.4,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.5,
+          "n_events": 10,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        }
+      }
+    },
+    {
+      "clip_sha256": "ffd05bde060c23780ef2845c065c5a8e1bd6c76d873b61220e6afe31fa015c77",
+      "source": "emilia_multilingual",
+      "language": "en",
+      "partition": "confirmation",
+      "config_results": {
+        "t50-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.0,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.0,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.0,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.0,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.0,
+          "n_events": 1,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        }
+      }
+    },
+    {
+      "clip_sha256": "8c01cf9c5bcb6bc49633f490dbd5909f87e364392bb791b6d11c835692dcc83c",
+      "source": "emilia_multilingual",
+      "language": "fr",
+      "partition": "confirmation",
+      "config_results": {
+        "t50-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.0,
+          "n_events": 3,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.0,
+          "n_events": 3,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.0,
+          "n_events": 3,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 3,
+          "event_precision": 4,
+          "event_recall": 3,
+          "weighted_score": 3.7,
+          "n_events": 2,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 0,
+          "timing_accuracy": 2,
+          "event_precision": 4,
+          "event_recall": 2,
+          "weighted_score": 2.4,
+          "n_events": 0,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        }
+      }
+    },
+    {
+      "clip_sha256": "43226e5a398d212ffb73529450699b3c898441122317f8cf1ab80b0f4c428800",
+      "source": "synthetic_acting",
+      "language": "en",
+      "partition": "confirmation",
+      "config_results": {
+        "t50-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.5454545454545454,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.536363636363636,
+          "n_events": 11,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.3636363636363638,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.490909090909091,
+          "n_events": 11,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.3636363636363638,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.490909090909091,
+          "n_events": 11,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.625,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.55625,
+          "n_events": 8,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.6666666666666665,
+          "timing_accuracy": 3,
+          "event_precision": 4,
+          "event_recall": 3,
+          "weighted_score": 3.6166666666666667,
+          "n_events": 6,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        }
+      }
+    },
+    {
+      "clip_sha256": "45d3a7c3f5616d6f3b02149fea9d380b68a3a426fcff7a1d6947fd6b079c8105",
+      "source": "synthetic_acting",
+      "language": "de",
+      "partition": "confirmation",
+      "config_results": {
+        "t50-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.5833333333333335,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.5458333333333334,
+          "n_events": 12,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.5,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.525,
+          "n_events": 12,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.5833333333333335,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.5458333333333334,
+          "n_events": 12,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.5833333333333335,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.5458333333333334,
+          "n_events": 12,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.6666666666666665,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.5666666666666664,
+          "n_events": 9,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        }
+      }
+    },
+    {
+      "clip_sha256": "5c952016b61a67f34a005f69adc9c6fba4c5ffb7f69c1b7ee08988ad0684a2e4",
+      "source": "synthetic_acting",
+      "language": "de",
+      "partition": "confirmation",
+      "config_results": {
+        "t50-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.933333333333333,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.6333333333333333,
+          "n_events": 15,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d30": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.8666666666666667,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.6166666666666667,
+          "n_events": 15,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t50-d70": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.6666666666666665,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.5666666666666664,
+          "n_events": 15,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t60-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 3.933333333333333,
+          "timing_accuracy": 3,
+          "event_precision": 3,
+          "event_recall": 4,
+          "weighted_score": 3.6333333333333333,
+          "n_events": 15,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        },
+        "t70-d00": {
+          "voice_caption_fidelity": 4,
+          "burst_caption_fidelity": 4,
+          "timing_accuracy": 4,
+          "event_precision": 4,
+          "event_recall": 4,
+          "weighted_score": 4.0,
+          "n_events": 14,
+          "burst_fidelity_empty_policy": "0 if audible events exist; 5 if no audible events; conditional caption-only averages exclude empty clips"
+        }
+      }
+    }
+  ],
+  "total_shared_judge_estimated_usd": 0.50333025,
+  "cost_scope": "All original 50-clip review, procedural searches and MOSS search in the shared ledger; estimated introductory list-price cost, not an invoice.",
+  "limitations": [
+    "Only 20 selected clips, not a representative independent benchmark.",
+    "The same 20 audio clips were used earlier for procedural tuning; confirmation is held out only from the present MOSS decoding selection.",
+    "Only one seeded sample per nonzero-temperature configuration.",
+    "The reviewer is an audio language model, not a human and not manually verified event ground truth.",
+    "Selection threshold 0.5 and confirmation threshold 0.6 rank differently; no universal optimum established.",
+    "Scores on the original 50 listening clips are a different set and protocol and are not a paired before/after comparison."
+  ]
+}

@@ -100,31 +100,26 @@ The reference contains training-domain material and synthetic speech. It is **no
 held-out benchmark, a human rating study, or a representative population survey. Its
 purpose is to describe how unusual a model prediction is relative to a documented mix.
 
-## Caption design
+## Reviewed caption design and audio evaluation
 
-Global captions keep the top five non-identity VoiceNet dimensions and top three
-emotions by **absolute reference z**. Age (`AGEV`), perceived vocal gender (`GEND`),
-register (`REGS`) and tempo (`TEMP`) remain always-on. Age, vocal gender and register
-use the existing ordinal bands; the remaining dimensions use the new z-score. These
-are vocal descriptions, not verified personal demographics.
+The current settings are explicit in `humaneness_caption_config.json`. General captions use **three** distinctive VoiceNet properties and up to **two** emotions whose raw prediction is at least **+0.5 standard deviations** above the reference. Tempo is included. Sentence captions use the same selection rules without always-on tempo. The two-sentence surface template and synonym rotation are deterministic. Demographic (`AGEV`, `GEND`, `REGS`) and genuineness wording are omitted; their raw numerical predictions remain saved.
 
-Per-sentence captions use the same model on each aligned audio crop, with 100 ms
-context at each end, top-three VoiceNet / top-three emotion selection, and no always-on
-identity list. Untimed or shorter-than-0.1-s crops fall back to global predictions.
-Synonym rotation and surface templates remain deterministic for a chosen seed.
+The default caption reference is **80,265 speech recordings** (41,771 S10 + 38,494 multilingual Emilia), in `baseline_stats_humaneness_medium_speech.json`. It is derived exactly from the frozen source-specific means and population variances, including between-source variance. Its provenance reports only these sources and their actual language counts, along with the filtered-manifest SHA-256 and parent hash. It is not a new independently sampled corpus. The original mixed **118,692**-clip normalizer remains in `baseline_stats_humaneness_medium.json` and can be selected as `humaneness-medium-global`. It is not silently replaced.
 
-Pleasantness wording is derived exclusively from **`audiobox:CE` (Content Enjoyment)**.
-VoiceNet `ESTH` is still predicted, normalized and inspectable, but never selected to
-say how enjoyable the audio sounds. The genuineness wording gate is retained, centered
-on the new arithmetic mean. No per-dimension reliability coefficients from the original
-teachers are copied into this student's reference. All missing reliability weights are
-equal, so they do not change the ranking.
+Pleasantness wording comes exclusively from **AudioBox Content Enjoyment**. VoiceNet ESTH stays in the numerical outputs. The blend regression describes delivery; it cannot decide whether the clip contains vocal bursts. Only selected event proposals mark bursts in the timed text. This removes the former inconsistency between a burst-free general description and nonempty event intervals.
+
+Twenty actual audio clips (ten synthetic acting, ten Emilia) were reviewed with blinded candidate annotations. Ten selected the configuration; ten different clips confirmed it. The six-part 0–5 automated-reviewer composite improved from **2.675 to 3.735** on selection and **2.485 to 3.405** on confirmation. The descriptive twenty-clip mean is **2.580 versus 3.570**. Rubric weights: caption fidelity 30%, timing 25%, event precision 15%, event recall 15%, consistency 10%, readability 5%. These are automated audio-reviewer ratings, not manually adjudicated event labels or human benchmark results.
+
+See `evaluations/procedural_caption_pilot.json` and the [English evaluation report](https://laion-moss-voice-acting-captions.static.hf.space/settings.html). The separate fifteen-combination MOSS threshold/temperature search reuses these twenty clips and has a different rubric; its scores cannot be compared directly to this procedural composite. The MOSS practical starting recommendation is greedy temperature zero with locator threshold 0.6; 0.5 favors recall and 0.7 favors precision. Threshold rankings differed between the splits, so no universal optimum was established.
 
 ## Burst detection and localization
 
 The Medium backend outputs frame probability at 20-ms resolution. Its onset/duration
-heads generate bounded interval proposals; detection uses onset threshold **0.5**, with
-at most **32 proposals per 30-s window**. The checkpoint does not include a `no_burst`
+heads generate raw interval proposals at onset threshold **0.5**, with
+at most **32 proposals per 30-s window**. The caption default additionally selects
+proposals at **0.7**, minimum duration **0.08 s**, and suppresses a lower-score
+interval if its overlap exceeds half the shorter interval. Raw proposals are
+retained separately from `selected_burst_event_proposals`; this is not IoU 0.5. The checkpoint does not include a `no_burst`
 classification label. Its 53-way softmax describes the class conditional on a proposal;
 it is not used as a separate no-burst classifier.
 

@@ -43,7 +43,7 @@ import os, sys, json, math, random, zlib, argparse
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 _LEGACY_BASE_PATH = os.path.join(HERE, "baseline_stats.json")
-_BASE_PATH = os.path.join(HERE, "baseline_stats_humaneness_medium.json")
+_BASE_PATH = os.path.join(HERE, "baseline_stats_humaneness_medium_speech.json")
 EPS = 1e-6
 
 # "default" uses the measured Medium student mean/std reference. "dramabox"
@@ -51,6 +51,7 @@ EPS = 1e-6
 BASELINES = {
     "default":  _BASE_PATH,
     "humaneness-medium": _BASE_PATH,
+    "humaneness-medium-global": os.path.join(HERE, "baseline_stats_humaneness_medium.json"),
     "dramabox": _LEGACY_BASE_PATH,
     "emolia":   os.path.join(HERE, "baseline_stats_emolia.json"),
 }
@@ -624,7 +625,7 @@ def caption_detail(preds, baseline=None, k_voicenet=5, k_emonet=3,
         quality.append({"dim": "genuineness", "name": "Genuineness",
                         "value": round(_val(genu), 3), "z": round(zg, 2) if zg is not None else None,
                         "phrase": gen_desc, "tag": gtag})
-    if blend is not None and "blend" in baseline:
+    if blend is not None and "blend" in baseline and preds.get("score_backend") != "humaneness-medium":
         bz = _zscore(_val(blend), baseline["blend"], baseline)
         if abs(bz) >= NEUTRAL_BAND:
             ph = ("interwoven with vocal bursts (laughs, gasps, sighs)" if bz >= 0

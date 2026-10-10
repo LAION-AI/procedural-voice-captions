@@ -29,7 +29,7 @@ body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 system-ui,sa
 <tr><td>Orange embeddings</td><td>128-dimensional timbre and 250-dimensional identity vectors in each downloadable annotation</td><td>Predicted embeddings; the original Orange teacher is not run here.</td></tr>
 </tbody></table>
 <h3>A measured reference, not an inherited teacher baseline</h3><p>__REFERENCE_SUMMARY__ Each successfully annotated clip has equal weight. The normalization is <code>z = (raw prediction − arithmetic mean) / population standard deviation</code>, calculated in float64 from stored float32 Medium predictions. <strong>z = +2</strong> means two standard deviations above this particular reference; it is not a probability. Bars show z, clipped only for display at ±3. All raw values remain available.</p>
-<p>Caption selection uses the largest absolute z-score within the emotion and VoiceNet pools. Consequently, a caption can describe both a strong property and a conspicuously weak one. The existing genuineness wording gate is retained, using the new mean as its center. The old teacher's per-dimension reliability coefficients are not reused for this student model. Age, perceived vocal gender and register retain the existing ordinal wording rules; they are voice attributes, not verified demographic facts.</p>
+<p>The reviewed caption default uses three distinctive VoiceNet properties and up to two emotions at least +0.5 standard deviations above the speech reference, with tempo always included. Unsupported demographic and authenticity wording is omitted; all corresponding raw predictions remain available. The blend score describes vocal delivery and never decides whether a recording is burst-free. Event intervals use onset threshold 0.7 and suppress proposals overlapping more than half the shorter interval. The former 118,692-clip mixed normalization remains available in the repository.</p>
 <p>Recordings longer than 30 seconds use overlapping windows. Global scores are averaged with weights that partition the original duration; event proposals are assigned by their midpoint and converted to full-recording timestamps. Frame probabilities are blended across overlap regions. Low-confidence event names are written as “Vocal Burst”; their actual top-three predictions remain visible.</p>
 <p><strong>Language coverage:</strong> Parakeet supports the German, English and French examples. It is explicitly skipped for Japanese, Korean and Chinese. For those examples, existing corpus text is displayed separately with no invented word timestamps. Medium still predicts all acoustic scores and vocal-burst intervals.</p>
 <p class="muted path">Model revision: <code>818506970d93c809a3295a0a02c40dee8ff2bfc3</code> · Reference SHA-256: <code>__REFERENCE_HASH__</code> · Normalization SHA-256: <code>__BASELINE_HASH__</code>. The reference is for caption normalization, not a held-out benchmark. Existing audio and teacher annotations are preserved; new values use the <code>humaneness_ears_medium</code> namespace.</p>
@@ -83,7 +83,7 @@ def card(index, result, audio, baseline):
     raw = dict(prediction["scores_raw"])
     raw.update({key: prediction[key] for key in ["characters_per_second", "estimated_burst_count"]})
     duration = result["dur"]
-    events = prediction["burst_event_proposals"]
+    events = prediction.get("selected_burst_event_proposals", prediction["burst_event_proposals"])
     rects, event_text = [], []
     for i, event in enumerate(events):
         start, end = event["start_s"], event["end_s"]
@@ -141,6 +141,13 @@ def render(args):
         row["humaneness_ears_medium"]["auxiliary_reference_z"] = {
             name: (row["humaneness_ears_medium"][name]-baseline["_raw_targets"][name]["mean"])/baseline["_raw_targets"][name]["std"]
             if baseline["_raw_targets"][name]["z_defined"] else None for name in ["characters_per_second", "estimated_burst_count"]}
+    # Local byte-address paths are useful in sidecars, but not in the listening page.
+    def public_copy(value):
+        if isinstance(value, dict):
+            return {k: public_copy(v) for k,v in value.items() if not (isinstance(v,str) and v.startswith('/e/'))}
+        if isinstance(value, list): return [public_copy(v) for v in value]
+        return value
+    data = [public_copy(row) for row in data]
     cards = ''.join(card(i, row, files[i].with_suffix('.mp3').read_bytes(),baseline) for i,row in enumerate(data))
     counts = baseline["_provenance"]["source_counts"]
     summary = 'The reference contains ' + f'{baseline["_provenance"]["n"]:,} clips: ' + ', '.join(f'{count:,} {name.replace("_", " ")}' for name,count in counts.items()) + '.'
