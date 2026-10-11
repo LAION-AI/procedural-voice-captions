@@ -91,7 +91,7 @@ def process_humaneness(cap, path, cid=None, mp3_out=None, language=None, precomp
             timed_ok = False
     if mp3_out:
         write_mp3(path,mp3_out,os.environ.get("BC_MP3_BITRATE","128k"))
-    return {"id":cid,"dur":duration,"transcript":transcript,"words":words,
+    result = {"id":cid,"dur":duration,"transcript":transcript,"words":words,
         "scores":scores,"score_backend":"humaneness-medium",NAMESPACE:global_prediction,
         "normalization_provenance":cap.baseline.get("_provenance"),
         "genu":scores["genu"],"blend":scores["blend"],"content_enjoyment":scores["content_enjoyment"],
@@ -106,3 +106,9 @@ def process_humaneness(cap, path, cid=None, mp3_out=None, language=None, precomp
             "supported_language":asr_supported,"status":"computed" if asr_supported else "not run: unsupported language",
             "word_timestamps":"Parakeet v3, unchanged RMS end trimming" if asr_supported else None},
         "pause":{"threshold":PAUSE_THR,"word_end":WORD_END,"silence_floor":SILENCE_FLOOR}}
+    if asr_supported:
+        from prompt_format import format_record
+        result['procedural_caption'] = format_record(result, duration_style=settings.get('duration_style','square'))
+    else:
+        result['timing_unavailable_reason'] = 'ASR is not supported for this language; no timed spoken script is invented.'
+    return result

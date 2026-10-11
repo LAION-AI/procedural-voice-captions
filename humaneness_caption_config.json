@@ -1,10 +1,10 @@
 {
-  "id": "c12",
+  "id": "guide-concise",
   "normalization": "speech",
   "threshold": 0.7,
-  "kv": 3,
-  "ke": 2,
-  "template": "two_sentence",
+  "kv": 2,
+  "ke": 1,
+  "template": "tags",
   "nms": true,
   "audible_only": true,
   "normalization_file": "baseline_stats_humaneness_medium_speech.json",
@@ -14,5 +14,11 @@
   "min_emotion_z": 0.5,
   "omit_demographic_wording": true,
   "omit_genuineness_wording": true,
-  "blend_is_not_a_detector": true
+  "blend_is_not_a_detector": true,
+  "format_id": "humaneness-general-script-v2-20261011",
+  "duration_style": "square",
+  "pause_min_s": 0.2,
+  "timing_mode": "verified_always",
+  "overlap_duration_policy": "Full duration on each inline event; included in its enclosing segment budget",
+  "selection_evidence": "evaluations/prompt-format-20261011.json"
 }

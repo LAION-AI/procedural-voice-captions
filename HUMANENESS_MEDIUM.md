@@ -1,8 +1,9 @@
 # Humaneness Ears Medium: annotation and procedural caption methods
 
 This update replaces the acoustic teacher stack with a single pinned student model.
-It preserves source audio, existing source annotations, Parakeet-v3 ASR, word alignment,
-RMS word-end trimming, pause formatting, and timed-script verification.
+It preserves source audio, existing source annotations, Parakeet-v3 ASR, word alignment
+and RMS word-end trimming. The current timed serializer adds explicit durations and
+verified overlap accounting; see [PROMPT_FORMAT.md](PROMPT_FORMAT.md).
 
 ## Model and outputs
 
@@ -103,15 +104,21 @@ purpose is to describe how unusual a model prediction is relative to a documente
 
 ## Reviewed caption design and audio evaluation
 
-The current settings are explicit in `humaneness_caption_config.json`. General captions use **three** distinctive VoiceNet properties and up to **two** emotions whose raw prediction is at least **+0.5 standard deviations** above the reference. Tempo is included. Sentence captions use the same selection rules without always-on tempo. The two-sentence surface template and synonym rotation are deterministic. Demographic (`AGEV`, `GEND`, `REGS`) and genuineness wording are omitted; their raw numerical predictions remain saved.
+The current settings are explicit in `humaneness_caption_config.json`: **two** distinctive VoiceNet properties, up to **one** emotion at **z ≥ +0.5**, compact tags, and tempo in the general description. Sentence captions omit always-on tempo. Synonym rotation is deterministic. Demographic (`AGEV`, `GEND`, `REGS`) and genuineness wording are omitted; their raw numerical predictions remain saved. This replaces the earlier three-property/two-emotion prose configuration.
 
 The default caption reference is **80,265 speech recordings** (41,771 S10 + 38,494 multilingual Emilia), in `baseline_stats_humaneness_medium_speech.json`. It is derived exactly from the frozen source-specific means and population variances, including between-source variance. Its provenance reports only these sources and their actual language counts, along with the filtered-manifest SHA-256 and parent hash. It is not a new independently sampled corpus. The original mixed **118,692**-clip normalizer remains in `baseline_stats_humaneness_medium.json` and can be selected as `humaneness-medium-global`. It is not silently replaced.
 
 Pleasantness wording comes exclusively from **AudioBox Content Enjoyment**. VoiceNet ESTH stays in the numerical outputs. The blend regression describes delivery; it cannot decide whether the clip contains vocal bursts. Only selected event proposals mark bursts in the timed text. This removes the former inconsistency between a burst-free general description and nonempty event intervals.
 
-Twenty actual audio clips (ten synthetic acting, ten Emilia) were reviewed with blinded candidate annotations. Ten selected the configuration; ten different clips confirmed it. The six-part 0–5 automated-reviewer composite improved from **2.675 to 3.735** on selection and **2.485 to 3.405** on confirmation. The descriptive twenty-clip mean is **2.580 versus 3.570**. Rubric weights: caption fidelity 30%, timing 25%, event precision 15%, event recall 15%, consistency 10%, readability 5%. These are automated audio-reviewer ratings, not manually adjudicated event labels or human benchmark results.
+Twenty actual audio clips (ten synthetic acting, ten Emilia) were reviewed in the earlier prose-configuration experiment with blinded candidate annotations. Ten selected the configuration; ten different clips confirmed it. The six-part 0–5 automated-reviewer composite improved from **2.675 to 3.735** on selection and **2.485 to 3.405** on confirmation. The descriptive twenty-clip mean is **2.580 versus 3.570**. Rubric weights: caption fidelity 30%, timing 25%, event precision 15%, event recall 15%, consistency 10%, readability 5%. These are automated audio-reviewer ratings, not manually adjudicated event labels or human benchmark results.
 
 See `evaluations/procedural_caption_pilot.json` and the [English evaluation report](https://laion-moss-voice-acting-captions.static.hf.space/settings.html). The separate fifteen-combination MOSS threshold/temperature search reuses these twenty clips and has a different rubric; its scores cannot be compared directly to this procedural composite. The MOSS practical starting recommendation is greedy temperature zero with locator threshold 0.6; 0.5 favors recall and 0.7 favors precision. Threshold rankings differed between the splits, so no universal optimum was established.
+
+## Current paired format evaluation
+
+The [50-audio comparison](https://laion-moss-voice-acting-captions.static.hf.space/format-comparison.html) applies one shared rubric to MOSS and procedural annotations of the same recordings. A 25/25 selection/confirmation split selected compact tags before confirmation. The combined composite is **2.704/5 for both compact procedural tags and previous procedural prose**, versus **3.863/5 for uncapped greedy MOSS**. On confirmation alone, compact tags score 2.760, previous prose 2.772 and MOSS 3.646. The compact default is not a demonstrated quality improvement over prose. This rubric differs from the earlier twenty-audio study. See [the frozen metrics](evaluations/prompt-format-20261011.json) and [README](README.md) for all dimensions, uncertainty and limitations.
+
+All 38,427 successful acting recordings pass the new serialization checks, which preserve every ASR word and numeric durations while accounting for overlap. This is a format check, not accuracy evidence. Unsupported ASR languages have no fabricated timed transcript. The [format guide](PROMPT_FORMAT.md) documents the original Humaneness Voice syntax and the explicit extension for timed overlapping events.
 
 ## Burst detection and localization
 

@@ -1,0 +1,227 @@
+{
+  "schema": "paired-caption-format-review-v1",
+  "n": 50,
+  "languages": {
+    "en": 45,
+    "de": 5
+  },
+  "selection_n": 25,
+  "confirmation_n": 25,
+  "results_all50": [
+    {
+      "name": "Procedural \u00b7 compact tags",
+      "config_id": "guide-concise",
+      "n": 50,
+      "weighted_score": 2.7039999999999997,
+      "caption_fidelity": 2.74,
+      "burst_description_fidelity": 2.02,
+      "timing_accuracy": 3.04,
+      "event_precision": 3.06,
+      "event_recall": 3.1,
+      "readability": 2.48
+    },
+    {
+      "name": "Procedural \u00b7 previous prose",
+      "config_id": "reviewed-prose",
+      "n": 50,
+      "weighted_score": 2.7039999999999997,
+      "caption_fidelity": 2.74,
+      "burst_description_fidelity": 2.02,
+      "timing_accuracy": 3.04,
+      "event_precision": 3.06,
+      "event_recall": 3.1,
+      "readability": 2.54
+    },
+    {
+      "name": "MOSS \u00b7 greedy, uncapped",
+      "config_id": "moss",
+      "n": 50,
+      "weighted_score": 3.863,
+      "caption_fidelity": 4.34,
+      "burst_description_fidelity": 3.72,
+      "timing_accuracy": 3.46,
+      "event_precision": 3.5,
+      "event_recall": 4.14,
+      "readability": 4.24
+    }
+  ],
+  "confirmation": {
+    "mode": "confirmation",
+    "n_audio": 25,
+    "results": {
+      "guide-concise": {
+        "n": 25,
+        "weighted_score": 2.76,
+        "caption_fidelity": 2.88,
+        "burst_description_fidelity": 2.2,
+        "timing_accuracy": 2.96,
+        "event_precision": 3.0,
+        "event_recall": 3.04,
+        "readability": 2.56
+      },
+      "reviewed-prose": {
+        "n": 25,
+        "weighted_score": 2.772,
+        "caption_fidelity": 2.92,
+        "burst_description_fidelity": 2.2,
+        "timing_accuracy": 2.96,
+        "event_precision": 3.0,
+        "event_recall": 3.04,
+        "readability": 2.8
+      },
+      "moss": {
+        "n": 25,
+        "weighted_score": 3.6459999999999995,
+        "caption_fidelity": 4.08,
+        "burst_description_fidelity": 3.48,
+        "timing_accuracy": 3.36,
+        "event_precision": 3.36,
+        "event_recall": 3.76,
+        "readability": 3.96
+      }
+    },
+    "procedural_ranking": [
+      "reviewed-prose",
+      "guide-concise"
+    ],
+    "rubric": {
+      "caption_fidelity": 0.3,
+      "burst_description_fidelity": 0.25,
+      "timing_accuracy": 0.2,
+      "event_precision": 0.15,
+      "event_recall": 0.1
+    },
+    "scale": "0\u20135; independent integer scores from an automated audio reviewer",
+    "automated_judge_not_human_ground_truth": true,
+    "paired_same_audio_same_rubric": true,
+    "moss_event_cap": null,
+    "score_aggregation": "Clip mean, equally weighted recordings",
+    "shared_budget_estimated_usd": 0.85162575,
+    "actual_model_versions": [
+      "gemini-3.8-flash"
+    ]
+  },
+  "selection": {
+    "mode": "selection",
+    "n_audio": 25,
+    "results": {
+      "guide-concise": {
+        "n": 25,
+        "weighted_score": 2.648,
+        "caption_fidelity": 2.6,
+        "burst_description_fidelity": 1.84,
+        "timing_accuracy": 3.12,
+        "event_precision": 3.12,
+        "event_recall": 3.16,
+        "readability": 2.4
+      },
+      "guide-tags": {
+        "n": 25,
+        "weighted_score": 2.648,
+        "caption_fidelity": 2.6,
+        "burst_description_fidelity": 1.84,
+        "timing_accuracy": 3.12,
+        "event_precision": 3.12,
+        "event_recall": 3.16,
+        "readability": 2.4
+      },
+      "moss": {
+        "n": 25,
+        "weighted_score": 4.08,
+        "caption_fidelity": 4.6,
+        "burst_description_fidelity": 3.96,
+        "timing_accuracy": 3.56,
+        "event_precision": 3.64,
+        "event_recall": 4.52,
+        "readability": 4.52
+      },
+      "guide-precision": {
+        "n": 25,
+        "weighted_score": 2.17,
+        "caption_fidelity": 2.6,
+        "burst_description_fidelity": 1.48,
+        "timing_accuracy": 2.4,
+        "event_precision": 2.48,
+        "event_recall": 1.68,
+        "readability": 2.36
+      },
+      "reviewed-prose": {
+        "n": 25,
+        "weighted_score": 2.636,
+        "caption_fidelity": 2.56,
+        "burst_description_fidelity": 1.84,
+        "timing_accuracy": 3.12,
+        "event_precision": 3.12,
+        "event_recall": 3.16,
+        "readability": 2.28
+      }
+    },
+    "procedural_ranking": [
+      "guide-concise",
+      "guide-tags",
+      "reviewed-prose",
+      "guide-precision"
+    ],
+    "rubric": {
+      "caption_fidelity": 0.3,
+      "burst_description_fidelity": 0.25,
+      "timing_accuracy": 0.2,
+      "event_precision": 0.15,
+      "event_recall": 0.1
+    },
+    "scale": "0\u20135; independent integer scores from an automated audio reviewer",
+    "automated_judge_not_human_ground_truth": true,
+    "paired_same_audio_same_rubric": true,
+    "moss_event_cap": null,
+    "score_aggregation": "Clip mean, equally weighted recordings",
+    "shared_budget_estimated_usd": 0.70739325,
+    "actual_model_versions": [
+      "gemini-3.8-flash"
+    ]
+  },
+  "bootstrap": [
+    {
+      "partition": "all",
+      "n": 50,
+      "mean_moss_minus_procedural": 1.1589999999999998,
+      "paired_bootstrap_95_ci": [
+        0.9869999999999999,
+        1.338
+      ]
+    },
+    {
+      "partition": "confirmation",
+      "n": 25,
+      "mean_moss_minus_procedural": 0.8859999999999998,
+      "paired_bootstrap_95_ci": [
+        0.7219999999999999,
+        1.0639999999999998
+      ]
+    }
+  ],
+  "selected_config": "guide-concise",
+  "selected_before_confirmation": true,
+  "moss_events": 360,
+  "procedural_events": 264,
+  "all_50_timed_formats_verified": true,
+  "training_variants_per_clip": 6,
+  "model_version": "gemini-3.8-flash",
+  "corpus_format_check": {
+    "format_id": "humaneness-general-script-v2-20261011",
+    "n": 38427,
+    "passed": 38427,
+    "old_timed_ok": 21961,
+    "errors": [],
+    "inline_overlapping_events": 171813,
+    "completed_epoch_s": 1791705077.8488383,
+    "rounding_repair": "Zero-budget sub-centisecond pause tags omitted; no word or burst interval altered"
+  },
+  "automated_review_not_human_ground_truth": true,
+  "rubric": {
+    "caption_fidelity": 0.3,
+    "burst_description_fidelity": 0.25,
+    "timing_accuracy": 0.2,
+    "event_precision": 0.15,
+    "event_recall": 0.1
+  }
+}

@@ -76,7 +76,8 @@ def score_record(result):
             normalization_provenance=result.get("normalization_provenance"),
             caption_settings=result.get("caption_settings"),
             burst_events=result.get("variant_a_bursts", []),
-            words=result.get("words", []), asr=result.get("asr"))
+            words=result.get("words", []), asr=result.get("asr"), dur=result.get("dur"),
+            prompt_format_id=result.get("prompt_format_id"))
     else:
         rec["baseline"] = "dramabox"
     return rec
@@ -148,6 +149,14 @@ def augment_script(rec, seed, template=None, gate_gender=True):
     """Full procedural caption (GENERAL + per-sentence SCRIPT with inline bursts) regenerated from
     the stored scores. Pass a fixed `template` to force one surface form, or leave None for a
     per-call random pick (recommended for training-time variety)."""
+    if rec.get('score_backend') == 'humaneness-medium':
+        from prompt_format import render_timed, TimingUnavailable
+        if rec.get('dur') is None or rec.get('asr', {}).get('supported_language') is False:
+            raise TimingUnavailable('A timed Medium record needs the measured audio duration and supported ASR alignment')
+        sentences = [dict(s, caption=augment_sentence(s, seed ^ (i+1)*0x9E3779B1,
+                       template=template, baseline=rec.get('baseline'))) for i,s in enumerate(rec.get('sentences', []))]
+        lines, _ = render_timed(sentences, rec.get('words', []), rec.get('burst_events', []), rec['dur'])
+        return 'GENERAL: '+augment_global(rec, seed, template=template, gate_gender=gate_gender)+'\nSCRIPT:\n'+'\n'.join(lines)
     out = ["GENERAL: " + augment_global(rec, seed, template=template, gate_gender=gate_gender), "SCRIPT:"]
     for i, s in enumerate(rec.get("sentences", [])):
         cue = augment_sentence(s, seed ^ (i + 1) * 0x9E3779B1, template=template, baseline=rec.get("baseline"))

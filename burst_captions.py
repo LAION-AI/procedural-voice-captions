@@ -207,79 +207,10 @@ BC_TIMED = os.environ.get("BC_TIMED", "1") == "1"
 
 
 def build_timed_script(sentences, words, bursts, clip_dur, pause_thr=None):
-    """Build the timed SCRIPT lines.
-
-    sentences: [{"text", "start", "end"}] (ASR sentence spans; timings may be
-      missing -> falls back to neighbouring word times)
-    words: [{"w", "start", "end"}] word timestamps (start required)
-    bursts: [{"start", "end", "label"}] kept, duration-gated locator bursts
-    clip_dur: seconds (float)
-    Returns list of lines (without the "SCRIPT:" header).
-    Raises ValueError on structural problems (never guesses).
-    """
-    pause_thr = PAUSE_THR if pause_thr is None else pause_thr
-    words_ts = [w for w in words if w.get("start") is not None]
-    if not words_ts:
-        raise ValueError("timed script needs word timestamps")
-    onsets = [w["start"] for w in words_ts]
-    offsets = [w.get("end", w["start"]) for w in words_ts]
-    spans = [(float(b["start"]), float(b["end"]), b.get("label")) for b in bursts
-             if b.get("label") and float(b["end"]) - float(b["start"]) >= 0.05]
-    # sentence word boundaries (first onset / last offset per sentence)
-    seg = []
-    for s in sentences:
-        a, b = s.get("start"), s.get("end")
-        if a is None or b is None:
-            seg.append(None)
-            continue
-        idx = [i for i, w in enumerate(words_ts) if a - 1e-6 <= w["start"] <= b + 1e-6]
-        seg.append((idx[0], idx[-1]) if idx else None)
-    if any(x is None for x in seg) and any(x is not None for x in seg):
-        # normalize: sentences without word times collapse to word-based grouping
-        seg = _regroup_by_gap(words_ts, len(sentences))
-    if all(x is None for x in seg):
-        seg = _regroup_by_gap(words_ts, len(sentences))
-    if any(x is None for x in seg):
-        raise ValueError("some sentences have no word timestamps")
-    n = len(seg)
-    out = []
-    # leading pause vs fold
-    first_onset = onsets[seg[0][0]]
-    if first_onset >= pause_thr:
-        out.append(f"[{first_onset:.2f} seconds pause]")
-    prev_off = 0.0
-    for i, (i0, i1) in enumerate(seg):
-        onset, off = onsets[i0], offsets[i1]
-        gap = onset - prev_off
-        if i > 0 and gap >= pause_thr:
-            out.append(f"[{gap:.2f} seconds pause]")
-            start_print = onset
-        else:
-            start_print = prev_off if i > 0 else 0.0
-        end_print = clip_dur if (i == n - 1 and (clip_dur - off) < pause_thr) else off
-        dur = end_print - start_print
-        if dur <= 0:
-            raise ValueError(f"non-positive duration for sentence {i}")
-        # bursts inside this segment
-        seg_bursts = [x for x in spans if prev_off - 1e-9 <= x[0] < end_print]
-        burst_toks = []
-        for (bs, be, lab) in seg_bursts:
-            speech_overlap = sum(max(0.0, min(be, offsets[j]) - max(bs, onsets[j]))
-                                 for j in range(i0, i1 + 1))
-            free = (be - bs) - speech_overlap
-            if free >= 0.05:
-                burst_toks.append(f"({lab}, {be - bs:.2f} seconds)")
-            else:
-                burst_toks.append(f"({lab})")
-        body = _inline_timed(words_ts[i0:i1 + 1], list(zip(seg_bursts, burst_toks)))
-        cue = sentences[i].get("caption") or sentences[i].get("cue")
-        line = f"[{dur:.2f} seconds duration] {body}"
-        out.append(f"({cue}) {line}" if cue else line)
-        prev_off = end_print
-    if clip_dur - prev_off >= pause_thr:
-        out.append(f"[{clip_dur - prev_off:.2f} seconds pause]")
-    _absorb(out, clip_dur)
-    return out
+    """Render all measured durations; preserve simultaneous events explicitly."""
+    from prompt_format import render_timed, PAUSE_MIN
+    return render_timed(sentences, words, bursts, clip_dur,
+                        pause_min=PAUSE_MIN if pause_thr is None else pause_thr)[0]
 
 
 def _regroup_by_gap(words_ts, want):
@@ -333,19 +264,10 @@ def _absorb(lines, clip_dur):
 
 
 def verify_timed_script(script, transcript, clip_dur, tol=0.05):
-    """Independent re-parse (no access to build internals). Returns [] on PASS."""
-    bad = []
-    dur_sum = sum(float(x) for x in DUR_TAG_RE.findall(script))
-    pause_sum = sum(float(x) for x in PAUSE_TAG_RE.findall(script))
-    if abs((dur_sum + pause_sum) - float(clip_dur)) > tol:
-        bad.append(f"length-mismatch printed={dur_sum + pause_sum:.3f} clip={clip_dur:.3f}")
-    stripped = re.sub(r"\[[^\]]*seconds\s+(?:duration|pause)\]", " ", script)
-    stripped = re.sub(r"\([^()]*\)", " ", stripped)
-    stripped = re.sub(r"\s+", " ", stripped).strip()
-    ref = re.sub(r"\s+", " ", (transcript or "").strip())
-    if stripped != ref:
-        bad.append("transcript-not-identical")
-    return bad
+    """Independent parse of printed sequential budgets and inline durations."""
+    from prompt_format import verify_timed
+    return verify_timed(script, transcript, clip_dur)
+
 
 def _hf_file(repo, filename):
     from huggingface_hub import hf_hub_download
@@ -1147,16 +1069,21 @@ class BurstCaptioner:
         return lines
 
     def procedural_caption(self, result, timed=None):
-        """Default procedural caption: GENERAL line + SCRIPT. With BC_TIMED (default on)
-        the timed scheme per the prompting guide is used when verification passed;
-        pass timed=False (or BC_TIMED=0) for the legacy untimed lines."""
-        use_timed = (BC_TIMED if timed is None else timed)
+        """GENERAL/SCRIPT with verified durations by default; no silent fallback.
+
+        ``timed=False`` explicitly opts into the historical untimed surface.
+        Missing or invalid alignment raises TimingUnavailable in the default path.
+        All measured endpoints and raw predictions remain in the result.
+        """
+        use_timed = True if timed is None else timed
+        if use_timed:
+            from prompt_format import format_record, TimingUnavailable
+            if result.get('asr', {}).get('supported_language') is False:
+                raise TimingUnavailable('ASR alignment is unavailable for this language; an untimed transcript is not a timed script')
+            return format_record(result)
         out = ["GENERAL: " + result["global_caption"], "SCRIPT:"]
-        if use_timed and result.get("script_timed") is not None:
-            out.extend(result["script_timed"])
-        else:
-            for ln in result.get("script_lines", []):
-                out.append(f"({ln['cue']}) {ln['text']}")
+        for line in result.get("script_lines", []):
+            out.append(f"({line['cue']}) {line['text']}")
         return "\n".join(out)
 
     @staticmethod

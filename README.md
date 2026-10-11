@@ -2,7 +2,7 @@
 
 **Turn speech into reproducible voice-acting descriptions using Humaneness Ears Medium and Parakeet v3.**
 
-▶ **[Listen to the new 40-clip Medium grid](https://projects.laion.ai/procedural-voice-captions/humaneness-medium/)** · [Methods and reproduction](HUMANENESS_MEDIUM.md) · [Reviewed caption normalization](baseline_stats_humaneness_medium_speech.json) · [Encoder weights and inference](https://huggingface.co/laion/humaneness-ears-base-medium)
+▶ **[Listen to the 40-clip Medium grid](https://projects.laion.ai/procedural-voice-captions/humaneness-medium/)** · **[Paired 50-audio comparison with MOSS](https://laion-moss-voice-acting-captions.static.hf.space/format-comparison.html)** · [GENERAL/SCRIPT format guide](PROMPT_FORMAT.md) · [Methods and reproduction](HUMANENESS_MEDIUM.md) · [Encoder weights and inference](https://huggingface.co/laion/humaneness-ears-base-medium)
 
 ## Current default: Humaneness Ears Medium
 
@@ -49,11 +49,15 @@ Every new column uses the **`humaneness_ears_medium`** namespace. The preserved
 
 ### Reviewed settings and measured audio pilot
 
-The current caption default is stored in [`humaneness_caption_config.json`](humaneness_caption_config.json): onset threshold **0.7**, overlap suppression at **half the shorter interval**, minimum duration **0.08 s**, three VoiceNet phrases, up to two emotions at **z ≥ +0.5**, tempo always included, and a two-sentence template. Demographic and authenticity wording is omitted; every numeric prediction stays available. A blend regression score never declares a clip burst-free. Raw event proposals remain alongside `selected_burst_event_proposals`.
+The current caption default is stored in [`humaneness_caption_config.json`](humaneness_caption_config.json): onset threshold **0.7**, overlap suppression at **half the shorter interval**, minimum duration **0.08 s**, **two** VoiceNet phrases, up to **one** emotion at **z ≥ +0.5**, tempo always included, and compact **tags**. Demographic and authenticity wording is omitted; every numeric prediction stays available. A blend regression score never declares a clip burst-free. Raw event proposals remain alongside `selected_burst_event_proposals`.
+
+**The default output is `GENERAL:` followed by `SCRIPT:`.** Every spoken segment and selected vocal event has a measured numeric duration; pauses are square-bracketed. The original Humaneness Voice guide uses square brackets for speech durations and round brackets for vocal events. An explicit round-bracket speech-duration option is also available. Overlapping event durations are included within the enclosing segment, rather than added twice. See the [complete grammar and timing policy](PROMPT_FORMAT.md). Invalid or unsupported word alignment is reported explicitly; the default never silently substitutes an untimed script.
 
 Caption selection now uses [`baseline_stats_humaneness_medium_speech.json`](baseline_stats_humaneness_medium_speech.json), measured from **80,265 clips**: 41,771 S10 and 38,494 multilingual Emilia. Exact pooled population variance includes the between-source mean differences. The original 118,692-clip mixed normalizer remains available as `humaneness-medium-global`.
 
-| Procedural caption setting | Selection, 10 clips | Confirmation, 10 other clips | Descriptive combined, 20 |
+The earlier study used three VoiceNet properties, two emotions and prose. It is retained below as a **historical experiment**, not the current wording configuration.
+
+| Historical procedural caption setting | Selection, 10 clips | Confirmation, 10 other clips | Descriptive combined, 20 |
 |---|---:|---:|---:|
 | Original captions | 2.675 | 2.485 | 2.580 |
 | Reviewed default | 3.735 | 3.405 | 3.570 |
@@ -61,6 +65,20 @@ Caption selection now uses [`baseline_stats_humaneness_medium_speech.json`](base
 All values are **0–5 automated audio-reviewer composite scores**, not human benchmark results. Each split contains five synthetic acting and five Emilia recordings. The rubric weights caption fidelity 30%, timing 25%, event precision 15%, event recall 15%, consistency 10% and readability 5%. The same twenty clips were later used for a separate MOSS decoding study, with a different rubric. MOSS works best with **greedy temperature 0.0** as a practical starting point; the threshold trade-off is documented without claiming a universal optimum.
 
 [English tuning report with all settings and scores](https://laion-moss-voice-acting-captions.static.hf.space/settings.html) · [Machine-readable procedural evaluation](evaluations/procedural_caption_pilot.json) · [MOSS locator/temperature study](evaluations/locator_decoding_pilot.json).
+
+### Same-audio comparison and format confirmation
+
+The latest study compares both pipelines on the **same 50 recordings** (45 English, five German), with the same blinded automated audio-reviewer rubric. Twenty-five recordings selected the compact configuration; twenty-five different recordings confirmed it. MOSS uses greedy decoding and threshold 0.6; procedural captions use threshold 0.7. Neither pipeline caps its selected event count.
+
+| Pipeline | Composite / 5 | Global fidelity | Burst description | Timing | Event precision rating | Event recall rating |
+|---|---:|---:|---:|---:|---:|---:|
+| Procedural, compact tags | 2.704 | 2.74 | 2.02 | 3.04 | 3.06 | 3.10 |
+| Procedural, previous prose | 2.704 | 2.74 | 2.02 | 3.04 | 3.06 | 3.10 |
+| MOSS, greedy and uncapped | 3.863 | 4.34 | 3.72 | 3.46 | 3.50 | 4.14 |
+
+These are **0–5 Gemini audio-judge ratings**, not human scores or precision/recall percentages. Composite weights: global fidelity 30%, burst description 25%, timing 20%, event precision 15%, event recall 10%. Readability is reported separately. The compact configuration tied the previous prose overall; its selection gain was tiny and did not persist on confirmation (2.760 versus 2.772). It is a concise, documented default, not a demonstrated general quality improvement. MOSS performed better under this rubric. These scores cannot be compared numerically to the historical 20-clip study, which used a different rubric.
+
+All **38,427** successful acting recordings passed the revised procedural time-budget/word-preservation checks. This verifies serialization, not detection accuracy. [Listen to all 50 paired examples and inspect six selectable MOSS CAPTION/TRANSCRIPT variants](https://laion-moss-voice-acting-captions.static.hf.space/format-comparison.html) · [Frozen evaluation and configuration evidence](evaluations/prompt-format-20261011.json).
 
 ### Run the current pipeline
 

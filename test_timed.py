@@ -21,13 +21,13 @@ def case_1():
     print(script)
     bad = bc.verify_timed_script(script, 'Hello there. How are you?', 2.4)
     assert not bad, bad
-    assert '[1.00 seconds duration] Hello there.' in lines[0]  # leading 0.05 folded in
-    assert '(Chuckle, 0.10 seconds)' in lines[1]
+    assert sum('Hello there.' in line for line in lines) == 1
+    assert '(Chuckle, 0.10 seconds)' in script
     print('case1 PASS')
 
 
 def case_2():
-    # big pause must print; burst overlapping speech collapses to bare label
+    # Big pause must print; overlapping bursts retain their full durations.
     words = [{'w': 'Yes.', 'start': 0.0, 'end': 0.4},
              {'w': 'Really', 'start': 1.0, 'end': 1.4},
              {'w': 'now?', 'start': 1.5, 'end': 1.9}]
@@ -40,7 +40,7 @@ def case_2():
     bad = bc.verify_timed_script(script, 'Yes. Really now?', 2.0)
     assert not bad, bad
     assert any('[0.60 seconds pause]' in l for l in lines), lines
-    assert '(Ahem)' in '\n'.join(lines) and '(Ahem, 0' not in '\n'.join(lines)
+    assert '(Ahem, 0.30 seconds)' in script
     print('case2 PASS')
 
 
