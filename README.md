@@ -2,7 +2,13 @@
 
 **Turn speech into reproducible voice-acting descriptions using Humaneness Ears Medium and Parakeet v3.**
 
-▶ **[Listen to the 40-clip Medium grid](https://projects.laion.ai/procedural-voice-captions/humaneness-medium/)** · **[Paired 50-audio comparison with MOSS](https://laion-moss-voice-acting-captions.static.hf.space/format-comparison.html)** · [GENERAL/SCRIPT format guide](PROMPT_FORMAT.md) · [Methods and reproduction](HUMANENESS_MEDIUM.md) · [Encoder weights and inference](https://huggingface.co/laion/humaneness-ears-base-medium)
+## Start here: the default demo grid
+
+▶ **[Listen and compare: 50 recordings, procedural captions and MOSS](https://laion-moss-voice-acting-captions.static.hf.space/format-comparison.html)**
+
+Our **default listening demo** places both pipelines beside the same audio: procedural `GENERAL / SCRIPT` on the left, and whole-voice plus vocal-event descriptions from [MOSS Voice Captioner](https://huggingface.co/laion/moss-voice-captioner) and [MOSS Vocal Burst Captioner](https://huggingface.co/laion/moss-vocal-burst-captioner) on the right. The English introduction explains the model roles, clickable start/end markers, timing grammar, six training-text exports and automated review results. The page opens directly over HTTPS, with audio embedded for listening.
+
+[Additional 40-clip multilingual Medium grid](https://projects.laion.ai/procedural-voice-captions/humaneness-medium/) · [GENERAL/SCRIPT format guide](PROMPT_FORMAT.md) · [Methods and reproduction](HUMANENESS_MEDIUM.md) · [Encoder weights and inference](https://huggingface.co/laion/humaneness-ears-base-medium)
 
 **[Download German-English Voice Acting Challenges](https://huggingface.co/datasets/laion/german-english-voice-acting-challenges)** — 38,427 complete synthetic performances, 314.13 hours, CC BY 4.0; both MOSS captions, verified procedural scripts, full generation-voice metadata and six CAPTION/TRANSCRIPT training choices.
 
