@@ -4,6 +4,8 @@
 
 ▶ **[Listen to the 40-clip Medium grid](https://projects.laion.ai/procedural-voice-captions/humaneness-medium/)** · **[Paired 50-audio comparison with MOSS](https://laion-moss-voice-acting-captions.static.hf.space/format-comparison.html)** · [GENERAL/SCRIPT format guide](PROMPT_FORMAT.md) · [Methods and reproduction](HUMANENESS_MEDIUM.md) · [Encoder weights and inference](https://huggingface.co/laion/humaneness-ears-base-medium)
 
+**[Download German-English Voice Acting Challenges](https://huggingface.co/datasets/laion/german-english-voice-acting-challenges)** — 38,427 complete synthetic performances, 314.13 hours, CC BY 4.0; both MOSS captions, verified procedural scripts, full generation-voice metadata and six CAPTION/TRANSCRIPT training choices.
+
 ## Current default: Humaneness Ears Medium
 
 The acoustic scoring backend is now **Humaneness Ears Medium**, pinned to model revision
